@@ -1,0 +1,3 @@
+# Quasi Newton
+
+//TOOD FINISH
