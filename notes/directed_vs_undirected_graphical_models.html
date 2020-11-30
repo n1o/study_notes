@@ -1,0 +1,2003 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Directed vs undirected graphical models &#8212; study-notes</title>
+    
+  <link rel="stylesheet" href="../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.40e2e510f6b7d1648584402491bb10fe.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.3da636dd464baa7582d2.js">
+
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/sphinx-book-theme.d31b09fe5c1d09cb49b26a786de4a05d.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="MAD" href="absolute_median_deviation.html" />
+    <link rel="prev" title="Adam (adaptive moment estimation method )" href="adam.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../index.html">
+  
+  <img src="../_static/logo.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">study-notes</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../content.html">
+   Content
+  </a>
+ </li>
+</ul>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="logistic_regression.html">
+   Logistic regression
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="fisher_information_matrix.html">
+   Fisher information matrix
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="beta_distribution.html">
+   Beta distribution
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="beta_distribution.html#pdf">
+   PDF
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="beta_distribution.html#moments">
+   Moments
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="beta_distribution.html#conjugacy">
+   Conjugacy
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="beta_distribution.html#properties">
+   Properties
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="condiitional_expectations.html">
+   Conditional expectations
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="exponential_family_bayesian_view.html">
+   Bayesian view of exponential family
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="softmax_function.html">
+   Softmax function
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="bayesian_model_selection.html">
+   Bayesian model selection
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="likelihood_principle.html">
+   Likelihood principle
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="rules_of_determinants.html">
+   Rules Determinants
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="expectations.html">
+   Expectations
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="expectations.html#functions-of-random-variables">
+   Functions of random variables
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="expectations.html#variance">
+   Variance
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="expectations.html#skew">
+   Skew
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="expectations.html#curtosis">
+   Curtosis
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="expectations.html#discrete-random-variables">
+   Discrete random variables
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="adam.html">
+   Adam (adaptive moment estimation method )
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Directed vs undirected graphical models
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="absolute_median_deviation.html">
+   MAD
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="graphical_models.html">
+   Graphical models
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="markov_random_fields_conditional_independence.html">
+   Conditional independence in
+   <span class="xref myst">
+    Undirected graphical models
+   </span>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="log_partition_function.html">
+   Log partition function
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="markov_random_fields_examples.html">
+   Markov Random Fields example
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="second_order_methods.html">
+   Second order methods
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="second_order_methods.html#newtons-method">
+   Newtons method
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="second_order_methods.html#secant-method">
+   Secant method
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="second_order_methods.html#quasi-newton">
+   Quasi Newton
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="multinomial_coeffiicient.html">
+   Multinomial coefficien
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="sufficient_statistics.html">
+   Sufficient statistics
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="log_sum_exp_trick.html">
+   Log-sum-exp trick
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="probability.html">
+   Probability
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="probability.html#joint-probability">
+   Joint probability
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="probability.html#conditional-probability">
+   Conditional probability
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="probability.html#union-of-mutliple-events">
+   Union of mutliple events
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="markov_assumption.html">
+   Markov assumption
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="first_order_methods.html">
+   First order Methods
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="first_order_methods.html#gradient-descent">
+   <span class="xref myst">
+    Gradient descent
+   </span>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="first_order_methods.html#conjugate-gradient">
+   <span class="xref myst">
+    Conjugate gradient
+   </span>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="first_order_methods.html#momentum">
+   Momentum
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="first_order_methods.html#nesterov-momentum">
+   Nesterov momentum
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="first_order_methods.html#adagrad">
+   <span class="xref myst">
+    Adagrad
+   </span>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="first_order_methods.html#rms-prop">
+   <span class="xref myst">
+    RMS-Prop
+   </span>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="first_order_methods.html#adam">
+   <span class="xref myst">
+    Adam
+   </span>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="first_order_methods.html#hyper-gradient-descent">
+   <span class="xref myst">
+    Hyper gradient descent
+   </span>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="conjugate_prior.html">
+   Conjugate prior
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="glm_mle_map_estimation.html">
+   MLE and MAP estimation for Generalized linear Models
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="support_vector_machines.html">
+   Support vector machines (SVM)
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="quadratic_distriminant_analysis.html">
+   Quadratic discriminant analysis (QDA)
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="bernoulli_gaussian_model.html">
+   Bernoulli-Gaussian Model
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="trust_region_method.html">
+   Trust region method
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="binomial_distribution.html">
+   Binomial distribution
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="binomial_distribution.html#conjugacy">
+   Conjugacy
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="multinomial_distributiion.html">
+   Multinomial
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="empirical_bayes.html">
+   Empirical Bayes
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="kernel_machines.html">
+   Kernel machines
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="infference_in_hidden_markov_models.html">
+   Inference in hidden markov models
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="infference_in_hidden_markov_models.html#forward">
+   Forward
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="infference_in_hidden_markov_models.html#backward">
+   Backward
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="infference_in_hidden_markov_models.html#forward-backward">
+   Forward-Backward
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="infference_in_hidden_markov_models.html#map-estimation-viberty">
+   MAP estimation (Viberty)
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="svm_classification.html">
+   <span class="xref myst">
+    SVM
+   </span>
+   classification
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="hyper_gradient_descent.html">
+   Hypergradient Descent
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="latent_variable_models.html">
+   Latent Variable Models
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="elipse.html">
+   Elipse
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="ordinary_least_squares_linear_regression.html">
+   Ordinary Least Squares (MLE)
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="bridge_regression.html">
+   Bridge regression
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="multivariate_gausasian.html">
+   Multivariate Gaussian
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="multivariate_gausasian.html#mle">
+   MLE
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="multivariate_gausasian.html#join-gaussian">
+   Join Gaussian:
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="multivariate_gausasian.html#maximum-entropy-distribution">
+   Maximum entropy distribution
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="linear_programming.html">
+   Linear programming
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="adagrad.html">
+   Adagrad (Adaptive subgradient method)
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="jensens_inequality.html">
+   Jensens inequality
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="l1_regularization.html">
+   <span class="math notranslate nohighlight">
+    \(l_1\)
+   </span>
+   regularization
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="l1_regularization.html#fitting">
+   Fitting
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="l1_regularization.html#variants">
+   Variants
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="local_descent.html">
+   Local descent
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="dirichlet_multinomial.html">
+   Dirichlet Multinomial model
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="bayesian_decision_theory.html">
+   Bayeisan decision theory
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="em_algorithm.html">
+   The EM Alogirthm
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="em_algorithm.html#theory">
+   Theory
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="em_algorithm.html#applications">
+   Applications
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="probability_chain_rule.html">
+   Probability chain rule
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="normal_inverse_chi_squared.html">
+   Normal Inverse Chi Squared
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="normal_inverse_chi_squared.html#uninformative-prior">
+   Uninformative prior
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="svm_classification_large_margine_principle.html">
+   Large margin principle
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="multinoulli_exponential_family.html">
+   Multinoulli exponential family
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="graph_terminology.html">
+   Graph
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="mercer_kernel.html">
+   Mercer (positive definite kernels)
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="inverse_wishart_distribution.html">
+   Inverse Wishart distribution
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="pdf_of_functions_of_random_variables.html">
+   PMF/PDF of a function of random variables
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="pdf_of_functions_of_random_variables.html#continuous">
+   Continuous
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="gaussian_mixture_model.html">
+   Mixture of Gaussians
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="gaussian_mixture_model.html#em">
+   EM
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="subgradients.html">
+   Subgradient
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="naive_bayes.html">
+   Naive Bayes Classifier
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="hierarchical_adaptive_lasso.html">
+   Hierarchical adaptive lasso
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="gaussian_process_latent_variable_model.html">
+   Gaussian process latent variable model
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="markov_random_fields_parametrization.html">
+   Parametrization of Markov Random Fields
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="kernel_density_estimation.html">
+   Kernel density estimation (KDE)
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="entropy.html">
+   Entropy
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="entropy.html#joint-entropy">
+   Joint entropy
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="adams_law.html">
+   Adams Law
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="bayes_rule.html">
+   Bayes rule
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="cholesky_decomposition.html">
+   Cholesky Decomposition
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="markov_models.html">
+   Markov models
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="mahalanobi_distance.html">
+   Mahalanobis distance
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="generalized_linear_model.html">
+   Generalized linear models
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="mixture_models.html">
+   Mixture models
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="mixture_models.html#parameter-estimation">
+   Parameter estimation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="cumulative_distribution_function.html">
+   Cumulative distribution function
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="linear_gaussian_systems.html">
+   Linear Gaussian systems
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="robust_linear_regression.html">
+   Robust linear regression
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="whitening_sphering.html">
+   Whitening or sphereing
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="posterior_distribution.html">
+   Posterior distribution
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="posterior_distribution.html#sumarizing-the-posterior-distribution">
+   Sumarizing the posterior distribution
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="rms_prop.html">
+   RMS Prop
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="markov_random_fields_d_separation_laternative.html">
+   <span class="xref myst">
+    D-separation
+   </span>
+   alternative for Markov Random Fields
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="ridge_regression_pca.html">
+   <span class="xref myst">
+    Ridge regression
+   </span>
+   connection to
+   <span class="xref myst">
+    PCA
+   </span>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="jeffrey_prior.html">
+   Jeffrey prior
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="survival_function.html">
+   Survival function
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="plate_notation.html">
+   Plate notatioin
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="soft_thresholding.html">
+   Soft threhsolding
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="noise_free_gaussian_process_regression.html">
+   Noise-free
+   <span class="xref myst">
+    Gaussian Process Regression
+   </span>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="shannon_information_content.html">
+   Shannon infromation content of an outcome
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="monter_carlo_estimation.html">
+   Monte Carlo approximation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="probabilistic_pca_em.html">
+   EM For PPCA
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="inequalities.html">
+   Inequalities
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="inequalities.html#markov-inequality">
+   Markov inequality
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="inequalities.html#chebyshev">
+   Chebyshev
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="proximal_algorithms.html">
+   Proximal algorithms
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="proximal_algorithms.html#proximal-gradient-method">
+   Proximal gradient method
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="principal_component_analysis.html">
+   Principal component analysis
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="principal_component_analysis.html#probabilistic-pca">
+   Probabilistic PCA
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="posterior_predictive_distribution.html">
+   Posterior predictive distribution
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="order_statistiics_quantiles.html">
+   Order statistics
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="kl_divergence.html">
+   Kullback-Lieber divergence (KL)
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="schur_complement.html">
+   Schur Complement
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="d-separation.html">
+   D-separation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="exponential_family_maximum_entropy.html">
+   Maximum entropy derivation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="noisy_gaussian_process_regression.html">
+   Noisy Gaussian process Regerssion
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="conditional_random_fields.html">
+   Conditional random fields (CRFs)
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="bayesian_information_criterion.html">
+   Derivation of BIC
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="sumarizing_posterior_distributions.html">
+   Map estimation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="sumarizing_posterior_distributions.html#credible-intervals">
+   Credible intervals
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="sumarizing_posterior_distributions.html#highest-posterior-density-hdp">
+   Highest posterior density (HDP)
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="linear_regression.html">
+   Linear Regression
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="linear_regression.html#fiting-linear-regression">
+   Fiting linear regression
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="wolfe_conditions.html">
+   Wolfe Conditions
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="mixture_models_parameter_estimation.html">
+   Parameter estimation for mixture models
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="mixture_models_parameter_estimation.html#em">
+   EM
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="mixture_model_examples.html">
+   Mixture of multinoullis
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="mixture_model_examples.html#clustering">
+   Clustering
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="mixture_model_examples.html#mixtures-of-experts">
+   Mixtures of experts
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="computing_evidence.html">
+   Computing the marginal likelihood (evidence)
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="computing_evidence.html#bic-approximation-of-marginal-likelihood">
+   Bic approximation of marginal likelihood
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="multiclass_logistic_regression.html">
+   Multi-class Logistic Regression
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="bernouli_distributioin.html">
+   Bernoulli distribution
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="unsented_transoform.html">
+   Unscented transform
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="common_bayesian_loss_functions.html">
+   0-1 Loss
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="common_bayesian_loss_functions.html#rejection-option">
+   Rejection option
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="common_bayesian_loss_functions.html#l-2-loss">
+   <span class="math notranslate nohighlight">
+    \(l_2\)
+   </span>
+   loss
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="common_bayesian_loss_functions.html#l-1-loss">
+   <span class="math notranslate nohighlight">
+    \(l_1\)
+   </span>
+   loss
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="student_t_distribution.html">
+   Student T
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="student_t_distribution.html#moments">
+   Moments
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="student_t_distribution.html#connections-to-cauchy-lorentz">
+   Connections to Cauchy/Lorentz
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="student_t_distribution.html#distribution">
+   Distribution
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="student_t_distribution.html#symetry-arround-arguments">
+   Symetry arround arguments
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="student_t_distribution.html#t-distribution-in-place-of-the-normal-for-bayesian-modelling">
+   t-distribution in place of the Normal for bayesian modelling
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="student_t_distribution.html#t-distribution-as-a-mixture-of-normals">
+   t -distribution as a mixture of Normals
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chi_square_distribution.html">
+   Chi-Squared distribution
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chi_square_distribution.html#connection-to-gaussian">
+   Connection to Gaussian
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chi_square_distribution.html#connection-to-gamma">
+   Connection to
+   <span class="xref myst">
+    Gamma
+   </span>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="learning_in_directed_graphical_models.html">
+   Learning
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="hinge_loss.html">
+   Hinge loss
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="kalman_smoothing.html">
+   Kalman smoothing algorithm
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="non_linear_non_gaussian_state_space_models.html">
+   Non-Linear, non-Gaussian SSMs
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="ridge_regression.html">
+   Ridge regression (Penalized least squares)
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="gamma_function.html">
+   Gamma Function
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="gamma_function.html#multivariate">
+   Multivariate:
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="gaussian_distribution.html">
+   Gaussian distribution
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="gaussian_distribution.html#moments">
+   Moments
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="gaussian_distribution.html#standard-normal">
+   Standard normal
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="gaussian_distribution.html#degenerate">
+   Degenerate
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="gaussian_distribution.html#pecission-parametrization">
+   Pecission parametrization
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="gaussian_distribution.html#multivariate">
+   Multivariate
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="gaussian_distribution.html#cdf">
+   CDF
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="gaussian_distribution.html#usage">
+   Usage
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="poisson_process.html">
+   Poisson process
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="some.html">
+   This is an test
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="law_of_large_numbers.html">
+   Law of large numbers
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="variance_stabilizing_transform.html">
+   Variance stabilizing transformation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="matrix_inverse.html">
+   Matrix inverse
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="gaussian_distribution_information_form.html">
+   Information norm
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="kernel.html">
+   Kernel function
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="linear_discriminant_analysis.html">
+   Linear discriminant analysis
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="linear_discriminant_analysis.html#regularization">
+   Regularization
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="bayesian_t_test.html">
+   Bayesian t-test
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="bonferroni_correction.html">
+   Bonferroni Correction
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="kalman_filtering.html">
+   Kalman filtering algorithm
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="kalman_filtering.html#prediction-step">
+   Prediction step
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="kalman_filtering.html#measurement-step">
+   Measurement step
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="kalman_filtering.html#posterior-predictive">
+   Posterior predictive
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="kalman_filtering.html#computational-issues">
+   Computational issues
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="random_variable.html">
+   Random Variables
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="poisson_distribution.html">
+   Poisson distribution
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="poisson_distribution.html#properties">
+   Properties
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="em_theory.html">
+   EM Theory
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="univariate_gaussian_exponential_family.html">
+   Univariate Gaussian exponential distribution
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="convolution_of_functions_of_random_variables.html">
+   Convolution
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="law_of_total_probability.html">
+   Law of total Probability
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="bayes_factor.html">
+   Bayes factors
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="gamma_distribution.html">
+   Gamma distribution
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="gamma_distribution.html#moments">
+   Moments
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="gamma_distribution.html#properties">
+   Properties
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="gamma_distribution.html#sum-of-2-gamma-distributions">
+   Sum of 2 Gamma distributions
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="gamma_distribution.html#connection-to-exponential-distribution">
+   Connection to Exponential distribution
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="gamma_distribution.html#connection-to-beta-distribution">
+   Connection to Beta distribution
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="gamma_distribution.html#erlang-distribution">
+   Erlang distribution
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="exponential_distribution.html">
+   Exponential distribution
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="exponential_distribution.html#memory-less-property">
+   Memory less property
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="exponential_distribution.html#connection-to-gamma">
+   Connection to Gamma
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="exponential_distribution.html#poisson-process">
+   Poisson process
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="gaussian_process_compared_to_other.html">
+   Comparing gaussian processes to other models
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="classical_pca.html">
+   Classical PCA
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="laplace_distribution.html">
+   Laplace distribution (Double exponential)
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="laplace_distribution.html#moments">
+   Moments
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="gradient_descent.html">
+   Gradient descent
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="gradient_descent.html#convergence">
+   Convergence
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="bayesian_linear_regression.html">
+   Bayesian linear regression
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="singular_value_decomposition.html">
+   Singular value decomposition (SVD)
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="multivariate_gausasian_infering_params.html">
+   Infering the parameters of an NVM
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="multivariate_gausasian_infering_params.html#p-mu-sigma-d">
+   <span class="math notranslate nohighlight">
+    \(P(\mu, \Sigma| D)\)
+   </span>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="probability_inclusion_exclusion.html">
+   Inclusion Exclusion Probability
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="probability_independence.html">
+   Independence
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="bayesian_occams_razor.html">
+   Bayesian occam’s razor.
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="factor_analysis_unidentifiability.html">
+   Factor analysis unidentifiability
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="uniform_distribution.html">
+   Uniform distribution
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="uniform_distribution.html#universality">
+   Universality
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="uninformative_prior.html">
+   Uninformative prior
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="l1_regularization_sparse_solution.html">
+   L1 regularization sparse solution
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="pca_extensions.html">
+   PCA for categorical data
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="pca_extensions.html#supervised-pca-bayesian-factor-regression">
+   Supervised PCA (Bayesian factor regression)
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="pca_extensions.html#partial-least-squares">
+   Partial least squares
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="pca_extensions.html#canonical-correlation-analysis">
+   Canonical correlation analysis
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="probit_regression.html">
+   Probit regression
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="convex_set.html">
+   Convex set
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="page_rank.html">
+   Page Rank
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="numerically_stable_ridge_regression.html">
+   Numerically stable ridge regression computation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="numerically_stable_ridge_regression.html#d-n">
+   <span class="math notranslate nohighlight">
+    \(D &gt;&gt; N\)
+   </span>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="inverse_gamma.html">
+   Inverse Gamma
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="inverse_gamma.html#pdf">
+   PDF
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="inverse_gamma.html#moments">
+   Moments
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="conjugate_gradient.html">
+   Conjugate gradient
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="false_positive_negative_tradeoff.html">
+   False positive vs false negative tradeoff
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="independent_component_analysis.html">
+   Independent component Analysis (ICA)
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="bernoulli_distribution_exponential_family.html">
+   Bernoulli distribution exponential family
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="wishart_distributiion.html">
+   Wishart distribution
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="wishart_distributiion.html#example">
+   Example:
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="sum_of_squares.html">
+   Sum of squares
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="epigraf_of_a_function.html">
+   Epigraf
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="dirac_measure.html">
+   Dirac measure / Dirac delta
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="kronecker_product.html">
+   Kronecker product
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="least_squares_ridge_lasso.html">
+   Comparing OLS with Ridge and Lasso
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="quasi_newton.html">
+   Quasi Newton
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="elastic_net.html">
+   Elastic Net (ridge and lasso combined)
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="jacobian.html">
+   Jacobian
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="sparse_linear_models.html">
+   Sparse Linear models
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="multi_task_learning.html">
+   Multi-task learning
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="gaussian_process.html">
+   Gaussian Process
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="mutual_information.html">
+   Mutual information
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="mutual_information.html#point-wise-mutual-information">
+   Point wise mutual information
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="mutual_information.html#continuous-random-variables">
+   Continuous random variables
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="factor_analysis.html">
+   Factor analysis (FA)
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="factor_analysis.html#unidentifiability">
+   Unidentifiability
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="stationary_distrion.html">
+   Stationary distribution
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="functions_of_random_variables.html">
+   Functions of random variables
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="functions_of_random_variables.html#linear-functions">
+   Linear functions
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="dirichlet_distribution.html">
+   Dirichlet distribution
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="prior.html">
+   Priors
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="k_medoids.html">
+   K-medoids
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="state_space_model.html">
+   State space models (SSM)
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="hessian.html">
+   Hessian
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="convex_function.html">
+   Convex Functions
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="convex_function.html#strict-convexity">
+   Strict convexity
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="convex_function.html#operations-that-preserve-convexity">
+   Operations that preserve convexity
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="convex_function.html#convexity-in-higher-dimesnions">
+   Convexity in higher dimesnions
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="svm_regression.html">
+   <span class="xref myst">
+    SVM
+   </span>
+   for regression.
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="qr_decomposition.html">
+   QR decomposition
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="tf_idf_kernel.html">
+   Kernels for document comparison
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="matrix_inversion_lehma.html">
+   Matrix inversion lemma
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="central_limit_theorem.html">
+   Central Limit Theorem
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="kernels_derived_from_probabilistic_models.html">
+   Kernels derived from probabilistic generative models
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="pareto_distributiion.html">
+   Pareto distribution
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="pareto_distributiion.html#moments">
+   Moments
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="gaussian_approximation.html">
+   Laplace (Gaussian) approxiation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="covariance_correlation.html">
+   Covariance
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="covariance_correlation.html#correlation-pearsons-correlation-coefficient">
+   Correlation (Pearsons correlation coefficient)
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="dirichlet_compound_multinomial.html">
+   Dirichlet Compound Multinomial
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="dirichlet_compound_multinomial.html#usage">
+   Usage
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="hierarchical_bayesian_models.html">
+   Hierarchical bayes (multi-level model)
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="directed_graphical_models.html">
+   Directe graphical models
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="directed_graphical_models.html#examples">
+   Examples
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="probability_mass_density_function.html">
+   Probability mass functions
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="probability_mass_density_function.html#probability-density-function">
+   Probability density function
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="kernel_trick.html">
+   Kernel trick
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="local_descent_terminal_conditions.html">
+   Terminal conditions
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="hybrid_discrete_continuous_state_space_models.html">
+   Hybrid discrete/continuous SSMs
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="pitman_koopman_darmois_exponential_family_mle.html">
+   Exponential family sufficient statistics
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="generalized_linear_mixed_models.html">
+   Generalized linear mixed models
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="inference_in_directed_graphical_models.html">
+   Inference
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="affine_function.html">
+   Affine function
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="conditional_independence_properties_of_directed_graphical_models.html">
+   Conditional independence
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="joint_gaussian_inference.html">
+   Inference in joint Gaussian distribution
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="gaussian_process_regression.html">
+   Gaussian Process Regression
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="bayesian_statistics.html">
+   Bayesian Statistics
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="bayesian_statistics.html#finding-the-posterior-distribution-inference">
+   Finding the posterior distribution (Inference)
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="bayesian_statistics.html#model-averaging">
+   Model averaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="bayesian_statistics.html#model-selection">
+   Model selection
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="bayesian_statistics.html#posterior-predictive-distribution">
+   Posterior predictive distribution
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="hidden_markov_models.html">
+   Hidden Markov models
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="lasso_optimality_conditions.html">
+   Optimality conditions for the lasso
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="exponential_family.html">
+   Exponential family
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="line_search.html">
+   Line search
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="line_search.html#approximate-line-search">
+   Approximate Line search
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="learning_in_state_space_models.html">
+   Learning for LG-SSM
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="poisson_regression.html">
+   Poison regression
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="bayes_biliard.html">
+   Bayes Biliard
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="markov_random_fields.html">
+   Markov random fileds (Undirected graphical models (UGM))
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="markov_random_fields.html#examples">
+   <span class="xref myst">
+    Examples
+   </span>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="markov_random_fields.html#learning">
+   Learning
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="beta_function.html">
+   Beta function
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="beta_function.html#gama-function">
+   Gama function
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="least_angle_regression_and_shrinkage.html">
+   LARS (homotopy methods)
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="empirical_distribution.html">
+   Empirical Distribution
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="empirical_distribution.html#empirical-cdf">
+   Empirical CDF
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="quadratic_to_linear_discriminant_analysis.html">
+   Qda to LDA
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="coordinate_descent.html">
+   Coordinate descent
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="gaussian_discriminant_analysis.html">
+   Gaussian discriminant Analysis
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="beta_binomial.html">
+   Beta binomial model
+  </a>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/notes/directed_vs_undirected_graphical_models.md"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.md</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+        <!-- Source interaction buttons -->
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="directed-vs-undirected-graphical-models">
+<h1>Directed vs undirected graphical models<a class="headerlink" href="#directed-vs-undirected-graphical-models" title="Permalink to this headline">¶</a></h1>
+<p>We cannot say that one is more powerfull than the other. Since there are some CI relationships that can be modeled by a DGM, but nod a UGM. An example is:</p>
+<p><span class="math notranslate nohighlight">\(A \rightarrow C \leftarrow B\)</span> where <span class="math notranslate nohighlight">\(A \perp B\)</span> but not <span class="math notranslate nohighlight">\(A \cancel{\perp} B | C\)</span></p>
+<p><span class="math notranslate nohighlight">\(A - C -B\)</span> where <span class="math notranslate nohighlight">\(A \perp B | C\)</span> but <span class="math notranslate nohighlight">\(A \cancel{\perp} B\)</span></p>
+<p>In general the CI properties in UGMs are monotonic, in the following sense:</p>
+<div class="math notranslate nohighlight">
+\[A \perp B |C \Rightarrow A \perp B | (C \cup D)​\]</div>
+<p>But in DGMs, CI properties can be non-monotonic, since conditioning on extra variables can eliminate conditional independence due explaining away.</p>
+<p>Some distributions can be perfectly modeled by either a DGM or a UGM; the resulting graphs are called <strong>decomposable</strong> or <strong>cordal</strong>. Roughly speaking, this means that if we collapse together all the variables in each maximal clique, to make “mega variable”, the resulting graph will be a tree.</p>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./notes"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="adam.html" title="previous page">Adam (adaptive moment estimation method )</a>
+    <a class='right-next' id="next-link" href="absolute_median_deviation.html" title="next page">MAD</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Marek Barak<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="../_static/js/index.3da636dd464baa7582d2.js"></script>
+
+
+    
+  </body>
+</html>
