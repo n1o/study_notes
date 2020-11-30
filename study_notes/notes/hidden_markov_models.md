@@ -28,7 +28,7 @@ The result is similar to a Gaussian mixture model, expect the cluster membership
 
 The essence of Hidden Markov models that we do not observe the true state of the system perfectly. Hence we can break the model into 2 parts, a visible state and a hidden state. Where we the hidden state is modeled as a markov chain. 
 
-## [Infference in HMMs]()
+## [Infference in HMMs](infference_in_hidden_markov_models.md)
 
 We now discuss how to infer the hidden state sequence of an HMM, assuming the parameters are known.
 
