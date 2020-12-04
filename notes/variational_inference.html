@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Bayesian Statistics &#8212; study-notes</title>
+    <title>Variational inference &#8212; study-notes</title>
     
   <link rel="stylesheet" href="../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
 
@@ -57,8 +57,6 @@
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Hidden Markov models" href="hidden_markov_models.html" />
-    <link rel="prev" title="Gaussian Process Regression" href="gaussian_process_regression.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -95,7 +93,7 @@
   </a>
  </li>
 </ul>
-<ul class="current nav sidenav_l1">
+<ul class="nav sidenav_l1">
  <li class="toctree-l1">
   <a class="reference internal" href="logistic_regression.html">
    Logistic regression
@@ -1735,28 +1733,28 @@
    Gaussian Process Regression
   </a>
  </li>
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
+ <li class="toctree-l1">
+  <a class="reference internal" href="bayesian_statistics.html">
    Bayesian Statistics
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="#finding-the-posterior-distribution-inference">
+  <a class="reference internal" href="bayesian_statistics.html#finding-the-posterior-distribution-inference">
    Finding the posterior distribution (Inference)
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="#model-averaging">
+  <a class="reference internal" href="bayesian_statistics.html#model-averaging">
    Model averaging
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="#model-selection">
+  <a class="reference internal" href="bayesian_statistics.html#model-selection">
    Model selection
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="#posterior-predictive-distribution">
+  <a class="reference internal" href="bayesian_statistics.html#posterior-predictive-distribution">
    Posterior predictive distribution
   </a>
  </li>
@@ -1902,7 +1900,7 @@
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../_sources/notes/bayesian_statistics.md"><button type="button"
+        <a class="dropdown-buttons" href="../_sources/notes/variational_inference.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.md</button></a>
         <!-- Download PDF via print -->
@@ -1927,60 +1925,6 @@
     <!-- Table of contents -->
     <div class="d-none d-md-block col-md-2 bd-toc show">
         
-        <div class="tocsection onthispage pt-5 pb-3">
-            <i class="fas fa-list"></i> Contents
-        </div>
-        <nav id="bd-toc-nav">
-            <ul class="nav section-nav flex-column">
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#">
-   Bayesian Statistics
-  </a>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#finding-the-posterior-distribution-inference">
-   Finding the posterior distribution (Inference)
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#analytical-solution-using-conjugate-priors">
-     Analytical solution using conjugate priors
-    </a>
-   </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#markov-chain-monte-carlo">
-     Markov chain monte carlo
-    </a>
-   </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#variational-approximation-inference">
-     <span class="xref myst">
-      Variational approximation
-     </span>
-     (Inference)
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#model-averaging">
-   Model averaging
-  </a>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#model-selection">
-   Model selection
-  </a>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#posterior-predictive-distribution">
-   Posterior predictive distribution
-  </a>
- </li>
-</ul>
-
-        </nav>
-        
     </div>
 </div>
     <div id="main-content" class="row">
@@ -1988,60 +1932,47 @@
         
               <div>
                 
-  <div class="section" id="bayesian-statistics">
-<h1>Bayesian Statistics<a class="headerlink" href="#bayesian-statistics" title="Permalink to this headline">¶</a></h1>
-<p>The main goal of Bayesian statistics is finding the <a class="reference internal" href="posterior_distribution.html"><span class="doc std std-doc">posterior distribution</span></a>. That is the distribution of parameteres of interest given the data.</p>
-<div class="math notranslate nohighlight">
-\[
-p(\theta|D)
-\]</div>
-<p>To find this distribution we must make an couple of assumptions.</p>
-<ol class="simple">
-<li><p>We describe the data given the parameters <span class="math notranslate nohighlight">\(p(D|\theta)\)</span> this is commonly known as <em>likelihood</em></p></li>
-<li><p>Express our belief about the paremters <span class="math notranslate nohighlight">\(p(\theta)\)</span> his is known as <em>prior</em></p></li>
-</ol>
-<p>Together this forms the following <a class="reference internal" href="bayes_rule.html"><span class="doc std std-doc">equation</span></a>:</p>
-<div class="math notranslate nohighlight">
-\[ \begin{align}\begin{aligned}\begin{split}
-p(\theta|D) \propto p(D|\theta) p(\theta) \\\end{split}\\p(\theta|D) =  \frac{p(D|\theta)p(\theta)}{p(D)}
-\end{aligned}\end{align} \]</div>
-<p>The later equation contains an aditional term:</p>
-<div class="math notranslate nohighlight">
-\[p(D) = \int_{\theta} p(D|\theta)p(\theta)\]</div>
-<p>This is aloso called the <a class="reference internal" href="computing_evidence.html"><span class="doc std std-doc"><strong>evidence</strong></span></a> and it is what makes Bayesian statistics hard! Since calculating the integral is notrivial.</p>
-</div>
-<div class="section" id="finding-the-posterior-distribution-inference">
-<h1>Finding the posterior distribution (Inference)<a class="headerlink" href="#finding-the-posterior-distribution-inference" title="Permalink to this headline">¶</a></h1>
-<p>There are multiple approaches how to find <span class="math notranslate nohighlight">\(p(\theta|D)\)</span> depending if we want an exact or approximate solution:</p>
-<div class="section" id="analytical-solution-using-conjugate-priors">
-<h2>Analytical solution using conjugate priors<a class="headerlink" href="#analytical-solution-using-conjugate-priors" title="Permalink to this headline">¶</a></h2>
-<p>Computing <span class="math notranslate nohighlight">\(p(\theta|D)\)</span> can be nontrivial, but for some cases it can be achieved analyticaly. We require that we choose an <a class="reference internal" href="conjugate_prior.html"><span class="doc std std-doc">conjugate priors</span></a> to an likelihood.</p>
-</div>
-<div class="section" id="markov-chain-monte-carlo">
-<h2>Markov chain monte carlo<a class="headerlink" href="#markov-chain-monte-carlo" title="Permalink to this headline">¶</a></h2>
-<p>//TODO MCMC</p>
-</div>
-<div class="section" id="variational-approximation-inference">
-<h2><a class="reference internal" href="variational_inference.html"><span class="doc std std-doc">Variational approximation</span></a> (Inference)<a class="headerlink" href="#variational-approximation-inference" title="Permalink to this headline">¶</a></h2>
+  <div class="section" id="variational-inference">
+<h1>Variational inference<a class="headerlink" href="#variational-inference" title="Permalink to this headline">¶</a></h1>
 <p>We try to approximate the posterior using a distribution from tractable family.</p>
 <div class="math notranslate nohighlight">
 \[
 p(\theta|D) \approx q(\theta)
 \]</div>
-<p>We want this approximation to be tight ass possible.</p>
-</div>
-</div>
-<div class="section" id="model-averaging">
-<h1>Model averaging<a class="headerlink" href="#model-averaging" title="Permalink to this headline">¶</a></h1>
-<p>//TODO Model averagings</p>
-</div>
-<div class="section" id="model-selection">
-<h1>Model selection<a class="headerlink" href="#model-selection" title="Permalink to this headline">¶</a></h1>
-<p>Sometimes we need to choose the <a class="reference internal" href="bayesian_model_selection.html"><span class="doc std std-doc">best model</span></a></p>
-</div>
-<div class="section" id="posterior-predictive-distribution">
-<h1>Posterior predictive distribution<a class="headerlink" href="#posterior-predictive-distribution" title="Permalink to this headline">¶</a></h1>
-<p>The posterior is our belief about the world. We can test if our belief is justified if it manages to predict observed quantities. By drawing from the posterior we get the <a class="reference internal" href="posterior_predictive_distribution.html"><span class="doc std std-doc">posterior predicitve distribution</span></a></p>
+<p>We assume that <span class="math notranslate nohighlight">\(q\)</span> has some free parameters that we can optimize, to make the approximation as tight as possible.</p>
+<p>To do this we usually minimize the KL divergence:</p>
+<div class="math notranslate nohighlight">
+\[
+KL(p^*||q) = \sum_x p^*(x) \log \frac{p^*(x)}{q(x)}
+\]</div>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(p^*(x)\)</span> is our posterior distribution.</p></li>
+</ul>
+<p>This is hard to compute since the expectation <span class="math notranslate nohighlight">\(\sum_x p^*(x)\)</span> is not tractable. Instead we work with the <strong>reverse KL divergence</strong></p>
+<div class="math notranslate nohighlight">
+\[
+KL(q||p^*) = \sum_x q(x) \log \frac{q(x)}{p^*(x)}
+\]</div>
+<p>If we choose <span class="math notranslate nohighlight">\(q\)</span> right this is tractable. But evaluating <span class="math notranslate nohighlight">\(p^*(x) = p(x|D)\)</span> pointwise is hard, since it requires to evaluate the normalization contant <span class="math notranslate nohighlight">\(Z = p(D)\)</span>. We have to use the unnormalized distribution:</p>
+<div class="math notranslate nohighlight">
+\[
+\tilde{p}(x) = p^*(x)Z
+\]</div>
+<p>The objective function becomes:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+J(q) = KL(q||\tilde{p}) \\ 
+= \sum_x q(x) \log \frac{q(x)}{Zp^*(x)} \\ 
+= \sum_x q(x) \log \frac{q(x)}{p^*(x)} - log Z \\
+= KL(q||p^*) - \log Z
+\end{split}\]</div>
+<p>Here Z is an constant, thus by minimizing <span class="math notranslate nohighlight">\(J(q)\)</span> we will force q to become close to <span class="math notranslate nohighlight">\(p^*\)</span>.</p>
+<p>KL divergence is nonnegative, thus <span class="math notranslate nohighlight">\(J(q)\)</span> can be viewed as an <strong>upper bound on the NLL(negative log likelihood)</strong>. Alternatively we can view it as <a class="reference internal" href="variational_free_energy.html"><span class="doc std std-doc">variational free energy</span></a>.</p>
+<div class="math notranslate nohighlight">
+\[
+L(q) = -J(q) = -KL(q||p^*) + \log Z \le \log Z = \log p(D)
+\]</div>
+<p>To get the thightest lowerbound we set <span class="math notranslate nohighlight">\(q = p^*\)</span></p>
 </div>
 
     <script type="text/x-thebe-config">
@@ -2072,8 +2003,6 @@ p(\theta|D) \approx q(\theta)
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="gaussian_process_regression.html" title="previous page">Gaussian Process Regression</a>
-    <a class='right-next' id="next-link" href="hidden_markov_models.html" title="next page">Hidden Markov models</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">

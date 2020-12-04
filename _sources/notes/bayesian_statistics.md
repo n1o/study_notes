@@ -40,8 +40,14 @@ Computing $p(\theta|D)$ can be nontrivial, but for some cases it can be achieved
 
 ## Markov chain monte carlo
 //TODO MCMC
-## Variational approximation (Inference)
-//TODO VI
+## [Variational approximation](variational_inference.md) (Inference)
+We try to approximate the posterior using a distribution from tractable family. 
+
+$$
+p(\theta|D) \approx q(\theta)
+$$
+
+We want this approximation to be tight ass possible.
 # Model averaging
 //TODO Model averagings
 
