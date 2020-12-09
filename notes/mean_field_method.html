@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Variational inference &#8212; study-notes</title>
+    <title>Mean filed method &#8212; study-notes</title>
     
   <link rel="stylesheet" href="../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
 
@@ -1900,7 +1900,7 @@
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../_sources/notes/variational_inference.md"><button type="button"
+        <a class="dropdown-buttons" href="../_sources/notes/mean_field_method.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.md</button></a>
         <!-- Download PDF via print -->
@@ -1931,10 +1931,13 @@
         <nav id="bd-toc-nav">
             <ul class="nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#mean-field-method">
-   <span class="xref myst">
-    Mean field method
-   </span>
+  <a class="reference internal nav-link" href="#derivation-of-the-mean-filed-update-equation">
+   Derivation of the mean filed update equation
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#structured-mean-field">
+   Structured mean field
   </a>
  </li>
 </ul>
@@ -1948,55 +1951,39 @@
         
               <div>
                 
-  <div class="section" id="variational-inference">
-<h1>Variational inference<a class="headerlink" href="#variational-inference" title="Permalink to this headline">¶</a></h1>
-<p>We try to approximate the posterior using a distribution from tractable family.</p>
-<div class="math notranslate nohighlight">
-\[
-p(\theta|D) \approx q(\theta)
-\]</div>
-<p>We assume that <span class="math notranslate nohighlight">\(q\)</span> has some free parameters that we can optimize, to make the approximation as tight as possible.</p>
-<p>To do this we usually minimize the KL divergence:</p>
-<div class="math notranslate nohighlight">
-\[
-KL(p^*||q) = \sum_x p^*(x) \log \frac{p^*(x)}{q(x)}
-\]</div>
-<ul class="simple">
-<li><p><span class="math notranslate nohighlight">\(p^*(x)\)</span> is our posterior distribution.</p></li>
-</ul>
-<p>This is hard to compute since the expectation <span class="math notranslate nohighlight">\(\sum_x p^*(x)\)</span> is not tractable. Instead we work with the <a class="reference internal" href="forward_vs_reverse_kl_divergence.html"><span class="doc std std-doc">reverse KL divergence</span></a></p>
-<div class="math notranslate nohighlight">
-\[
-KL(q||p^*) = \sum_x q(x) \log \frac{q(x)}{p^*(x)}
-\]</div>
-<p>If we choose <span class="math notranslate nohighlight">\(q\)</span> right this is tractable. But evaluating <span class="math notranslate nohighlight">\(p^*(x) = p(x|D)\)</span> pointwise is hard, since it requires to evaluate the normalization contant <span class="math notranslate nohighlight">\(Z = p(D)\)</span>. We have to use the unnormalized distribution:</p>
-<div class="math notranslate nohighlight">
-\[
-\tilde{p}(x) = p^*(x)Z
-\]</div>
-<p>The objective function becomes:</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}
-J(q) = KL(q||\tilde{p}) \\ 
-= \sum_x q(x) \log \frac{q(x)}{Zp^*(x)} \\ 
-= \sum_x q(x) \log \frac{q(x)}{p^*(x)} - log Z \\
-= KL(q||p^*) - \log Z
-\end{split}\]</div>
-<p>Here Z is an constant, thus by minimizing <span class="math notranslate nohighlight">\(J(q)\)</span> we will force q to become close to <span class="math notranslate nohighlight">\(p^*\)</span>.</p>
-<p>KL divergence is nonnegative, thus <span class="math notranslate nohighlight">\(J(q)\)</span> can be viewed as an <strong>upper bound on the NLL(negative log likelihood)</strong>. Alternatively we can view it as <a class="reference internal" href="variational_free_energy.html"><span class="doc std std-doc">variational free energy</span></a>.</p>
-<div class="math notranslate nohighlight">
-\[
-L(q) = -J(q) = -KL(q||p^*) + \log Z \le \log Z = \log p(D)
-\]</div>
-<p>To get the thightest lowerbound we set <span class="math notranslate nohighlight">\(q = p^*\)</span></p>
-<div class="section" id="mean-field-method">
-<h2><a class="reference internal" href="mean_field_method.html"><span class="doc std std-doc">Mean field method</span></a><a class="headerlink" href="#mean-field-method" title="Permalink to this headline">¶</a></h2>
+  <div class="section" id="mean-filed-method">
+<h1>Mean filed method<a class="headerlink" href="#mean-filed-method" title="Permalink to this headline">¶</a></h1>
 <p>One of the most polular variational inference methods. It assumes that the posterior is fully factorized approximation of the form:</p>
 <div class="math notranslate nohighlight">
 \[q(x) = \prod_{i=1} ^D q_i(x)\]</div>
 <p>Our goal is to solve this optimization problem:</p>
 <div class="math notranslate nohighlight">
 \[min_{q_1, \cdots, q_D } KL(q||p) \]</div>
+<p>Here we optimize over the parameters of each marginal distribution <span class="math notranslate nohighlight">\(q_i\)</span>. This can be solved using <a class="reference internal" href="coordinate_descent.html"><span class="doc std std-doc">coordinate descent method</span></a>. Where at each step we make the following update:</p>
+<div class="math notranslate nohighlight">
+\[ \log q_j(x_j) = E_{-q_j}[\log \tilde{p}(x)] + const ​\]</div>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\tilde{p}(x) = p(x,D)\)</span> is the unnormalized posterior</p></li>
+<li><p><span class="math notranslate nohighlight">\(E_{-q_j} [f(x)]\)</span> is a notation that we take expecation over <span class="math notranslate nohighlight">\(f(x)\)</span>, with respect all the variables except <span class="math notranslate nohighlight">\(x_j\)</span></p></li>
+<li><p>Here at each update step we replace the neighboring values by their mean value, hence the name mean field.</p></li>
+</ul>
+<p>For example if we have 3 variables:
+$<span class="math notranslate nohighlight">\(
+E_{-q_2}[f(x)] = \sum_{x_1}\sum_{x_2}q(x_1)q_3(x_3)f(x_1, x_2, x_3)
+\)</span><span class="math notranslate nohighlight">\(
+When we update \)</span>q_j<span class="math notranslate nohighlight">\( we only need to reason about the variables which share a factor with \)</span>x_j$, the other terms get absrobed into the constant term.</p>
+<p>Mean field method can be used to infer discrete or continuous latent quantities, using variety of parametric forms for <span class="math notranslate nohighlight">\(q_i\)</span>.</p>
+<div class="section" id="derivation-of-the-mean-filed-update-equation">
+<h2>Derivation of the mean filed update equation<a class="headerlink" href="#derivation-of-the-mean-filed-update-equation" title="Permalink to this headline">¶</a></h2>
+<p>//TODO prove this</p>
+</div>
+<div class="section" id="structured-mean-field">
+<h2>Structured mean field<a class="headerlink" href="#structured-mean-field" title="Permalink to this headline">¶</a></h2>
+<p>Assuming that all the variables are independent in the posterior is a very strong assumeption that can lead to poor results. Sometimes we can exploit <strong>tractable substructures</strong> in our problem, that we can efficiently handle some kind of dependencies. This is called <strong>strucutred mean field</strong> approach. This approach is the same as before, except we group sets of variables together and we update them simultatneously. (We treet all the variables of a group as a single “mega variable”).</p>
+<p>Examples:</p>
+<ul class="simple">
+<li><p>Factorial HMM</p></li>
+</ul>
 </div>
 </div>
 

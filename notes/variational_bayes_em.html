@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Variational inference &#8212; study-notes</title>
+    <title>Variational bayes EM &#8212; study-notes</title>
     
   <link rel="stylesheet" href="../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
 
@@ -1900,7 +1900,7 @@
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../_sources/notes/variational_inference.md"><button type="button"
+        <a class="dropdown-buttons" href="../_sources/notes/variational_bayes_em.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.md</button></a>
         <!-- Download PDF via print -->
@@ -1925,22 +1925,6 @@
     <!-- Table of contents -->
     <div class="d-none d-md-block col-md-2 bd-toc show">
         
-        <div class="tocsection onthispage pt-5 pb-3">
-            <i class="fas fa-list"></i> Contents
-        </div>
-        <nav id="bd-toc-nav">
-            <ul class="nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#mean-field-method">
-   <span class="xref myst">
-    Mean field method
-   </span>
-  </a>
- </li>
-</ul>
-
-        </nav>
-        
     </div>
 </div>
     <div id="main-content" class="row">
@@ -1948,56 +1932,19 @@
         
               <div>
                 
-  <div class="section" id="variational-inference">
-<h1>Variational inference<a class="headerlink" href="#variational-inference" title="Permalink to this headline">¶</a></h1>
-<p>We try to approximate the posterior using a distribution from tractable family.</p>
+  <div class="section" id="variational-bayes-em">
+<h1>Variational bayes EM<a class="headerlink" href="#variational-bayes-em" title="Permalink to this headline">¶</a></h1>
+<p>If we consider a model of the form <span class="math notranslate nohighlight">\(z_i \rightarrow x_i \leftarrow \theta\)</span>. This includes mixture models, PCA, HMM, etc. There are two kind of unknonws: parameters <span class="math notranslate nohighlight">\(\theta\)</span> and latent variables <span class="math notranslate nohighlight">\(z_i\)</span>.</p>
+<p>It is common to use EM to fit this models, where in E step we infer the posterior over the latent variables <span class="math notranslate nohighlight">\(p(z_i| x_i, \theta)\)</span> and in the M step we compute a point estimate of the parameter <span class="math notranslate nohighlight">\(\theta\)</span>. We can justify this by assuming that the posterior uncertainity in <span class="math notranslate nohighlight">\(\theta\)</span> is in general smaller than in <span class="math notranslate nohighlight">\(z_i\)</span>, since <span class="math notranslate nohighlight">\(\theta\)</span> is informed by all N data cases, whereas <span class="math notranslate nohighlight">\(z_i\)</span> is only informed by <span class="math notranslate nohighlight">\(x\)</span>, this makes MAP estimation of <span class="math notranslate nohighlight">\(\theta\)</span> more reasonable than MAP estimate of <span class="math notranslate nohighlight">\(z_i\)</span></p>
+<p>Variational Bayes provides a way to be “more Bayesian”, by modelling uncertainity in the parameters <span class="math notranslate nohighlight">\(\theta\)</span> as well in the latent variables <span class="math notranslate nohighlight">\(z_i\)</span>, at a computational cost that is essentially the same as EM.</p>
+<p>This method is known as <strong>variational Bayes EM (VBEM)</strong>. The basic idea is to use mean field, where the approximate posterior has the form:</p>
 <div class="math notranslate nohighlight">
-\[
-p(\theta|D) \approx q(\theta)
-\]</div>
-<p>We assume that <span class="math notranslate nohighlight">\(q\)</span> has some free parameters that we can optimize, to make the approximation as tight as possible.</p>
-<p>To do this we usually minimize the KL divergence:</p>
-<div class="math notranslate nohighlight">
-\[
-KL(p^*||q) = \sum_x p^*(x) \log \frac{p^*(x)}{q(x)}
-\]</div>
-<ul class="simple">
-<li><p><span class="math notranslate nohighlight">\(p^*(x)\)</span> is our posterior distribution.</p></li>
-</ul>
-<p>This is hard to compute since the expectation <span class="math notranslate nohighlight">\(\sum_x p^*(x)\)</span> is not tractable. Instead we work with the <a class="reference internal" href="forward_vs_reverse_kl_divergence.html"><span class="doc std std-doc">reverse KL divergence</span></a></p>
-<div class="math notranslate nohighlight">
-\[
-KL(q||p^*) = \sum_x q(x) \log \frac{q(x)}{p^*(x)}
-\]</div>
-<p>If we choose <span class="math notranslate nohighlight">\(q\)</span> right this is tractable. But evaluating <span class="math notranslate nohighlight">\(p^*(x) = p(x|D)\)</span> pointwise is hard, since it requires to evaluate the normalization contant <span class="math notranslate nohighlight">\(Z = p(D)\)</span>. We have to use the unnormalized distribution:</p>
-<div class="math notranslate nohighlight">
-\[
-\tilde{p}(x) = p^*(x)Z
-\]</div>
-<p>The objective function becomes:</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}
-J(q) = KL(q||\tilde{p}) \\ 
-= \sum_x q(x) \log \frac{q(x)}{Zp^*(x)} \\ 
-= \sum_x q(x) \log \frac{q(x)}{p^*(x)} - log Z \\
-= KL(q||p^*) - \log Z
-\end{split}\]</div>
-<p>Here Z is an constant, thus by minimizing <span class="math notranslate nohighlight">\(J(q)\)</span> we will force q to become close to <span class="math notranslate nohighlight">\(p^*\)</span>.</p>
-<p>KL divergence is nonnegative, thus <span class="math notranslate nohighlight">\(J(q)\)</span> can be viewed as an <strong>upper bound on the NLL(negative log likelihood)</strong>. Alternatively we can view it as <a class="reference internal" href="variational_free_energy.html"><span class="doc std std-doc">variational free energy</span></a>.</p>
-<div class="math notranslate nohighlight">
-\[
-L(q) = -J(q) = -KL(q||p^*) + \log Z \le \log Z = \log p(D)
-\]</div>
-<p>To get the thightest lowerbound we set <span class="math notranslate nohighlight">\(q = p^*\)</span></p>
-<div class="section" id="mean-field-method">
-<h2><a class="reference internal" href="mean_field_method.html"><span class="doc std std-doc">Mean field method</span></a><a class="headerlink" href="#mean-field-method" title="Permalink to this headline">¶</a></h2>
-<p>One of the most polular variational inference methods. It assumes that the posterior is fully factorized approximation of the form:</p>
-<div class="math notranslate nohighlight">
-\[q(x) = \prod_{i=1} ^D q_i(x)\]</div>
-<p>Our goal is to solve this optimization problem:</p>
-<div class="math notranslate nohighlight">
-\[min_{q_1, \cdots, q_D } KL(q||p) \]</div>
-</div>
+\[p(\theta, z_{1:N}|D)  \approx q(\theta) q(z) = q(\theta) \prod_i q(z_i)\]</div>
+<p>The first factorization, between <span class="math notranslate nohighlight">\(\theta\)</span> and <span class="math notranslate nohighlight">\(z_i\)</span> is crutial assumption to make the algorithm tractable. The second factorization follows from the model, since the latent variables are iid conditional on <span class="math notranslate nohighlight">\(\theta\)</span>.</p>
+<p>In VBEM we alternate between updating <span class="math notranslate nohighlight">\(q(z_i|D)\)</span> (the variational E step) and updating <span class="math notranslate nohighlight">\(q(\theta|D)\)</span> (the variational M step). We can recover standard EM from VBEM by approximating the parameter posterior using a delta function <span class="math notranslate nohighlight">\(q(\theta|D) = \delta_{\hat{\theta}}(\theta)\)</span>.</p>
+<p><strong>Variational E step</strong> is similar to a standard E step, except instead of plugging in a MAP estimate of the parameters and computing <span class="math notranslate nohighlight">\(p(z_i|D,\theta)\)</span> we need to average over the parameters.</p>
+<p><strong>Variational M step</strong> is similar to standard M step, except instead of computing a point estimate of the parameters, we update the hyperparameters, using the expected sufficient statistics.</p>
+<p>The principle advantage of VBEM over regular EM is that by marginalizing out the hyperparameters, we can compute a lowerbound on the marignal likelihood, which can be used fro model selection.</p>
 </div>
 
     <script type="text/x-thebe-config">

@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Variational inference &#8212; study-notes</title>
+    <title>Variational bayes &#8212; study-notes</title>
     
   <link rel="stylesheet" href="../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
 
@@ -1900,7 +1900,7 @@
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../_sources/notes/variational_inference.md"><button type="button"
+        <a class="dropdown-buttons" href="../_sources/notes/variational_bayes.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.md</button></a>
         <!-- Download PDF via print -->
@@ -1931,10 +1931,13 @@
         <nav id="bd-toc-nav">
             <ul class="nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#mean-field-method">
-   <span class="xref myst">
-    Mean field method
-   </span>
+  <a class="reference internal nav-link" href="#lower-bound">
+   Lower bound
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#compared-to-eb">
+   Compared to EB
   </a>
  </li>
 </ul>
@@ -1948,55 +1951,26 @@
         
               <div>
                 
-  <div class="section" id="variational-inference">
-<h1>Variational inference<a class="headerlink" href="#variational-inference" title="Permalink to this headline">¶</a></h1>
-<p>We try to approximate the posterior using a distribution from tractable family.</p>
+  <div class="section" id="variational-bayes">
+<h1>Variational bayes<a class="headerlink" href="#variational-bayes" title="Permalink to this headline">¶</a></h1>
+<p>So far we were infering latent varialbes <span class="math notranslate nohighlight">\(z_i\)</span> assuming the parameters <span class="math notranslate nohighlight">\(\theta\)</span> of the model are known. No we want to infer the parameters themselves. If we make a fully factorized approximation: <span class="math notranslate nohighlight">\(p(\theta|D) \approx \prod_k q(\theta_k)\)</span>. This method is known as <strong>variational bayes (VB)</strong> . Unfortunately deriving VB algorithms can be heavy on algebra, however, the resulting methods are usualy fast as MAP estimations, but enjoy the benefits of Bayesian approach.</p>
+<p>If we want to infer booth latent variables and parameters, and we make an approximation of the form <span class="math notranslate nohighlight">\(p(\theta, z_{1:N} |D) \approx q(\theta) \prod_{i}q_i(z_i)\)</span> we get a method known as <strong>variational bayes EM</strong>.</p>
+<div class="section" id="lower-bound">
+<h2>Lower bound<a class="headerlink" href="#lower-bound" title="Permalink to this headline">¶</a></h2>
+<p>In VB, we are maximing <span class="math notranslate nohighlight">\(L(q)\)</span>, which is a lower bound on the log marginal likelihood:</p>
 <div class="math notranslate nohighlight">
-\[
-p(\theta|D) \approx q(\theta)
-\]</div>
-<p>We assume that <span class="math notranslate nohighlight">\(q\)</span> has some free parameters that we can optimize, to make the approximation as tight as possible.</p>
-<p>To do this we usually minimize the KL divergence:</p>
-<div class="math notranslate nohighlight">
-\[
-KL(p^*||q) = \sum_x p^*(x) \log \frac{p^*(x)}{q(x)}
-\]</div>
-<ul class="simple">
-<li><p><span class="math notranslate nohighlight">\(p^*(x)\)</span> is our posterior distribution.</p></li>
-</ul>
-<p>This is hard to compute since the expectation <span class="math notranslate nohighlight">\(\sum_x p^*(x)\)</span> is not tractable. Instead we work with the <a class="reference internal" href="forward_vs_reverse_kl_divergence.html"><span class="doc std std-doc">reverse KL divergence</span></a></p>
-<div class="math notranslate nohighlight">
-\[
-KL(q||p^*) = \sum_x q(x) \log \frac{q(x)}{p^*(x)}
-\]</div>
-<p>If we choose <span class="math notranslate nohighlight">\(q\)</span> right this is tractable. But evaluating <span class="math notranslate nohighlight">\(p^*(x) = p(x|D)\)</span> pointwise is hard, since it requires to evaluate the normalization contant <span class="math notranslate nohighlight">\(Z = p(D)\)</span>. We have to use the unnormalized distribution:</p>
-<div class="math notranslate nohighlight">
-\[
-\tilde{p}(x) = p^*(x)Z
-\]</div>
-<p>The objective function becomes:</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}
-J(q) = KL(q||\tilde{p}) \\ 
-= \sum_x q(x) \log \frac{q(x)}{Zp^*(x)} \\ 
-= \sum_x q(x) \log \frac{q(x)}{p^*(x)} - log Z \\
-= KL(q||p^*) - \log Z
-\end{split}\]</div>
-<p>Here Z is an constant, thus by minimizing <span class="math notranslate nohighlight">\(J(q)\)</span> we will force q to become close to <span class="math notranslate nohighlight">\(p^*\)</span>.</p>
-<p>KL divergence is nonnegative, thus <span class="math notranslate nohighlight">\(J(q)\)</span> can be viewed as an <strong>upper bound on the NLL(negative log likelihood)</strong>. Alternatively we can view it as <a class="reference internal" href="variational_free_energy.html"><span class="doc std std-doc">variational free energy</span></a>.</p>
-<div class="math notranslate nohighlight">
-\[
-L(q) = -J(q) = -KL(q||p^*) + \log Z \le \log Z = \log p(D)
-\]</div>
-<p>To get the thightest lowerbound we set <span class="math notranslate nohighlight">\(q = p^*\)</span></p>
-<div class="section" id="mean-field-method">
-<h2><a class="reference internal" href="mean_field_method.html"><span class="doc std std-doc">Mean field method</span></a><a class="headerlink" href="#mean-field-method" title="Permalink to this headline">¶</a></h2>
-<p>One of the most polular variational inference methods. It assumes that the posterior is fully factorized approximation of the form:</p>
-<div class="math notranslate nohighlight">
-\[q(x) = \prod_{i=1} ^D q_i(x)\]</div>
-<p>Our goal is to solve this optimization problem:</p>
-<div class="math notranslate nohighlight">
-\[min_{q_1, \cdots, q_D } KL(q||p) \]</div>
+\[L(q) \le \log p(D) = \log \int \int p(D| \mu, \lambda) p(\mu, \lambda) d\mu d \lambda \]</div>
+<p>(this is an example for an univarate Gaussian)</p>
+<p>This lowerbound is usefull for the following reasons:</p>
+<ol class="simple">
+<li><p>It can be used to assess convergence of the algorithm</p></li>
+<li><p>It can be used to assess correctnesss of one’s code (as with EM, if the bound does not increase monotonically, there must be a bug)</p></li>
+<li><p>The bound can be used as an approximation to the marginal likelihood, which can be used for Bayesian model selection.</p></li>
+</ol>
+</div>
+<div class="section" id="compared-to-eb">
+<h2>Compared to EB<a class="headerlink" href="#compared-to-eb" title="Permalink to this headline">¶</a></h2>
+<p>Most of the times VB will give similar results as EB, but the precise behaviour depends on the sample size. If the sample size is small, VB’s estimate of the posterior over models is more diffuse than EB’s, since VB models uncertainity in the hyper-parameters.</p>
 </div>
 </div>
 

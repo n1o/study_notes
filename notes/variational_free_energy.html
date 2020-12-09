@@ -1934,6 +1934,25 @@
                 
   <div class="section" id="variational-free-energy">
 <h1>Variational free energy<a class="headerlink" href="#variational-free-energy" title="Permalink to this headline">¶</a></h1>
+<p>We can express <a class="reference internal" href="variational_inference.html"><span class="doc std std-doc">variational inference</span></a> alternatively as:</p>
+<div class="math notranslate nohighlight">
+\[
+J(q) = KL(q||\tilde{p}) = E_q[\log q(x)] = E_q[-\log \tilde{p}(x)] = -H(q) + E_q[E(x)]
+\]</div>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(E[x] = - \log \tilde{p}(x)\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\tilde{p} = Zp^*(x)\)</span> is the unnormalized posterior distribution</p></li>
+</ul>
+<p>The equation is the expected energy minus the entropy of the system.
+In statistical physics <span class="math notranslate nohighlight">\(J(q)\)</span> is called the <strong>variational free energy (Helmholtz free energy)</strong>. It is called free because the variable x is free to vary, rather than being fixed. The variational free energy is a function of a distribution q, whereas the regular energy is a function of the state vector x.</p>
+<p>Alternatively it can be written as:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+J(q) = E_q(\log q(x) - \log p(x)p(D|x)) \\
+= E_q[\log q(x) - \log p(x) = \log p(D|x)] \\
+= E_q[-\log p(D|x)] + KL(q(x) || p(x))
+\end{split}\]</div>
+<p>This is the expected NLL, plus a penalty term that measures how far the approximate posterior is from the exact prior.</p>
 </div>
 
     <script type="text/x-thebe-config">

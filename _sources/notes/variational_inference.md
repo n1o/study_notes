@@ -14,7 +14,7 @@ KL(p^*||q) = \sum_x p^*(x) \log \frac{p^*(x)}{q(x)}
 $$
 * $p^*(x)$ is our posterior distribution.
 
-This is hard to compute since the expectation $\sum_x p^*(x)$ is not tractable. Instead we work with the **reverse KL divergence**
+This is hard to compute since the expectation $\sum_x p^*(x)$ is not tractable. Instead we work with the [reverse KL divergence](forward_vs_reverse_kl_divergence.md)
 
 $$
 KL(q||p^*) = \sum_x q(x) \log \frac{q(x)}{p^*(x)}
@@ -44,3 +44,12 @@ L(q) = -J(q) = -KL(q||p^*) + \log Z \le \log Z = \log p(D)
 $$
 
 To get the thightest lowerbound we set $q = p^*$
+
+## [Mean field method](mean_field_method.md)
+One of the most polular variational inference methods. It assumes that the posterior is fully factorized approximation of the form:
+
+$$q(x) = \prod_{i=1} ^D q_i(x)$$
+
+Our goal is to solve this optimization problem:
+
+$$min_{q_1, \cdots, q_D } KL(q||p) $$

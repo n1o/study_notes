@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Variational inference &#8212; study-notes</title>
+    <title>Forward vs reverse KL divergence &#8212; study-notes</title>
     
   <link rel="stylesheet" href="../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
 
@@ -1900,7 +1900,7 @@
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../_sources/notes/variational_inference.md"><button type="button"
+        <a class="dropdown-buttons" href="../_sources/notes/forward_vs_reverse_kl_divergence.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.md</button></a>
         <!-- Download PDF via print -->
@@ -1931,10 +1931,26 @@
         <nav id="bd-toc-nav">
             <ul class="nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#mean-field-method">
-   <span class="xref myst">
-    Mean field method
+  <a class="reference internal nav-link" href="#reverse-kl-q-p-i-projection-information-projection">
+   Reverse
+   <span class="math notranslate nohighlight">
+    \(KL(q||p)\)
    </span>
+   (I-projection, information projection)
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#forward-kl-p-q-m-projection-moment-projection">
+   Forward
+   <span class="math notranslate nohighlight">
+    \(KL(p||q)\)
+   </span>
+   (M-projection, moment projection)
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#alpha-divergence">
+   Alpha divergence
   </a>
  </li>
 </ul>
@@ -1948,55 +1964,38 @@
         
               <div>
                 
-  <div class="section" id="variational-inference">
-<h1>Variational inference<a class="headerlink" href="#variational-inference" title="Permalink to this headline">¶</a></h1>
-<p>We try to approximate the posterior using a distribution from tractable family.</p>
+  <div class="section" id="forward-vs-reverse-kl-divergence">
+<h1>Forward vs reverse KL divergence<a class="headerlink" href="#forward-vs-reverse-kl-divergence" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference internal" href="kl_divergence.html"><span class="doc std std-doc">KL divergence</span></a> is not symmetric in its arguments, minimizing <span class="math notranslate nohighlight">\(K(q||p)\)</span> wtr <span class="math notranslate nohighlight">\(q\)</span> will give different behaviour than minimizing <span class="math notranslate nohighlight">\(KL(p||q)\)</span>.</p>
+<div class="section" id="reverse-kl-q-p-i-projection-information-projection">
+<h2>Reverse <span class="math notranslate nohighlight">\(KL(q||p)\)</span>  (I-projection, information projection)<a class="headerlink" href="#reverse-kl-q-p-i-projection-information-projection" title="Permalink to this headline">¶</a></h2>
+<p>By definition we have:</p>
+<div class="math notranslate nohighlight">
+\[KL(q||p) = \sum_x q(x) \ln \frac{q(x)}{p(x)} \]</div>
+<p>This is infinite if <span class="math notranslate nohighlight">\(p(x) = 0\)</span> and <span class="math notranslate nohighlight">\(q(x) \ge 0\)</span>. Thus if <span class="math notranslate nohighlight">\(p(x) = 0\)</span> we must ensure <span class="math notranslate nohighlight">\(q(x) = 0\)</span>. We say that the reverse KL is <strong>zero forcing for q.</strong>  Hence <strong>q will typically under-estimatethe support of p</strong>.</p>
+</div>
+<div class="section" id="forward-kl-p-q-m-projection-moment-projection">
+<h2>Forward <span class="math notranslate nohighlight">\(KL(p||q)\)</span> (M-projection, moment projection)<a class="headerlink" href="#forward-kl-p-q-m-projection-moment-projection" title="Permalink to this headline">¶</a></h2>
+<div class="math notranslate nohighlight">
+\[K(p||q) = \sum_x p(x) \ln \frac{p(x)}{q(x)} \]</div>
+<p>This is inifinite if <span class="math notranslate nohighlight">\(q(x) = 0\)</span> and <span class="math notranslate nohighlight">\(p(x) &gt; 0\)</span>. So if <span class="math notranslate nohighlight">\(p(x) &gt; 0\)</span> we must ensure that <span class="math notranslate nohighlight">\(q(x) &gt; 0\)</span>. We say that the forward KL is <strong>zero avoiding for q</strong>. Hence <strong>q will typically over-estimate the support of p</strong>.</p>
+</div>
+<div class="section" id="alpha-divergence">
+<h2>Alpha divergence<a class="headerlink" href="#alpha-divergence" title="Permalink to this headline">¶</a></h2>
+<p>Ofthen if we minimize <span class="math notranslate nohighlight">\(K(q||p)\)</span> where <span class="math notranslate nohighlight">\(q\)</span> is factorized, the result in an approximation that is overconfident.</p>
+<p>We can create a family of divergence measures indexed by a parameter <span class="math notranslate nohighlight">\(\alpha \in R\)</span>. By defining the <strong>alpha divergence</strong> as follows:</p>
 <div class="math notranslate nohighlight">
 \[
-p(\theta|D) \approx q(\theta)
+D_{\alpha}(p||q) = \frac{4}{1 - \alpha^2}(1 - \int p(x)^{(1+\alpha)/2} q(x)^{(1- \alpha)/2})dx
 \]</div>
-<p>We assume that <span class="math notranslate nohighlight">\(q\)</span> has some free parameters that we can optimize, to make the approximation as tight as possible.</p>
-<p>To do this we usually minimize the KL divergence:</p>
+<p>This measure satisfies <span class="math notranslate nohighlight">\(D_{\alpha}(p||q) = 0 \iff p = q\)</span>, but it is not symmetric, hence it is not a metric. <span class="math notranslate nohighlight">\(KL(p||q)\)</span> correspondes to the limit <span class="math notranslate nohighlight">\(\alpha \rightarrow 1\)</span>, whereas <span class="math notranslate nohighlight">\(KL(q||p)\)</span> corresponds to <span class="math notranslate nohighlight">\(\alpha \rightarrow -1\)</span>. When <span class="math notranslate nohighlight">\(\alpha = 0\)</span>, we get a symmetric divergence measure that linearly related to the <strong>Hellinger distance</strong> defined by:</p>
 <div class="math notranslate nohighlight">
 \[
-KL(p^*||q) = \sum_x p^*(x) \log \frac{p^*(x)}{q(x)}
+D_H (p||q) = \int (p(x)^{1/2} - q(x)^{1/2})^2 dx
 \]</div>
 <ul class="simple">
-<li><p><span class="math notranslate nohighlight">\(p^*(x)\)</span> is our posterior distribution.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\sqrt{D_H (p||q)}\)</span> is a valid distance metric.</p></li>
 </ul>
-<p>This is hard to compute since the expectation <span class="math notranslate nohighlight">\(\sum_x p^*(x)\)</span> is not tractable. Instead we work with the <a class="reference internal" href="forward_vs_reverse_kl_divergence.html"><span class="doc std std-doc">reverse KL divergence</span></a></p>
-<div class="math notranslate nohighlight">
-\[
-KL(q||p^*) = \sum_x q(x) \log \frac{q(x)}{p^*(x)}
-\]</div>
-<p>If we choose <span class="math notranslate nohighlight">\(q\)</span> right this is tractable. But evaluating <span class="math notranslate nohighlight">\(p^*(x) = p(x|D)\)</span> pointwise is hard, since it requires to evaluate the normalization contant <span class="math notranslate nohighlight">\(Z = p(D)\)</span>. We have to use the unnormalized distribution:</p>
-<div class="math notranslate nohighlight">
-\[
-\tilde{p}(x) = p^*(x)Z
-\]</div>
-<p>The objective function becomes:</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}
-J(q) = KL(q||\tilde{p}) \\ 
-= \sum_x q(x) \log \frac{q(x)}{Zp^*(x)} \\ 
-= \sum_x q(x) \log \frac{q(x)}{p^*(x)} - log Z \\
-= KL(q||p^*) - \log Z
-\end{split}\]</div>
-<p>Here Z is an constant, thus by minimizing <span class="math notranslate nohighlight">\(J(q)\)</span> we will force q to become close to <span class="math notranslate nohighlight">\(p^*\)</span>.</p>
-<p>KL divergence is nonnegative, thus <span class="math notranslate nohighlight">\(J(q)\)</span> can be viewed as an <strong>upper bound on the NLL(negative log likelihood)</strong>. Alternatively we can view it as <a class="reference internal" href="variational_free_energy.html"><span class="doc std std-doc">variational free energy</span></a>.</p>
-<div class="math notranslate nohighlight">
-\[
-L(q) = -J(q) = -KL(q||p^*) + \log Z \le \log Z = \log p(D)
-\]</div>
-<p>To get the thightest lowerbound we set <span class="math notranslate nohighlight">\(q = p^*\)</span></p>
-<div class="section" id="mean-field-method">
-<h2><a class="reference internal" href="mean_field_method.html"><span class="doc std std-doc">Mean field method</span></a><a class="headerlink" href="#mean-field-method" title="Permalink to this headline">¶</a></h2>
-<p>One of the most polular variational inference methods. It assumes that the posterior is fully factorized approximation of the form:</p>
-<div class="math notranslate nohighlight">
-\[q(x) = \prod_{i=1} ^D q_i(x)\]</div>
-<p>Our goal is to solve this optimization problem:</p>
-<div class="math notranslate nohighlight">
-\[min_{q_1, \cdots, q_D } KL(q||p) \]</div>
 </div>
 </div>
 

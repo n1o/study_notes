@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Variational inference &#8212; study-notes</title>
+    <title>Loopy belief propagation &#8212; study-notes</title>
     
   <link rel="stylesheet" href="../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
 
@@ -1900,7 +1900,7 @@
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../_sources/notes/variational_inference.md"><button type="button"
+        <a class="dropdown-buttons" href="../_sources/notes/loopy_belief_propagation.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.md</button></a>
         <!-- Download PDF via print -->
@@ -1925,22 +1925,6 @@
     <!-- Table of contents -->
     <div class="d-none d-md-block col-md-2 bd-toc show">
         
-        <div class="tocsection onthispage pt-5 pb-3">
-            <i class="fas fa-list"></i> Contents
-        </div>
-        <nav id="bd-toc-nav">
-            <ul class="nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#mean-field-method">
-   <span class="xref myst">
-    Mean field method
-   </span>
-  </a>
- </li>
-</ul>
-
-        </nav>
-        
     </div>
 </div>
     <div id="main-content" class="row">
@@ -1948,56 +1932,11 @@
         
               <div>
                 
-  <div class="section" id="variational-inference">
-<h1>Variational inference<a class="headerlink" href="#variational-inference" title="Permalink to this headline">¶</a></h1>
-<p>We try to approximate the posterior using a distribution from tractable family.</p>
-<div class="math notranslate nohighlight">
-\[
-p(\theta|D) \approx q(\theta)
-\]</div>
-<p>We assume that <span class="math notranslate nohighlight">\(q\)</span> has some free parameters that we can optimize, to make the approximation as tight as possible.</p>
-<p>To do this we usually minimize the KL divergence:</p>
-<div class="math notranslate nohighlight">
-\[
-KL(p^*||q) = \sum_x p^*(x) \log \frac{p^*(x)}{q(x)}
-\]</div>
-<ul class="simple">
-<li><p><span class="math notranslate nohighlight">\(p^*(x)\)</span> is our posterior distribution.</p></li>
-</ul>
-<p>This is hard to compute since the expectation <span class="math notranslate nohighlight">\(\sum_x p^*(x)\)</span> is not tractable. Instead we work with the <a class="reference internal" href="forward_vs_reverse_kl_divergence.html"><span class="doc std std-doc">reverse KL divergence</span></a></p>
-<div class="math notranslate nohighlight">
-\[
-KL(q||p^*) = \sum_x q(x) \log \frac{q(x)}{p^*(x)}
-\]</div>
-<p>If we choose <span class="math notranslate nohighlight">\(q\)</span> right this is tractable. But evaluating <span class="math notranslate nohighlight">\(p^*(x) = p(x|D)\)</span> pointwise is hard, since it requires to evaluate the normalization contant <span class="math notranslate nohighlight">\(Z = p(D)\)</span>. We have to use the unnormalized distribution:</p>
-<div class="math notranslate nohighlight">
-\[
-\tilde{p}(x) = p^*(x)Z
-\]</div>
-<p>The objective function becomes:</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}
-J(q) = KL(q||\tilde{p}) \\ 
-= \sum_x q(x) \log \frac{q(x)}{Zp^*(x)} \\ 
-= \sum_x q(x) \log \frac{q(x)}{p^*(x)} - log Z \\
-= KL(q||p^*) - \log Z
-\end{split}\]</div>
-<p>Here Z is an constant, thus by minimizing <span class="math notranslate nohighlight">\(J(q)\)</span> we will force q to become close to <span class="math notranslate nohighlight">\(p^*\)</span>.</p>
-<p>KL divergence is nonnegative, thus <span class="math notranslate nohighlight">\(J(q)\)</span> can be viewed as an <strong>upper bound on the NLL(negative log likelihood)</strong>. Alternatively we can view it as <a class="reference internal" href="variational_free_energy.html"><span class="doc std std-doc">variational free energy</span></a>.</p>
-<div class="math notranslate nohighlight">
-\[
-L(q) = -J(q) = -KL(q||p^*) + \log Z \le \log Z = \log p(D)
-\]</div>
-<p>To get the thightest lowerbound we set <span class="math notranslate nohighlight">\(q = p^*\)</span></p>
-<div class="section" id="mean-field-method">
-<h2><a class="reference internal" href="mean_field_method.html"><span class="doc std std-doc">Mean field method</span></a><a class="headerlink" href="#mean-field-method" title="Permalink to this headline">¶</a></h2>
-<p>One of the most polular variational inference methods. It assumes that the posterior is fully factorized approximation of the form:</p>
-<div class="math notranslate nohighlight">
-\[q(x) = \prod_{i=1} ^D q_i(x)\]</div>
-<p>Our goal is to solve this optimization problem:</p>
-<div class="math notranslate nohighlight">
-\[min_{q_1, \cdots, q_D } KL(q||p) \]</div>
-</div>
+  <div class="section" id="loopy-belief-propagation">
+<h1>Loopy belief propagation<a class="headerlink" href="#loopy-belief-propagation" title="Permalink to this headline">¶</a></h1>
+<p>It is essentially belief propagation, that is applied to graphs, even if they have loops. This method is simple and ofthen works well in practice, outperforming the mean field.</p>
+<p>Unfortunatelly we have <strong>no guarantees</strong> that if it is applied to loopy graphs, that it will converge.</p>
+<p>An popular version of error correcting code called <strong>turbo codes</strong> (But also low density parity check (LDPC)) can be viewed as an instance of BP applied to a certain king od graph.</p>
 </div>
 
     <script type="text/x-thebe-config">
