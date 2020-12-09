@@ -13,4 +13,4 @@ logo                        : logo.png  # A path to the book logo
 html:
   comments:
     utterances:
-      repo: "https://github.com/n1o/study_notes"
+      repo: "n1o/study_notes"
