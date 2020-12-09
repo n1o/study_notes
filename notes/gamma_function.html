@@ -44,6 +44,40 @@
     <script src="../_static/togglebutton.js"></script>
     <script src="../_static/clipboard.min.js"></script>
     <script src="../_static/copybutton.js"></script>
+    <script kind="utterances">
+
+    var commentsRunWhenDOMLoaded = cb => {
+    if (document.readyState != 'loading') {
+        cb()
+    } else if (document.addEventListener) {
+        document.addEventListener('DOMContentLoaded', cb)
+    } else {
+        document.attachEvent('onreadystatechange', function() {
+        if (document.readyState == 'complete') cb()
+        })
+    }
+}
+
+var addUtterances = () => {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src = "https://utteranc.es/client.js";
+    script.async = "async";
+
+    script.setAttribute("repo", "https://github.com/n1o/study_notes");
+    script.setAttribute("issue-term", "pathname");
+    script.setAttribute("theme", "github-light");
+    script.setAttribute("label", "💬 comment");
+    script.setAttribute("crossorigin", "anonymous");
+
+    sections = document.querySelectorAll("div.section");
+    if (sections !== null) {
+        section = sections[sections.length-1];
+        section.appendChild(script);
+    }
+}
+commentsRunWhenDOMLoaded(addUtterances);
+</script>
     <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="../_static/sphinx-book-theme.d31b09fe5c1d09cb49b26a786de4a05d.js"></script>
     <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
@@ -1049,11 +1083,6 @@
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="#multivariate">
-   Multivariate:
-  </a>
- </li>
- <li class="toctree-l1">
   <a class="reference internal" href="gaussian_distribution.html">
    Gaussian distribution
   </a>
@@ -1932,12 +1961,7 @@
         </div>
         <nav id="bd-toc-nav">
             <ul class="nav section-nav flex-column">
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#">
-   Gamma Function
-  </a>
- </li>
- <li class="toc-h1 nav-item toc-entry">
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#multivariate">
    Multivariate:
   </a>
@@ -1962,14 +1986,14 @@
 <li><p><span class="math notranslate nohighlight">\(\Gamma(a+1) = a\Gamma (a)​\)</span></p></li>
 <li><p><span class="math notranslate nohighlight">\(\Gamma(n) = (n-1)! ​\)</span> if n is a positive integer.</p></li>
 </ol>
-</div>
 <div class="section" id="multivariate">
-<h1>Multivariate:<a class="headerlink" href="#multivariate" title="Permalink to this headline">¶</a></h1>
+<h2>Multivariate:<a class="headerlink" href="#multivariate" title="Permalink to this headline">¶</a></h2>
 <div class="math notranslate nohighlight">
 \[\Gamma_D(x) = \pi^{(D)(D-1)/4} \prod_{i=1}^D \Gamma(x + (1 - i)/2)\]</div>
 <ul class="simple">
 <li><p><span class="math notranslate nohighlight">\(\Gamma_1(a) = \Gamma(a)\)</span> is the single variable gamma function.</p></li>
 </ul>
+</div>
 </div>
 
     <script type="text/x-thebe-config">

@@ -9,7 +9,7 @@ Properties of the Gamma function:
 1. $\Gamma(a+1) = a\Gamma (a)​$
 2. $\Gamma(n) = (n-1)! ​$ if n is a positive integer. 
 
-# Multivariate:
+## Multivariate:
 
 $$\Gamma_D(x) = \pi^{(D)(D-1)/4} \prod_{i=1}^D \Gamma(x + (1 - i)/2)$$
 

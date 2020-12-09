@@ -44,6 +44,40 @@
     <script src="_static/togglebutton.js"></script>
     <script src="_static/clipboard.min.js"></script>
     <script src="_static/copybutton.js"></script>
+    <script kind="utterances">
+
+    var commentsRunWhenDOMLoaded = cb => {
+    if (document.readyState != 'loading') {
+        cb()
+    } else if (document.addEventListener) {
+        document.addEventListener('DOMContentLoaded', cb)
+    } else {
+        document.attachEvent('onreadystatechange', function() {
+        if (document.readyState == 'complete') cb()
+        })
+    }
+}
+
+var addUtterances = () => {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src = "https://utteranc.es/client.js";
+    script.async = "async";
+
+    script.setAttribute("repo", "https://github.com/n1o/study_notes");
+    script.setAttribute("issue-term", "pathname");
+    script.setAttribute("theme", "github-light");
+    script.setAttribute("label", "💬 comment");
+    script.setAttribute("crossorigin", "anonymous");
+
+    sections = document.querySelectorAll("div.section");
+    if (sections !== null) {
+        section = sections[sections.length-1];
+        section.appendChild(script);
+    }
+}
+commentsRunWhenDOMLoaded(addUtterances);
+</script>
     <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="_static/sphinx-book-theme.d31b09fe5c1d09cb49b26a786de4a05d.js"></script>
     <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
@@ -1048,11 +1082,6 @@
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="notes/gamma_function.html#multivariate">
-   Multivariate:
-  </a>
- </li>
- <li class="toctree-l1">
   <a class="reference internal" href="notes/gaussian_distribution.html">
    Gaussian distribution
   </a>
@@ -1935,6 +1964,18 @@
                 
   <div class="section" id="content">
 <h1>Content<a class="headerlink" href="#content" title="Permalink to this headline">¶</a></h1>
+<p>This is my port of study notes to something that is easily awailable from the web. In general it covers:</p>
+<ol class="simple">
+<li><p>Machine Learning</p>
+<ol class="simple">
+<li><p><a class="reference internal" href="notes/bayesian_statistics.html"><span class="doc std std-doc">Bayesian stats</span></a></p></li>
+</ol>
+</li>
+<li><p>Math</p></li>
+<li><p>Physics</p></li>
+<li><p>Algorithms</p></li>
+</ol>
+<p>The general idea is to have small notes covering a single topic. This is still work in progress, since most of my previous notes are rather large documents, that need some breaking up, simplifying or extending to be easier to grasp.</p>
 <div class="toctree-wrapper compound">
 </div>
 </div>
