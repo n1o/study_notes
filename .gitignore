@@ -1,2 +1,4 @@
 .env/
 study_notes/_build
+.vscode/
+.metals/
