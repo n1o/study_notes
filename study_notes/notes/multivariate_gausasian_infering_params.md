@@ -51,10 +51,10 @@ Where:
 Hence the posterior strength $v_N$ is the prior strength $v_0$ plus the number of observations N, and the posterior scatter matrix $S_N$ is the prior scatter matrix plus the data scatter matrix.
 
 
-# $P(\mu, \Sigma| D)$
+## $P(\mu, \Sigma| D)$
 
 
-## Likelihood
+### Likelihood
 $$ p(D| \mu, \Sigma) = (2\pi)^{-ND/2}|\Sigma|^{-N/2} \exp{ (-\frac{1}{2} \sum_{i=1}^N(x_i - \mu)^T \Sigma^{-1}(x_i - \mu) ) } $$
 
 We can re express the term in the exponent using the follwing fact:
@@ -63,7 +63,7 @@ $$\sum_{i=1}^N(x_i - \mu)^T \Sigma^{-1}(x_i - \mu)  = tr(\Sigma^{-1} S_{\bar{x}}
 
 $$ p(D| \mu, \Sigma) = (2\pi)^{-ND/2}|\Sigma|^{-N/2} \exp{(\frac{N}{2} (\bar{x} - \mu)^T{\Sigma^{-1}} (\bar{x} - \mu) )} \exp{(- \frac{N}{2} (tr(\Sigma^{-1} S_{\bar{x}}))}$$
 
-## Prior
+### Prior
 
 We can use the obvious mixture prior:
 $$ p(\mu, \Sigma) = \mathcal{N}(\mu| m_0, V_0) IW(\Sigma| S_0, v_0)$$
@@ -87,7 +87,7 @@ Where:
 * $v_0$ is how strongly we believe in the prior for $\Sigma$
 
 
-## Posterior
+### Posterior
 $$p(\mu, \Sigma | D) = NIW(\mu, \Sigma | m_N, k_N, v_N, S_N) $$
 
 where:
@@ -99,7 +99,7 @@ where:
 
 Here we can sea that the posterior mean is a convex combination of the prior mean and the MLE, with strength $k_0 + N$, and the posterior scatter matrix $S_N$ is the prior scater matrix $S_0$ plus the empirical scatter matrix $S_{\bar{x}}$ and an extra term due the uncertainity in the mean.
 
-### Posterior marginals
+#### Posterior marginals
 $$p(\Sigma | D) = IW(\Sigma | S_N , v_N)$$
 
 The posterior marginal for $\mu$ has a multivariate Student T distribution:
@@ -107,8 +107,8 @@ $$p(\mu|D) = \mathcal{T}(\mu | m_N, \frac{1}{k_N (v_n - D + 2)S_N}, v_N - D + 1)
 
 This follows the fact that the [Student distribution](student_t_distribution.md) can be represented as a scaled mixture of Gusssians.
 
-## Posterior predictive
+### Posterior predictive
 $$p(x| D) = \frac{p(x,D)}{p(D)} = \mathcal{T}(x| m_n \frac{k_N + 1}{k_N(v_n - D + 1)}, S_N, v_N - D  +1)$$
 
-## Univariate case
+### Univariate case
 Here we assume that $P(\mu, \sigma^2| D)$ follows an [normal inverse chi-squared](normal_inverse_chi_squared.md) distribution.
