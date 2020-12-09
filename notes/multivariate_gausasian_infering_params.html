@@ -1343,13 +1343,6 @@ commentsRunWhenDOMLoaded(addUtterances);
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="#p-mu-sigma-d">
-   <span class="math notranslate nohighlight">
-    \(P(\mu, \Sigma| D)\)
-   </span>
-  </a>
- </li>
- <li class="toctree-l1">
   <a class="reference internal" href="probability_inclusion_exclusion.html">
    Inclusion Exclusion Probability
   </a>
@@ -1961,92 +1954,85 @@ commentsRunWhenDOMLoaded(addUtterances);
         </div>
         <nav id="bd-toc-nav">
             <ul class="nav section-nav flex-column">
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#">
-   Infering the parameters of an NVM
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#p-mu-d-sigma">
+   <span class="math notranslate nohighlight">
+    \(P(\mu|D, \Sigma)\)
+   </span>
+   .
   </a>
   <ul class="nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#p-mu-d-sigma">
-     <span class="math notranslate nohighlight">
-      \(P(\mu|D, \Sigma)\)
-     </span>
-     .
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#likelihood">
+     Likelihood
     </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#likelihood">
-       Likelihood
-      </a>
-     </li>
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#prior">
-       Prior
-      </a>
-     </li>
-    </ul>
    </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#p-sigma-d-mu">
-     <span class="math notranslate nohighlight">
-      \(P(\Sigma|D, \mu)\)
-     </span>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#prior">
+     Prior
     </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id1">
-       Likelihood:
-      </a>
-     </li>
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id2">
-       Prior
-      </a>
-     </li>
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#posterior">
-       Posterior
-      </a>
-     </li>
-    </ul>
    </li>
   </ul>
  </li>
- <li class="toc-h1 nav-item toc-entry">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#p-sigma-d-mu">
+   <span class="math notranslate nohighlight">
+    \(P(\Sigma|D, \mu)\)
+   </span>
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id1">
+     Likelihood:
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id2">
+     Prior
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#posterior">
+     Posterior
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#p-mu-sigma-d">
    <span class="math notranslate nohighlight">
     \(P(\mu, \Sigma| D)\)
    </span>
   </a>
   <ul class="nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id3">
      Likelihood
     </a>
    </li>
-   <li class="toc-h2 nav-item toc-entry">
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id4">
      Prior
     </a>
    </li>
-   <li class="toc-h2 nav-item toc-entry">
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id5">
      Posterior
     </a>
     <ul class="nav section-nav flex-column">
-     <li class="toc-h3 nav-item toc-entry">
+     <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#posterior-marginals">
        Posterior marginals
       </a>
      </li>
     </ul>
    </li>
-   <li class="toc-h2 nav-item toc-entry">
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#posterior-predictive">
      Posterior predictive
     </a>
    </li>
-   <li class="toc-h2 nav-item toc-entry">
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#univariate-case">
      Univariate case
     </a>
@@ -2126,11 +2112,10 @@ $<span class="math notranslate nohighlight">\(p(\mu|D, \Sigma) = \mathcal{N}(\mu
 <p>Hence the posterior strength <span class="math notranslate nohighlight">\(v_N\)</span> is the prior strength <span class="math notranslate nohighlight">\(v_0\)</span> plus the number of observations N, and the posterior scatter matrix <span class="math notranslate nohighlight">\(S_N\)</span> is the prior scatter matrix plus the data scatter matrix.</p>
 </div>
 </div>
-</div>
 <div class="section" id="p-mu-sigma-d">
-<h1><span class="math notranslate nohighlight">\(P(\mu, \Sigma| D)\)</span><a class="headerlink" href="#p-mu-sigma-d" title="Permalink to this headline">¶</a></h1>
+<h2><span class="math notranslate nohighlight">\(P(\mu, \Sigma| D)\)</span><a class="headerlink" href="#p-mu-sigma-d" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="id3">
-<h2>Likelihood<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<h3>Likelihood<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
 <div class="math notranslate nohighlight">
 \[ p(D| \mu, \Sigma) = (2\pi)^{-ND/2}|\Sigma|^{-N/2} \exp{ (-\frac{1}{2} \sum_{i=1}^N(x_i - \mu)^T \Sigma^{-1}(x_i - \mu) ) } \]</div>
 <p>We can re express the term in the exponent using the follwing fact:</p>
@@ -2140,7 +2125,7 @@ $<span class="math notranslate nohighlight">\(p(\mu|D, \Sigma) = \mathcal{N}(\mu
 \[ p(D| \mu, \Sigma) = (2\pi)^{-ND/2}|\Sigma|^{-N/2} \exp{(\frac{N}{2} (\bar{x} - \mu)^T{\Sigma^{-1}} (\bar{x} - \mu) )} \exp{(- \frac{N}{2} (tr(\Sigma^{-1} S_{\bar{x}}))}\]</div>
 </div>
 <div class="section" id="id4">
-<h2>Prior<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<h3>Prior<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
 <p>We can use the obvious mixture prior:
 $<span class="math notranslate nohighlight">\( p(\mu, \Sigma) = \mathcal{N}(\mu| m_0, V_0) IW(\Sigma| S_0, v_0)\)</span>$</p>
 <p>Unfortunately this is not a conjugate prior, it is a <strong>semi-conjugat</strong> or <strong>conditionally conjugate</strong>, since booth <span class="math notranslate nohighlight">\(p(\mu|\Sigma), p(\Sigma|\mu)\)</span> are individually conjugate.</p>
@@ -2161,7 +2146,7 @@ $<span class="math notranslate nohighlight">\( p(\mu, \Sigma) = \mathcal{N}(\mu|
 </ul>
 </div>
 <div class="section" id="id5">
-<h2>Posterior<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<h3>Posterior<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
 <div class="math notranslate nohighlight">
 \[p(\mu, \Sigma | D) = NIW(\mu, \Sigma | m_N, k_N, v_N, S_N) \]</div>
 <p>where:</p>
@@ -2174,7 +2159,7 @@ $<span class="math notranslate nohighlight">\( p(\mu, \Sigma) = \mathcal{N}(\mu|
 </ul>
 <p>Here we can sea that the posterior mean is a convex combination of the prior mean and the MLE, with strength <span class="math notranslate nohighlight">\(k_0 + N\)</span>, and the posterior scatter matrix <span class="math notranslate nohighlight">\(S_N\)</span> is the prior scater matrix <span class="math notranslate nohighlight">\(S_0\)</span> plus the empirical scatter matrix <span class="math notranslate nohighlight">\(S_{\bar{x}}\)</span> and an extra term due the uncertainity in the mean.</p>
 <div class="section" id="posterior-marginals">
-<h3>Posterior marginals<a class="headerlink" href="#posterior-marginals" title="Permalink to this headline">¶</a></h3>
+<h4>Posterior marginals<a class="headerlink" href="#posterior-marginals" title="Permalink to this headline">¶</a></h4>
 <div class="math notranslate nohighlight">
 \[p(\Sigma | D) = IW(\Sigma | S_N , v_N)\]</div>
 <p>The posterior marginal for <span class="math notranslate nohighlight">\(\mu\)</span> has a multivariate Student T distribution:
@@ -2183,13 +2168,14 @@ $<span class="math notranslate nohighlight">\(p(\mu|D) = \mathcal{T}(\mu | m_N, 
 </div>
 </div>
 <div class="section" id="posterior-predictive">
-<h2>Posterior predictive<a class="headerlink" href="#posterior-predictive" title="Permalink to this headline">¶</a></h2>
+<h3>Posterior predictive<a class="headerlink" href="#posterior-predictive" title="Permalink to this headline">¶</a></h3>
 <div class="math notranslate nohighlight">
 \[p(x| D) = \frac{p(x,D)}{p(D)} = \mathcal{T}(x| m_n \frac{k_N + 1}{k_N(v_n - D + 1)}, S_N, v_N - D  +1)\]</div>
 </div>
 <div class="section" id="univariate-case">
-<h2>Univariate case<a class="headerlink" href="#univariate-case" title="Permalink to this headline">¶</a></h2>
+<h3>Univariate case<a class="headerlink" href="#univariate-case" title="Permalink to this headline">¶</a></h3>
 <p>Here we assume that <span class="math notranslate nohighlight">\(P(\mu, \sigma^2| D)\)</span> follows an <a class="reference internal" href="normal_inverse_chi_squared.html"><span class="doc std std-doc">normal inverse chi-squared</span></a> distribution.</p>
+</div>
 </div>
 </div>
 
