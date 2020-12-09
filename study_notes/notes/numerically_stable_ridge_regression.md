@@ -18,7 +18,6 @@ Now if we perfrom [QR decomposition](qr_decomposition.md) of $\tilde{X}$ we get:
 
 $$\tilde{X} = QR$$ 
 
-
 Now:
 
 $$(\tilde{X}^T\tilde{X})^{-1} = R^{-1}R^{-T}$$
@@ -29,8 +28,7 @@ Now our ridge estimate is:
 
 $$\hat{w}_{ridge}= R^{-1}R^{-T}R^T Q^T \tilde{y} = R^{-1}Q\tilde{y} $$
 
-
-# $D >> N$
+## $D >> N$
 
 Than we first perform the [SVD](singular_value_decomposition.md) of $X = USV^T$ and define $Z = US$ than the estimation of ridge becomes:
 

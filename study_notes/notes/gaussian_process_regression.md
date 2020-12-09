@@ -44,9 +44,11 @@ The predictive performance of GPs depends exclusively on the suitability of the 
 ## Semi parametric GP
 
 We assume that the mean of the process is a linear model:
+
 $$
 f(x) = \beta^T \phi(x) + r(x)
 $$
+
 * $r(x ) \sim GP(0, k(x,x'))$ models the residuals
 
 Here we combine parametric and nonparametric models (semi-parametric model)
