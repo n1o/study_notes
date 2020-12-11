@@ -14,6 +14,7 @@ sections:
 - file: notes/directed_vs_undirected_graphical_models
 - file: notes/absolute_median_deviation
 - file: notes/graphical_models
+- file: notes/variational_free_energy
 - file: notes/markov_random_fields_conditional_independence
 - file: notes/log_partition_function
 - file: notes/markov_random_fields_examples
@@ -36,10 +37,13 @@ sections:
 - file: notes/kernel_machines
 - file: notes/infference_in_hidden_markov_models
 - file: notes/svm_classification
+- file: notes/mean_field_method
 - file: notes/hyper_gradient_descent
 - file: notes/latent_variable_models
 - file: notes/elipse
+- file: notes/sampling_from_standard_distributions
 - file: notes/ordinary_least_squares_linear_regression
+- file: notes/rejection_sampling
 - file: notes/bridge_regression
 - file: notes/multivariate_gausasian
 - file: notes/linear_programming
@@ -52,6 +56,7 @@ sections:
 - file: notes/em_algorithm
 - file: notes/probability_chain_rule
 - file: notes/normal_inverse_chi_squared
+- file: notes/sequential_importance_sampling
 - file: notes/svm_classification_large_margine_principle
 - file: notes/multinoulli_exponential_family
 - file: notes/graph_terminology
@@ -73,6 +78,8 @@ sections:
 - file: notes/mahalanobi_distance
 - file: notes/generalized_linear_model
 - file: notes/mixture_models
+- file: notes/variational_inference
+- file: notes/junction_tree_algorithm
 - file: notes/cumulative_distribution_function
 - file: notes/linear_gaussian_systems
 - file: notes/robust_linear_regression
@@ -86,8 +93,10 @@ sections:
 - file: notes/plate_notation
 - file: notes/soft_thresholding
 - file: notes/noise_free_gaussian_process_regression
+- file: notes/variable_elimination
 - file: notes/shannon_information_content
 - file: notes/monter_carlo_estimation
+- file: notes/forward_vs_reverse_kl_divergence
 - file: notes/probabilistic_pca_em
 - file: notes/inequalities
 - file: notes/proximal_algorithms
@@ -99,6 +108,7 @@ sections:
 - file: notes/d-separation
 - file: notes/exponential_family_maximum_entropy
 - file: notes/noisy_gaussian_process_regression
+- file: notes/importance_sampling
 - file: notes/conditional_random_fields
 - file: notes/bayesian_information_criterion
 - file: notes/sumarizing_posterior_distributions
@@ -109,12 +119,14 @@ sections:
 - file: notes/computing_evidence
 - file: notes/multiclass_logistic_regression
 - file: notes/bernouli_distributioin
+- file: notes/variational_bayes
 - file: notes/unsented_transoform
 - file: notes/common_bayesian_loss_functions
 - file: notes/student_t_distribution
 - file: notes/chi_square_distribution
 - file: notes/learning_in_directed_graphical_models
 - file: notes/hinge_loss
+- file: notes/variational_bayes_em
 - file: notes/kalman_smoothing
 - file: notes/non_linear_non_gaussian_state_space_models
 - file: notes/ridge_regression
@@ -132,6 +144,7 @@ sections:
 - file: notes/bonferroni_correction
 - file: notes/kalman_filtering
 - file: notes/random_variable
+- file: notes/monte_carlo_inference
 - file: notes/poisson_distribution
 - file: notes/em_theory
 - file: notes/univariate_gaussian_exponential_family
@@ -155,6 +168,7 @@ sections:
 - file: notes/uninformative_prior
 - file: notes/l1_regularization_sparse_solution
 - file: notes/pca_extensions
+- file: notes/belief_propagation
 - file: notes/probit_regression
 - file: notes/convex_set
 - file: notes/page_rank
@@ -184,6 +198,7 @@ sections:
 - file: notes/prior
 - file: notes/k_medoids
 - file: notes/state_space_model
+- file: notes/loopy_belief_propagation
 - file: notes/hessian
 - file: notes/convex_function
 - file: notes/svm_regression
