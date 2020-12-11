@@ -14,3 +14,6 @@ html:
   comments:
     utterances:
       repo: "n1o/study_notes"
+
+execute:
+  run_in_temp: true
