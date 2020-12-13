@@ -7,3 +7,5 @@ We draw:
 $$
 p(\tilde{y}|D) = \int p(\tilde{y}|\theta) p(\theta|D)d\theta
 $$
+
+We can use this distribution to check if the data generated from the model is similar to the observed data. This procedure is also known as **posterior preditive check**. If this fails we know that our model is wrong.
