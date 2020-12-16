@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Posterior predictive distribution &#8212; study-notes</title>
+    <title>Markov chain Monte Carlo (MCMC) inference &#8212; study-notes</title>
     
   <link rel="stylesheet" href="../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
 
@@ -91,8 +91,6 @@ commentsRunWhenDOMLoaded(addUtterances);
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Order statistics" href="order_statistiics_quantiles.html" />
-    <link rel="prev" title="Principal component analysis" href="principal_component_analysis.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -129,7 +127,7 @@ commentsRunWhenDOMLoaded(addUtterances);
   </a>
  </li>
 </ul>
-<ul class="current nav sidenav_l1">
+<ul class="nav sidenav_l1">
  <li class="toctree-l1">
   <a class="reference internal" href="logistic_regression.html">
    Logistic regression
@@ -893,8 +891,8 @@ commentsRunWhenDOMLoaded(addUtterances);
    Probabilistic PCA
   </a>
  </li>
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
+ <li class="toctree-l1">
+  <a class="reference internal" href="posterior_predictive_distribution.html">
    Posterior predictive distribution
   </a>
  </li>
@@ -2014,7 +2012,7 @@ commentsRunWhenDOMLoaded(addUtterances);
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../_sources/notes/posterior_predictive_distribution.md"><button type="button"
+        <a class="dropdown-buttons" href="../_sources/notes/markov_chain_monte_carlo_inference.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.md</button></a>
         <!-- Download PDF via print -->
@@ -2039,6 +2037,44 @@ commentsRunWhenDOMLoaded(addUtterances);
     <!-- Table of contents -->
     <div class="d-none d-md-block col-md-2 bd-toc show">
         
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#commong-algorithms">
+   Commong algorithms
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#speed-and-accuracy-of-mcmc">
+   Speed and accuracy of MCMC
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#mixing-rates-of-markov-chains">
+   <span class="xref myst">
+    Mixing rates of Markov chains
+   </span>
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#accuracy-of-mcmc">
+   <span class="xref myst">
+    Accuracy of MCMC
+   </span>
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#how-many-chains">
+   How many chains
+  </a>
+ </li>
+</ul>
+
+        </nav>
+        
     </div>
 </div>
     <div id="main-content" class="row">
@@ -2046,15 +2082,35 @@ commentsRunWhenDOMLoaded(addUtterances);
         
               <div>
                 
-  <div class="section" id="posterior-predictive-distribution">
-<h1>Posterior predictive distribution<a class="headerlink" href="#posterior-predictive-distribution" title="Permalink to this headline">¶</a></h1>
-<p>We use the posterior distribution to generate new data and compare it to the observed quantities. The idea behind posterior predicitve check, is that if we manage to create a model that captures the data generative process well, than the data generated from the posterior distribution should be similar to the observed data.</p>
-<p>We draw:</p>
-<div class="math notranslate nohighlight">
-\[
-p(\tilde{y}|D) = \int p(\tilde{y}|\theta) p(\theta|D)d\theta
-\]</div>
-<p>We can use this distribution to check if the data generated from the model is similar to the observed data. This procedure is also known as <strong>posterior preditive check</strong>. If this fails we know that our model is wrong.</p>
+  <div class="section" id="markov-chain-monte-carlo-mcmc-inference">
+<h1>Markov chain Monte Carlo (MCMC) inference<a class="headerlink" href="#markov-chain-monte-carlo-mcmc-inference" title="Permalink to this headline">¶</a></h1>
+<p>In general classic <a class="reference internal" href="monte_carlo_inference.html"><span class="doc std std-doc">Monte Carlo methods</span></a> do not work well in high dimension space. MCMC are more efficient.</p>
+<p>The basic idea of MCMC is to construct a Markov chain on the state pace <span class="math notranslate nohighlight">\(X\)</span> whose stationary distribution is the target density <span class="math notranslate nohighlight">\(p^*(x)\)</span> of interest. That is, we perform random walk on the state space  X is proportional ot <span class="math notranslate nohighlight">\(p^*(x)\)</span>. By drawing <strong>correlated</strong> samples <span class="math notranslate nohighlight">\(x_0, x_1, \cdots\)</span>, from the chain, we can perform Monte Carlo integration with respect to <span class="math notranslate nohighlight">\(p^*\)</span>.</p>
+<div class="section" id="commong-algorithms">
+<h2>Commong algorithms<a class="headerlink" href="#commong-algorithms" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="gibs_sampling.html"><span class="doc std std-doc">Gibs Sampling</span></a></p></li>
+<li><p>Metropolis hastings</p></li>
+<li><p>Hamiltonian monte carlo</p></li>
+</ul>
+</div>
+<div class="section" id="speed-and-accuracy-of-mcmc">
+<h2>Speed and accuracy of MCMC<a class="headerlink" href="#speed-and-accuracy-of-mcmc" title="Permalink to this headline">¶</a></h2>
+<p>We start MCMC from an arbitrary initial state. If we see enough samples, only than has the chain “forgotten” where it has started from will the samples be comming from the chain’s stationary distribution. Samples collected before the chain has reached its stationary distribution do not come from <span class="math notranslate nohighlight">\(p^*\)</span>, and are usually thrown away. The initial period, whose samples will be ignored, is called <strong>burn-in phase</strong>.</p>
+<p>Unfortunatelly diagnose when a chain has burned in is difficult, and it is one of the fundamental weaknesses of MCMC.</p>
+</div>
+<div class="section" id="mixing-rates-of-markov-chains">
+<h2><a class="reference internal" href="markov_chain_monte_carlo_convergence.html"><span class="doc std std-doc">Mixing rates of Markov chains</span></a><a class="headerlink" href="#mixing-rates-of-markov-chains" title="Permalink to this headline">¶</a></h2>
+<p>The amount of time it takes for a Markov chain to converge to the stationary distribution, and forget its initial state, is called the <strong>mixing time</strong>.</p>
+</div>
+<div class="section" id="accuracy-of-mcmc">
+<h2><a class="reference internal" href="markov_chain_monte_carlo_accuracy.html"><span class="doc std std-doc">Accuracy of MCMC</span></a><a class="headerlink" href="#accuracy-of-mcmc" title="Permalink to this headline">¶</a></h2>
+<p>Samples produces by MCMC are autocorrelated, and this reduces their information content relative to independent or perfect samples. Thus we need to estimate how accurate the samples are.</p>
+</div>
+<div class="section" id="how-many-chains">
+<h2>How many chains<a class="headerlink" href="#how-many-chains" title="Permalink to this headline">¶</a></h2>
+<p>In practice it is common to run a medium number of chains (~3) of medium lenght (~ 100k steps), and take samples from each afther discarting the first half of the samples. If we initialize at a local mode, we may be able to keep more samples, sometimes we can keep all of them.</p>
+</div>
 </div>
 
     <script type="text/x-thebe-config">
@@ -2085,8 +2141,6 @@ p(\tilde{y}|D) = \int p(\tilde{y}|\theta) p(\theta|D)d\theta
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="principal_component_analysis.html" title="previous page">Principal component analysis</a>
-    <a class='right-next' id="next-link" href="order_statistiics_quantiles.html" title="next page">Order statistics</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">

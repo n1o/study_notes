@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Posterior predictive distribution &#8212; study-notes</title>
+    <title>Estimator &#8212; study-notes</title>
     
   <link rel="stylesheet" href="../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
 
@@ -91,8 +91,6 @@ commentsRunWhenDOMLoaded(addUtterances);
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Order statistics" href="order_statistiics_quantiles.html" />
-    <link rel="prev" title="Principal component analysis" href="principal_component_analysis.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -129,7 +127,7 @@ commentsRunWhenDOMLoaded(addUtterances);
   </a>
  </li>
 </ul>
-<ul class="current nav sidenav_l1">
+<ul class="nav sidenav_l1">
  <li class="toctree-l1">
   <a class="reference internal" href="logistic_regression.html">
    Logistic regression
@@ -893,8 +891,8 @@ commentsRunWhenDOMLoaded(addUtterances);
    Probabilistic PCA
   </a>
  </li>
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
+ <li class="toctree-l1">
+  <a class="reference internal" href="posterior_predictive_distribution.html">
    Posterior predictive distribution
   </a>
  </li>
@@ -2014,7 +2012,7 @@ commentsRunWhenDOMLoaded(addUtterances);
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../_sources/notes/posterior_predictive_distribution.md"><button type="button"
+        <a class="dropdown-buttons" href="../_sources/notes/estimator.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.md</button></a>
         <!-- Download PDF via print -->
@@ -2039,6 +2037,47 @@ commentsRunWhenDOMLoaded(addUtterances);
     <!-- Table of contents -->
     <div class="d-none d-md-block col-md-2 bd-toc show">
         
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#desirable-properties-of-estimators">
+   Desirable properties of estimators
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#consistency">
+     Consistency
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#ubiased-estimator">
+     Ubiased estimator
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#minimum-variance">
+     Minimum variance
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#bias-variance-tradeoff">
+     Bias variance tradeoff
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#sampling-distribution-of-an-extimator">
+   Sampling distribution of an extimator
+  </a>
+ </li>
+</ul>
+
+        </nav>
+        
     </div>
 </div>
     <div id="main-content" class="row">
@@ -2046,15 +2085,56 @@ commentsRunWhenDOMLoaded(addUtterances);
         
               <div>
                 
-  <div class="section" id="posterior-predictive-distribution">
-<h1>Posterior predictive distribution<a class="headerlink" href="#posterior-predictive-distribution" title="Permalink to this headline">¶</a></h1>
-<p>We use the posterior distribution to generate new data and compare it to the observed quantities. The idea behind posterior predicitve check, is that if we manage to create a model that captures the data generative process well, than the data generated from the posterior distribution should be similar to the observed data.</p>
-<p>We draw:</p>
+  <div class="section" id="estimator">
+<h1>Estimator<a class="headerlink" href="#estimator" title="Permalink to this headline">¶</a></h1>
+<p>An estimator is a statistics (we use only a sample not the whole population) that estimates some fact about the population (estimand)</p>
+<blockquote>
+<div><p>Example:
+Sample mean is is an estimator for the true mean
+$<span class="math notranslate nohighlight">\( \bar{x} \approx \mu \)</span>$</p>
+</div></blockquote>
+<div class="section" id="desirable-properties-of-estimators">
+<h2>Desirable properties of estimators<a class="headerlink" href="#desirable-properties-of-estimators" title="Permalink to this headline">¶</a></h2>
+<p>Unfortunatelly we cannot achieve all the properties at the same time.</p>
+<div class="section" id="consistency">
+<h3>Consistency<a class="headerlink" href="#consistency" title="Permalink to this headline">¶</a></h3>
+<p>An estimator is said to be consistent if it eventually recovers the true parameter that generated the data as the sample size goes to infinity</p>
 <div class="math notranslate nohighlight">
-\[
-p(\tilde{y}|D) = \int p(\tilde{y}|\theta) p(\theta|D)d\theta
-\]</div>
-<p>We can use this distribution to check if the data generated from the model is similar to the observed data. This procedure is also known as <strong>posterior preditive check</strong>. If this fails we know that our model is wrong.</p>
+\[\hat{\theta}(D) \rightarrow \theta^*, |D|\rightarrow \infty\]</div>
+<p>(Converges in probability)</p>
+<p>Where it can be shown that the MLE is an consistent estimator. The intuition is that we minimize <span class="math notranslate nohighlight">\(KL(p(\cdot| \theta^*)||p(\cdot| \hat{\theta}))\)</span> which is zero if <span class="math notranslate nohighlight">\(\hat{\theta} = \theta^*\)</span></p>
+</div>
+<div class="section" id="ubiased-estimator">
+<h3>Ubiased estimator<a class="headerlink" href="#ubiased-estimator" title="Permalink to this headline">¶</a></h3>
+<p>The <strong>bias</strong> of an estimator is defined as:</p>
+<div class="math notranslate nohighlight">
+\[bias(\hat{\theta}(.)) = E_{p(D|\theta^*)}[\hat{\theta}(D)- \theta_*]\]</div>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\theta_*\)</span> is the true parameter.</p></li>
+</ul>
+<p>If bias is zero, the estimator is called <strong>unbiased</strong>. That means that the means of the sampling distribution is centered on the true parameter.</p>
+<p>We can use this fact to show that the sample variance is not an unbiased estimator for <span class="math notranslate nohighlight">\(\sigma^2\)</span>. Hence we need to use:</p>
+<div class="math notranslate nohighlight">
+\[\hat{\sigma}^2_{N -1} = \frac{N}{N-1}\sigma^2\]</div>
+</div>
+<div class="section" id="minimum-variance">
+<h3>Minimum variance<a class="headerlink" href="#minimum-variance" title="Permalink to this headline">¶</a></h3>
+<p>We can have that our estimator will be unbiased, but it will have a large variance. So it is important to have a low variance. The lower bound of the variance is given by <strong>Cramer-Rao lower bound</strong>.</p>
+<p>Where MLE achieves the Cramer Rao lower bound, hence it has the smallest asymptotic variance of any unbiased estimator. MLE is <strong>asymptotically optimal</strong>.</p>
+</div>
+<div class="section" id="bias-variance-tradeoff">
+<h3>Bias variance tradeoff<a class="headerlink" href="#bias-variance-tradeoff" title="Permalink to this headline">¶</a></h3>
+<p>Sometimes using an unbiased estimator is not the best idea. If the correspoing risk of our estimator is the MSE. Than we can decompose it as:</p>
+<div class="math notranslate nohighlight">
+\[E[(\hat{\theta} - \theta^*)^2] = var[\hat{\theta}] + bias^2(\hat{\theta})\]</div>
+<p>This is called the <strong>bias-variance tradeoff</strong>. Which means that it might be wise to use a biased estimator, so long as it reduces our variance, assuming our goal is to minimize squared error.</p>
+</div>
+</div>
+<div class="section" id="sampling-distribution-of-an-extimator">
+<h2>Sampling distribution of an extimator<a class="headerlink" href="#sampling-distribution-of-an-extimator" title="Permalink to this headline">¶</a></h2>
+<p>In frequentist statistics, a parameter estimate <span class="math notranslate nohighlight">\(\hat{\theta}\)</span> is computed by applying an <strong>estimator</strong> <span class="math notranslate nohighlight">\(\delta\)</span> to some data D such that <span class="math notranslate nohighlight">\(\hat{\theta} = \delta(D)\)</span>. The parameter is viewed as fixed and the data as random, which is the exact opposite of the Bayesian approach.  The uncertainity in the parameter estimate can be measured by computing the <strong>sampling distribution</strong> of the estimator. This an be viewed as sampling different datasets <span class="math notranslate nohighlight">\(D^{(s)}\)</span> from some true model <span class="math notranslate nohighlight">\(p(.|\theta^*)\)</span>. Now we apply the estimator <span class="math notranslate nohighlight">\(\hat{\theta}(\cdot )\)</span> to each <span class="math notranslate nohighlight">\(D^{(s)}\)</span> to get <span class="math notranslate nohighlight">\(\{ \hat{\theta}(D^{(s)}) \}\)</span>. As <span class="math notranslate nohighlight">\(S \rightarrow \infty\)</span> than this set becomes the sampling distribution of our estimator.</p>
+<p>To compute this sampling we can use <a class="reference internal" href="boostrap.html"><span class="doc std std-doc">Boostrap</span></a></p>
+</div>
 </div>
 
     <script type="text/x-thebe-config">
@@ -2085,8 +2165,6 @@ p(\tilde{y}|D) = \int p(\tilde{y}|\theta) p(\theta|D)d\theta
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="principal_component_analysis.html" title="previous page">Principal component analysis</a>
-    <a class='right-next' id="next-link" href="order_statistiics_quantiles.html" title="next page">Order statistics</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">

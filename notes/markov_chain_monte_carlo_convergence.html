@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Posterior predictive distribution &#8212; study-notes</title>
+    <title>Marko chain monte carlo convergence &#8212; study-notes</title>
     
   <link rel="stylesheet" href="../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
 
@@ -91,8 +91,6 @@ commentsRunWhenDOMLoaded(addUtterances);
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Order statistics" href="order_statistiics_quantiles.html" />
-    <link rel="prev" title="Principal component analysis" href="principal_component_analysis.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -129,7 +127,7 @@ commentsRunWhenDOMLoaded(addUtterances);
   </a>
  </li>
 </ul>
-<ul class="current nav sidenav_l1">
+<ul class="nav sidenav_l1">
  <li class="toctree-l1">
   <a class="reference internal" href="logistic_regression.html">
    Logistic regression
@@ -893,8 +891,8 @@ commentsRunWhenDOMLoaded(addUtterances);
    Probabilistic PCA
   </a>
  </li>
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
+ <li class="toctree-l1">
+  <a class="reference internal" href="posterior_predictive_distribution.html">
    Posterior predictive distribution
   </a>
  </li>
@@ -2014,7 +2012,7 @@ commentsRunWhenDOMLoaded(addUtterances);
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../_sources/notes/posterior_predictive_distribution.md"><button type="button"
+        <a class="dropdown-buttons" href="../_sources/notes/markov_chain_monte_carlo_convergence.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.md</button></a>
         <!-- Download PDF via print -->
@@ -2039,6 +2037,25 @@ commentsRunWhenDOMLoaded(addUtterances);
     <!-- Table of contents -->
     <div class="d-none d-md-block col-md-2 bd-toc show">
         
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#practical-convergence-diagnostics">
+   Practical convergence diagnostics
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#estimated-potential-scale-reduction-epsr">
+   Estimated potential scale reduction (EPSR)
+  </a>
+ </li>
+</ul>
+
+        </nav>
+        
     </div>
 </div>
     <div id="main-content" class="row">
@@ -2046,15 +2063,69 @@ commentsRunWhenDOMLoaded(addUtterances);
         
               <div>
                 
-  <div class="section" id="posterior-predictive-distribution">
-<h1>Posterior predictive distribution<a class="headerlink" href="#posterior-predictive-distribution" title="Permalink to this headline">¶</a></h1>
-<p>We use the posterior distribution to generate new data and compare it to the observed quantities. The idea behind posterior predicitve check, is that if we manage to create a model that captures the data generative process well, than the data generated from the posterior distribution should be similar to the observed data.</p>
-<p>We draw:</p>
+  <div class="section" id="marko-chain-monte-carlo-convergence">
+<h1>Marko chain monte carlo convergence<a class="headerlink" href="#marko-chain-monte-carlo-convergence" title="Permalink to this headline">¶</a></h1>
+<p>The amount of time it takes for a Markov chain to converge to the stationary distribution, and forget its initial state, is called the <strong>mixing time</strong>. More formaly, the mixing time from state <span class="math notranslate nohighlight">\(x_0\)</span> is the minimal time such that, for any constant <span class="math notranslate nohighlight">\(\epsilon &gt; 0\)</span>, we have:</p>
 <div class="math notranslate nohighlight">
 \[
-p(\tilde{y}|D) = \int p(\tilde{y}|\theta) p(\theta|D)d\theta
+\tau_{\epsilon}(x_0) = \min \{ t: || \delta_{x_0}(x)T^t - p^*||_1 \le \epsilon \}
 \]</div>
-<p>We can use this distribution to check if the data generated from the model is similar to the observed data. This procedure is also known as <strong>posterior preditive check</strong>. If this fails we know that our model is wrong.</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\delta_{x_0} (x)\)</span> is the distribution with all its mass at state <span class="math notranslate nohighlight">\(x_0\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(T\)</span> si the transition matrix of the chain</p></li>
+<li><p><span class="math notranslate nohighlight">\(\delta_{x_0} (x)T^t\)</span> is the distribution afther t steps</p></li>
+</ul>
+<p>The mixing time of the chain is defined as:</p>
+<div class="math notranslate nohighlight">
+\[\tau_{\epsilon} \triangleq \max_{x_0} \tau_{\epsilon} (x_0)\]</div>
+<p>The mixing time is determined by the eigengap <span class="math notranslate nohighlight">\(\gamma = \lambda_1 - \lambda_2\)</span>, which is the difference between the first and second eigen value of the transition matrix. Then:</p>
+<div class="math notranslate nohighlight">
+\[\tau_{\epsilon} \le O(\frac{1}{\gamma} \log \frac{n}{\epsilon}) \]</div>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(n\)</span> is the number of states</p></li>
+</ul>
+<p>Unfortunately computing the transition matrix can be hard to do, especially for high dimensional and/or continuous state spaces, it is useful to find other ways to estimate the mixing time.</p>
+<p>Anternativelly we can examine the geometry of the state space. From this we can define the <strong>conductance</strong> <span class="math notranslate nohighlight">\(\theta\)</span> of a chain as the minimum probability, over all subsets of states, of transitioning from that set to its complement:</p>
+<div class="math notranslate nohighlight">
+\[
+\phi = \min_{s: 0 \le p^*(S) \le 0.5} \frac{\sum_{x in S, x' \in S^c} T(x \rightarrow x')}{p^*(S)}
+\]</div>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\tau_{\epsilon} \le O(\frac{1}{\sigma^2} \log \frac{n}{\epsilon})\)</span></p></li>
+</ul>
+<p>In general chain that have low conductance have high mixin time. <span style="color:red">For example, distributions with well-separate modes usually have high mixing times</span></p>
+<div class="section" id="practical-convergence-diagnostics">
+<h2>Practical convergence diagnostics<a class="headerlink" href="#practical-convergence-diagnostics" title="Permalink to this headline">¶</a></h2>
+<p>Computing the mixing time of a chain is in general quite difficult, since the transition matrix is usually very hard to compute. In practice we use various heuristics, where these methods do not diagnose convergence, but rather non-convergence, since diagnosinc convergence is computationally intractable.</p>
+<p>One of the simples approaches to assesing when a method has converged is to run multiple chains from very different <strong>overdispersed</strong> starting points, and to plot the samples from some variables of interest. This is called <strong>trace plot</strong>. If the chain has mixed, it should have “forgotten” where it started from, so the trace plots should converge to the same distribution, thus they should overlap.</p>
+</div>
+<div class="section" id="estimated-potential-scale-reduction-epsr">
+<h2>Estimated potential scale reduction (EPSR)<a class="headerlink" href="#estimated-potential-scale-reduction-epsr" title="Permalink to this headline">¶</a></h2>
+<p>(Gelman and Rubin 1992)</p>
+<p>An quantitative measure of convergence. The basic idea is to compare variance of a quantitiy within each chain to its variance across chains.</p>
+<p>Suppose we collect S samples (afther burn-in) from each C chains of D variables <span class="math notranslate nohighlight">\(x_{isc} , i = 1:D, s = 1:S, c = 1:C\)</span>. Let <span class="math notranslate nohighlight">\(y_{sc}\)</span> be a scalar quantity of interest derived from <span class="math notranslate nohighlight">\(X_{1:D,s,c}\)</span> (e.g <span class="math notranslate nohighlight">\(y_{sc} = x_{isc}\)</span> for some choosen i).</p>
+<p>We define the within-seqence mean and overall mean as:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\bar{y}_{.c} = \frac{1}{S}\sum_{s=1}^S y_{sc} \\
+\bar{y}_{..} = \frac{1}{C} \sum_{c=1}^C \bar{y}_{.c}
+\end{split}\]</div>
+<p>We define the between-sequence and within sequence variance as:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+B = \frac{S}{C-1} \sum_{c=1}^C(\bar{y}_{.c} - \bar{C}_{..})^2 \\
+W = \frac{1}{C} \sum_{c=1}^C [\frac{1}{S-1} \sum_{s=1}^S(y_{sc} - \bar{y}_{.c})^2]
+\end{split}\]</div>
+<p>We can now construct the two estimates of variance of y. The first estimate is <span class="math notranslate nohighlight">\(W\)</span>: this should underestimate <span class="math notranslate nohighlight">\(var[y]\)</span> if the chain have not ranged over the full posterior. The second estimate is:</p>
+<div class="math notranslate nohighlight">
+\[
+\hat{V} = \frac{S-1}{S}W + \frac{1}{S}B
+\]</div>
+<p>This is an estimate of <span class="math notranslate nohighlight">\(var[y]\)</span> that is unbiased under stationarity, but is an overestimate if the starting poins where overdisperse. From this we can define the <strong>EPSR</strong> diagnostic statistics:</p>
+<div class="math notranslate nohighlight">
+\[\hat{R} = \triangleq \sqrt{\frac{\hat{V}}{W}} \]</div>
+<p>This quantity measures the degree to which the posterior variance would decrease if we where to continue sampling in the <span class="math notranslate nohighlight">\(S \rightarrow \infty\)</span> limit. If <span class="math notranslate nohighlight">\(\hat{R} \approx 1\)</span> for any given quantity, than the estimate is reliable (or at least not unrealiable).</p>
+</div>
 </div>
 
     <script type="text/x-thebe-config">
@@ -2085,8 +2156,6 @@ p(\tilde{y}|D) = \int p(\tilde{y}|\theta) p(\theta|D)d\theta
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="principal_component_analysis.html" title="previous page">Principal component analysis</a>
-    <a class='right-next' id="next-link" href="order_statistiics_quantiles.html" title="next page">Order statistics</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">

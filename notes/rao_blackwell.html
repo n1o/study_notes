@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Posterior predictive distribution &#8212; study-notes</title>
+    <title>Rao Blackwell theorem &#8212; study-notes</title>
     
   <link rel="stylesheet" href="../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
 
@@ -91,8 +91,6 @@ commentsRunWhenDOMLoaded(addUtterances);
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Order statistics" href="order_statistiics_quantiles.html" />
-    <link rel="prev" title="Principal component analysis" href="principal_component_analysis.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -129,7 +127,7 @@ commentsRunWhenDOMLoaded(addUtterances);
   </a>
  </li>
 </ul>
-<ul class="current nav sidenav_l1">
+<ul class="nav sidenav_l1">
  <li class="toctree-l1">
   <a class="reference internal" href="logistic_regression.html">
    Logistic regression
@@ -893,8 +891,8 @@ commentsRunWhenDOMLoaded(addUtterances);
    Probabilistic PCA
   </a>
  </li>
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
+ <li class="toctree-l1">
+  <a class="reference internal" href="posterior_predictive_distribution.html">
    Posterior predictive distribution
   </a>
  </li>
@@ -2014,7 +2012,7 @@ commentsRunWhenDOMLoaded(addUtterances);
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../_sources/notes/posterior_predictive_distribution.md"><button type="button"
+        <a class="dropdown-buttons" href="../_sources/notes/rao_blackwell.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.md</button></a>
         <!-- Download PDF via print -->
@@ -2039,6 +2037,20 @@ commentsRunWhenDOMLoaded(addUtterances);
     <!-- Table of contents -->
     <div class="d-none d-md-block col-md-2 bd-toc show">
         
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#context-of-random-vriables">
+   Context of random vriables
+  </a>
+ </li>
+</ul>
+
+        </nav>
+        
     </div>
 </div>
     <div id="main-content" class="row">
@@ -2046,15 +2058,22 @@ commentsRunWhenDOMLoaded(addUtterances);
         
               <div>
                 
-  <div class="section" id="posterior-predictive-distribution">
-<h1>Posterior predictive distribution<a class="headerlink" href="#posterior-predictive-distribution" title="Permalink to this headline">¶</a></h1>
-<p>We use the posterior distribution to generate new data and compare it to the observed quantities. The idea behind posterior predicitve check, is that if we manage to create a model that captures the data generative process well, than the data generated from the posterior distribution should be similar to the observed data.</p>
-<p>We draw:</p>
+  <div class="section" id="rao-blackwell-theorem">
+<h1>Rao Blackwell theorem<a class="headerlink" href="#rao-blackwell-theorem" title="Permalink to this headline">¶</a></h1>
+<p>It is a way to improve the efficiency of initial estimators.</p>
+<blockquote>
+<div><p>Theorem:
+Suppose <span class="math notranslate nohighlight">\(g(X)\)</span> is an unbiased estimator of a scalar parametric function <span class="math notranslate nohighlight">\(h(\theta)\)</span> and <span class="math notranslate nohighlight">\(T_i(X); i = 1,2,\cdots p\)</span> are jointly sufficient for <span class="math notranslate nohighlight">\((\theta)\)</span>; then there exists an estimator <span class="math notranslate nohighlight">\(u(T)\)</span>, depending on the data only through the sufficient statistics, such that
+$<span class="math notranslate nohighlight">\(E[u(T)] = h(\theta) \\ \text{Var}[u(T)] \le \text{Var}[g(X)]\)</span>$</p>
+</div></blockquote>
+<p>Improvement in efficiency is obtained by taking the statistic’s conditional expectation with respect to a <a class="reference internal" href="sufficient_statistics.html"><span class="doc std std-doc">sufficient statistic</span></a> (assuming one exists). In other words, a statistic is “sufficient” if it retains all of the information about the population that was contained in the original data points.</p>
+<div class="section" id="context-of-random-vriables">
+<h2>Context of random vriables<a class="headerlink" href="#context-of-random-vriables" title="Permalink to this headline">¶</a></h2>
+<p>Let <span class="math notranslate nohighlight">\(z\)</span> and <span class="math notranslate nohighlight">\(\theta\)</span> be dependent random variables, and <span class="math notranslate nohighlight">\(f(z, \theta)\)</span> be some scalar function. Then:</p>
 <div class="math notranslate nohighlight">
-\[
-p(\tilde{y}|D) = \int p(\tilde{y}|\theta) p(\theta|D)d\theta
-\]</div>
-<p>We can use this distribution to check if the data generated from the model is similar to the observed data. This procedure is also known as <strong>posterior preditive check</strong>. If this fails we know that our model is wrong.</p>
+\[ var_{z,\theta} [f(z, \theta)] \ge var_z [E_{\theta}[f(z,\theta)|z]] \]</div>
+<p>This theorem guarantees that the variance of the estimate is create by analyticially integrating out <span class="math notranslate nohighlight">\(\theta\)</span> will always be lower (or rather never by higher) than the variance of direct <a class="reference internal" href="markov_chain_monte_carlo_inference.html"><span class="doc std std-doc">MCMC</span></a> estimate.</p>
+</div>
 </div>
 
     <script type="text/x-thebe-config">
@@ -2085,8 +2104,6 @@ p(\tilde{y}|D) = \int p(\tilde{y}|\theta) p(\theta|D)d\theta
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="principal_component_analysis.html" title="previous page">Principal component analysis</a>
-    <a class='right-next' id="next-link" href="order_statistiics_quantiles.html" title="next page">Order statistics</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">

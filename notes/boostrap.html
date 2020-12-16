@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Posterior predictive distribution &#8212; study-notes</title>
+    <title>Boostrap &#8212; study-notes</title>
     
   <link rel="stylesheet" href="../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
 
@@ -91,8 +91,6 @@ commentsRunWhenDOMLoaded(addUtterances);
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Order statistics" href="order_statistiics_quantiles.html" />
-    <link rel="prev" title="Principal component analysis" href="principal_component_analysis.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -129,7 +127,7 @@ commentsRunWhenDOMLoaded(addUtterances);
   </a>
  </li>
 </ul>
-<ul class="current nav sidenav_l1">
+<ul class="nav sidenav_l1">
  <li class="toctree-l1">
   <a class="reference internal" href="logistic_regression.html">
    Logistic regression
@@ -893,8 +891,8 @@ commentsRunWhenDOMLoaded(addUtterances);
    Probabilistic PCA
   </a>
  </li>
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
+ <li class="toctree-l1">
+  <a class="reference internal" href="posterior_predictive_distribution.html">
    Posterior predictive distribution
   </a>
  </li>
@@ -2014,7 +2012,7 @@ commentsRunWhenDOMLoaded(addUtterances);
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../_sources/notes/posterior_predictive_distribution.md"><button type="button"
+        <a class="dropdown-buttons" href="../_sources/notes/boostrap.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.md</button></a>
         <!-- Download PDF via print -->
@@ -2046,15 +2044,11 @@ commentsRunWhenDOMLoaded(addUtterances);
         
               <div>
                 
-  <div class="section" id="posterior-predictive-distribution">
-<h1>Posterior predictive distribution<a class="headerlink" href="#posterior-predictive-distribution" title="Permalink to this headline">¶</a></h1>
-<p>We use the posterior distribution to generate new data and compare it to the observed quantities. The idea behind posterior predicitve check, is that if we manage to create a model that captures the data generative process well, than the data generated from the posterior distribution should be similar to the observed data.</p>
-<p>We draw:</p>
-<div class="math notranslate nohighlight">
-\[
-p(\tilde{y}|D) = \int p(\tilde{y}|\theta) p(\theta|D)d\theta
-\]</div>
-<p>We can use this distribution to check if the data generated from the model is similar to the observed data. This procedure is also known as <strong>posterior preditive check</strong>. If this fails we know that our model is wrong.</p>
+  <div class="section" id="boostrap">
+<h1>Boostrap<a class="headerlink" href="#boostrap" title="Permalink to this headline">¶</a></h1>
+<p>Monte carlo method to approximate the sampling distribution. It is particulary usefull when the estimator is a complex function of the true parameters. The idea is:</p>
+<p>Given we known the true parameters <span class="math notranslate nohighlight">\(\theta^*\)</span>, we can generate many (say S) fake datasets each of size N, from the true distribution <span class="math notranslate nohighlight">\(x_i^s \sim p(\cdot| \theta^*)\)</span> for <span class="math notranslate nohighlight">\(s = 1: S, i=1:N\)</span> now we can compute our estimator from each sample <span class="math notranslate nohighlight">\(\hat{\theta}^s = f(x_{1:N}^s)\)</span> and use the empirical distribution of the resulting samples as our estimate of the sampling distribution. Since in general <span class="math notranslate nohighlight">\(\theta\)</span> is unknown we can use <strong>parametric bootstrap</strong> to generate samples using <span class="math notranslate nohighlight">\(\hat{\theta}(D)\)</span> instead. Or <strong>nonparametric boostrap</strong> to sample <span class="math notranslate nohighlight">\(x_i^s\)</span> (with replacement ) from the original dataset D.</p>
+<p>We can think of Boostrap as a “poor man’s” posterior. Since in the case when the prior is not strong, the sampling distribuiton and the posterior can be quite similar.</p>
 </div>
 
     <script type="text/x-thebe-config">
@@ -2085,8 +2079,6 @@ p(\tilde{y}|D) = \int p(\tilde{y}|\theta) p(\theta|D)d\theta
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="principal_component_analysis.html" title="previous page">Principal component analysis</a>
-    <a class='right-next' id="next-link" href="order_statistiics_quantiles.html" title="next page">Order statistics</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">
