@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Markov chain Monte Carlo (MCMC) inference &#8212; study-notes</title>
+    <title>Steps of HMC iteration &#8212; study-notes</title>
     
   <link rel="stylesheet" href="../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
 
@@ -2012,7 +2012,7 @@ commentsRunWhenDOMLoaded(addUtterances);
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../_sources/notes/markov_chain_monte_carlo_inference.md"><button type="button"
+        <a class="dropdown-buttons" href="../_sources/notes/hamiltonian_monte_carlo_steps.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.md</button></a>
         <!-- Download PDF via print -->
@@ -2037,44 +2037,6 @@ commentsRunWhenDOMLoaded(addUtterances);
     <!-- Table of contents -->
     <div class="d-none d-md-block col-md-2 bd-toc show">
         
-        <div class="tocsection onthispage pt-5 pb-3">
-            <i class="fas fa-list"></i> Contents
-        </div>
-        <nav id="bd-toc-nav">
-            <ul class="nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#commong-algorithms">
-   Commong algorithms
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#speed-and-accuracy-of-mcmc">
-   Speed and accuracy of MCMC
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#mixing-rates-of-markov-chains">
-   <span class="xref myst">
-    Mixing rates of Markov chains
-   </span>
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#accuracy-of-mcmc">
-   <span class="xref myst">
-    Accuracy of MCMC
-   </span>
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#how-many-chains">
-   How many chains
-  </a>
- </li>
-</ul>
-
-        </nav>
-        
     </div>
 </div>
     <div id="main-content" class="row">
@@ -2082,36 +2044,48 @@ commentsRunWhenDOMLoaded(addUtterances);
         
               <div>
                 
-  <div class="section" id="markov-chain-monte-carlo-mcmc-inference">
-<h1>Markov chain Monte Carlo (MCMC) inference<a class="headerlink" href="#markov-chain-monte-carlo-mcmc-inference" title="Permalink to this headline">¶</a></h1>
-<p>In general classic <a class="reference internal" href="monte_carlo_inference.html"><span class="doc std std-doc">Monte Carlo methods</span></a> do not work well in high dimension space. MCMC are more efficient.</p>
-<p>The basic idea of MCMC is to construct a Markov chain on the state pace <span class="math notranslate nohighlight">\(X\)</span> whose stationary distribution is the target density <span class="math notranslate nohighlight">\(p^*(x)\)</span> of interest. That is, we perform random walk on the state space  X is proportional ot <span class="math notranslate nohighlight">\(p^*(x)\)</span>. By drawing <strong>correlated</strong> samples <span class="math notranslate nohighlight">\(x_0, x_1, \cdots\)</span>, from the chain, we can perform Monte Carlo integration with respect to <span class="math notranslate nohighlight">\(p^*\)</span>.</p>
-<div class="section" id="commong-algorithms">
-<h2>Commong algorithms<a class="headerlink" href="#commong-algorithms" title="Permalink to this headline">¶</a></h2>
+  <div class="section" id="steps-of-hmc-iteration">
+<h1>Steps of HMC iteration<a class="headerlink" href="#steps-of-hmc-iteration" title="Permalink to this headline">¶</a></h1>
+<ol>
+<li><p>The iteration begins by setting <span class="math notranslate nohighlight">\(\phi\)</span> with a random draw form <span class="math notranslate nohighlight">\(\theta \sim N(0, M)\)</span></p></li>
+<li><p>The main part of HMC iteration is a simultaneous update of <span class="math notranslate nohighlight">\((\theta, \phi)\)</span>, conducted via discrete mimicing physical dynamics. This involves L ‘leapfrog steps’, each scaled by a factor <span class="math notranslate nohighlight">\(\epsilon\)</span>. In leapfrog steps, booth <span class="math notranslate nohighlight">\(\theta\)</span> and <span class="math notranslate nohighlight">\(\phi\)</span> are changed, each in relation to the other.</p>
+<p>Each of the L leapfrog steps procede as follows:</p>
+<ol>
+<li><p>Use the gradient of the log posterior density of <span class="math notranslate nohighlight">\(\theta\)</span> to make an half step of <span class="math notranslate nohighlight">\(\phi\)</span></p>
+<div class="math notranslate nohighlight">
+\[ \phi \leftarrow \phi + \frac{1}{2} \epsilon \frac{d \log p(\theta|y)}{d \theta} \]</div>
+</li>
+<li><p>Use the momentum vector <span class="math notranslate nohighlight">\(\phi\)</span> to update the ‘position’ vector <span class="math notranslate nohighlight">\(\theta\)</span></p>
+<div class="math notranslate nohighlight">
+\[\theta \leftarrow \theta + \epsilon M^{-1}\phi \]</div>
 <ul class="simple">
-<li><p><a class="reference internal" href="gibs_sampling.html"><span class="doc std std-doc">Gibs Sampling</span></a></p></li>
-<li><p>Metropolis hastings
-//TODO: Finish</p></li>
-<li><p><a class="reference internal" href="hamiltonian_monte_carlo.html"><span class="doc std std-doc">Hamiltonian monte carlo</span></a></p></li>
+<li><p><span class="math notranslate nohighlight">\(\epsilon\)</span> can be used as an tuning parameter</p></li>
 </ul>
-</div>
-<div class="section" id="speed-and-accuracy-of-mcmc">
-<h2>Speed and accuracy of MCMC<a class="headerlink" href="#speed-and-accuracy-of-mcmc" title="Permalink to this headline">¶</a></h2>
-<p>We start MCMC from an arbitrary initial state. If we see enough samples, only than has the chain “forgotten” where it has started from will the samples be comming from the chain’s stationary distribution. Samples collected before the chain has reached its stationary distribution do not come from <span class="math notranslate nohighlight">\(p^*\)</span>, and are usually thrown away. The initial period, whose samples will be ignored, is called <strong>burn-in phase</strong>.</p>
-<p>Unfortunatelly diagnose when a chain has burned in is difficult, and it is one of the fundamental weaknesses of MCMC.</p>
-</div>
-<div class="section" id="mixing-rates-of-markov-chains">
-<h2><a class="reference internal" href="markov_chain_monte_carlo_convergence.html"><span class="doc std std-doc">Mixing rates of Markov chains</span></a><a class="headerlink" href="#mixing-rates-of-markov-chains" title="Permalink to this headline">¶</a></h2>
-<p>The amount of time it takes for a Markov chain to converge to the stationary distribution, and forget its initial state, is called the <strong>mixing time</strong>.</p>
-</div>
-<div class="section" id="accuracy-of-mcmc">
-<h2><a class="reference internal" href="markov_chain_monte_carlo_accuracy.html"><span class="doc std std-doc">Accuracy of MCMC</span></a><a class="headerlink" href="#accuracy-of-mcmc" title="Permalink to this headline">¶</a></h2>
-<p>Samples produces by MCMC are autocorrelated, and this reduces their information content relative to independent or perfect samples. Thus we need to estimate how accurate the samples are.</p>
-</div>
-<div class="section" id="how-many-chains">
-<h2>How many chains<a class="headerlink" href="#how-many-chains" title="Permalink to this headline">¶</a></h2>
-<p>In practice it is common to run a medium number of chains (~3) of medium lenght (~ 100k steps), and take samples from each afther discarting the first half of the samples. If we initialize at a local mode, we may be able to keep more samples, sometimes we can keep all of them.</p>
-</div>
+</li>
+<li><p>Again use the gradient of <span class="math notranslate nohighlight">\(\theta\)</span> to half update <span class="math notranslate nohighlight">\(\psi\)</span></p>
+<div class="math notranslate nohighlight">
+\[\phi \leftarrow \phi + \frac{1}{2} \epsilon \frac{d \log p(\theta|y)}{d \theta}\]</div>
+</li>
+</ol>
+<p>This algorithm is called leap-frog, which splits the momentum update into half steps, is a discrete approximation to physical Hamiltonian dynamics in which booth position and momentum evovle in continuous space.</p>
+<p>In the limit <span class="math notranslate nohighlight">\(\epsilon \rightarrow 0\)</span>, leapfrog preserves <span class="math notranslate nohighlight">\(p(\theta, \phi | y)\)</span>. The intuition is:</p>
+<ul class="simple">
+<li><p>If <span class="math notranslate nohighlight">\(\frac{d \log p(\theta|y)}{d \theta}\)</span> is zero, than we in a flat region and <span class="math notranslate nohighlight">\(\theta\)</span> will scate along with constant velocity</p></li>
+<li><p>If <span class="math notranslate nohighlight">\(\frac{d \log p(\theta|y)}{d \theta}\)</span> is negative, than the momentum will decrease until it stops and turns the other direction</p></li>
+<li><p>If <span class="math notranslate nohighlight">\(\frac{d \log p(\theta|y)}{d \theta}\)</span> is positive, then we gain momentum until we pass the mode and start to slow down.</p></li>
+</ul>
+</li>
+<li><p>Unfortunately for finite <span class="math notranslate nohighlight">\(\epsilon\)</span>, leapfrog wont approximate the trajectory perfectly, but with an error <span class="math notranslate nohighlight">\(\delta\)</span> . Fortunately this error with L steps is not <span class="math notranslate nohighlight">\(L\delta\)</span> but it is wawing back and fort. For correcting this error we require an accept/reject step.</p>
+<p>Label <span class="math notranslate nohighlight">\(\theta^{t-1}, \phi^{t-1}\)</span> as the values at the start of the leap-forg step <span class="math notranslate nohighlight">\(\theta^*, \phi^*\)</span> afther L leap frog steps. The acccept reject step:</p>
+<div class="math notranslate nohighlight">
+\[r = \frac{p(\theta^*| y)p(\phi^*)}{p(\theta^{t-1}|y)p(\phi^{t-1})} \]</div>
+</li>
+<li><p>Set</p>
+<div class="math notranslate nohighlight">
+\[\begin{split} \theta^t = \begin{cases} \theta^* &amp;&amp; \text{ with probability } \min(r,1) \\ \theta^{t-1} &amp;&amp; \text { otherwise } \end{cases}\end{split}\]</div>
+<p>We do not need to set <span class="math notranslate nohighlight">\(\phi^t\)</span> since at step 1 we set it to a new value</p>
+</li>
+</ol>
 </div>
 
     <script type="text/x-thebe-config">

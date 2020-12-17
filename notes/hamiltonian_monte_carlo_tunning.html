@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Markov chain Monte Carlo (MCMC) inference &#8212; study-notes</title>
+    <title>Hamiltonian Monte Carlo Tunning parameters &#8212; study-notes</title>
     
   <link rel="stylesheet" href="../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
 
@@ -2012,7 +2012,7 @@ commentsRunWhenDOMLoaded(addUtterances);
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../_sources/notes/markov_chain_monte_carlo_inference.md"><button type="button"
+        <a class="dropdown-buttons" href="../_sources/notes/hamiltonian_monte_carlo_tunning.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.md</button></a>
         <!-- Download PDF via print -->
@@ -2043,33 +2043,21 @@ commentsRunWhenDOMLoaded(addUtterances);
         <nav id="bd-toc-nav">
             <ul class="nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#commong-algorithms">
-   Commong algorithms
+  <a class="reference internal nav-link" href="#how-to-set-hmc">
+   How to set HMC
   </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#speed-and-accuracy-of-mcmc">
-   Speed and accuracy of MCMC
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#mixing-rates-of-markov-chains">
-   <span class="xref myst">
-    Mixing rates of Markov chains
-   </span>
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#accuracy-of-mcmc">
-   <span class="xref myst">
-    Accuracy of MCMC
-   </span>
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#how-many-chains">
-   How many chains
-  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#locally-adaptive-hmc">
+     Locally adaptive HMC
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#no-u-turn-sampler">
+     No U-turn sampler
+    </a>
+   </li>
+  </ul>
  </li>
 </ul>
 
@@ -2082,35 +2070,31 @@ commentsRunWhenDOMLoaded(addUtterances);
         
               <div>
                 
-  <div class="section" id="markov-chain-monte-carlo-mcmc-inference">
-<h1>Markov chain Monte Carlo (MCMC) inference<a class="headerlink" href="#markov-chain-monte-carlo-mcmc-inference" title="Permalink to this headline">¶</a></h1>
-<p>In general classic <a class="reference internal" href="monte_carlo_inference.html"><span class="doc std std-doc">Monte Carlo methods</span></a> do not work well in high dimension space. MCMC are more efficient.</p>
-<p>The basic idea of MCMC is to construct a Markov chain on the state pace <span class="math notranslate nohighlight">\(X\)</span> whose stationary distribution is the target density <span class="math notranslate nohighlight">\(p^*(x)\)</span> of interest. That is, we perform random walk on the state space  X is proportional ot <span class="math notranslate nohighlight">\(p^*(x)\)</span>. By drawing <strong>correlated</strong> samples <span class="math notranslate nohighlight">\(x_0, x_1, \cdots\)</span>, from the chain, we can perform Monte Carlo integration with respect to <span class="math notranslate nohighlight">\(p^*\)</span>.</p>
-<div class="section" id="commong-algorithms">
-<h2>Commong algorithms<a class="headerlink" href="#commong-algorithms" title="Permalink to this headline">¶</a></h2>
-<ul class="simple">
-<li><p><a class="reference internal" href="gibs_sampling.html"><span class="doc std std-doc">Gibs Sampling</span></a></p></li>
-<li><p>Metropolis hastings
-//TODO: Finish</p></li>
-<li><p><a class="reference internal" href="hamiltonian_monte_carlo.html"><span class="doc std std-doc">Hamiltonian monte carlo</span></a></p></li>
-</ul>
+  <div class="section" id="hamiltonian-monte-carlo-tunning-parameters">
+<h1>Hamiltonian Monte Carlo Tunning parameters<a class="headerlink" href="#hamiltonian-monte-carlo-tunning-parameters" title="Permalink to this headline">¶</a></h1>
+<p>There are 3 places where we can tune HMC</p>
+<ol class="simple">
+<li><p>Proposal distribution <span class="math notranslate nohighlight">\(p(\phi)\)</span>, where we can set the diagonal entries of the ‘mass matrix’ M</p></li>
+<li><p><span class="math notranslate nohighlight">\(\epsilon\)</span> - scaling factor of the leap-frog steps</p></li>
+<li><p><span class="math notranslate nohighlight">\(L\)</span> - number of leap-frog steps</p></li>
+</ol>
+<p>If we perform adaptive tunning of these parameter we need to split into a warmup stage, where alter the parameters and fixed, where the parameters are fixed, and from which we keep samplers for inference.</p>
+<div class="section" id="how-to-set-hmc">
+<h2>How to set HMC<a class="headerlink" href="#how-to-set-hmc" title="Permalink to this headline">¶</a></h2>
+<ol class="simple">
+<li><p>M should be a crude scale of the target distribution. But by default we can use the identity matrix.</p></li>
+<li><p>Set <span class="math notranslate nohighlight">\(\epsilon L = 1\)</span>. With an default <span class="math notranslate nohighlight">\(\epsilon = 0.1, L = 10\)</span>.</p></li>
+<li><p>The target acceptance we should aim for <span class="math notranslate nohighlight">\(65%\)</span>. If it is lower then we should lower <span class="math notranslate nohighlight">\(\epsilon\)</span> and  increase L, and vice versa</p></li>
+</ol>
+<div class="section" id="locally-adaptive-hmc">
+<h3>Locally adaptive HMC<a class="headerlink" href="#locally-adaptive-hmc" title="Permalink to this headline">¶</a></h3>
+<p>For dificult problems, it would be desirable for the tunning parameters to wary as the algorithm moves trough the posterior distribution, with the mass matrix M scaling the local curvature of the log density, the step size <span class="math notranslate nohighlight">\(\epsilon\)</span> getting smaller in areas of high curvature, and <span class="math notranslate nohighlight">\(L\)</span> large enough to move far trough the posterior, without truning arround. These requriements fuel more complicated algorithms but they are more efficient. Examples:</p>
 </div>
-<div class="section" id="speed-and-accuracy-of-mcmc">
-<h2>Speed and accuracy of MCMC<a class="headerlink" href="#speed-and-accuracy-of-mcmc" title="Permalink to this headline">¶</a></h2>
-<p>We start MCMC from an arbitrary initial state. If we see enough samples, only than has the chain “forgotten” where it has started from will the samples be comming from the chain’s stationary distribution. Samples collected before the chain has reached its stationary distribution do not come from <span class="math notranslate nohighlight">\(p^*\)</span>, and are usually thrown away. The initial period, whose samples will be ignored, is called <strong>burn-in phase</strong>.</p>
-<p>Unfortunatelly diagnose when a chain has burned in is difficult, and it is one of the fundamental weaknesses of MCMC.</p>
+<div class="section" id="no-u-turn-sampler">
+<h3>No U-turn sampler<a class="headerlink" href="#no-u-turn-sampler" title="Permalink to this headline">¶</a></h3>
+<p>Here we adapt L at each step instead of running it for a fixed length. The trajectory at each iteration continues until it turns arround (until the dot product between the momentum variable <span class="math notranslate nohighlight">\(\phi\)</span> and the distance traveled from the position <span class="math notranslate nohighlight">\(\theta\)</span> at the start it not negative) . However this alone is not enough, since ti does not guarantee that we will statisfy detailed balance equation, and we need to alow for moving tovard and backward along the trajectory. This procedure also adaptively tunes the mass matrix M and <span class="math notranslate nohighlight">\(\epsilon\)</span> during warm up phase, but it is fixed after.</p>
+<p>No U-turn sampler has difficulties exploring distributions with very short-tails or very long-tails. It fails to transition from center to the tails.</p>
 </div>
-<div class="section" id="mixing-rates-of-markov-chains">
-<h2><a class="reference internal" href="markov_chain_monte_carlo_convergence.html"><span class="doc std std-doc">Mixing rates of Markov chains</span></a><a class="headerlink" href="#mixing-rates-of-markov-chains" title="Permalink to this headline">¶</a></h2>
-<p>The amount of time it takes for a Markov chain to converge to the stationary distribution, and forget its initial state, is called the <strong>mixing time</strong>.</p>
-</div>
-<div class="section" id="accuracy-of-mcmc">
-<h2><a class="reference internal" href="markov_chain_monte_carlo_accuracy.html"><span class="doc std std-doc">Accuracy of MCMC</span></a><a class="headerlink" href="#accuracy-of-mcmc" title="Permalink to this headline">¶</a></h2>
-<p>Samples produces by MCMC are autocorrelated, and this reduces their information content relative to independent or perfect samples. Thus we need to estimate how accurate the samples are.</p>
-</div>
-<div class="section" id="how-many-chains">
-<h2>How many chains<a class="headerlink" href="#how-many-chains" title="Permalink to this headline">¶</a></h2>
-<p>In practice it is common to run a medium number of chains (~3) of medium lenght (~ 100k steps), and take samples from each afther discarting the first half of the samples. If we initialize at a local mode, we may be able to keep more samples, sometimes we can keep all of them.</p>
 </div>
 </div>
 

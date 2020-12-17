@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Markov chain Monte Carlo (MCMC) inference &#8212; study-notes</title>
+    <title>Hamiltonian monte carlo &#8212; study-notes</title>
     
   <link rel="stylesheet" href="../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
 
@@ -2012,7 +2012,7 @@ commentsRunWhenDOMLoaded(addUtterances);
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../_sources/notes/markov_chain_monte_carlo_inference.md"><button type="button"
+        <a class="dropdown-buttons" href="../_sources/notes/hamiltonian_monte_carlo.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.md</button></a>
         <!-- Download PDF via print -->
@@ -2043,32 +2043,42 @@ commentsRunWhenDOMLoaded(addUtterances);
         <nav id="bd-toc-nav">
             <ul class="nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#commong-algorithms">
-   Commong algorithms
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#speed-and-accuracy-of-mcmc">
-   Speed and accuracy of MCMC
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#mixing-rates-of-markov-chains">
-   <span class="xref myst">
-    Mixing rates of Markov chains
+  <a class="reference internal nav-link" href="#momentum-distribution-p-theta">
+   Momentum distribution
+   <span class="math notranslate nohighlight">
+    \(p(\theta)\)
    </span>
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#accuracy-of-mcmc">
+  <a class="reference internal nav-link" href="#steps-of-hmc">
    <span class="xref myst">
-    Accuracy of MCMC
+    Steps of HMC
    </span>
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#how-many-chains">
-   How many chains
+  <a class="reference internal nav-link" href="#restricted-parameters-and-areas-of-zero-posterior-density">
+   Restricted parameters and areas of zero posterior density
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#tunning-parameters">
+   <span class="xref myst">
+    Tunning parameters
+   </span>
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#riemanian-adaptation">
+     Riemanian adaptation
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#combine-hmc-with-other-samples">
+   Combine HMC with other samples
   </a>
  </li>
 </ul>
@@ -2082,35 +2092,43 @@ commentsRunWhenDOMLoaded(addUtterances);
         
               <div>
                 
-  <div class="section" id="markov-chain-monte-carlo-mcmc-inference">
-<h1>Markov chain Monte Carlo (MCMC) inference<a class="headerlink" href="#markov-chain-monte-carlo-mcmc-inference" title="Permalink to this headline">¶</a></h1>
-<p>In general classic <a class="reference internal" href="monte_carlo_inference.html"><span class="doc std std-doc">Monte Carlo methods</span></a> do not work well in high dimension space. MCMC are more efficient.</p>
-<p>The basic idea of MCMC is to construct a Markov chain on the state pace <span class="math notranslate nohighlight">\(X\)</span> whose stationary distribution is the target density <span class="math notranslate nohighlight">\(p^*(x)\)</span> of interest. That is, we perform random walk on the state space  X is proportional ot <span class="math notranslate nohighlight">\(p^*(x)\)</span>. By drawing <strong>correlated</strong> samples <span class="math notranslate nohighlight">\(x_0, x_1, \cdots\)</span>, from the chain, we can perform Monte Carlo integration with respect to <span class="math notranslate nohighlight">\(p^*\)</span>.</p>
-<div class="section" id="commong-algorithms">
-<h2>Commong algorithms<a class="headerlink" href="#commong-algorithms" title="Permalink to this headline">¶</a></h2>
-<ul class="simple">
-<li><p><a class="reference internal" href="gibs_sampling.html"><span class="doc std std-doc">Gibs Sampling</span></a></p></li>
-<li><p>Metropolis hastings
-//TODO: Finish</p></li>
-<li><p><a class="reference internal" href="hamiltonian_monte_carlo.html"><span class="doc std std-doc">Hamiltonian monte carlo</span></a></p></li>
-</ul>
+  <div class="section" id="hamiltonian-monte-carlo">
+<h1>Hamiltonian monte carlo<a class="headerlink" href="#hamiltonian-monte-carlo" title="Permalink to this headline">¶</a></h1>
+<p>Also called hybrid monte carlo since it combines MCMC and deterministic simulation</p>
+<p>Hamiltonian monte carlo borrows an idea from physics to suppress the local random walk behaviour in Metropolis algorithm, allowing much faster progress trough the target distributions.</p>
+<p>For each compontent <span class="math notranslate nohighlight">\(\theta_j\)</span> in target space, we add an momentum variable <span class="math notranslate nohighlight">\(\phi_j\)</span>. Booth <span class="math notranslate nohighlight">\(\theta_j\)</span> and <span class="math notranslate nohighlight">\(\phi_j\)</span> are updated together in an Metropolis algorithm, in which the jumping distribution for <span class="math notranslate nohighlight">\(\theta\)</span> is determined by <span class="math notranslate nohighlight">\(\phi\)</span>. Each itreration of HMC has multiple steps, during which position and momentum evolves, where we move rapidly trough the space <span class="math notranslate nohighlight">\(\theta\)</span>, and we are able to turn corrners to preserve the total energy of the trajectory.</p>
+<p>We can view the momentum as an auxiliary variable, since we are only interested in <span class="math notranslate nohighlight">\(\theta\)</span>. In HMC the posterior <span class="math notranslate nohighlight">\(p(\theta|y)\)</span> is augumented by an independent distribution <span class="math notranslate nohighlight">\(p(\theta)\)</span> defining:</p>
+<div class="math notranslate nohighlight">
+\[p(\theta, \phi|y) = p(\phi)p(\theta|y) \]</div>
+<p>To perform HMC we also require the gradient of <span class="math notranslate nohighlight">\(\log p (\theta|y)\)</span></p>
+<div class="section" id="momentum-distribution-p-theta">
+<h2>Momentum distribution <span class="math notranslate nohighlight">\(p(\theta)\)</span><a class="headerlink" href="#momentum-distribution-p-theta" title="Permalink to this headline">¶</a></h2>
+<p>Usualy <span class="math notranslate nohighlight">\(\phi\)</span> is an multivariate Normal, with mean <span class="math notranslate nohighlight">\(0\)</span> and covariance matrix set to an pre specified ‘mass matrix’ M (naming is due the analogy of Hamiltonian dynamics). We commonly use an diagonal M, so components of <span class="math notranslate nohighlight">\(\phi\)</span> are independent, with <span class="math notranslate nohighlight">\(\phi_k \sim \mathcal{N}(0, M_{jj})\)</span> . It is useful for M to roughly scale with the inverse covariance matrix of the posterior distribution <span class="math notranslate nohighlight">\(var[\theta|y]^{-1}\)</span>, this gives us an more efficient sampler, but it is not required.</p>
 </div>
-<div class="section" id="speed-and-accuracy-of-mcmc">
-<h2>Speed and accuracy of MCMC<a class="headerlink" href="#speed-and-accuracy-of-mcmc" title="Permalink to this headline">¶</a></h2>
-<p>We start MCMC from an arbitrary initial state. If we see enough samples, only than has the chain “forgotten” where it has started from will the samples be comming from the chain’s stationary distribution. Samples collected before the chain has reached its stationary distribution do not come from <span class="math notranslate nohighlight">\(p^*\)</span>, and are usually thrown away. The initial period, whose samples will be ignored, is called <strong>burn-in phase</strong>.</p>
-<p>Unfortunatelly diagnose when a chain has burned in is difficult, and it is one of the fundamental weaknesses of MCMC.</p>
+<div class="section" id="steps-of-hmc">
+<h2><a class="reference internal" href="hamiltonian_monte_carlo_steps.html"><span class="doc std std-doc">Steps of HMC</span></a><a class="headerlink" href="#steps-of-hmc" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="mixing-rates-of-markov-chains">
-<h2><a class="reference internal" href="markov_chain_monte_carlo_convergence.html"><span class="doc std std-doc">Mixing rates of Markov chains</span></a><a class="headerlink" href="#mixing-rates-of-markov-chains" title="Permalink to this headline">¶</a></h2>
-<p>The amount of time it takes for a Markov chain to converge to the stationary distribution, and forget its initial state, is called the <strong>mixing time</strong>.</p>
+<div class="section" id="restricted-parameters-and-areas-of-zero-posterior-density">
+<h2>Restricted parameters and areas of zero posterior density<a class="headerlink" href="#restricted-parameters-and-areas-of-zero-posterior-density" title="Permalink to this headline">¶</a></h2>
+<p>HMC works only with all positive target distributions. If we at a given state ned up in an region with negative probability we can change the sign of the momentum to bounce back to positive regions. This preserves detailed balance..</p>
+<p>Another alternative is to reparametrize the model, take the log of params that are positive, sigmoid that are bounded between 0-1. However if we reparametrize we need to work out the Jacobian.</p>
 </div>
-<div class="section" id="accuracy-of-mcmc">
-<h2><a class="reference internal" href="markov_chain_monte_carlo_accuracy.html"><span class="doc std std-doc">Accuracy of MCMC</span></a><a class="headerlink" href="#accuracy-of-mcmc" title="Permalink to this headline">¶</a></h2>
-<p>Samples produces by MCMC are autocorrelated, and this reduces their information content relative to independent or perfect samples. Thus we need to estimate how accurate the samples are.</p>
+<div class="section" id="tunning-parameters">
+<h2><a class="reference internal" href="hamiltonian_monte_carlo_tunning.html"><span class="doc std std-doc">Tunning parameters</span></a><a class="headerlink" href="#tunning-parameters" title="Permalink to this headline">¶</a></h2>
+<p>There are 3 places where we can tune HMC</p>
+<ol class="simple">
+<li><p>Proposal distribution <span class="math notranslate nohighlight">\(p(\phi)\)</span>, where we can set the diagonal entries of the ‘mass matrix’ M</p></li>
+<li><p><span class="math notranslate nohighlight">\(\epsilon\)</span> - scaling factor of the leap-frog steps</p></li>
+<li><p><span class="math notranslate nohighlight">\(L\)</span> - number of leap-frog steps</p></li>
+</ol>
+<div class="section" id="riemanian-adaptation">
+<h3>Riemanian adaptation<a class="headerlink" href="#riemanian-adaptation" title="Permalink to this headline">¶</a></h3>
+<p>The mass matrix M is conform with local curvature of the log posterior density at each step. However this is inpractical in high dimensions.</p>
 </div>
-<div class="section" id="how-many-chains">
-<h2>How many chains<a class="headerlink" href="#how-many-chains" title="Permalink to this headline">¶</a></h2>
-<p>In practice it is common to run a medium number of chains (~3) of medium lenght (~ 100k steps), and take samples from each afther discarting the first half of the samples. If we initialize at a local mode, we may be able to keep more samples, sometimes we can keep all of them.</p>
+</div>
+<div class="section" id="combine-hmc-with-other-samples">
+<h2>Combine HMC with other samples<a class="headerlink" href="#combine-hmc-with-other-samples" title="Permalink to this headline">¶</a></h2>
+<p>If our model booth contains discrete and continuous distributions, it is common to partition the space into discrete and continuous parameters, then alternate between HMC update on continuous nad Gibbs/Metropolis on discrete</p>
 </div>
 </div>
 
