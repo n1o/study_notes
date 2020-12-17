@@ -6,7 +6,8 @@ The basic idea of MCMC is to construct a Markov chain on the state pace $X$ whos
 ## Commong algorithms
 * [Gibs Sampling](gibs_sampling.md)
 * Metropolis hastings
-* Hamiltonian monte carlo
+  //TODO: Finish
+* [Hamiltonian monte carlo](hamiltonian_monte_carlo.md)
 
 ## Speed and accuracy of MCMC
 
