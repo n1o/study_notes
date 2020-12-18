@@ -38,8 +38,9 @@ There are multiple approaches how to find $p(\theta|D)$ depending if we want an 
 
 Computing $p(\theta|D)$ can be nontrivial, but for some cases it can be achieved analyticaly. We require that we choose an [conjugate priors](conjugate_prior.md) to an likelihood.
 
-## Markov chain monte carlo
-//TODO MCMC
+## [Markov chain monte carlo](markov_chain_monte_carlo_inference.md)
+We build an markov chain whose stationary distribution is the posterior distribution.
+
 ## [Variational approximation](variational_inference.md) (Inference)
 We try to approximate the posterior using a distribution from tractable family. 
 
@@ -48,9 +49,8 @@ p(\theta|D) \approx q(\theta)
 $$
 
 We want this approximation to be tight ass possible.
-# Model averaging
-//TODO Model averagings
-
+# [Model averaging](bayesian_model_averaging.md)
+We can use the probability of the model $p(M|D)$ to average over.
 # Model selection
 Sometimes we need to choose the [best model](bayesian_model_selection.md)
 

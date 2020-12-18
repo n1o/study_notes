@@ -1859,7 +1859,9 @@ commentsRunWhenDOMLoaded(addUtterances);
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="bayesian_statistics.html#model-averaging">
-   Model averaging
+   <span class="xref myst">
+    Model averaging
+   </span>
   </a>
  </li>
  <li class="toctree-l1">
@@ -2039,6 +2041,20 @@ commentsRunWhenDOMLoaded(addUtterances);
     <!-- Table of contents -->
     <div class="d-none d-md-block col-md-2 bd-toc show">
         
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#another-view">
+   Another View
+  </a>
+ </li>
+</ul>
+
+        </nav>
+        
     </div>
 </div>
     <div id="main-content" class="row">
@@ -2072,7 +2088,26 @@ commentsRunWhenDOMLoaded(addUtterances);
 Z = e^{-E(\theta^*)} (2\pi)^{D/2} |H|^{-\frac{1}{2}}
 \end{split}\]</div>
 <p>Which is just a Gaussian approximation to the posterior, where the mean of the Gaussian is the mode, and the curvature is given by the inverse of the Hessian at the mode.</p>
-<p>This approximation is reasonable since the posterior becomes Gaussian-like if the sample size increases.s</p>
+<p>This approximation is reasonable since the posterior becomes Gaussian-like if the sample size increases.</p>
+<div class="section" id="another-view">
+<h2>Another View<a class="headerlink" href="#another-view" title="Permalink to this headline">¶</a></h2>
+<p>We assume that an unnormalized probability density <span class="math notranslate nohighlight">\(P^*(x)\)</span> whose normalizing constant is:</p>
+<div class="math notranslate nohighlight">
+\[Z_P \equiv \int P^* (x)dx\]</div>
+<p>and has a peak at point <span class="math notranslate nohighlight">\(x_0\)</span>. We then Taylor-expand the logarithm of <span class="math notranslate nohighlight">\(P^*(x)\)</span> arround this peak:</p>
+<div class="math notranslate nohighlight">
+\[\ln P^{*}(x) \simeq \ln P^{*}(x_0) - \frac{c}{2} (x - x_{0})^2 + \cdots \]</div>
+<p>where <span class="math notranslate nohighlight">\(c = \frac{\partial ^2}{\partial x^2} \ln P^{*}(x)|_{x = x_0}\)</span></p>
+<p>Then we approximate <span class="math notranslate nohighlight">\(P^*(x)\)</span> by an unnormalized Gaussian</p>
+<p><span class="math notranslate nohighlight">\(Q(x) \equiv P^*(x_0) \exp [- \frac{c}{2}(x - x_0)^2]\)</span></p>
+<p>Next we approximate the normalization constnat <span class="math notranslate nohighlight">\(Z_P\)</span> by the normalizing constant of the Gaussian.</p>
+<div class="math notranslate nohighlight">
+\[Z_Q = P^{*} (x_0) \sqrt{\frac{2 \pi}{c}} \]</div>
+<p>Now we can use Q to make prediction. This is widely-used in physics and it is know as the saddle-point approximation.</p>
+<p>The Laplace approximation is basis-dependent: if <span class="math notranslate nohighlight">\(x\)</span> is transformed to a nonlinear function <span class="math notranslate nohighlight">\(u(x)\)</span> and the density is transformed to <span class="math notranslate nohighlight">\(P (u) = P (x) |dx/du|\)</span></p>
+<p><img alt="" src="../_images/gaussian_approximation.png" /></p>
+<p>This procedure can be generalized into higher dimension.</p>
+</div>
 </div>
 
     <script type="text/x-thebe-config">

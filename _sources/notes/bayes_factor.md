@@ -11,3 +11,4 @@ $$p(M_0|D) = \frac{1}{BF_{1,0}  +1 }$$
 Now we can use this ration, to say which model is better or worse, and by how much.
 
 ## Computing
+We frame them as hierachical models.
