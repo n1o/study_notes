@@ -1,5 +1,5 @@
 ## [SVM](support_vector_machines.md) for regression.
-The problem with [kernelized ridge regression](kernel_trick.md) is that the solution vector w depends on all the training inputs. We now seek a method to produce a sparse estimate. We use a variant of **Hubert loss** function called the **epsilon insensitive loss function** defined as:
+We enforce sparsity by using for the loss function a variant of **Hubert loss** function called the **epsilon insensitive loss function** defined as:
 
 $$
 L_{\epsilon}(y, \hat{y}) = \begin{cases}
