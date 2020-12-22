@@ -40,7 +40,6 @@
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
-    <script src="../_static/language_data.js"></script>
     <script src="../_static/togglebutton.js"></script>
     <script src="../_static/clipboard.min.js"></script>
     <script src="../_static/copybutton.js"></script>
@@ -2069,7 +2068,7 @@ commentsRunWhenDOMLoaded(addUtterances);
                 
   <div class="section" id="kernels-derived-from-probabilistic-generative-models">
 <h1>Kernels derived from probabilistic generative models<a class="headerlink" href="#kernels-derived-from-probabilistic-generative-models" title="Permalink to this headline">¶</a></h1>
-<p>Suppose we have a probabilistic generative model of feature vectors, <span class="math notranslate nohighlight">\(p(x|\theta)\)</span>. Then there are several ways we can use this model to define kernel functions, and thereby make the model suitable for discriminative tasks.</p>
+<p>We have a probabilistic generative model of feature vectors, <span class="math notranslate nohighlight">\(p(x|\theta)\)</span>. We can use this model to define kernel functions, and thereby make the model suitable for discriminative tasks.</p>
 <div class="section" id="probability-product-kernels">
 <h2>Probability product kernels<a class="headerlink" href="#probability-product-kernels" title="Permalink to this headline">¶</a></h2>
 <p>One approach is to define a kernel as follows:</p>
@@ -2081,7 +2080,7 @@ commentsRunWhenDOMLoaded(addUtterances);
 <li><p><span class="math notranslate nohighlight">\(\rho \ge 0\)</span></p></li>
 <li><p><span class="math notranslate nohighlight">\(p(x|x_i)\)</span> is ofthen approximated by <span class="math notranslate nohighlight">\(p(x| \hat{\theta}(x_i))\)</span> where <span class="math notranslate nohighlight">\(\hat{\theta}(x_i)\)</span> is a parameter estimate computed using a single data vector.</p></li>
 </ul>
-<p>It may sound strange to fit a model only to a single data vector, but we use this kernel to compare two objects.</p>
+<p>We use this kernel to compare two objects. If we fit the model to <span class="math notranslate nohighlight">\(x_i\)</span> and the model thinks that <span class="math notranslate nohighlight">\(x_j\)</span> is likely, that means that <span class="math notranslate nohighlight">\(x_i\)</span> and <span class="math notranslate nohighlight">\(x_j\)</span> are similar.</p>
 <p>It turns out that one can compute the above equations for a variety of generative models, including ones with latent variables, such as HMMs. This provides one way to define kernels on variable length sequences.</p>
 </div>
 <div class="section" id="fisher-kernels">

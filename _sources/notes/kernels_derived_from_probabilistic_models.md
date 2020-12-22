@@ -1,6 +1,6 @@
 # Kernels derived from probabilistic generative models
 
-Suppose we have a probabilistic generative model of feature vectors, $p(x|\theta)$. Then there are several ways we can use this model to define kernel functions, and thereby make the model suitable for discriminative tasks.
+We have a probabilistic generative model of feature vectors, $p(x|\theta)$. We can use this model to define kernel functions, and thereby make the model suitable for discriminative tasks.
 
 ## Probability product kernels
 
@@ -13,7 +13,7 @@ $$
 * $\rho \ge 0$
 * $p(x|x_i)$ is ofthen approximated by $p(x| \hat{\theta}(x_i))$ where $\hat{\theta}(x_i)$ is a parameter estimate computed using a single data vector. 
 
-It may sound strange to fit a model only to a single data vector, but we use this kernel to compare two objects. 
+We use this kernel to compare two objects. If we fit the model to $x_i$ and the model thinks that $x_j$ is likely, that means that $x_i$ and $x_j$ are similar.
 
 It turns out that one can compute the above equations for a variety of generative models, including ones with latent variables, such as HMMs. This provides one way to define kernels on variable length sequences.
 

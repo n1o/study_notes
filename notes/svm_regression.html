@@ -40,7 +40,6 @@
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
-    <script src="../_static/language_data.js"></script>
     <script src="../_static/togglebutton.js"></script>
     <script src="../_static/clipboard.min.js"></script>
     <script src="../_static/copybutton.js"></script>
@@ -2050,7 +2049,7 @@ commentsRunWhenDOMLoaded(addUtterances);
                 
   <div class="section" id="svm-for-regression">
 <h1><a class="reference internal" href="support_vector_machines.html"><span class="doc std std-doc">SVM</span></a> for regression.<a class="headerlink" href="#svm-for-regression" title="Permalink to this headline">¶</a></h1>
-<p>The problem with <a class="reference internal" href="kernel_trick.html"><span class="doc std std-doc">kernelized ridge regression</span></a> is that the solution vector w depends on all the training inputs. We now seek a method to produce a sparse estimate. We use a variant of <strong>Hubert loss</strong> function called the <strong>epsilon insensitive loss function</strong> defined as:</p>
+<p>We enforce sparsity by using for the loss function a variant of <strong>Hubert loss</strong> function called the <strong>epsilon insensitive loss function</strong> defined as:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
 L_{\epsilon}(y, \hat{y}) = \begin{cases}
