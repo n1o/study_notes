@@ -21,8 +21,6 @@ It is difficult ot estimate how reliable the estimator $\bar{\Phi}$ is. The vari
 
 It can happen that $Q(x)$ is small where $|\phi(x)P^*(x)|$ is large, then there is a possibility that even afther many samples $x^r$ non of them would fall in that region. In this case the estimator for $\Phi$ would be drastically wrong. 
 
-
-
 ## Choosing the approximation function Q
 
 Importance sampling is NOT useful if the importance weights wary substatially. The worst scenario is when the importance ratios are small with high probability, and huge with small probability. This happens if P has wider tails than Q. 

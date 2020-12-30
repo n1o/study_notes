@@ -63,7 +63,7 @@ $$
 $$
 * $r = ||x - x,||$
 
-* $v > 0 $
+* $v > 0$
 * $l > 0$
 
 * $K_v$ is a modified Bessel function
