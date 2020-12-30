@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Kernel function &#8212; study-notes</title>
+    <title>Acceleration &#8212; study-notes</title>
     
   <link rel="stylesheet" href="../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
 
@@ -90,8 +90,6 @@ commentsRunWhenDOMLoaded(addUtterances);
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Linear discriminant analysis" href="linear_discriminant_analysis.html" />
-    <link rel="prev" title="Information norm" href="gaussian_distribution_information_form.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -128,7 +126,7 @@ commentsRunWhenDOMLoaded(addUtterances);
   </a>
  </li>
 </ul>
-<ul class="current nav sidenav_l1">
+<ul class="nav sidenav_l1">
  <li class="toctree-l1">
   <a class="reference internal" href="logistic_regression.html">
    Logistic regression
@@ -1226,8 +1224,8 @@ commentsRunWhenDOMLoaded(addUtterances);
    Information norm
   </a>
  </li>
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
+ <li class="toctree-l1">
+  <a class="reference internal" href="kernel.html">
    Kernel function
   </a>
  </li>
@@ -2015,7 +2013,7 @@ commentsRunWhenDOMLoaded(addUtterances);
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../_sources/notes/kernel.md"><button type="button"
+        <a class="dropdown-buttons" href="../_sources/notes/one_dimensional_acceleration.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.md</button></a>
         <!-- Download PDF via print -->
@@ -2046,30 +2044,35 @@ commentsRunWhenDOMLoaded(addUtterances);
         <nav id="bd-toc-nav">
             <ul class="nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#rbf-gaussian-kernel">
-   RBF (Gaussian) Kernel
+  <a class="reference internal nav-link" href="#units">
+   Units
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#cosine-similarity">
-   Cosine similarity
+  <a class="reference internal nav-link" href="#average-acceleration">
+   Average acceleration
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#mercer-kernels">
-   <span class="xref myst">
-    Mercer kernels
-   </span>
+  <a class="reference internal nav-link" href="#instantaneous-acceleration">
+   Instantaneous acceleration
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#linear-kernels">
-   Linear kernels
+  <a class="reference internal nav-link" href="#motion-with-contant-accelration">
+   Motion with contant accelration
   </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#position-afther-constant-acceleration">
+     Position afther constant acceleration
+    </a>
+   </li>
+  </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#matern-kernels">
-   Matern kernels
+  <a class="reference internal nav-link" href="#free-falling">
+   Free falling
   </a>
  </li>
 </ul>
@@ -2083,78 +2086,90 @@ commentsRunWhenDOMLoaded(addUtterances);
         
               <div>
                 
-  <div class="section" id="kernel-function">
-<h1>Kernel function<a class="headerlink" href="#kernel-function" title="Permalink to this headline">¶</a></h1>
-<p>We define a <strong>kernel function</strong> to be a real-values function of two arguments</p>
+  <div class="section" id="acceleration">
+<h1>Acceleration<a class="headerlink" href="#acceleration" title="Permalink to this headline">¶</a></h1>
+<p>If the velocity of a moving object changes with time, we say that the object has acceleration.Acceleration is a quantitative description of the rate of change of velocity with time. In general we divide an change in velocity by time. Thus this is again an vector quantity.</p>
+<div class="section" id="units">
+<h2>Units<a class="headerlink" href="#units" title="Permalink to this headline">¶</a></h2>
+<div class="math notranslate nohighlight">
+\[
+\frac{(m/s)}{s} = m/s^2
+\]</div>
+<p>They are in meters per second sequared.</p>
+</div>
+<div class="section" id="average-acceleration">
+<h2>Average acceleration<a class="headerlink" href="#average-acceleration" title="Permalink to this headline">¶</a></h2>
+<div class="math notranslate nohighlight">
+\[
+a_{av,x} = \frac{\Delta v_x}{\Delta t}
+\]</div>
+<p>It is the difference between velocity divided by time. This difference can be negative if we are deaccelerating. Thus the velocity decreases.</p>
+</div>
+<div class="section" id="instantaneous-acceleration">
+<h2>Instantaneous acceleration<a class="headerlink" href="#instantaneous-acceleration" title="Permalink to this headline">¶</a></h2>
+<div class="math notranslate nohighlight">
+\[
+a_{x} =\lim_{\Delta t \rightarrow 0} \frac{\Delta v_x}{\Delta t}
+\]</div>
+<p>It is the acceleration at any given time or point along the path. In general if we talk about acceleration we think about instantaneous acceleration.</p>
+<p><img alt="" src="../_images/acceleration.png" /></p>
+<p>We can express acceleration as a function of t.</p>
+<p>The average acceleration between any two points on a graph of velocity versus time equals the slope of a line connecting those points.
+The instantaneous acceleration at any point on the graph equals the slope of the line tangent to the curve at that point.</p>
+</div>
+<div class="section" id="motion-with-contant-accelration">
+<h2>Motion with contant accelration<a class="headerlink" href="#motion-with-contant-accelration" title="Permalink to this headline">¶</a></h2>
+<p>The instantaneous acceleration does not change.</p>
+<p><img alt="" src="../_images/constant_acceleration.png" /></p>
+<p>The change in velocity is a linear curve. The velocity after accelerating is:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
-    \mathcal{k}(x, x') \in R \\
-    x,x' \in \mathcal{X}
+a_x = \frac{v_x - v_{0x}}{t-0} \\
+v_x = v_{0x} + a_x t
 \end{split}\]</div>
-<p>Typically the function is symmetric, and non-negative, so it can be interpreted as a measure of similarity. (But this is not required)</p>
-<div class="section" id="rbf-gaussian-kernel">
-<h2>RBF (Gaussian) Kernel<a class="headerlink" href="#rbf-gaussian-kernel" title="Permalink to this headline">¶</a></h2>
-<p>Also known as <strong>squared exponential kernel</strong> (SE)</p>
-<div class="math notranslate nohighlight">
-\[
-\mathcal{k}(x, x') = \exp(- \frac{1}{2}(x - x')^T\Sigma^{-1}(x - x'))
-\]</div>
-<p>In case that <span class="math notranslate nohighlight">\(\Sigma\)</span> is diagonal we can simplify</p>
-<div class="math notranslate nohighlight">
-\[
-\mathcal{k}(x, x') = \exp(- \frac{1}{2}\sum_{j=1}^D \frac{1}{\sigma^2_j}(x_j - x_j')^2)
-\]</div>
-<ul class="simple">
-<li><p><span class="math notranslate nohighlight">\(\sigma_j\)</span> can be interpreted as defining the <strong>characteristic length scale</strong> of dimension j. If <span class="math notranslate nohighlight">\(\sigma_j = \infty\)</span>, the corresponding dimension is ignored, hence this is known as the <strong>ARD kernel</strong>.</p></li>
-</ul>
-<p>If <span class="math notranslate nohighlight">\(\Sigma\)</span> is spehrical, we get the isotropic kernel. (This is an example of a <strong>radial basis function</strong>, since it is only a function of <span class="math notranslate nohighlight">\(||x - x'||\)</span>)</p>
-<div class="math notranslate nohighlight">
-\[
-\mathcal{k}(x, x') = \exp(- \frac{||x - x'||^2}{2\sigma^2})
-\]</div>
-<ul class="simple">
-<li><p><span class="math notranslate nohighlight">\(\sigma^2\)</span> is known as the bandwidth</p></li>
-</ul>
-</div>
-<div class="section" id="cosine-similarity">
-<h2>Cosine similarity<a class="headerlink" href="#cosine-similarity" title="Permalink to this headline">¶</a></h2>
-<div class="math notranslate nohighlight">
-\[
-\mathcal{x_i, x_{i'}} = \frac{x_i^Tx_{i'}}{||x_i||_2 ||x_{i'}||_2}
-\]</div>
-<p>Here we measure the cosine of the angle between two vectors. This is bounded to be within 0 and 1.</p>
-<p>We can extend this to <a class="reference internal" href="tf_idf_kernel.html"><span class="doc std std-doc">compare documents</span></a>.</p>
-</div>
-<div class="section" id="mercer-kernels">
-<h2><a class="reference internal" href="mercer_kernel.html"><span class="doc std std-doc">Mercer kernels</span></a><a class="headerlink" href="#mercer-kernels" title="Permalink to this headline">¶</a></h2>
-<p>Sometimes kernel function have to be positive definite.</p>
-</div>
-<div class="section" id="linear-kernels">
-<h2>Linear kernels<a class="headerlink" href="#linear-kernels" title="Permalink to this headline">¶</a></h2>
+<p>Thus it is the initial velocity plus, t times the acceleration.</p>
+<p>If the acceleration is constant we can calculate the average velocity:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
-\mathcal{k}(x, x') = \phi(x)^T\phi(x') \\ 
-\phi(x) = x \\
-\mathcal{k}(x, x') = x^Tx'
+v_{av,x} = \frac{v_{0x} + v_x}{2} \\
+ = \frac{1}{2} (v_{0x} + v_{0x} + a_xt) \\ 
+ = v_{0x} + \frac{1}{2}a_xt \\
+ = \frac{\Delta x}{\Delta t}
 \end{split}\]</div>
-<p>This kernel is especially usefull if the data is high dimensional. In such case, the decision boundary is likely to be represented by a linear combination of the original features.</p>
-</div>
-<div class="section" id="matern-kernels">
-<h2>Matern kernels<a class="headerlink" href="#matern-kernels" title="Permalink to this headline">¶</a></h2>
-<p>Commonly used in Gaussian processes regression and has the form:</p>
+<p>If <span class="math notranslate nohighlight">\(\Delta t = t - 0\)</span> (we start at t = 0) we can simplify to:</p>
 <div class="math notranslate nohighlight">
 \[
-\mathcal{r} = \frac{2^{1 - v}}{\Gamma(v)} (\frac{\sqrt{2v}r}{l})^v K_v(\frac{\sqrt{2v}r}{l})
+v_{av,x} = \frac{x-x_0}{t}
 \]</div>
-<ul class="simple">
-<li><p><span class="math notranslate nohighlight">\(r = ||x - x,||\)</span></p></li>
-<li><p><span class="math notranslate nohighlight">\(v &gt; 0\)</span></p></li>
-<li><p><span class="math notranslate nohighlight">\(l &gt; 0\)</span></p></li>
-<li><p><span class="math notranslate nohighlight">\(K_v\)</span> is a modified Bessel function</p></li>
-</ul>
-<p>As we take <span class="math notranslate nohighlight">\(v \rightarrow \infty\)</span> this approaches the SE kernel. If <span class="math notranslate nohighlight">\(v = 1/2\)</span> the kernel simplifies to</p>
-<p><span class="math notranslate nohighlight">\(\mathcal{k}(r) = \exp(-r /l)\)</span></p>
-<p>If <span class="math notranslate nohighlight">\(D=1\)</span>, and we use this kernel to define a Gaussian process, we get the <strong>Ornstein-Uhlenbeck process</strong>, which describes the velocity of a praticle undergoing Brownian motion.</p>
+<div class="section" id="position-afther-constant-acceleration">
+<h3>Position afther constant acceleration<a class="headerlink" href="#position-afther-constant-acceleration" title="Permalink to this headline">¶</a></h3>
+<p>We can put the equations together do derive:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+v_{0x} + \frac{1}{2}a_xt = \frac{x - x_0}{t} \\
+x = x_0 + v_{0x}t + \frac{1}{2} a_xt^2
+\end{split}\]</div>
+<p>If we express <span class="math notranslate nohighlight">\(t = \frac{v_x - v_{0x}}{a_x}\)</span> (the time we need reach the target velocity under acceleration <span class="math notranslate nohighlight">\(a_x\)</span>). Now we can express the distance traveled as:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+x = x_0 + v_{0x} (\frac{v_x - v_{0x}}{a_x}) + \frac{1}{2}a_x (\frac{v_x - v_{0x}}{a_x})^2 \\
+2a_x(x - x_0) = 2v_{0x} v_x - 2v_{0x}^2 + v_x^2
+ - 2v_{0x}v_x + v_{0x}^2
+\end{split}\]</div>
+<p>This can be simplified into:</p>
+<div class="math notranslate nohighlight">
+\[
+v_x^2 = v_{0x}^2 + 2a_x(x - x_0) 
+\]</div>
+</div>
+</div>
+<div class="section" id="free-falling">
+<h2>Free falling<a class="headerlink" href="#free-falling" title="Permalink to this headline">¶</a></h2>
+<p>It is the acceleration due gravity, on earth this is:</p>
+<div class="math notranslate nohighlight">
+\[
+a = -g = 9.8m/s^2
+\]</div>
 </div>
 </div>
 
@@ -2186,8 +2201,6 @@ commentsRunWhenDOMLoaded(addUtterances);
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="gaussian_distribution_information_form.html" title="previous page">Information norm</a>
-    <a class='right-next' id="next-link" href="linear_discriminant_analysis.html" title="next page">Linear discriminant analysis</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">

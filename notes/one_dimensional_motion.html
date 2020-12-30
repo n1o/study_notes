@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Kernel function &#8212; study-notes</title>
+    <title>One dimensional motion &#8212; study-notes</title>
     
   <link rel="stylesheet" href="../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
 
@@ -90,8 +90,6 @@ commentsRunWhenDOMLoaded(addUtterances);
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Linear discriminant analysis" href="linear_discriminant_analysis.html" />
-    <link rel="prev" title="Information norm" href="gaussian_distribution_information_form.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -128,7 +126,7 @@ commentsRunWhenDOMLoaded(addUtterances);
   </a>
  </li>
 </ul>
-<ul class="current nav sidenav_l1">
+<ul class="nav sidenav_l1">
  <li class="toctree-l1">
   <a class="reference internal" href="logistic_regression.html">
    Logistic regression
@@ -1226,8 +1224,8 @@ commentsRunWhenDOMLoaded(addUtterances);
    Information norm
   </a>
  </li>
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
+ <li class="toctree-l1">
+  <a class="reference internal" href="kernel.html">
    Kernel function
   </a>
  </li>
@@ -2015,7 +2013,7 @@ commentsRunWhenDOMLoaded(addUtterances);
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../_sources/notes/kernel.md"><button type="button"
+        <a class="dropdown-buttons" href="../_sources/notes/one_dimensional_motion.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.md</button></a>
         <!-- Download PDF via print -->
@@ -2046,30 +2044,32 @@ commentsRunWhenDOMLoaded(addUtterances);
         <nav id="bd-toc-nav">
             <ul class="nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#rbf-gaussian-kernel">
-   RBF (Gaussian) Kernel
+  <a class="reference internal nav-link" href="#displacement">
+   Displacement
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#cosine-similarity">
-   Cosine similarity
+  <a class="reference internal nav-link" href="#velocity">
+   Velocity
   </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#average-velocity">
+     Average velocity
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#instantaneous-velocity">
+     Instantaneous velocity
+    </a>
+   </li>
+  </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#mercer-kernels">
+  <a class="reference internal nav-link" href="#acceleration">
    <span class="xref myst">
-    Mercer kernels
+    Acceleration
    </span>
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#linear-kernels">
-   Linear kernels
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#matern-kernels">
-   Matern kernels
   </a>
  </li>
 </ul>
@@ -2083,78 +2083,58 @@ commentsRunWhenDOMLoaded(addUtterances);
         
               <div>
                 
-  <div class="section" id="kernel-function">
-<h1>Kernel function<a class="headerlink" href="#kernel-function" title="Permalink to this headline">¶</a></h1>
-<p>We define a <strong>kernel function</strong> to be a real-values function of two arguments</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}
-    \mathcal{k}(x, x') \in R \\
-    x,x' \in \mathcal{X}
-\end{split}\]</div>
-<p>Typically the function is symmetric, and non-negative, so it can be interpreted as a measure of similarity. (But this is not required)</p>
-<div class="section" id="rbf-gaussian-kernel">
-<h2>RBF (Gaussian) Kernel<a class="headerlink" href="#rbf-gaussian-kernel" title="Permalink to this headline">¶</a></h2>
-<p>Also known as <strong>squared exponential kernel</strong> (SE)</p>
-<div class="math notranslate nohighlight">
-\[
-\mathcal{k}(x, x') = \exp(- \frac{1}{2}(x - x')^T\Sigma^{-1}(x - x'))
-\]</div>
-<p>In case that <span class="math notranslate nohighlight">\(\Sigma\)</span> is diagonal we can simplify</p>
+  <div class="section" id="one-dimensional-motion">
+<h1>One dimensional motion<a class="headerlink" href="#one-dimensional-motion" title="Permalink to this headline">¶</a></h1>
+<p>We move along an single axis, from <span class="math notranslate nohighlight">\(x_1\)</span> to <span class="math notranslate nohighlight">\(x_2\)</span>.</p>
+<div class="section" id="displacement">
+<h2>Displacement<a class="headerlink" href="#displacement" title="Permalink to this headline">¶</a></h2>
+<p>Is a vector valued quantity where we move from one point to the other. It is defined by a starting postion ending position and a direction in which an object moves.</p>
+<p><img alt="" src="../_images/displacement_avg_velocity.png" /></p>
+<p>The initial position <span class="math notranslate nohighlight">\(x_1 = 277m\)</span> to the ending position <span class="math notranslate nohighlight">\(x_2=19m\)</span> thus the displacement <span class="math notranslate nohighlight">\(\Delta x = -258m\)</span></p>
+<p>Since the value is negative, we know in which direction an particle is moving. (we have only one dimension)</p>
+</div>
+<div class="section" id="velocity">
+<h2>Velocity<a class="headerlink" href="#velocity" title="Permalink to this headline">¶</a></h2>
+<p>Is a vector valued quanity, since we allways divide the displacement by time.</p>
+<div class="section" id="average-velocity">
+<h3>Average velocity<a class="headerlink" href="#average-velocity" title="Permalink to this headline">¶</a></h3>
 <div class="math notranslate nohighlight">
 \[
-\mathcal{k}(x, x') = \exp(- \frac{1}{2}\sum_{j=1}^D \frac{1}{\sigma^2_j}(x_j - x_j')^2)
+v_{av} = \frac{\Delta x}{\Delta t}
 \]</div>
 <ul class="simple">
-<li><p><span class="math notranslate nohighlight">\(\sigma_j\)</span> can be interpreted as defining the <strong>characteristic length scale</strong> of dimension j. If <span class="math notranslate nohighlight">\(\sigma_j = \infty\)</span>, the corresponding dimension is ignored, hence this is known as the <strong>ARD kernel</strong>.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\Delta x = x_2 - x_1\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\Delta t = t_2 - t_1\)</span></p></li>
 </ul>
-<p>If <span class="math notranslate nohighlight">\(\Sigma\)</span> is spehrical, we get the isotropic kernel. (This is an example of a <strong>radial basis function</strong>, since it is only a function of <span class="math notranslate nohighlight">\(||x - x'||\)</span>)</p>
+<p>It is the displacement divided by the time it took to displace.</p>
+<blockquote>
+<div><p>Example:
+An car is at <span class="math notranslate nohighlight">\(t_1 = 1s\)</span> in position <span class="math notranslate nohighlight">\(x_1 = 19m\)</span> and moves along the x axis. At <span class="math notranslate nohighlight">\(t_2=4s\)</span> is at <span class="math notranslate nohighlight">\(277m\)</span>
+The average veloity is
+$<span class="math notranslate nohighlight">\(v_{av} = \frac{277-19}{4-1} = 86 \text{m/s}\)</span>$</p>
+</div></blockquote>
+<p>We can express the movement of a particle along a straight line as function:</p>
 <div class="math notranslate nohighlight">
 \[
-\mathcal{k}(x, x') = \exp(- \frac{||x - x'||^2}{2\sigma^2})
+x = f(t)
 \]</div>
-<ul class="simple">
-<li><p><span class="math notranslate nohighlight">\(\sigma^2\)</span> is known as the bandwidth</p></li>
-</ul>
+<p><img alt="" src="../_images/graph_one_dim_movement.png" /></p>
+<p>The average velocity between two positions is the slope of a line connecting the two corresponding points on a graph of position as a function of time.</p>
 </div>
-<div class="section" id="cosine-similarity">
-<h2>Cosine similarity<a class="headerlink" href="#cosine-similarity" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="instantaneous-velocity">
+<h3>Instantaneous velocity<a class="headerlink" href="#instantaneous-velocity" title="Permalink to this headline">¶</a></h3>
+<p>In general velocity is not constant, the <strong>instantaneous velocity</strong>  is the velocity of a particle at any one specific instant of time or point in path.</p>
 <div class="math notranslate nohighlight">
 \[
-\mathcal{x_i, x_{i'}} = \frac{x_i^Tx_{i'}}{||x_i||_2 ||x_{i'}||_2}
+v_x = \lim_{\Delta_t \rightarrow 0} \frac{\Delta x}{\Delta t}
 \]</div>
-<p>Here we measure the cosine of the angle between two vectors. This is bounded to be within 0 and 1.</p>
-<p>We can extend this to <a class="reference internal" href="tf_idf_kernel.html"><span class="doc std std-doc">compare documents</span></a>.</p>
+<p><img alt="" src="../_images/instantaneous_velocity.png" /></p>
+<p>The instantaneous velocity at any point is equal to the slope of the tangent line to the curve at that point.</p>
 </div>
-<div class="section" id="mercer-kernels">
-<h2><a class="reference internal" href="mercer_kernel.html"><span class="doc std std-doc">Mercer kernels</span></a><a class="headerlink" href="#mercer-kernels" title="Permalink to this headline">¶</a></h2>
-<p>Sometimes kernel function have to be positive definite.</p>
 </div>
-<div class="section" id="linear-kernels">
-<h2>Linear kernels<a class="headerlink" href="#linear-kernels" title="Permalink to this headline">¶</a></h2>
-<div class="math notranslate nohighlight">
-\[\begin{split}
-\mathcal{k}(x, x') = \phi(x)^T\phi(x') \\ 
-\phi(x) = x \\
-\mathcal{k}(x, x') = x^Tx'
-\end{split}\]</div>
-<p>This kernel is especially usefull if the data is high dimensional. In such case, the decision boundary is likely to be represented by a linear combination of the original features.</p>
-</div>
-<div class="section" id="matern-kernels">
-<h2>Matern kernels<a class="headerlink" href="#matern-kernels" title="Permalink to this headline">¶</a></h2>
-<p>Commonly used in Gaussian processes regression and has the form:</p>
-<div class="math notranslate nohighlight">
-\[
-\mathcal{r} = \frac{2^{1 - v}}{\Gamma(v)} (\frac{\sqrt{2v}r}{l})^v K_v(\frac{\sqrt{2v}r}{l})
-\]</div>
-<ul class="simple">
-<li><p><span class="math notranslate nohighlight">\(r = ||x - x,||\)</span></p></li>
-<li><p><span class="math notranslate nohighlight">\(v &gt; 0\)</span></p></li>
-<li><p><span class="math notranslate nohighlight">\(l &gt; 0\)</span></p></li>
-<li><p><span class="math notranslate nohighlight">\(K_v\)</span> is a modified Bessel function</p></li>
-</ul>
-<p>As we take <span class="math notranslate nohighlight">\(v \rightarrow \infty\)</span> this approaches the SE kernel. If <span class="math notranslate nohighlight">\(v = 1/2\)</span> the kernel simplifies to</p>
-<p><span class="math notranslate nohighlight">\(\mathcal{k}(r) = \exp(-r /l)\)</span></p>
-<p>If <span class="math notranslate nohighlight">\(D=1\)</span>, and we use this kernel to define a Gaussian process, we get the <strong>Ornstein-Uhlenbeck process</strong>, which describes the velocity of a praticle undergoing Brownian motion.</p>
+<div class="section" id="acceleration">
+<h2><a class="reference internal" href="one_dimensional_acceleration.html"><span class="doc std std-doc">Acceleration</span></a><a class="headerlink" href="#acceleration" title="Permalink to this headline">¶</a></h2>
+<p>Here we accelerate in one dimension, mostly focusin on constant acceleration.</p>
 </div>
 </div>
 
@@ -2186,8 +2166,6 @@ commentsRunWhenDOMLoaded(addUtterances);
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="gaussian_distribution_information_form.html" title="previous page">Information norm</a>
-    <a class='right-next' id="next-link" href="linear_discriminant_analysis.html" title="next page">Linear discriminant analysis</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">

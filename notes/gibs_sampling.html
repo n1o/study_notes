@@ -2049,6 +2049,16 @@ commentsRunWhenDOMLoaded(addUtterances);
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#gibbs-sampling-comared-to-metropolis-hastings">
+   Gibbs sampling comared to Metropolis hastings
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#metropolis-with-gibbs">
+   Metropolis with Gibbs
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#collapsed-gibbs-sampling">
    Collapsed Gibbs sampling
   </a>
@@ -2079,7 +2089,7 @@ commentsRunWhenDOMLoaded(addUtterances);
 <p>Can be viewed as <a class="reference internal" href="markov_chain_monte_carlo_inference.html"><span class="doc std std-doc">MCMC</span></a> analog of <a class="reference internal" href="coordinate_descent.html"><span class="doc std std-doc">coordinate descent</span></a>. It is also known as <strong>Guauber dynamics</strong> or <strong>heat bath</strong> method or <strong>aternating conditional sampler</strong>.</p>
 <div class="section" id="basic-idea">
 <h2>Basic idea<a class="headerlink" href="#basic-idea" title="Permalink to this headline">¶</a></h2>
-<p>The basic idea behind Gibbs sampling is that we sample each variable in turn, conditioned on the values of all the other variables in the distribution. That is given a joint sample <span class="math notranslate nohighlight">\(x^s\)</span> of all the variables, we generate a new sample <span class="math notranslate nohighlight">\(x^{s+1}\)</span> by sampling each component in turn, based on the most recent values of the other variables:</p>
+<p>We sample each variable in turn, conditioned on the values of all the other variables in the distribution. That is given a joint sample <span class="math notranslate nohighlight">\(x^s\)</span> of all the variables, we generate a new sample <span class="math notranslate nohighlight">\(x^{s+1}\)</span> by sampling each component in turn, based on the most recent values of the other variables:</p>
 <p>An example for a joint distribution <span class="math notranslate nohighlight">\(p(x_1, x_2, x_3)\)</span> we sample:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
@@ -2087,8 +2097,17 @@ commentsRunWhenDOMLoaded(addUtterances);
     x_2^{s+1} \sim p(x_2| x_1^{s+1}, x_3^s) \\
     x_3^{s+1} \sim p(x_3| x_1^{s+1}, x_2^{s+1})
 \end{split}\]</div>
-<p>We can generalize this to D variables. If <span class="math notranslate nohighlight">\(x_i\)</span> is visible we do not need to sample it since it is already known. The expression <span class="math notranslate nohighlight">\(p(x_i|x_{-i})\)</span> is called the <strong>full conditional</strong> for variable i. In general <span class="math notranslate nohighlight">\(x_i\)</span> may only depend on some of the other variables. If we represent <span class="math notranslate nohighlight">\(p(x)\)</span> as a graphical model, we can infer the dependencies by looking at <em>i’ts Markov blanket</em>.</p>
-<p>In general we need to throw away the initial samples until the Markov chain has <strong>burned in</strong>, or entered its stationary distribution.</p>
+<p>Here we require that we can efficiently sample from the conditional distribution.</p>
+<p>We can generalize this to D variables. If <span class="math notranslate nohighlight">\(x_i\)</span> is visible we do not need to sample it since it is already known. The expression <span class="math notranslate nohighlight">\(p(x_i|x_{-i})\)</span> is called the <strong>full conditional</strong> for variable i.</p>
+<p>In general <span class="math notranslate nohighlight">\(x_i\)</span> may only depend on some of the other variables. If we represent <span class="math notranslate nohighlight">\(p(x)\)</span> as a graphical model, we can infer the dependencies by looking at <em>i’ts Markov blanket</em>.</p>
+</div>
+<div class="section" id="gibbs-sampling-comared-to-metropolis-hastings">
+<h2>Gibbs sampling comared to Metropolis hastings<a class="headerlink" href="#gibbs-sampling-comared-to-metropolis-hastings" title="Permalink to this headline">¶</a></h2>
+<p>Gibbs sampling is a type of random walk through parameter space, and hence can be thought of as a Metropolis-Hastings algorithm with a special proposal distribution. At each iteration in the cycle, we are drawing a proposal for a new value of a particular parameter, where the proposal distribution is the conditional posterior probability of that parameter. This means that the proposal move is always accepted. Hence, if we draw samples form the conditional distribution, Gibbs sampling can be much more efficient than regular Metropoli-Hastings. More formally, we want to show that</p>
+</div>
+<div class="section" id="metropolis-with-gibbs">
+<h2>Metropolis with Gibbs<a class="headerlink" href="#metropolis-with-gibbs" title="Permalink to this headline">¶</a></h2>
+<p>In some cases it is difficult to sample from a conditional distribution, than we use <a class="reference internal" href="metropolis_hastings.html"><span class="doc std std-doc">metropolis hastings</span></a> instead.</p>
 </div>
 <div class="section" id="collapsed-gibbs-sampling">
 <h2>Collapsed Gibbs sampling<a class="headerlink" href="#collapsed-gibbs-sampling" title="Permalink to this headline">¶</a></h2>
