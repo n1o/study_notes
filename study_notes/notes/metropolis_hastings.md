@@ -1,14 +1,12 @@
 # Metropolis Hastings
 
-Gibbs sampling is simple, but it is somewhat restricted in the set of models to which it can be applied. For example we cannot compute $p(w|D) $ for a logistic regression model, since the corresponding graphical model has no useful Markov strucutre. 
-
-Fortunately there is a more general algorithm that can be used called **Metropolis Hastings (HM)**. 
+Metropolis Hastings (HM) is an more general algorithm than can be used to draw samples from any distribution.
 
 ## Basic idea
 
-The basic idea is that at each step, we propose to move from the current state $x$ to a new state $x'$ with probability $q(x'|x)$ where $q$ is called the **proposal distribution** (also called **kernel**). Where we can use any proposal distribution we want, subject to some conditions. A common choise is to use a symmetric Gaussian distribution centered at the current state, $q(x'|x) = N(x'|x, \Sigma)$ this is also called **random walk Metropolis algorithm**. If we use $q(x'|x).= q(x')$ where thenew state indpenedent of the old state,  we get a method known as the **independence sampler**, which is simmilar to importance sampling.
+The basic idea is that at each step, we propose to move from the current state $x$ to a new state $x'$ with probability $q(x'|x)$ where $q$ is called the **proposal distribution** (also called **kernel**). Where we can use any proposal distribution we want, subject to some conditions. A common choice is to use a symmetric Gaussian distribution centered at the current state, $q(x'|x) = N(x'|x, \Sigma)$ this is also called **random walk Metropolis algorithm**. If we use $q(x'|x).= q(x')$ where thenew state independent of the old state,  we get a method known as the **independence sampler**, which is similar to importance sampling.
 
-Having propsed a move to $x'$, we decide to whether to **accept** this proposal, or not to according to some formula, which ensures that the fraction of time spent in each state is proportional to $p^*(x)$. If the proposal is accepted, the new state is $x'$, otherwise the new state is the same as the current state x. 
+Having proposed a move to $x'$, we decide to whether to **accept** this proposal, or not to according to some formula, which ensures that the fraction of time spent in each state is proportional to $p^*(x)$. If the proposal is accepted, the new state is $x'$, otherwise the new state is the same as the current state x. 
 
 If the proposal is symmetric $q(x'|x) = q(x|x')$ , the acceptance probability is given by:
 
@@ -25,7 +23,7 @@ r = \min(a, \alpha) \\
 \alpha = \frac{p^*(x')q(x|x')}{p^*(x)q(x',x)} = \frac{p^*(x')/q(x'|x)}{p^*(x)/q(x|x')}
 $$
 
-This correction is needed to compensate for the fact that the proposal distribution itself than just the target distribution may favour certain states. 
+This correction is needed to compensate for the fact that the proposal distribution itself than just the target distribution may favour certain states. (To satisfy the detailed ballance equation)
 
 **Algorithm**:
 
@@ -52,10 +50,10 @@ In general we use a Gaussian but we can use other as well.
 It satisfies the [detailed balance equation](stationary_distrion.md)
 
 ## Reversible jump (trans-dimensional) MCMC
-Here we sample from space which has different dimensionality for different components. This is difficult sicne computing the HM acceptance ratio is not straight forward (it is like comparing circles to spheres). A solution to this is to augument the low dimensional space with extra random variables so that the two spaces have a common measure. 
+Here we sample from space which has different dimensionality for different components. This is difficult since computing the HM acceptance ratio is not straight forward (it is like comparing circles to spheres). A solution to this is to argument the low dimensional space with extra random variables so that the two spaces have a common measure. 
 
-Unfortunately in practice this is tricky. However if we have continuous parameters, we can analyticaly integrate them out, so we are left with discrete space, where we do not need to worry about change of measure. 
+Unfortunately in practice this is tricky. However if we have continuous parameters, we can analytically integrate them out, so we are left with discrete space, where we do not need to worry about change of measure. 
 
 ## High Dimensions
 
-In general we generate proposals that are close to our current point, since in high dimenssions it is likely that a large step would be rejected. The disadvatage of small steps that this method will explore the probability space using a **random walk** and those take a long time to get anywere especially if the walk is made of small steps. This makes this inefficient.
+In general we generate proposals that are close to our current point, since in high dimensions it is likely that a large step would be rejected. The disadvantage of small steps that this method will explore the probability space using a **random walk** and those take a long time to get anywhere especially if the walk is made of small steps. This makes this inefficient.
