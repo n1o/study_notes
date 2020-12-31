@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Variable elimiation algorithm &#8212; study-notes</title>
+    <title>Variable elimination algorithm &#8212; study-notes</title>
     
   <link rel="stylesheet" href="../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
 
@@ -834,7 +834,7 @@ commentsRunWhenDOMLoaded(addUtterances);
  </li>
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
-   Variable elimiation algorithm
+   Variable elimination algorithm
   </a>
  </li>
  <li class="toctree-l1">
@@ -2061,8 +2061,8 @@ commentsRunWhenDOMLoaded(addUtterances);
         
               <div>
                 
-  <div class="section" id="variable-elimiation-algorithm">
-<h1>Variable elimiation algorithm<a class="headerlink" href="#variable-elimiation-algorithm" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="variable-elimination-algorithm">
+<h1>Variable elimination algorithm<a class="headerlink" href="#variable-elimination-algorithm" title="Permalink to this headline">¶</a></h1>
 <p>This extends Belief propagation so we can compute <span class="math notranslate nohighlight">\(p(x_q|x_p)\)</span> for any kind of graph.</p>
 <blockquote>
 <div><p>Example of getting an job given some conditions
@@ -2073,12 +2073,12 @@ commentsRunWhenDOMLoaded(addUtterances);
 \[
 P(C,D, I,G, S,L, J,H) = P(C)P(D|C)P(I)P(G|I,D)P(S|I)P(L|G)P(J|L, S)P(H|G, J)
 \]</div>
-<p>We can convert to an UGM where we define a potential function for every CPD yeilding:</p>
+<p>We can convert to an UGM where we define a potential function for every CPD yielding:</p>
 <div class="math notranslate nohighlight">
 \[
 P(C,D,I,G,S,L,J,H) = \psi_C(C) \psi_D(D,C) \psi_I(I) \psi_G(G,I,D) \psi_S(S,I) \psi_L(J,L,S) \psi_H(H,G,J)
 \]</div>
-<p>The UGM has more edges than the DAG. Since <strong>normalization</strong> connect all the unmaried nodes.  Now if we want to compute <span class="math notranslate nohighlight">\(p(J=1)​\)</span>, the marginal probability that a person will get a job. This can be achieved by summing up all the possible variables:</p>
+<p>The UGM has more edges than the DAG. Since <strong>normalization</strong> connect all the unmarried nodes.  Now if we want to compute <span class="math notranslate nohighlight">\(p(J=1)​\)</span>, the marginal probability that a person will get a job. This can be achieved by summing up all the possible variables:</p>
 <div class="math notranslate nohighlight">
 \[P(J) = \sum_L \sum _S \sum_G \sum_H \sum_I \sum_D \sum_C p(C,D,I,G,S,L,J,H)​\]</div>
 <p>Tthis can take <span class="math notranslate nohighlight">\(O(2^7)\)</span> time.</p>
@@ -2091,11 +2091,11 @@ p(J) = \sum_{L,S,G,H,I,D,C} p(C,D,I,G,S,L,J,H) = \\
 \end{split}\]</div>
 <p>Now we can evaluate this expression, working right to left as:</p>
 <p><img alt="" src="../_images/variable_eliminatino_left_to_right.png" /></p>
-<p>We can use this to ompute any marginal of interest like <span class="math notranslate nohighlight">\(p(J)\)</span> or <span class="math notranslate nohighlight">\(p(J,H)\)</span>. To compute the condiitonals, we can take ratio of two marignals, where the visible variables have been clamped to their known values.</p>
+<p>We can use this to compute any marginal of interest like <span class="math notranslate nohighlight">\(p(J)\)</span> or <span class="math notranslate nohighlight">\(p(J,H)\)</span>. To compute the conditional, we can take ratio of two marginals, where the visible variables have been clamped to their known values.</p>
 <p>Unfortunately <strong>Variable elimination</strong> can be exponentially slow in the worst case.</p>
 <div class="section" id="computational-complexity-of-ve">
 <h2>Computational complexity of VE<a class="headerlink" href="#computational-complexity-of-ve" title="Permalink to this headline">¶</a></h2>
-<p>The running time of VE is exponential in the size of the largest factor, since we have to sum over all of the corresponding variables. Some of the factors come from the original model, bu <strong>new factors</strong> are created in the process of summing out. Therefore if we are not carefull we can introduce unnecessarry factors, and slow down the computation.</p>
+<p>The running time of VE is exponential in the size of the largest factor, since we have to sum over all of the corresponding variables. Some of the factors come from the original model, bu <strong>new factors</strong> are created in the process of summing out. Therefore if we are not careful we can introduce unnecessary factors, and slow down the computation.</p>
 <p>The order in which we perform summation is known as <strong>elimination order</strong>. This can have a large impact on the size of the intermediate factors that are created.  Unfortunately finding the best elimination order is NP hard.</p>
 </div>
 </div>

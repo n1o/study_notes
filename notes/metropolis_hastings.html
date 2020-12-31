@@ -832,7 +832,7 @@ commentsRunWhenDOMLoaded(addUtterances);
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="variable_elimination.html">
-   Variable elimiation algorithm
+   Variable elimination algorithm
   </a>
  </li>
  <li class="toctree-l1">
@@ -2097,12 +2097,11 @@ commentsRunWhenDOMLoaded(addUtterances);
                 
   <div class="section" id="metropolis-hastings">
 <h1>Metropolis Hastings<a class="headerlink" href="#metropolis-hastings" title="Permalink to this headline">¶</a></h1>
-<p>Gibbs sampling is simple, but it is somewhat restricted in the set of models to which it can be applied. For example we cannot compute <span class="math notranslate nohighlight">\(p(w|D) \)</span> for a logistic regression model, since the corresponding graphical model has no useful Markov strucutre.</p>
-<p>Fortunately there is a more general algorithm that can be used called <strong>Metropolis Hastings (HM)</strong>.</p>
+<p>Metropolis Hastings (HM) is an more general algorithm than can be used to draw samples from any distribution.</p>
 <div class="section" id="basic-idea">
 <h2>Basic idea<a class="headerlink" href="#basic-idea" title="Permalink to this headline">¶</a></h2>
-<p>The basic idea is that at each step, we propose to move from the current state <span class="math notranslate nohighlight">\(x\)</span> to a new state <span class="math notranslate nohighlight">\(x'\)</span> with probability <span class="math notranslate nohighlight">\(q(x'|x)\)</span> where <span class="math notranslate nohighlight">\(q\)</span> is called the <strong>proposal distribution</strong> (also called <strong>kernel</strong>). Where we can use any proposal distribution we want, subject to some conditions. A common choise is to use a symmetric Gaussian distribution centered at the current state, <span class="math notranslate nohighlight">\(q(x'|x) = N(x'|x, \Sigma)\)</span> this is also called <strong>random walk Metropolis algorithm</strong>. If we use <span class="math notranslate nohighlight">\(q(x'|x).= q(x')\)</span> where thenew state indpenedent of the old state,  we get a method known as the <strong>independence sampler</strong>, which is simmilar to importance sampling.</p>
-<p>Having propsed a move to <span class="math notranslate nohighlight">\(x'\)</span>, we decide to whether to <strong>accept</strong> this proposal, or not to according to some formula, which ensures that the fraction of time spent in each state is proportional to <span class="math notranslate nohighlight">\(p^*(x)\)</span>. If the proposal is accepted, the new state is <span class="math notranslate nohighlight">\(x'\)</span>, otherwise the new state is the same as the current state x.</p>
+<p>The basic idea is that at each step, we propose to move from the current state <span class="math notranslate nohighlight">\(x\)</span> to a new state <span class="math notranslate nohighlight">\(x'\)</span> with probability <span class="math notranslate nohighlight">\(q(x'|x)\)</span> where <span class="math notranslate nohighlight">\(q\)</span> is called the <strong>proposal distribution</strong> (also called <strong>kernel</strong>). Where we can use any proposal distribution we want, subject to some conditions. A common choice is to use a symmetric Gaussian distribution centered at the current state, <span class="math notranslate nohighlight">\(q(x'|x) = N(x'|x, \Sigma)\)</span> this is also called <strong>random walk Metropolis algorithm</strong>. If we use <span class="math notranslate nohighlight">\(q(x'|x).= q(x')\)</span> where thenew state independent of the old state,  we get a method known as the <strong>independence sampler</strong>, which is similar to importance sampling.</p>
+<p>Having proposed a move to <span class="math notranslate nohighlight">\(x'\)</span>, we decide to whether to <strong>accept</strong> this proposal, or not to according to some formula, which ensures that the fraction of time spent in each state is proportional to <span class="math notranslate nohighlight">\(p^*(x)\)</span>. If the proposal is accepted, the new state is <span class="math notranslate nohighlight">\(x'\)</span>, otherwise the new state is the same as the current state x.</p>
 <p>If the proposal is symmetric <span class="math notranslate nohighlight">\(q(x'|x) = q(x|x')\)</span> , the acceptance probability is given by:</p>
 <div class="math notranslate nohighlight">
 \[ r = min(1, \frac{p^*(x')}{ p^*(x)}) \]</div>
@@ -2114,7 +2113,7 @@ commentsRunWhenDOMLoaded(addUtterances);
 r = \min(a, \alpha) \\
 \alpha = \frac{p^*(x')q(x|x')}{p^*(x)q(x',x)} = \frac{p^*(x')/q(x'|x)}{p^*(x)/q(x|x')}
 \end{split}\]</div>
-<p>This correction is needed to compensate for the fact that the proposal distribution itself than just the target distribution may favour certain states.</p>
+<p>This correction is needed to compensate for the fact that the proposal distribution itself than just the target distribution may favour certain states. (To satisfy the detailed ballance equation)</p>
 <p><strong>Algorithm</strong>:</p>
 <p><img alt="" src="../_images/metropolis_hastings_algo.png" /></p>
 <div class="section" id="importance-of-mh">
@@ -2141,12 +2140,12 @@ r = \min(a, \alpha) \\
 </div>
 <div class="section" id="reversible-jump-trans-dimensional-mcmc">
 <h2>Reversible jump (trans-dimensional) MCMC<a class="headerlink" href="#reversible-jump-trans-dimensional-mcmc" title="Permalink to this headline">¶</a></h2>
-<p>Here we sample from space which has different dimensionality for different components. This is difficult sicne computing the HM acceptance ratio is not straight forward (it is like comparing circles to spheres). A solution to this is to augument the low dimensional space with extra random variables so that the two spaces have a common measure.</p>
-<p>Unfortunately in practice this is tricky. However if we have continuous parameters, we can analyticaly integrate them out, so we are left with discrete space, where we do not need to worry about change of measure.</p>
+<p>Here we sample from space which has different dimensionality for different components. This is difficult since computing the HM acceptance ratio is not straight forward (it is like comparing circles to spheres). A solution to this is to argument the low dimensional space with extra random variables so that the two spaces have a common measure.</p>
+<p>Unfortunately in practice this is tricky. However if we have continuous parameters, we can analytically integrate them out, so we are left with discrete space, where we do not need to worry about change of measure.</p>
 </div>
 <div class="section" id="high-dimensions">
 <h2>High Dimensions<a class="headerlink" href="#high-dimensions" title="Permalink to this headline">¶</a></h2>
-<p>In general we generate proposals that are close to our current point, since in high dimenssions it is likely that a large step would be rejected. The disadvatage of small steps that this method will explore the probability space using a <strong>random walk</strong> and those take a long time to get anywere especially if the walk is made of small steps. This makes this inefficient.</p>
+<p>In general we generate proposals that are close to our current point, since in high dimensions it is likely that a large step would be rejected. The disadvantage of small steps that this method will explore the probability space using a <strong>random walk</strong> and those take a long time to get anywhere especially if the walk is made of small steps. This makes this inefficient.</p>
 </div>
 </div>
 

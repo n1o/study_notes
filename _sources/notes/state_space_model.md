@@ -33,10 +33,15 @@ $$
 
 If all the parameters $\theta_t = (A_t, B_t, C_t, D_t, Q_t, R_t)$ are independent of time, the model is called **stationary**.
 
-LG-SSM is important because it supports exact inference. And if the initial belief state $p(z_1) = N(\mu_{1|0}, \Sigma_{1|0})$ then all subserquent belief states will be also Gaussian, $p(z_t| y_{1:t}) = N(\mu_{t|t}, \Sigma_{t|t})$. And we can compute these quantities efficiently using the [Kalman filtering](kalman_filtering.md) algorithm.
+LG-SSM is important because it supports exact inference. And if the initial belief state $p(z_1) = N(\mu_{1|0}, \Sigma_{1|0})$ then all subsequent belief states will be also Gaussian, $p(z_t| y_{1:t}) = N(\mu_{t|t}, \Sigma_{t|t})$. And we can compute these quantities efficiently using the [Kalman filtering](kalman_filtering.md) algorithm.
 
 ## Application of SSM
 
 1. Object tracking
 2. Robotic slam (Essentially this is the base for robotic vacuums)
-3. Timeseries forecasting: Here we can show that the popular ARMA model can be viewed as a form of SSM.
+3. Time-series forecasting: Here we can show that the popular ARMA model can be viewed as a form of SSM.
+
+## Non-Linear and non-Gaussian SSM
+
+A lot of models are not linear, or the noise is non-Gaussian. Hence the posterior is no longer Gaussian. So we have to approximate 
+$p(Y)$

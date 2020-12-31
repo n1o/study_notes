@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Sparse Linear models &#8212; study-notes</title>
+    <title>Metropolis Hastings mathematical formulation &#8212; study-notes</title>
     
   <link rel="stylesheet" href="../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
 
@@ -90,8 +90,6 @@ commentsRunWhenDOMLoaded(addUtterances);
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Multi-task learning" href="multi_task_learning.html" />
-    <link rel="prev" title="Jacobian" href="jacobian.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -128,7 +126,7 @@ commentsRunWhenDOMLoaded(addUtterances);
   </a>
  </li>
 </ul>
-<ul class="current nav sidenav_l1">
+<ul class="nav sidenav_l1">
  <li class="toctree-l1">
   <a class="reference internal" href="logistic_regression.html">
    Logistic regression
@@ -1598,8 +1596,8 @@ commentsRunWhenDOMLoaded(addUtterances);
    Jacobian
   </a>
  </li>
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
+ <li class="toctree-l1">
+  <a class="reference internal" href="sparse_linear_models.html">
    Sparse Linear models
   </a>
  </li>
@@ -2015,7 +2013,7 @@ commentsRunWhenDOMLoaded(addUtterances);
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../_sources/notes/sparse_linear_models.md"><button type="button"
+        <a class="dropdown-buttons" href="../_sources/notes/metropolis_hastings_mathematical_formulation.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.md</button></a>
         <!-- Download PDF via print -->
@@ -2047,13 +2045,18 @@ commentsRunWhenDOMLoaded(addUtterances);
         
               <div>
                 
-  <div class="section" id="sparse-linear-models">
-<h1>Sparse Linear models<a class="headerlink" href="#sparse-linear-models" title="Permalink to this headline">¶</a></h1>
-<p>A set of <a class="reference internal" href="generalized_linear_model.html"><span class="doc std std-doc">generalized linear models</span></a> of the form <span class="math notranslate nohighlight">\(p(y|Z) = p(y| f(w^Tx))\)</span> for some link function <span class="math notranslate nohighlight">\(f\)</span>, where we ecnourage the weight vector w to be <strong>sparse</strong>. This approach offers significant computational advantages like:</p>
+  <div class="section" id="metropolis-hastings-mathematical-formulation">
+<h1>Metropolis Hastings mathematical formulation<a class="headerlink" href="#metropolis-hastings-mathematical-formulation" title="Permalink to this headline">¶</a></h1>
+<p>Let [<span class="math notranslate nohighlight">\(]s = (s_1, s_2, \cdots, s_M)[/\)</span>] be a desired stationary distribution on the state space [<span class="math notranslate nohighlight">\(]\{1,2, \cdots, M \}[/\)</span>]. Assumre that [<span class="math notranslate nohighlight">\(]s_i \ge 0[/\)</span>] for all i. (If this is not true we can delete any state i from the chain). Suppose that [<span class="math notranslate nohighlight">\(]P = (p_{ij})[/\)</span>] is the transition matrix form a Markov chain on state space [<span class="math notranslate nohighlight">\(]\{1,2, \cdots, M \}[/\)</span>] . Tis makes P a Markov chain that we know to run but does not have the desired stationary distribution.</p>
+<p>We use Metripolis-Hastings to modify P to construct a Markov chain [<span class="math notranslate nohighlight">\(]X_0, X_1, \cdots [/\)</span>] with stationary distribution s. Here P is the proposal distribution, and choosing the right proposal distribution is extremely important since it can make an enormous differencei n how fast the chain converges.</p>
+<p>Start at any state [<span class="math notranslate nohighlight">\(]X_0[/\)</span>] (we can randomly choose form the original chain), and suppose the new chain is currently at [<span class="math notranslate nohighlight">\(]X_n[/\)</span>] to make one move of the new chain we do:</p>
 <ol class="simple">
-<li><p>If the number of dimensions D is larger than N. We want to find the smallest subset of features that can accurately predict the response in order to prevent overfitting.</p></li>
-<li><p>Useful i context of sparse kernel machines.</p></li>
+<li><p>If [<span class="math notranslate nohighlight">\(]X_n = i[/\)</span>], propose a new state j using the transition probabilities in the ith row of the original transition matrix P.</p></li>
+<li><p>Compute the acceptance probability: [<span class="math notranslate nohighlight">\(]a_{ij} = min(\frac{s_j p_{ji}}{s_i p_{ij}}, 1)[/\)</span>]</p></li>
+<li><p>Flip a coin that lands Heads with probaiblity [<span class="math notranslate nohighlight">\(]a_{ij}[/\)</span>]</p></li>
+<li><p>If the coin land Heads, accept the proposal [<span class="math notranslate nohighlight">\(]X_{n+1} = j[/\)</span>]. Otherwise reject the proposal [<span class="math notranslate nohighlight">\(]X_{n+1} = i[/\)</span>].</p></li>
 </ol>
+<p>This is pracital since the normalization constants cancels out [<span class="math notranslate nohighlight">\(]\frac{s_i}{s_j}[/\)</span>].</p>
 </div>
 
     <script type="text/x-thebe-config">
@@ -2084,8 +2087,6 @@ commentsRunWhenDOMLoaded(addUtterances);
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="jacobian.html" title="previous page">Jacobian</a>
-    <a class='right-next' id="next-link" href="multi_task_learning.html" title="next page">Multi-task learning</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">

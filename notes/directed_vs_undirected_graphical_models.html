@@ -834,7 +834,7 @@ commentsRunWhenDOMLoaded(addUtterances);
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="variable_elimination.html">
-   Variable elimiation algorithm
+   Variable elimination algorithm
   </a>
  </li>
  <li class="toctree-l1">
@@ -2040,6 +2040,25 @@ commentsRunWhenDOMLoaded(addUtterances);
     <!-- Table of contents -->
     <div class="d-none d-md-block col-md-2 bd-toc show">
         
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#advantages-of-ugm-vs-dgm">
+   Advantages of UGM vs DGM
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#disadvantages-of-ugm-vs-dgm">
+   Disadvantages of UGM vs DGM
+  </a>
+ </li>
+</ul>
+
+        </nav>
+        
     </div>
 </div>
     <div id="main-content" class="row">
@@ -2049,7 +2068,7 @@ commentsRunWhenDOMLoaded(addUtterances);
                 
   <div class="section" id="directed-vs-undirected-graphical-models">
 <h1>Directed vs undirected graphical models<a class="headerlink" href="#directed-vs-undirected-graphical-models" title="Permalink to this headline">¶</a></h1>
-<p>We cannot say that one is more powerfull than the other. Since there are some CI relationships that can be modeled by a DGM, but nod a UGM. An example is:</p>
+<p>We cannot say that one is more powerful than the other. Since there are some CI relationships that can be modeled by a DGM, but nod a UGM. An example is:</p>
 <p><span class="math notranslate nohighlight">\(A \rightarrow C \leftarrow B\)</span> where <span class="math notranslate nohighlight">\(A \perp B\)</span> but not <span class="math notranslate nohighlight">\(A \cancel{\perp} B | C\)</span></p>
 <p><span class="math notranslate nohighlight">\(A - C -B\)</span> where <span class="math notranslate nohighlight">\(A \perp B | C\)</span> but <span class="math notranslate nohighlight">\(A \cancel{\perp} B\)</span></p>
 <p>In general the CI properties in UGMs are monotonic, in the following sense:</p>
@@ -2057,6 +2076,20 @@ commentsRunWhenDOMLoaded(addUtterances);
 \[A \perp B |C \Rightarrow A \perp B | (C \cup D)​\]</div>
 <p>But in DGMs, CI properties can be non-monotonic, since conditioning on extra variables can eliminate conditional independence due explaining away.</p>
 <p>Some distributions can be perfectly modeled by either a DGM or a UGM; the resulting graphs are called <strong>decomposable</strong> or <strong>cordal</strong>. Roughly speaking, this means that if we collapse together all the variables in each maximal clique, to make “mega variable”, the resulting graph will be a tree.</p>
+<div class="section" id="advantages-of-ugm-vs-dgm">
+<h2>Advantages of UGM vs DGM<a class="headerlink" href="#advantages-of-ugm-vs-dgm" title="Permalink to this headline">¶</a></h2>
+<ol class="simple">
+<li><p>UGMs are symmetric and are more natural for certain domains, such as spatial or relational data.</p></li>
+<li><p><a class="reference internal" href="conditional_random_fields.html"><span class="doc std std-doc">Conditional random fields</span></a> work better than discriminative DGMs</p></li>
+</ol>
+</div>
+<div class="section" id="disadvantages-of-ugm-vs-dgm">
+<h2>Disadvantages of UGM vs DGM<a class="headerlink" href="#disadvantages-of-ugm-vs-dgm" title="Permalink to this headline">¶</a></h2>
+<ol class="simple">
+<li><p>Parameters are less interpretable and less modular</p></li>
+<li><p>Parameter estimation is more expensive</p></li>
+</ol>
+</div>
 </div>
 
     <script type="text/x-thebe-config">
