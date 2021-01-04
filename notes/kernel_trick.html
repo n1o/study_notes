@@ -2085,10 +2085,7 @@ commentsRunWhenDOMLoaded(addUtterances);
                 
   <div class="section" id="kernel-trick">
 <h1>Kernel trick<a class="headerlink" href="#kernel-trick" title="Permalink to this headline">¶</a></h1>
-<p>Rather than defining our <a class="reference internal" href="kernel_machines.html"><span class="doc std std-doc">feature vector in terms of kernels</span></a>:</p>
-<div class="math notranslate nohighlight">
-\[\phi(x)=[k(x, x_1), \cdots, k(x,x_N)]\]</div>
-<p>We can instead work with the original feature vectors x, but modify the algorithm so that it replaces alll the inner producs of the form <span class="math notranslate nohighlight">\(&lt;x, x'&gt;\)</span> with a call to the kernel function <span class="math notranslate nohighlight">\(k(x, x')\)</span>. This is called the <strong>kernel trick</strong>.  It turns out that many algorithms can be kernelized in this way. Note that we require that the kernel be a <a class="reference internal" href="kernel.html"><span class="doc std std-doc">Mercer kernel</span></a> for this trick to work.</p>
+<p>We replaces all the inner products of the form <span class="math notranslate nohighlight">\(&lt;x, x'&gt;\)</span> with a call to the kernel function <span class="math notranslate nohighlight">\(k(x, x')\)</span>. This is called the <strong>kernel trick</strong>.  It turns out that many algorithms can be kernelized in this way. Note that we require that the kernel be a <a class="reference internal" href="kernel.html"><span class="doc std std-doc">Mercer kernel</span></a> for this trick to work.</p>
 <div class="section" id="nearest-neighbor-classification">
 <h2>Nearest neighbor classification<a class="headerlink" href="#nearest-neighbor-classification" title="Permalink to this headline">¶</a></h2>
 <p>In nearest neighbours we need to compute the Euclidean distance of the test vector to all the training points and find the closest. We can kernelize:</p>
@@ -2100,7 +2097,7 @@ commentsRunWhenDOMLoaded(addUtterances);
 <h3><a class="reference internal" href="k_medoids.html"><span class="doc std std-doc">K-medoids</span></a> clustering<a class="headerlink" href="#k-medoids-clustering" title="Permalink to this headline">¶</a></h3>
 <p>We can kernelize the distance function.</p>
 <div class="math notranslate nohighlight">
-\[d(i,i') \triangleq ||x_i -x_{i'}||_2^2\]</div>
+\[d(i,i') = ||x_i -x_{i'}||_2^2\]</div>
 <p>This algorithm works in <span class="math notranslate nohighlight">\(O(n_k^2)\)</span> per cluster where K-means takes <span class="math notranslate nohighlight">\(O(n_kD)\)</span> to update each cluster.</p>
 </div>
 </div>

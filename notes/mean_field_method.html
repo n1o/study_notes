@@ -2068,7 +2068,7 @@ commentsRunWhenDOMLoaded(addUtterances);
                 
   <div class="section" id="mean-filed-method">
 <h1>Mean filed method<a class="headerlink" href="#mean-filed-method" title="Permalink to this headline">¶</a></h1>
-<p>One of the most polular variational inference methods. It assumes that the posterior is fully factorized approximation of the form:</p>
+<p>One of the most popular variational inference methods. It assumes that the posterior is fully factorized approximation of the form:</p>
 <div class="math notranslate nohighlight">
 \[q(x) = \prod_{i=1} ^D q_i(x)\]</div>
 <p>Our goal is to solve this optimization problem:</p>
@@ -2079,7 +2079,7 @@ commentsRunWhenDOMLoaded(addUtterances);
 \[ \log q_j(x_j) = E_{-q_j}[\log \tilde{p}(x)] + const ​\]</div>
 <ul class="simple">
 <li><p><span class="math notranslate nohighlight">\(\tilde{p}(x) = p(x,D)\)</span> is the unnormalized posterior</p></li>
-<li><p><span class="math notranslate nohighlight">\(E_{-q_j} [f(x)]\)</span> is a notation that we take expecation over <span class="math notranslate nohighlight">\(f(x)\)</span>, with respect all the variables except <span class="math notranslate nohighlight">\(x_j\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(E_{-q_j} [f(x)]\)</span> is a notation that we take expectation over <span class="math notranslate nohighlight">\(f(x)\)</span>, with respect all the variables except <span class="math notranslate nohighlight">\(x_j\)</span></p></li>
 <li><p>Here at each update step we replace the neighboring values by their mean value, hence the name mean field.</p></li>
 </ul>
 <p>For example if we have 3 variables:
@@ -2094,7 +2094,7 @@ When we update \)</span>q_j<span class="math notranslate nohighlight">\( we only
 </div>
 <div class="section" id="structured-mean-field">
 <h2>Structured mean field<a class="headerlink" href="#structured-mean-field" title="Permalink to this headline">¶</a></h2>
-<p>Assuming that all the variables are independent in the posterior is a very strong assumeption that can lead to poor results. Sometimes we can exploit <strong>tractable substructures</strong> in our problem, that we can efficiently handle some kind of dependencies. This is called <strong>strucutred mean field</strong> approach. This approach is the same as before, except we group sets of variables together and we update them simultatneously. (We treet all the variables of a group as a single “mega variable”).</p>
+<p>Assuming that all the variables are independent in the posterior is a very strong assumption that can lead to poor results. Sometimes we can exploit <strong>tractable substructures</strong> in our problem, that we can efficiently handle some kind of dependencies. This is called <strong>strucutred mean field</strong> approach. This approach is the same as before, except we group sets of variables together and we update them simultaneously. (We treat all the variables of a group as a single “mega variable”).</p>
 <p>Examples:</p>
 <ul class="simple">
 <li><p>Factorial HMM</p></li>

@@ -2084,7 +2084,7 @@ KL(p^*||q) = \sum_x p^*(x) \log \frac{p^*(x)}{q(x)}
 \[
 KL(q||p^*) = \sum_x q(x) \log \frac{q(x)}{p^*(x)}
 \]</div>
-<p>If we choose <span class="math notranslate nohighlight">\(q\)</span> right this is tractable. But evaluating <span class="math notranslate nohighlight">\(p^*(x) = p(x|D)\)</span> pointwise is hard, since it requires to evaluate the normalization contant <span class="math notranslate nohighlight">\(Z = p(D)\)</span>. We have to use the unnormalized distribution:</p>
+<p>If we choose <span class="math notranslate nohighlight">\(q\)</span> right this is tractable. But evaluating <span class="math notranslate nohighlight">\(p^*(x) = p(x|D)\)</span> point-wise is hard, since it requires to evaluate the normalization constant <span class="math notranslate nohighlight">\(Z = p(D)\)</span>. We have to use the un-normalized distribution:</p>
 <div class="math notranslate nohighlight">
 \[
 \tilde{p}(x) = p^*(x)Z

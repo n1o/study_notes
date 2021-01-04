@@ -2081,7 +2081,7 @@ P(C,D,I,G,S,L,J,H) = \psi_C(C) \psi_D(D,C) \psi_I(I) \psi_G(G,I,D) \psi_S(S,I) \
 <p>The UGM has more edges than the DAG. Since <strong>normalization</strong> connect all the unmarried nodes.  Now if we want to compute <span class="math notranslate nohighlight">\(p(J=1)​\)</span>, the marginal probability that a person will get a job. This can be achieved by summing up all the possible variables:</p>
 <div class="math notranslate nohighlight">
 \[P(J) = \sum_L \sum _S \sum_G \sum_H \sum_I \sum_D \sum_C p(C,D,I,G,S,L,J,H)​\]</div>
-<p>Tthis can take <span class="math notranslate nohighlight">\(O(2^7)\)</span> time.</p>
+<p>This can take <span class="math notranslate nohighlight">\(O(2^7)\)</span> time.</p>
 <p>We can reduce on this if we manage to push sums inside products. This is the key idea behind <strong>variable elimination</strong> algorithm called <strong>bucket elimination</strong>.</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}

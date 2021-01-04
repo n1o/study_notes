@@ -2082,13 +2082,13 @@ commentsRunWhenDOMLoaded(addUtterances);
 <div class="section" id="crating-a-junction-tree">
 <h2>Crating a junction tree<a class="headerlink" href="#crating-a-junction-tree" title="Permalink to this headline">¶</a></h2>
 <p>The basic idea of JTA is:</p>
-<p>First we run the <a class="reference internal" href="variable_elimination.html"><span class="doc std std-doc">variable elimination</span></a> algorithm “symbolically”, adding fill-in edges as we go, according to a given elimination ordering. The resulting graph will be a <strong>cordal graph</strong>, which means that every undirected cycle <span class="math notranslate nohighlight">\(X_1 - X_2 \cdots X_k - X_1\)</span> of lenght <span class="math notranslate nohighlight">\(k \ge 4\)</span> has a <em>cord</em>.</p>
-<p>Having this chordal graph, we can extract its maximal cliques. In general finidng max cliques is computationaly hard, but for this special graph it can be done efficiently.</p>
+<p>First we run the <a class="reference internal" href="variable_elimination.html"><span class="doc std std-doc">variable elimination</span></a> algorithm “symbolically”, adding fill-in edges as we go, according to a given elimination ordering. The resulting graph will be a <a class="reference internal" href="chordal_graph.html"><span class="doc std std-doc">chordal graph</span></a>.</p>
+<p>Having this chordal graph, we can extract its maximal cliques. In general finding max cliques is computationally hard, but for this special graph it can be done efficiently.</p>
 <blockquote>
 <div><p>Example:
 <img alt="" src="../_images/junction_tree_algorithm.png" /></p>
 </div></blockquote>
-<p>It turns out that the cliques of a chordal graph can be arranged into a special kind of tree known as <strong>junction tree</strong> (on the picture it is on the bottom). This enyos the <strong>running intersecion property</strong> (RIP), which means that any subset of nodes containing a given variable forms a connected component.</p>
+<p>It turns out that the cliques of a chordal graph can be arranged into a special kind of tree known as <strong>junction tree</strong> (on the picture it is on the bottom). This enjoys the <strong>running intersecion property</strong> (RIP), which means that any subset of nodes containing a given variable forms a connected component.</p>
 <p>In the example we can see that node I occurs in the two adjacent three nodes, so they can share information about this variable. This holds for all the other variables.</p>
 <p>We can show that if a tree satisfies the running intersection property, then applying BP to this tree will return the exact values of <span class="math notranslate nohighlight">\(p(x_c|v)\)</span> for each node c in the tree. From this we can extract the node and edge marginal <span class="math notranslate nohighlight">\(p(x_t|v)\)</span> and <span class="math notranslate nohighlight">\(p(x_s,x_t|v)\)</span> from the original model by marginalizing the clique distribution.</p>
 </div>

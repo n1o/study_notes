@@ -21,7 +21,7 @@ The UGM has more edges than the DAG. Since **normalization** connect all the unm
 
 $$P(J) = \sum_L \sum _S \sum_G \sum_H \sum_I \sum_D \sum_C p(C,D,I,G,S,L,J,H)​$$
 
-Tthis can take $O(2^7)$ time. 
+This can take $O(2^7)$ time. 
 
 We can reduce on this if we manage to push sums inside products. This is the key idea behind **variable elimination** algorithm called **bucket elimination**.
 

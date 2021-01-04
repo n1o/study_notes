@@ -2047,16 +2047,16 @@ commentsRunWhenDOMLoaded(addUtterances);
                 
   <div class="section" id="metropolis-hastings-mathematical-formulation">
 <h1>Metropolis Hastings mathematical formulation<a class="headerlink" href="#metropolis-hastings-mathematical-formulation" title="Permalink to this headline">¶</a></h1>
-<p>Let [<span class="math notranslate nohighlight">\(]s = (s_1, s_2, \cdots, s_M)[/\)</span>] be a desired stationary distribution on the state space [<span class="math notranslate nohighlight">\(]\{1,2, \cdots, M \}[/\)</span>]. Assumre that [<span class="math notranslate nohighlight">\(]s_i \ge 0[/\)</span>] for all i. (If this is not true we can delete any state i from the chain). Suppose that [<span class="math notranslate nohighlight">\(]P = (p_{ij})[/\)</span>] is the transition matrix form a Markov chain on state space [<span class="math notranslate nohighlight">\(]\{1,2, \cdots, M \}[/\)</span>] . Tis makes P a Markov chain that we know to run but does not have the desired stationary distribution.</p>
-<p>We use Metripolis-Hastings to modify P to construct a Markov chain [<span class="math notranslate nohighlight">\(]X_0, X_1, \cdots [/\)</span>] with stationary distribution s. Here P is the proposal distribution, and choosing the right proposal distribution is extremely important since it can make an enormous differencei n how fast the chain converges.</p>
-<p>Start at any state [<span class="math notranslate nohighlight">\(]X_0[/\)</span>] (we can randomly choose form the original chain), and suppose the new chain is currently at [<span class="math notranslate nohighlight">\(]X_n[/\)</span>] to make one move of the new chain we do:</p>
+<p>Let <span class="math notranslate nohighlight">\(s = (s_1, s_2, \cdots, s_M)\)</span> be a desired stationary distribution on the state space <span class="math notranslate nohighlight">\(\{1,2, \cdots, M \}\)</span>. Assure that <span class="math notranslate nohighlight">\(s_i \ge 0\)</span> for all i. (If this is not true we can delete any state i from the chain). Suppose that <span class="math notranslate nohighlight">\(P = (p_{ij})\)</span> is the transition matrix form a Markov chain on state space <span class="math notranslate nohighlight">\(\{1,2, \cdots, M \}\)</span> . Tis makes P a Markov chain that we know to run but does not have the desired stationary distribution.</p>
+<p>We use Metropolis-Hastings to modify P to construct a Markov chain <span class="math notranslate nohighlight">\(X_0, X_1, \cdots\)</span> with stationary distribution s. Here P is the proposal distribution, and choosing the right proposal distribution is extremely important since it can make an enormous difference in how fast the chain converges.</p>
+<p>Start at any state <span class="math notranslate nohighlight">\(X_0\)</span> (we can randomly choose form the original chain), and suppose the new chain is currently at <span class="math notranslate nohighlight">\(X_n\)</span> to make one move of the new chain we do:</p>
 <ol class="simple">
-<li><p>If [<span class="math notranslate nohighlight">\(]X_n = i[/\)</span>], propose a new state j using the transition probabilities in the ith row of the original transition matrix P.</p></li>
-<li><p>Compute the acceptance probability: [<span class="math notranslate nohighlight">\(]a_{ij} = min(\frac{s_j p_{ji}}{s_i p_{ij}}, 1)[/\)</span>]</p></li>
-<li><p>Flip a coin that lands Heads with probaiblity [<span class="math notranslate nohighlight">\(]a_{ij}[/\)</span>]</p></li>
-<li><p>If the coin land Heads, accept the proposal [<span class="math notranslate nohighlight">\(]X_{n+1} = j[/\)</span>]. Otherwise reject the proposal [<span class="math notranslate nohighlight">\(]X_{n+1} = i[/\)</span>].</p></li>
+<li><p>If <span class="math notranslate nohighlight">\(X_n = i\)</span>, propose a new state j using the transition probabilities in the ith row of the original transition matrix P.</p></li>
+<li><p>Compute the acceptance probability: <span class="math notranslate nohighlight">\(a_{ij} = min(\frac{s_j p_{ji}}{s_i p_{ij}}, 1)\)</span></p></li>
+<li><p>Flip a coin that lands Heads with probability <span class="math notranslate nohighlight">\(a_{ij}\)</span></p></li>
+<li><p>If the coin land Heads, accept the proposal <span class="math notranslate nohighlight">\(X_{n+1} = j\)</span>. Otherwise reject the proposal <span class="math notranslate nohighlight">\(X_{n+1} = i\)</span>.</p></li>
 </ol>
-<p>This is pracital since the normalization constants cancels out [<span class="math notranslate nohighlight">\(]\frac{s_i}{s_j}[/\)</span>].</p>
+<p>This is practical since the normalization constants cancels out <span class="math notranslate nohighlight">\(\frac{s_i}{s_j}\)</span>.</p>
 </div>
 
     <script type="text/x-thebe-config">

@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Conditional independence in Undirected graphical models &#8212; study-notes</title>
+    <title>Chordal graph &#8212; study-notes</title>
     
   <link rel="stylesheet" href="../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
 
@@ -90,8 +90,6 @@ commentsRunWhenDOMLoaded(addUtterances);
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Log partition function" href="log_partition_function.html" />
-    <link rel="prev" title="Variational free energy" href="variational_free_energy.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -128,7 +126,7 @@ commentsRunWhenDOMLoaded(addUtterances);
   </a>
  </li>
 </ul>
-<ul class="current nav sidenav_l1">
+<ul class="nav sidenav_l1">
  <li class="toctree-l1">
   <a class="reference internal" href="logistic_regression.html">
    Logistic regression
@@ -249,8 +247,8 @@ commentsRunWhenDOMLoaded(addUtterances);
    Variational free energy
   </a>
  </li>
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
+ <li class="toctree-l1">
+  <a class="reference internal" href="markov_random_fields_conditional_independence.html">
    Conditional independence in
    <span class="xref myst">
     Undirected graphical models
@@ -2015,7 +2013,7 @@ commentsRunWhenDOMLoaded(addUtterances);
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../_sources/notes/markov_random_fields_conditional_independence.md"><button type="button"
+        <a class="dropdown-buttons" href="../_sources/notes/chordal_graph.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.md</button></a>
         <!-- Download PDF via print -->
@@ -2040,47 +2038,6 @@ commentsRunWhenDOMLoaded(addUtterances);
     <!-- Table of contents -->
     <div class="d-none d-md-block col-md-2 bd-toc show">
         
-        <div class="tocsection onthispage pt-5 pb-3">
-            <i class="fas fa-list"></i> Contents
-        </div>
-        <nav id="bd-toc-nav">
-            <ul class="nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#global-markov-property">
-   Global Markov property
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#markov-blanket">
-   Markov blanket
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#pairwise-markov-property">
-   Pairwise Markov Property
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#ci-properties-in-ugm">
-   CI properties in UGM
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#undirected-alternative-to-d-separation">
-     Undirected alternative to d-separation
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#comparison-of-directed-and-undirected-graphical-models">
-     Comparison of directed and undirected graphical models
-    </a>
-   </li>
-  </ul>
- </li>
-</ul>
-
-        </nav>
-        
     </div>
 </div>
     <div id="main-content" class="row">
@@ -2088,61 +2045,12 @@ commentsRunWhenDOMLoaded(addUtterances);
         
               <div>
                 
-  <div class="section" id="conditional-independence-in-undirected-graphical-models">
-<h1>Conditional independence in <a class="reference internal" href="markov_random_fields.html"><span class="doc std std-doc">Undirected graphical models</span></a><a class="headerlink" href="#conditional-independence-in-undirected-graphical-models" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="global-markov-property">
-<h2>Global Markov property<a class="headerlink" href="#global-markov-property" title="Permalink to this headline">¶</a></h2>
-<p>In UGM we define conditional independence relationship via simple graph separation. For a set of nodes A,B and C we can say that <span class="math notranslate nohighlight">\(x_A \perp_G x_B | x_c​\)</span> iff C separates A from B in graph G.  This means when we remove all the nodes in C, if there are no paths connecting any node in A to any node in B, then the Ci property holds. This is called the <strong>Global Markov property</strong> for UGMs.</p>
-<p><img alt="" src="../_images/markov_random_field_example.png" />
-We have:</p>
-<div class="math notranslate nohighlight">
-\[\{  1,2 \} \perp \{ 6,7 \} | \{3, 4, 5 \}\]</div>
-</div>
-<div class="section" id="markov-blanket">
-<h2>Markov blanket<a class="headerlink" href="#markov-blanket" title="Permalink to this headline">¶</a></h2>
-<p>Is the smalles st of nodes that renders a node <span class="math notranslate nohighlight">\(t​\)</span> conditionally independent lf all the other nodes in the graph is called <span class="math notranslate nohighlight">\(t​\)</span>‘s <strong>Markov Blanket</strong>, and it is denoted <span class="math notranslate nohighlight">\(mb(t)​\)</span>. Formaly this is:</p>
-<div class="math notranslate nohighlight">
-\[ t \perp V /\ cl(t)| mb(t) \]</div>
-<ul class="simple">
-<li><p><span class="math notranslate nohighlight">\(cl(t) \triangleq mb(t) \cup \{t \}\)</span> is the closure of node t</p></li>
-</ul>
-<p>In an UGM a node’s Markov Blanket is its set of immediate neighbors. And it is called <strong>undirected local Markov property</strong>.</p>
-<p><img alt="" src="../_images/markov_random_field_example.png" /></p>
-<p><span class="math notranslate nohighlight">\(mb(5) = \{2,3,4,6,7 \}​\)</span></p>
-</div>
-<div class="section" id="pairwise-markov-property">
-<h2>Pairwise Markov Property<a class="headerlink" href="#pairwise-markov-property" title="Permalink to this headline">¶</a></h2>
-<p>From this property we can see that two nodes are conditionally independed given the rest if there is no direct edge between them.  More formally:</p>
-<div class="math notranslate nohighlight">
-\[ s \perp t | V /\ \{ s,t \} \iff G_{st} = 0 \]</div>
-</div>
-<div class="section" id="ci-properties-in-ugm">
-<h2>CI properties in UGM<a class="headerlink" href="#ci-properties-in-ugm" title="Permalink to this headline">¶</a></h2>
-<p>We can summarize different CI properties for:</p>
-<p><img alt="" src="../_images/markov_random_field_example.png" /></p>
-<ol class="simple">
-<li><p><strong>Pairwise</strong> <span class="math notranslate nohighlight">\(1 \perp 7 | rest\)</span></p></li>
-<li><p><strong>Local</strong> <span class="math notranslate nohighlight">\(1 \perp rest | 2, 3\)</span></p></li>
-<li><p><strong>Global</strong> <span class="math notranslate nohighlight">\(1,2 \perp 6,7 | 3,4,5\)</span></p></li>
-</ol>
-<p><strong>There Global Markov implies Local Markov which implies pairwise Markov</strong></p>
-<div class="math notranslate nohighlight">
-\[
-G \Rightarrow L \Rightarrow P \Rightarrow G
-\]</div>
-<p>Empirically it is easier to asses pairwise conditional independence. Hence we use pairwise CI to construct a graph from which global CI statements can be extracted.</p>
-<div class="section" id="undirected-alternative-to-d-separation">
-<h3>Undirected alternative to d-separation<a class="headerlink" href="#undirected-alternative-to-d-separation" title="Permalink to this headline">¶</a></h3>
-<p>We cannot convert DGM to an UGM just by dropping the orientation of the edges. (To give an example we cannot convert a v-structure <span class="math notranslate nohighlight">\(A \rightarrow B \leftarrow C\)</span> into <span class="math notranslate nohighlight">\(A-B-C\)</span> which states that <span class="math notranslate nohighlight">\(A \perp C | B\)</span> but it muss not hold for the first). To avoid inccorect CI statements, we have to add edges between the “unmarried” parents A and C, and then drop the arrows from the edges, forming a fully connected undirected graph. This process is called <strong>normalization</strong>:</p>
-<p>Example of normalization:</p>
-<p><img alt="" src="../_images/ugm_normalization.png" /></p>
-<p>We need to interconnect 2,3 since they have an common child 5, and we interconnect 4,5,6 since they have a common child 7.</p>
-<p><strong>Downside of normalization</strong> is that we loose some CI information, and therefore we cannot use the normalized UGM to determine the Ci properties of DGM.</p>
-</div>
-<div class="section" id="comparison-of-directed-and-undirected-graphical-models">
-<h3>Comparison of directed and undirected graphical models<a class="headerlink" href="#comparison-of-directed-and-undirected-graphical-models" title="Permalink to this headline">¶</a></h3>
-</div>
-</div>
+  <div class="section" id="chordal-graph">
+<h1>Chordal graph<a class="headerlink" href="#chordal-graph" title="Permalink to this headline">¶</a></h1>
+<p>Every undirected cycle <span class="math notranslate nohighlight">\(X_1 - X_2 \cdots X_k - X_1\)</span> of length <span class="math notranslate nohighlight">\(k \ge 4\)</span> has a <em>chord</em>.</p>
+<p>Chord is an edge that is not part of the cycle but connects two vertices of the cycle</p>
+<p><img alt="" src="../_images/chordal_graph.png" /></p>
+<p>Example of a chord. The green edges are not part of a cycle.</p>
 </div>
 
     <script type="text/x-thebe-config">
@@ -2173,8 +2081,6 @@ G \Rightarrow L \Rightarrow P \Rightarrow G
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="variational_free_energy.html" title="previous page">Variational free energy</a>
-    <a class='right-next' id="next-link" href="log_partition_function.html" title="next page">Log partition function</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">
