@@ -1,10 +1,6 @@
 # Kernel trick 
 
-Rather than defining our [feature vector in terms of kernels](kernel_machines.md):
-
-$$\phi(x)=[k(x, x_1), \cdots, k(x,x_N)]$$
-
-We can instead work with the original feature vectors x, but modify the algorithm so that it replaces alll the inner producs of the form $<x, x'>$ with a call to the kernel function $k(x, x')$. This is called the **kernel trick**.  It turns out that many algorithms can be kernelized in this way. Note that we require that the kernel be a [Mercer kernel](kernel.md) for this trick to work.
+We replaces all the inner products of the form $<x, x'>$ with a call to the kernel function $k(x, x')$. This is called the **kernel trick**.  It turns out that many algorithms can be kernelized in this way. Note that we require that the kernel be a [Mercer kernel](kernel.md) for this trick to work.
 
 ## Nearest neighbor classification
 
@@ -17,7 +13,7 @@ $$
 ### [K-medoids](k_medoids.md) clustering
 We can kernelize the distance function.
 
-$$d(i,i') \triangleq ||x_i -x_{i'}||_2^2$$
+$$d(i,i') = ||x_i -x_{i'}||_2^2$$
 
 This algorithm works in $O(n_k^2)$ per cluster where K-means takes $O(n_kD)$ to update each cluster.
 

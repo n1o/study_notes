@@ -39,13 +39,13 @@ We can summarize different CI properties for:
 2. **Local** $1 \perp rest | 2, 3$
 3. **Global** $1,2 \perp 6,7 | 3,4,5$
 
-
-
 **There Global Markov implies Local Markov which implies pairwise Markov**
 
-![image-20190122113554193](/Users/mbarak/google_drive/study_notes/machine_learning/Undirected Graphical Models (Markov random fields).assets/image-20190122113554193.png)
+$$
+G \Rightarrow L \Rightarrow P \Rightarrow G
+$$
 
-Where all there Markov properties are the same. And empirically it is easier to asses pairwise conditional independence. Hence we use pairwise CI to construct a graph from which global CI statements can be extracted. 
+Empirically it is easier to asses pairwise conditional independence. Hence we use pairwise CI to construct a graph from which global CI statements can be extracted. 
 
 ### Undirected alternative to d-separation
 
@@ -53,7 +53,7 @@ We cannot convert DGM to an UGM just by dropping the orientation of the edges. (
 
 Example of normalization:
 
-![Screenshot 2019-01-22 at 11.42.48](/Users/mbarak/google_drive/study_notes/machine_learning/Undirected Graphical Models (Markov random fields).assets/Screenshot 2019-01-22 at 11.42.48.png)
+![](../.images/machine_learning/ugm_normalization.png)
 
 We need to interconnect 2,3 since they have an common child 5, and we interconnect 4,5,6 since they have a common child 7. 
 

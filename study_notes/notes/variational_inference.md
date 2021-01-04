@@ -20,7 +20,7 @@ $$
 KL(q||p^*) = \sum_x q(x) \log \frac{q(x)}{p^*(x)}
 $$
 
-If we choose $q$ right this is tractable. But evaluating $p^*(x) = p(x|D)$ pointwise is hard, since it requires to evaluate the normalization contant $Z = p(D)$. We have to use the unnormalized distribution:
+If we choose $q$ right this is tractable. But evaluating $p^*(x) = p(x|D)$ point-wise is hard, since it requires to evaluate the normalization constant $Z = p(D)$. We have to use the un-normalized distribution:
 
 $$
 \tilde{p}(x) = p^*(x)Z
