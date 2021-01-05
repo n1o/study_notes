@@ -5,7 +5,7 @@ $$
 p(\theta|D) \approx q(\theta)
 $$
 
-We assume that $q$ has some free parameters that we can optimize, to make the approximation as tight as possible.
+We assume that $q$ has some free parameters that we can optimize,   make the approximation as tight as possible.
 
 To do this we usually minimize the KL divergence:
 
