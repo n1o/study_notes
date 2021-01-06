@@ -29,6 +29,6 @@ In general if the kernel is Mercer, then there exists a function $\phi$ mapping 
 
 $$\mathcal{k}(x,x') = \phi(x)^T\phi(x')$$
 
-* $\phi$ depends on the eigen functions of $\mathcal{k}$ (so D is a potentionally infinte dimension space). 
+* $\phi$ depends on the eigen functions of $\mathcal{k}$ (so D is a potentially infinite dimension space). 
 
 In general, establishing that a kernel is a Mercer kernel is difficult, and requires techniques from functional analysis. However, one can show that it is possible to build up new Mercer kernels from simpler ones using a set of standard rules. For example if $\mathcal{k_1}$ and $\mathcal{k_2}$ are booth Mercer so is $\mathcal{k}(x,x') = \mathcal{k}_1(x,x') + \mathcal{k}_2(x,x')$.

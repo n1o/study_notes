@@ -1,6 +1,6 @@
 # Forward vs reverse KL divergence
 
-[KL divergence](kl_divergence.md) is not symmetric in its arguments, minimizing $K(q||p)$ wtr $q$ will give different behaviour than minimizing $KL(p||q)$.
+[KL divergence](kl_divergence.md) is not symmetric in its arguments, minimizing $K(q||p)$ wtr $q$ will give different behavior than minimizing $KL(p||q)$.
 
 ## Reverse $KL(q||p)$  (I-projection, information projection)
 
