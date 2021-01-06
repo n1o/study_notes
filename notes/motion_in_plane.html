@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Variational inference &#8212; study-notes</title>
+    <title>Motion in plane &#8212; study-notes</title>
     
   <link rel="stylesheet" href="../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
 
@@ -90,8 +90,6 @@ commentsRunWhenDOMLoaded(addUtterances);
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Junction tree algorithm" href="junction_tree_algorithm.html" />
-    <link rel="prev" title="Mixture models" href="mixture_models.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -128,7 +126,7 @@ commentsRunWhenDOMLoaded(addUtterances);
   </a>
  </li>
 </ul>
-<ul class="current nav sidenav_l1">
+<ul class="nav sidenav_l1">
  <li class="toctree-l1">
   <a class="reference internal" href="logistic_regression.html">
    Logistic regression
@@ -740,8 +738,8 @@ commentsRunWhenDOMLoaded(addUtterances);
    Parameter estimation
   </a>
  </li>
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
+ <li class="toctree-l1">
+  <a class="reference internal" href="variational_inference.html">
    Variational inference
   </a>
  </li>
@@ -2015,7 +2013,7 @@ commentsRunWhenDOMLoaded(addUtterances);
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../_sources/notes/variational_inference.md"><button type="button"
+        <a class="dropdown-buttons" href="../_sources/notes/motion_in_plane.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.md</button></a>
         <!-- Download PDF via print -->
@@ -2046,10 +2044,8 @@ commentsRunWhenDOMLoaded(addUtterances);
         <nav id="bd-toc-nav">
             <ul class="nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#mean-field-method">
-   <span class="xref myst">
-    Mean field method
-   </span>
+  <a class="reference internal nav-link" href="#instananeous-velocity">
+   Instananeous velocity
   </a>
  </li>
 </ul>
@@ -2063,55 +2059,44 @@ commentsRunWhenDOMLoaded(addUtterances);
         
               <div>
                 
-  <div class="section" id="variational-inference">
-<h1>Variational inference<a class="headerlink" href="#variational-inference" title="Permalink to this headline">¶</a></h1>
-<p>We try to approximate the posterior using a distribution from tractable family.</p>
+  <div class="section" id="motion-in-plane">
+<h1>Motion in plane<a class="headerlink" href="#motion-in-plane" title="Permalink to this headline">¶</a></h1>
+<p>We extend the <a class="reference internal" href="one_dimensional_motion.html"><span class="doc std std-doc">one dimensional motion</span></a> into two dimensions. This generalizes than into tree dimensions.</p>
+<p><img alt="" src="../_images/two_dimensional_motion.png" /></p>
+<p>The vector <span class="math notranslate nohighlight">\(\vec{r}\)</span> is the <strong>position vector</strong> (x,v coordinates). If we want to measure the distance a particle has traveled whe take its magnitude:</p>
 <div class="math notranslate nohighlight">
 \[
-p(\theta|D) \approx q(\theta)
+r = ||r||_2
 \]</div>
-<p>We assume that <span class="math notranslate nohighlight">\(q\)</span> has some free parameters that we can optimize,   make the approximation as tight as possible.</p>
-<p>To do this we usually minimize the KL divergence:</p>
-<div class="math notranslate nohighlight">
-\[
-KL(p^*||q) = \sum_x p^*(x) \log \frac{p^*(x)}{q(x)}
-\]</div>
-<ul class="simple">
-<li><p><span class="math notranslate nohighlight">\(p^*(x)\)</span> is our posterior distribution.</p></li>
-</ul>
-<p>This is hard to compute since the expectation <span class="math notranslate nohighlight">\(\sum_x p^*(x)\)</span> is not tractable. Instead we work with the <a class="reference internal" href="forward_vs_reverse_kl_divergence.html"><span class="doc std std-doc">reverse KL divergence</span></a></p>
-<div class="math notranslate nohighlight">
-\[
-KL(q||p^*) = \sum_x q(x) \log \frac{q(x)}{p^*(x)}
-\]</div>
-<p>If we choose <span class="math notranslate nohighlight">\(q\)</span> right this is tractable. But evaluating <span class="math notranslate nohighlight">\(p^*(x) = p(x|D)\)</span> point-wise is hard, since it requires to evaluate the normalization constant <span class="math notranslate nohighlight">\(Z = p(D)\)</span>. We have to use the un-normalized distribution:</p>
-<div class="math notranslate nohighlight">
-\[
-\tilde{p}(x) = p^*(x)Z
-\]</div>
-<p>The objective function becomes:</p>
+<p>This can be viewed as displacement. We can now calculate the average velocity by:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
-J(q) = KL(q||\tilde{p}) \\ 
-= \sum_x q(x) \log \frac{q(x)}{Zp^*(x)} \\ 
-= \sum_x q(x) \log \frac{q(x)}{p^*(x)} - log Z \\
-= KL(q||p^*) - \log Z
+v_{av} = \frac{\Delta r}{\Delta t} \\
+v_{av,x} = \frac{\Delta x}{\Delta t} \\
+v_{av,y} = \frac{\Delta y}{\Delta t}
 \end{split}\]</div>
-<p>Here Z is an constant, thus by minimizing <span class="math notranslate nohighlight">\(J(q)\)</span> we will force q to become close to <span class="math notranslate nohighlight">\(p^*\)</span>.</p>
-<p>KL divergence is nonnegative, thus <span class="math notranslate nohighlight">\(J(q)\)</span> can be viewed as an <strong>upper bound on the NLL(negative log likelihood)</strong>. Alternatively we can view it as <a class="reference internal" href="variational_free_energy.html"><span class="doc std std-doc">variational free energy</span></a>.</p>
+<p>This is a vector, and it has the same direction as <span class="math notranslate nohighlight">\(\Delta \vec{r}\)</span> and the magnitude equal to the magnitude of <span class="math notranslate nohighlight">\(\Delta \vec{r}\)</span> divided by <span class="math notranslate nohighlight">\(\Delta r\)</span>. And its compontets are the average velocity along each axes.</p>
+<p>The magnitude <span class="math notranslate nohighlight">\(\Delta \vec{r}\)</span> is allways a straing line distance between two points, regardle of the actal path.</p>
+<div class="section" id="instananeous-velocity">
+<h2>Instananeous velocity<a class="headerlink" href="#instananeous-velocity" title="Permalink to this headline">¶</a></h2>
+<p>Here ve just take the limit:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\vec{v} = \lim_{\Delta t \rightarrow 0} \frac{\Delta \vec{r}}{\Delta t} \\
+v_x = \lim_{\Delta t \rightarrow 0} \frac{\Delta x}{\Delta t} \\
+v_y =\lim_{\Delta t \rightarrow 0} \frac{\Delta y}{\Delta t} 
+\end{split}\]</div>
+<p>Here <span class="math notranslate nohighlight">\(\Delta \vec{r}\)</span> becomes tagent to the curve of the trajector.</p>
+<p>The instantenous speed is just the magnitude of the instataneous velocity.</p>
 <div class="math notranslate nohighlight">
 \[
-L(q) = -J(q) = -KL(q||p^*) + \log Z \le \log Z = \log p(D)
+|\vec{v}| = \sqrt{v_x^2 + v_y^2}
 \]</div>
-<p>To get the thightest lowerbound we set <span class="math notranslate nohighlight">\(q = p^*\)</span></p>
-<div class="section" id="mean-field-method">
-<h2><a class="reference internal" href="mean_field_method.html"><span class="doc std std-doc">Mean field method</span></a><a class="headerlink" href="#mean-field-method" title="Permalink to this headline">¶</a></h2>
-<p>One of the most polular variational inference methods. It assumes that the posterior is fully factorized approximation of the form:</p>
+<p>We can express the angle in which an object is traveling as:</p>
 <div class="math notranslate nohighlight">
-\[q(x) = \prod_{i=1} ^D q_i(x)\]</div>
-<p>Our goal is to solve this optimization problem:</p>
-<div class="math notranslate nohighlight">
-\[min_{q_1, \cdots, q_D } KL(q||p) \]</div>
+\[
+\theta = \tan^{-1} \frac{u_y}{u_x}
+\]</div>
 </div>
 </div>
 
@@ -2143,8 +2128,6 @@ L(q) = -J(q) = -KL(q||p^*) + \log Z \le \log Z = \log p(D)
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="mixture_models.html" title="previous page">Mixture models</a>
-    <a class='right-next' id="next-link" href="junction_tree_algorithm.html" title="next page">Junction tree algorithm</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">
