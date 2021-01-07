@@ -73,7 +73,7 @@ For a Markov chain with infinite number of states, our requirements are similar.
 
 We require that each state is recurrent, and we can return to that position in finite time. The two requirements combined is also called **non-null recurrent**. 
 
-We can say that a state is **ergodic** if it is aperiodic, recurrent and non-null, and we can say that a chain is rgodic if all its states are ergodic. 
+We can say that a state is **ergodic** if it is aperiodic, recurrent and non-null, and we can say that a chain is ergodic if all its states are ergodic. 
 
 **Theorem**
 

@@ -1,6 +1,6 @@
 # Kernel density estimation (KDE)
 
-Simmilar to Gaussian mixture model, but instead of choosing K number of cluster centers we allocate one cluster center per data point, so $\mu_i = x_i$. Hence the model becomes:
+Similar to Gaussian mixture model, but instead of choosing K number of cluster centers we allocate one cluster center per data point, so $\mu_i = x_i$. The model:
 
 $$
 p(x|D) = \frac{1}{N} \sum_{i=1}^NN(x|x_i, \sigma^2I)

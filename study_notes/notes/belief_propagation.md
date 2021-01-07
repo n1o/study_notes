@@ -15,7 +15,7 @@ $$
 
 We can implement BP for undirected trees as follows:
 
-1. Pick an arbitrary ndoe and call it the root r.
+1. Pick an arbitrary node and call it the root r.
 2. Orient all the edges away from r ("pick up the graph" and let all the edges "dangle down" ) this gives a notion of parents and children. 
 3. Send messages from leaves to the root (**collect evidence** phase)
 4. Send messages back down from the root (**distribute evidence** phase) 
@@ -98,12 +98,12 @@ $$
 m_{t \rightarrow s}^+ (x_s) = \sum_{x_t}\psi_{st}(x_s, x_t)\psi_t(x_t) \prod_{c \in \text{ch}(t), c \ne s}m_{c \rightarrow t}^-(x_t)\prod_{p \in \text{pa}(t)} m_{p \rightarrow t}^+ (x_t)
 $$
 
-Here we multiply together all the mesages coming into $t$ from all nodes except for the recipient $s$, combine together and then pass through the edge potential $\psi_{st}​$. 
+Here we multiply together all the messages coming into $t$ from all nodes except for the recipient $s$, combine together and then pass through the edge potential $\psi_{st}​$. 
 
 The version of BP in which we use division is called **belief updating**, and the version in which we multiply all-but-one of the messages is called **sum-product**.
 
 ## Parallel protocol
 
-Unfortunately serial protocol cannot handle graphs with loops, hence wee need to consider a prallel version of BF, wich gives equivalent resutls to the serial version but is less efficient. 
+Unfortunately serial protocol cannot handle graphs with loops, hence wee need to consider a parallel version of BF, wich gives equivalent results to the serial version but is less efficient. 
 
-The main idea is that all nodes recceive messages from their neighbors in parallel, they then update their belif states, and finally they send new messages back out to their neighbours. 
+The main idea is that all nodes receive messages from their neighbors in parallel, they then update their belief states, and finally they send new messages back out to their neighbors. 
