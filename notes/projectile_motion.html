@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Physics &#8212; study-notes</title>
+    <title>Projectile Motion &#8212; study-notes</title>
     
   <link rel="stylesheet" href="../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
 
@@ -2013,7 +2013,7 @@ commentsRunWhenDOMLoaded(addUtterances);
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../_sources/notes/physics.md"><button type="button"
+        <a class="dropdown-buttons" href="../_sources/notes/projectile_motion.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.md</button></a>
         <!-- Download PDF via print -->
@@ -2038,38 +2038,6 @@ commentsRunWhenDOMLoaded(addUtterances);
     <!-- Table of contents -->
     <div class="d-none d-md-block col-md-2 bd-toc show">
         
-        <div class="tocsection onthispage pt-5 pb-3">
-            <i class="fas fa-list"></i> Contents
-        </div>
-        <nav id="bd-toc-nav">
-            <ul class="nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#one-dimensional-movement">
-   <span class="xref myst">
-    One dimensional movement
-   </span>
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#motion-in-a-plane">
-   <span class="xref myst">
-    Motion in a plane
-   </span>
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#projectile-motion">
-     <span class="xref myst">
-      Projectile motion
-     </span>
-    </a>
-   </li>
-  </ul>
- </li>
-</ul>
-
-        </nav>
-        
     </div>
 </div>
     <div id="main-content" class="row">
@@ -2077,19 +2045,19 @@ commentsRunWhenDOMLoaded(addUtterances);
         
               <div>
                 
-  <div class="section" id="physics">
-<h1>Physics<a class="headerlink" href="#physics" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="one-dimensional-movement">
-<h2><a class="reference internal" href="one_dimensional_motion.html"><span class="doc std std-doc">One dimensional movement</span></a><a class="headerlink" href="#one-dimensional-movement" title="Permalink to this headline">¶</a></h2>
-</div>
-<div class="section" id="motion-in-a-plane">
-<h2><a class="reference internal" href="motion_in_plane.html"><span class="doc std std-doc">Motion in a plane</span></a><a class="headerlink" href="#motion-in-a-plane" title="Permalink to this headline">¶</a></h2>
-<p>Here we move in a plane represented by x,y coordinates.</p>
-<div class="section" id="projectile-motion">
-<h3><a class="reference internal" href="projectile_motion.html"><span class="doc std std-doc">Projectile motion</span></a><a class="headerlink" href="#projectile-motion" title="Permalink to this headline">¶</a></h3>
-<p>Here a projective given an initial velocity follows a path determined by the effect of gravity and air resistance.</p>
-</div>
-</div>
+  <div class="section" id="projectile-motion">
+<h1>Projectile Motion<a class="headerlink" href="#projectile-motion" title="Permalink to this headline">¶</a></h1>
+<p>Here we simplify a bit, we ignore the curvature and air resistance.</p>
+<p>Here we assume that the acceleration towards earth is constant:</p>
+<div class="math notranslate nohighlight">
+\[
+a_y = -g
+\]</div>
+<p><img alt="" src="../_images/projectile_simplified.png" /></p>
+<p>The vertical and horizontal motions are independent, that means if we throw two balls, one straight to the ground the other with some velocity to the side they booth reach ground at the same time.</p>
+<p><img alt="" src="../_images/projectile_motion_independent_velocity.png" /></p>
+<p>Thus we need to trait the x and y coordinate separately.</p>
+<p>In projectile motion booth the horizontal and vertical axis wary with constant acceleration. (Horizontal component of acceleration is constant at zero.)</p>
 </div>
 
     <script type="text/x-thebe-config">
