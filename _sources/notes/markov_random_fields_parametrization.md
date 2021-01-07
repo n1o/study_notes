@@ -6,9 +6,9 @@ Unfortunately representing joint distributions in Undirected graphical models is
 
 Since there is no topological ordering associated with an undirected graph, we can't use the chain rule to represent $p(y)$. So instead of associating CPDs with each node, we associate **potential functions** or **factors** with each maximal clieque in the graph. We will denote this potential function for clique c as 
 
-$$ \psi_c (y_c|\theta_c)$$
+$$\psi_c (y_c|\theta_c)$$
 
-A potential function can be any non-negative function of its arguments. The join distribution is then defined to be proportional to the product of clique potentials. 
+A potential function is non-negative function of its arguments. The join distribution is then defined to be proportional to the product of clique potentials. 
 
 More formaly this is called the *Hammersley-Clifford* theorem
 

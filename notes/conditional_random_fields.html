@@ -2049,18 +2049,18 @@ commentsRunWhenDOMLoaded(addUtterances);
                 
   <div class="section" id="conditional-random-fields-crfs">
 <h1>Conditional random fields (CRFs)<a class="headerlink" href="#conditional-random-fields-crfs" title="Permalink to this headline">¶</a></h1>
-<p>A <strong>conditional random fiels (CRF)</strong> , sometimes called <strong>discriminative random field</strong>, is just a version of MRF, where all the clique potentials are conditioned on the input feature:</p>
+<p>A <strong>conditional random fields (CRF)</strong> , sometimes called <strong>discriminative random field</strong>, is just a version of MRF, where all the clique potentials are conditioned on the input feature:</p>
 <div class="math notranslate nohighlight">
 \[
 p(y|x,w) = \frac{1}{Z(x,w)} \prod_c\psi_c(y_c|x,w)
 \]</div>
-<p>A CRF can be thought as a strucutred output extension of logistic regression, where we model the correlation amongs the ouput labels conditioned on the input features. We usually assume a log-linear representation of the potentials:</p>
+<p>A CRF can be thought as a structured output extension of logistic regression, where we model the correlation among the outputs labels conditioned on the input features. We usually assume a log-linear representation of the potentials:</p>
 <div class="math notranslate nohighlight">
 \[
 \psi_c(y_c|x,w) = \exp(w_c^T\phi(x, y_c))
 \]</div>
 <ul class="simple">
-<li><p><span class="math notranslate nohighlight">\(\phi(x| y_c)\)</span> is a feature vector dervied from the lobal inputs x and the local set of labels <span class="math notranslate nohighlight">\(y_c\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\phi(x| y_c)\)</span> is a feature vector derived from the global inputs x and the local set of labels <span class="math notranslate nohighlight">\(y_c\)</span></p></li>
 </ul>
 <p>This is just an discriminative version of a <a class="reference internal" href="markov_random_fields.html"><span class="doc std std-doc">markov random field</span></a>.</p>
 </div>

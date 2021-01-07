@@ -2068,7 +2068,7 @@ commentsRunWhenDOMLoaded(addUtterances);
                 
   <div class="section" id="markov-models">
 <h1>Markov models<a class="headerlink" href="#markov-models" title="Permalink to this headline">¶</a></h1>
-<p>Idea behind a Markov chain is to assume that <span class="math notranslate nohighlight">\(X_t\)</span> (curent state) captures all the relevant infromation for predicting the future. We can express it as the following joint distribution:</p>
+<p>Idea behind a Markov chain is to assume that <span class="math notranslate nohighlight">\(X_t\)</span> (current state) captures all the relevant information for predicting the future. We can express it as the following joint distribution:</p>
 <div class="math notranslate nohighlight">
 \[
 p(X_{1:T}) = p(X_1)p(X_2|X_1)P(X_3|X_2)\cdots = p(X_1)\prod_{t=2}^TP(X_t|X_{t-1})
@@ -2111,7 +2111,7 @@ A(n) = AA(n-1) = AAA(n-2) = A^n
 </div>
 <div class="section" id="stationary-distribution-of-a-markov-chain">
 <h2>Stationary distribution of a Markov chain<a class="headerlink" href="#stationary-distribution-of-a-markov-chain" title="Permalink to this headline">¶</a></h2>
-<p>We can interpret a markov chain as a stochasting dynamical system, where we hop from one state to another at each time step. In this case, we are ofthen interested in the log term distribution over states, which is known as the <a class="reference internal" href="stationary_distrion.html"><span class="doc std std-doc">stationary distribution</span></a>.</p>
+<p>We can interpret a markov chain as a stochastic dynamical system, where we hop from one state to another at each time step. In this case, we are often interested in the log term distribution over states, which is known as the <a class="reference internal" href="stationary_distrion.html"><span class="doc std std-doc">stationary distribution</span></a>.</p>
 </div>
 </div>
 

@@ -1,5 +1,5 @@
 # Markov models
-Idea behind a Markov chain is to assume that $X_t$ (curent state) captures all the relevant infromation for predicting the future. We can express it as the following joint distribution:
+Idea behind a Markov chain is to assume that $X_t$ (current state) captures all the relevant information for predicting the future. We can express it as the following joint distribution:
 
 $$
 p(X_{1:T}) = p(X_1)p(X_2|X_1)P(X_3|X_2)\cdots = p(X_1)\prod_{t=2}^TP(X_t|X_{t-1})
@@ -52,4 +52,4 @@ We can simulate multiple steps of a Markov chain by "powering up" the transition
 
 ## Stationary distribution of a Markov chain
 
-We can interpret a markov chain as a stochasting dynamical system, where we hop from one state to another at each time step. In this case, we are ofthen interested in the log term distribution over states, which is known as the [stationary distribution](stationary_distrion.md).
+We can interpret a markov chain as a stochastic dynamical system, where we hop from one state to another at each time step. In this case, we are often interested in the log term distribution over states, which is known as the [stationary distribution](stationary_distrion.md).

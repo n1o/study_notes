@@ -2099,7 +2099,7 @@ p(x|v) = \frac{1}{Z(v)}\prod_{s \in V}\psi_x(x_s) \prod_{(x,t) \in \mathcal{E}} 
 </ul>
 <p>We can implement BP for undirected trees as follows:</p>
 <ol class="simple">
-<li><p>Pick an arbitrary ndoe and call it the root r.</p></li>
+<li><p>Pick an arbitrary node and call it the root r.</p></li>
 <li><p>Orient all the edges away from r (“pick up the graph” and let all the edges “dangle down” ) this gives a notion of parents and children.</p></li>
 <li><p>Send messages from leaves to the root (<strong>collect evidence</strong> phase)</p></li>
 <li><p>Send messages back down from the root (<strong>distribute evidence</strong> phase)</p></li>
@@ -2179,13 +2179,13 @@ m_{t \rightarrow s}^+ (x_s) = p(x_s| v_{st}^+) = \sum_{x_t} \psi_{st}(x_s, x_t) 
 \[
 m_{t \rightarrow s}^+ (x_s) = \sum_{x_t}\psi_{st}(x_s, x_t)\psi_t(x_t) \prod_{c \in \text{ch}(t), c \ne s}m_{c \rightarrow t}^-(x_t)\prod_{p \in \text{pa}(t)} m_{p \rightarrow t}^+ (x_t)
 \]</div>
-<p>Here we multiply together all the mesages coming into <span class="math notranslate nohighlight">\(t\)</span> from all nodes except for the recipient <span class="math notranslate nohighlight">\(s\)</span>, combine together and then pass through the edge potential <span class="math notranslate nohighlight">\(\psi_{st}​\)</span>.</p>
+<p>Here we multiply together all the messages coming into <span class="math notranslate nohighlight">\(t\)</span> from all nodes except for the recipient <span class="math notranslate nohighlight">\(s\)</span>, combine together and then pass through the edge potential <span class="math notranslate nohighlight">\(\psi_{st}​\)</span>.</p>
 <p>The version of BP in which we use division is called <strong>belief updating</strong>, and the version in which we multiply all-but-one of the messages is called <strong>sum-product</strong>.</p>
 </div>
 <div class="section" id="parallel-protocol">
 <h2>Parallel protocol<a class="headerlink" href="#parallel-protocol" title="Permalink to this headline">¶</a></h2>
-<p>Unfortunately serial protocol cannot handle graphs with loops, hence wee need to consider a prallel version of BF, wich gives equivalent resutls to the serial version but is less efficient.</p>
-<p>The main idea is that all nodes recceive messages from their neighbors in parallel, they then update their belif states, and finally they send new messages back out to their neighbours.</p>
+<p>Unfortunately serial protocol cannot handle graphs with loops, hence wee need to consider a parallel version of BF, wich gives equivalent results to the serial version but is less efficient.</p>
+<p>The main idea is that all nodes receive messages from their neighbors in parallel, they then update their belief states, and finally they send new messages back out to their neighbors.</p>
 </div>
 </div>
 
