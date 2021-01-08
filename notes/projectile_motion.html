@@ -2058,6 +2058,40 @@ a_y = -g
 <p><img alt="" src="../_images/projectile_motion_independent_velocity.png" /></p>
 <p>Thus we need to trait the x and y coordinate separately.</p>
 <p>In projectile motion booth the horizontal and vertical axis wary with constant acceleration. (Horizontal component of acceleration is constant at zero.)</p>
+<p><img alt="" src="../_images/projectile_in_motion_example.png" /></p>
+<p>The acceleration of a projectile is zero, thus <span class="math notranslate nohighlight">\(v_x\)</span> is constant, but <span class="math notranslate nohighlight">\(v_y\)</span> changes by constant acceleration (gravity). At the highest point <span class="math notranslate nohighlight">\(v_y=0\)</span>. We can represent the initial velocity using the initial angle:</p>
+<p><img alt="" src="../_images/projectile_motion_angle.png" /></p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+v_{0x} = v_0 \cos \theta_0 \\
+v_{0y} = v_0 \sin\theta_0 \\
+\end{split}\]</div>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(v_0 = |\vec{v_0}|\)</span> is the magnitude (initial speed).</p></li>
+</ul>
+<p>We can specify the velocity of a projectile as function of time:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+x =x_0 + (v_0 \cos \theta_0)t \\
+y = y_0 + (v_0 \sin \theta_0)t - \frac{1}{2}g^2t \\
+v_x = v_0 \cos \theta_0 \\
+v_y = v_0 \sin \theta_0 - gt
+\end{split}\]</div>
+<p>(If we start at the origin we can simplify x_0 = y_0 = 0)
+From this we can calculate the distance a projectile travels at any time:</p>
+<div class="math notranslate nohighlight">
+\[
+r = \sqrt{x^2 + y^2}
+\]</div>
+<p>And the projectiles speed at any time:
+$<span class="math notranslate nohighlight">\(
+v = \sqrt{u_x^2 + u_y^2}
+\)</span>$</p>
+<p>And the angle at any time:</p>
+<div class="math notranslate nohighlight">
+\[
+\theta = \tan^{-1} \frac{u_y}{u_x}
+\]</div>
 </div>
 
     <script type="text/x-thebe-config">
