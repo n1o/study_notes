@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Projectile Motion &#8212; study-notes</title>
+    <title>Uniform circular motion &#8212; study-notes</title>
     
   <link rel="stylesheet" href="../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
 
@@ -2013,7 +2013,7 @@ commentsRunWhenDOMLoaded(addUtterances);
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../_sources/notes/projectile_motion.md"><button type="button"
+        <a class="dropdown-buttons" href="../_sources/notes/uniform_circular_motion.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.md</button></a>
         <!-- Download PDF via print -->
@@ -2038,20 +2038,6 @@ commentsRunWhenDOMLoaded(addUtterances);
     <!-- Table of contents -->
     <div class="d-none d-md-block col-md-2 bd-toc show">
         
-        <div class="tocsection onthispage pt-5 pb-3">
-            <i class="fas fa-list"></i> Contents
-        </div>
-        <nav id="bd-toc-nav">
-            <ul class="nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#symetry">
-   Symetry
-  </a>
- </li>
-</ul>
-
-        </nav>
-        
     </div>
 </div>
     <div id="main-content" class="row">
@@ -2059,57 +2045,39 @@ commentsRunWhenDOMLoaded(addUtterances);
         
               <div>
                 
-  <div class="section" id="projectile-motion">
-<h1>Projectile Motion<a class="headerlink" href="#projectile-motion" title="Permalink to this headline">¶</a></h1>
-<p>Here we simplify a bit, we ignore the curvature and air resistance.</p>
-<p>Here we assume that the acceleration towards earth is constant:</p>
+  <div class="section" id="uniform-circular-motion">
+<h1>Uniform circular motion<a class="headerlink" href="#uniform-circular-motion" title="Permalink to this headline">¶</a></h1>
+<p>We move in a circle with constant speed. Thus there is acceleration that is perpendicular to the path (If it would be along than we would increase the speed).</p>
+<p><img alt="" src="../_images/circular_motion.png" /></p>
+<p>The velocity at each point changes, while the acceleration always points towards the Origin of the circle. The magintude of the change of velocity is defined as:</p>
 <div class="math notranslate nohighlight">
 \[
-a_y = -g
+|\Delta \vec{v}| = \frac{v_1}{R}\Delta s
 \]</div>
-<p><img alt="" src="../_images/projectile_simplified.png" /></p>
-<p>The vertical and horizontal motions are independent, that means if we throw two balls, one straight to the ground the other with some velocity to the side they booth reach ground at the same time.</p>
-<p><img alt="" src="../_images/projectile_motion_independent_velocity.png" /></p>
-<p>Thus we need to trait the x and y coordinate separately.</p>
-<p>In projectile motion booth the horizontal and vertical axis wary with constant acceleration. (Horizontal component of acceleration is constant at zero.)</p>
-<p><img alt="" src="../_images/projectile_in_motion_example.png" /></p>
-<p>The acceleration of a projectile is zero, thus <span class="math notranslate nohighlight">\(v_x\)</span> is constant, but <span class="math notranslate nohighlight">\(v_y\)</span> changes by constant acceleration (gravity). At the highest point <span class="math notranslate nohighlight">\(v_y=0\)</span>. We can represent the initial velocity using the initial angle:</p>
-<p><img alt="" src="../_images/projectile_motion_angle.png" /></p>
-<div class="math notranslate nohighlight">
-\[\begin{split}
-v_{0x} = v_0 \cos \theta_0 \\
-v_{0y} = v_0 \sin\theta_0 \\
-\end{split}\]</div>
-<ul class="simple">
-<li><p><span class="math notranslate nohighlight">\(v_0 = |\vec{v_0}|\)</span> is the magnitude (initial speed).</p></li>
-</ul>
-<p>We can specify the velocity of a projectile as function of time:</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}
-x =x_0 + v_{0x}t \\
-y = y_0 + y_{0x}t - \frac{1}{2}g^2t \\
-v_x = v_0 \cos \theta_0 \\
-v_y = v_0 \sin \theta_0 - gt
-\end{split}\]</div>
-<p>(If we start at the origin we can simplify <span class="math notranslate nohighlight">\(x_0 = y_0 = 0\)</span>)
-From this we can calculate the distance a projectile travels at any time:</p>
+<p>From this we can calculate the average acceleration:</p>
 <div class="math notranslate nohighlight">
 \[
-r = \sqrt{x^2 + y^2}
+a_{av} = \frac{|\Delta \vec{v}|}{\Delta t} = \frac{v_1}{R}\frac{\Delta s}{\Delta t}
 \]</div>
-<p>And the projectiles speed at any time:
+<p>The instantaneous acceleration is:</p>
+<div class="math notranslate nohighlight">
+\[
+a = \lim_{\Delta t \rightarrow 0} 
+ \frac{v_1}{R}\frac{\Delta s}{\Delta t} =  \frac{v_1}{R} \lim_{\Delta t \rightarrow 0} \frac{\Delta s}{\Delta t}
+\]</div>
+<p>The limit of <span class="math notranslate nohighlight">\(\frac{\Delta s}{\Delta t}\)</span> is the speed <span class="math notranslate nohighlight">\(v_1\)</span> at point A, which is constant at every point on the path. This makes:</p>
+<div class="math notranslate nohighlight">
+\[
+\lim_{\Delta t \rightarrow 0} \frac{\Delta s}{\Delta t} = v
+\]</div>
+<p>And the acceleration is:
 $<span class="math notranslate nohighlight">\(
-v = \sqrt{u_x^2 + u_y^2}
+a_{rad} = \frac{v^2}{R}
 \)</span>$</p>
-<p>And the angle at any time:</p>
-<div class="math notranslate nohighlight">
-\[
-\theta = \tan^{-1} \frac{u_y}{u_x}
-\]</div>
-<div class="section" id="symetry">
-<h2>Symetry<a class="headerlink" href="#symetry" title="Permalink to this headline">¶</a></h2>
-<p>The time that it takes to reach the highest point is the same as the time required to fall back.</p>
-</div>
+<blockquote>
+<div><p>This acceleration is <strong>radial</strong> (points allways to the center of the circle, and perpendicular to the objects velocity)
+It is proportional to the square of speed <span class="math notranslate nohighlight">\(a_{rad}\propto v^2\)</span> and inversely proportional to the radius <span class="math notranslate nohighlight">\(a_{rad} \propto \frac{1}{R}\)</span></p>
+</div></blockquote>
 </div>
 
     <script type="text/x-thebe-config">
