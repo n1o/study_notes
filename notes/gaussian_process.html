@@ -2049,15 +2049,16 @@ commentsRunWhenDOMLoaded(addUtterances);
                 
   <div class="section" id="gaussian-process">
 <h1>Gaussian Process<a class="headerlink" href="#gaussian-process" title="Permalink to this headline">¶</a></h1>
-<p>We assume that <span class="math notranslate nohighlight">\(y_i = f(x)\)</span> is an unkown function which can be corrupted by noise. The optimal approach is to infer a distribution over functions given the data <span class="math notranslate nohighlight">\(p(f|X,y)\)</span> and then use this to make predictions given new inputs.</p>
+<p>We assume that <span class="math notranslate nohighlight">\(y_i = f(x)\)</span> is an unknown function which can be corrupted by noise. The optimal approach is to infer a distribution over functions given the data <span class="math notranslate nohighlight">\(p(f|X,y)\)</span> and then use this to make predictions given new inputs.</p>
 <div class="math notranslate nohighlight">
 \[
 p(y_*|x_*, X, y) = \int_p(y_*| f, x_*)p(f|X,y)df
 \]</div>
 <p>In this appoach we do not assume any parametric form for the function <span class="math notranslate nohighlight">\(f\)</span>, but we perform Bayesian inference over functions themselves.</p>
 <p>A <strong>Gaussian Process</strong> GP defines a prior over functions, which can be converted into a posterior over functions once we have seen some data. This may seem difficult, but it is enough to be able to define a distribution over the function’s values at a finite, but arbitrary, set of points, say <span class="math notranslate nohighlight">\(x_1, \cdots, x_N\)</span>. Where <em>GP</em> assumes that <span class="math notranslate nohighlight">\(p(f(x_1), \cdots, f(x_N))\)</span> is jointly Gaussian with some mean <span class="math notranslate nohighlight">\(\mu(x)\)</span> and covariance <span class="math notranslate nohighlight">\(\Sigma(x), \Sigma_{ij} = k(x_i, x_j)\)</span> where <span class="math notranslate nohighlight">\(k\)</span> is a positive definite kernel function. The key idea is that <span class="math notranslate nohighlight">\(x_i\)</span> and <span class="math notranslate nohighlight">\(x_j\)</span> are deemed by the kernel to be similar, then we expect the ouptut of the function at those points to be similar too.</p>
-<p>Gaussian processes for regression can be done in close form in <span class="math notranslate nohighlight">\(O(N^3)\)</span> time (there are setting where it can be faster).  And for <strong>classification</strong> setting we must use <strong>approximation</strong>. (Gaussian approximation, since the posterior is no longer Gaussian)</p>
-<p>Gaussian processes can be tought of as a Bayesian alternative to kernel methods, although those methods are sparser and therefore faster, but they do not give well-calibrated probabilistic output.</p>
+<p><a class="reference internal" href="gaussian_process_regression.html"><span class="doc std std-doc">Gaussian processes for regression</span></a> can be done in close form in <span class="math notranslate nohighlight">\(O(N^3)\)</span> time (there are setting where it can be faster).</p>
+<p>Gaussian process classification has no closed form solution (posterior is no longer Gaussian), we approximate. (Gaussian approximation, VI, MCMC)</p>
+<p>Gaussian processes can be thought of as a Bayesian alternative to kernel methods, although those methods are sparser and therefore faster, but they do not give well-calibrated probabilistic output.</p>
 </div>
 
     <script type="text/x-thebe-config">

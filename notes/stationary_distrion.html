@@ -2093,6 +2093,7 @@ commentsRunWhenDOMLoaded(addUtterances);
 \[
 \pi_i \sum_{j\ne i}A_{ij} = \sum_{j \ne i}\pi_jA_{ji}
 \]</div>
+<p>This means that the probability of entering a state is the same as the probability of leaving it.</p>
 <div class="section" id="computing-stationary-distribution">
 <h2>Computing stationary distribution<a class="headerlink" href="#computing-stationary-distribution" title="Permalink to this headline">¶</a></h2>
 <p>To find the stationary distribution, we can just solve the eigenvector equation <span class="math notranslate nohighlight">\(A^Tv = v\)</span>, and set <span class="math notranslate nohighlight">\(\pi = (\frac{v}{||v||})^T\)</span>, where <span class="math notranslate nohighlight">\(v\)</span> is the eigen vector with eigen value 1.</p>
@@ -2144,6 +2145,7 @@ t \rightarrow \infty
 <div class="math notranslate nohighlight">
 \[\pi_i A_{ij} = \pi_j A_{ji}\]</div>
 <p>These are called the <strong>detailed balance equations</strong>. This says that the flow from i to j must equal the flow from j to i, weighted by the appropriate source probabilities.</p>
+<p>Or, going from any state i to any state j is the same as the probability of going backwards from state j to state i.</p>
 <p><strong>Theorem</strong></p>
 <blockquote>
 <div><p>If a Markov chain with transition matrix A is regular and satisfies detailed balance wrt distribution <span class="math notranslate nohighlight">\(\pi\)</span>, then π is a stationary distribution of the chain.</p>

@@ -22,6 +22,8 @@ $$
 \pi_i \sum_{j\ne i}A_{ij} = \sum_{j \ne i}\pi_jA_{ji}
 $$
 
+This means that the probability of entering a state is the same as the probability of leaving it.
+
 ## Computing stationary distribution
 
 To find the stationary distribution, we can just solve the eigenvector equation $A^Tv = v$, and set $\pi = (\frac{v}{||v||})^T$, where $v$ is the eigen vector with eigen value 1. 
@@ -87,7 +89,9 @@ We say that a Markov chain A is **time reversible** if there exists a distributi
 
 $$\pi_i A_{ij} = \pi_j A_{ji}$$
 
-These are called the **detailed balance equations**. This says that the flow from i to j must equal the flow from j to i, weighted by the appropriate source probabilities.
+These are called the **detailed balance equations**. This says that the flow from i to j must equal the flow from j to i, weighted by the appropriate source probabilities. 
+
+Or, going from any state i to any state j is the same as the probability of going backwards from state j to state i.
 
 **Theorem**
 
