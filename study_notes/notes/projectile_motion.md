@@ -34,12 +34,12 @@ $$
 We can specify the velocity of a projectile as function of time:
 
 $$
-x =x_0 + (v_0 \cos \theta_0)t \\
-y = y_0 + (v_0 \sin \theta_0)t - \frac{1}{2}g^2t \\
+x =x_0 + v_{0x}t \\
+y = y_0 + y_{0x}t - \frac{1}{2}g^2t \\
 v_x = v_0 \cos \theta_0 \\
 v_y = v_0 \sin \theta_0 - gt
 $$
-(If we start at the origin we can simplify x_0 = y_0 = 0)
+(If we start at the origin we can simplify $x_0 = y_0 = 0$)
 From this we can calculate the distance a projectile travels at any time:
 
 $$
@@ -56,3 +56,6 @@ And the angle at any time:
 $$
 \theta = \tan^{-1} \frac{u_y}{u_x}
 $$
+
+## Symetry
+The time that it takes to reach the highest point is the same as the time required to fall back.
