@@ -14,6 +14,8 @@ $$
 y_i(x_i^T + w_0) \ge 1 - \epsilon_i; i = 1: N
 $$
 
+[Solution]((examples/svm_classification.ipynb))
+
 This is an quadratic program. And standard solvers solve it in $O(N^3)$, however there are specialized algorithms like **sequential minimal optimization (SMO)** than in practice take $O(N^2)$ for large problems it is best to use a linear SVM which can be trained in $O(N)$
 
 The solution has the from of 
