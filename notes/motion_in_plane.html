@@ -2087,7 +2087,7 @@ commentsRunWhenDOMLoaded(addUtterances);
   <div class="section" id="motion-in-plane">
 <h1>Motion in plane<a class="headerlink" href="#motion-in-plane" title="Permalink to this headline">¶</a></h1>
 <p>We extend the <a class="reference internal" href="one_dimensional_motion.html"><span class="doc std std-doc">one dimensional motion</span></a> into two dimensions. This generalizes than into tree dimensions.</p>
-<p><img alt="" src="../_images/two_dimensional_motion.png" /></p>
+<p><img alt="" src="../_images/motion_in_plane.png" /></p>
 <p>The vector <span class="math notranslate nohighlight">\(\vec{r}\)</span> is the <strong>position vector</strong> (x,v coordinates). If we want to measure the distance a particle has traveled whe take its magnitude:</p>
 <div class="math notranslate nohighlight">
 \[
@@ -2097,12 +2097,9 @@ r = ||r||_2
 <div class="math notranslate nohighlight">
 \[\begin{split}
 v_{av} = \frac{\Delta r}
-{\Delta t} \\
-v_{av} = \begin{bmatrix}
-    v_{av,x} \\ v_{av,y}
-\end{bmatrix}\\
-v_{av,x} = \frac{\Delta x}{\Delta t} \\
-v_{av,y} = \frac{\Delta y}{\Delta t} 
+{\Delta t}
+= \begin{bmatrix} v_{av,x} \\ v_{av,y} \end{bmatrix} 
+= \begin{bmatrix} \frac{\Delta x}{\Delta t} \\ \frac{\Delta y}{\Delta t} \end{bmatrix}
 \end{split}\]</div>
 <p>This is a vector, and it has the same direction as <span class="math notranslate nohighlight">\(\Delta \vec{r}\)</span> and the magnitude equal to the magnitude of <span class="math notranslate nohighlight">\(\Delta \vec{r}\)</span> divided by <span class="math notranslate nohighlight">\(\Delta r\)</span>. And its components are the average velocity along each axes.</p>
 <p>The magnitude <span class="math notranslate nohighlight">\(\Delta \vec{r}\)</span> is always a straight line distance between two points, regardless of the actual path.</p>
@@ -2111,9 +2108,9 @@ v_{av,y} = \frac{\Delta y}{\Delta t}
 <p>Here ve just take the limit:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
-\vec{v} = \lim_{\Delta t \rightarrow 0} \frac{\Delta \vec{r}}{\Delta t} \\
-t_x = \lim_{\Delta t \rightarrow 0} \frac{\Delta x}{\Delta t} \\
-v_y =\lim_{\Delta t \rightarrow 0} \frac{\Delta y}{\Delta t} 
+\vec{v} = \lim_{\Delta t \rightarrow 0} \frac{\Delta \vec{r}}{\Delta t} = \begin{bmatrix}
+    \lim_{\Delta t \rightarrow 0} \frac{\Delta x}{\Delta t} \\ \lim_{\Delta t \rightarrow 0} \frac{\Delta y}{\Delta t} 
+\end{bmatrix}
 \end{split}\]</div>
 <p>Here <span class="math notranslate nohighlight">\(\Delta \vec{r}\)</span> becomes tangent to the curve of the trajectory.</p>
 <div class="section" id="instantaneous-speed">
@@ -2121,19 +2118,15 @@ v_y =\lim_{\Delta t \rightarrow 0} \frac{\Delta y}{\Delta t}
 <p>Is just the magnitude of the instantaneous velocity.</p>
 <div class="math notranslate nohighlight">
 \[
-|\vec{v}| = \sqrt{v_x^2 + v_y^2}
+|\vec{v}| = v = \sqrt{v_x^2 + v_y^2}
 \]</div>
-<p>We can express the angle in which an object is traveling as:</p>
-<div class="math notranslate nohighlight">
-\[
-\theta = \tan^{-1} \frac{u_y}{u_x}
-\]</div>
+<p>To express the angle we need to realize that <span class="math notranslate nohighlight">\(v_x,v_y, v\)</span> form a right triangle.</p>
 </div>
 </div>
 <div class="section" id="acceleration-in-a-plane">
 <h2>Acceleration in a Plane<a class="headerlink" href="#acceleration-in-a-plane" title="Permalink to this headline">¶</a></h2>
 <p>Object is moving on a curved path in a plane</p>
-<p><img alt="" src="../_images/acceleration_plane.png" /></p>
+<p><img alt="" src="../_images/velocity_acceleration_plane.png" /></p>
 <blockquote>
 <div><p>The final velocity <span class="math notranslate nohighlight">\(v_2 = v_1 + \Delta v\)</span> thus it is the sum of original velocity and the change in velocity.</p>
 </div></blockquote>
@@ -2142,32 +2135,29 @@ v_y =\lim_{\Delta t \rightarrow 0} \frac{\Delta y}{\Delta t}
 <p>During a time interval the velocity of a particle changes by <span class="math notranslate nohighlight">\(\Delta \vec{v}\)</span></p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
-\vec{a}_{av} = \frac{\Delta \vec{v}}{\Delta t}\\
-a_{av,x} = \frac{\Delta v_x}{\Delta t} \\
-a_{av,y} = \frac{\Delta v_y}{\Delta t} \\
+\vec{a}_{av} = \frac{\Delta \vec{v}}{\Delta t} = 
+\begin{bmatrix}
+    \frac{\Delta v_x}{\Delta t} \\ \frac{\Delta v_y}{\Delta t} \\
+\end{bmatrix}
 \end{split}\]</div>
-<p><img alt="" src="../_images/average_acceleration_interval.png" /></p>
 </div>
 <div class="section" id="instantaneous-acceleration">
 <h3>Instantaneous acceleration<a class="headerlink" href="#instantaneous-acceleration" title="Permalink to this headline">¶</a></h3>
 <div class="math notranslate nohighlight">
 \[\begin{split}
-\vec{a} = \lim_{\Delta t \rightarrow 0} \frac{\Delta \vec{v}}{\Delta t} \\
-a_x = \lim_{\Delta t \rightarrow 0} \frac{\Delta v_x}{\Delta t} \\
-a_y = \lim_{\Delta t \rightarrow 0} \frac{\Delta v_y}{\Delta t}
+\vec{a} = \lim_{\Delta t \rightarrow 0} \frac{\Delta \vec{v}}{\Delta t} = 
+\begin{bmatrix}
+    \lim_{\Delta t \rightarrow 0} \frac{\Delta v_x}{\Delta t} \\
+    \lim_{\Delta t \rightarrow 0} \frac{\Delta v_y}{\Delta t}
+\end{bmatrix}
 \end{split}\]</div>
 <p>Acceleration always points to the concave side of the curved path.</p>
-<p><img alt="" src="../_images/instantaneous_acceleration.png" /></p>
 <p>When a particle moves in a curved path, it always has nonzero acceleration, even when it moves with constant speed. Acceleration is associated with change of speed, change of direction of velocity, or both.</p>
-<p>If we know the components <span class="math notranslate nohighlight">\(a_x, a_y\)</span> we can find its magnitude and direction:</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}
+<p>If we know the components <span class="math notranslate nohighlight">\(a_x, a_y\)</span> we can find its magnitude:
+$<span class="math notranslate nohighlight">\(
 |\vec{a}| = a = \sqrt{a_x^2 + a_y^2} \\
-\theta = \tan^{-1} \frac{a_y}{a_x}
-\end{split}\]</div>
-<p>The angle is counter clockwise.</p>
-<p><img alt="" src="../_images/instantaneous_acceleration_magnitude_angle.png" /></p>
-<p>If acceleration is parallel to the velocity of an object then there is no change in direction, otherwise we always change direction.</p>
+\)</span>$</p>
+<p>To get the direction it is enough to realize that <span class="math notranslate nohighlight">\(a_x, a_y, a\)</span> form a right triangle and just use trigonometry.</p>
 </div>
 </div>
 </div>
