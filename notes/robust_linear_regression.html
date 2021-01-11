@@ -2083,7 +2083,7 @@ commentsRunWhenDOMLoaded(addUtterances);
 <li><p><span class="math notranslate nohighlight">\(b = []\)</span></p></li>
 <li><p><span class="math notranslate nohighlight">\(A_{eq} = [X, I,I]\)</span></p></li>
 </ul>
-<p>Alternativelly we can choose to minimize the <strong>Hubert loss</strong>.</p>
+<p>Alteratively we can choose to minimize the <strong>Hubert loss</strong>.</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}L_H(r, \delta) = \begin{cases} r^2/2 &amp; \text{ if } |r| \le \delta \\ \delta|r| - \delta^2/2 &amp; \text{ if } |r| &gt; \delta \end{cases} \end{split}\]</div>
 <p>This is equivalent to <span class="math notranslate nohighlight">\(l_2\)</span> for errors that are smaller than <span class="math notranslate nohighlight">\(\delta\)</span> and <span class="math notranslate nohighlight">\(l_1\)</span> for larger errors. Advantage of this method is that it is differentiable. And we can use <a class="reference internal" href="quasi_newton.html"><span class="doc std std-doc">Quasi-newton</span></a> instead of LP. (Faster)</p>

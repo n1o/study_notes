@@ -2082,20 +2082,22 @@ commentsRunWhenDOMLoaded(addUtterances);
                 
   <div class="section" id="gaussian-process-regression">
 <h1>Gaussian Process Regression<a class="headerlink" href="#gaussian-process-regression" title="Permalink to this headline">¶</a></h1>
-<p>Let the prior on the regression function be a GP denoted as:</p>
+<p>It is a prior on the regression function defined as:</p>
 <div class="math notranslate nohighlight">
 \[
 f(x) \sim GP(m(x), \mathcal{k}(x, x'))
 \]</div>
 <ul class="simple">
 <li><p><span class="math notranslate nohighlight">\(m(x)\)</span> is the mean function</p></li>
-<li><p><span class="math notranslate nohighlight">\(\mathcal{k}(x,x')\)</span> is the kernel or covariance function, hence it is required that
-$<span class="math notranslate nohighlight">\(
-m(x) = E[f(x)] \\ 
-\mathcal{k}(x, x') = E[(f(x) - m(x))(f(x') - m(k'))^T]
-\)</span>$</p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathcal{k}(x,x')\)</span> is the kernel or covariance function, it requires that</p>
+<ul>
+<li><p><span class="math notranslate nohighlight">\(m(x) = E[f(x)]\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathcal{k}(x, x') = E[(f(x) - m(x))(f(x') - m(k'))^T]\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathcal{k}\)</span> is positive definite kernel.</p></li>
 </ul>
-<p>We require <span class="math notranslate nohighlight">\(\mathcal{k}()\)</span> to be a positive definite kernel. For any finite set of points, this process defines an joint Gaussian:</p>
+</li>
+</ul>
+<p>For any finite set of points, this process defines an joint Gaussian:</p>
 <div class="math notranslate nohighlight">
 \[
 p(f|X)= \mathcal{N}(f|\mu, K)
@@ -2104,7 +2106,7 @@ p(f|X)= \mathcal{N}(f|\mu, K)
 <li><p><span class="math notranslate nohighlight">\(K_{ij} = \mathcal{k}(x_i, x_j)\)</span></p></li>
 <li><p><span class="math notranslate nohighlight">\(\mu = (m(x_1), \cdots, m(x_M))\)</span></p></li>
 </ul>
-<p>It is commont to use a mean function of <span class="math notranslate nohighlight">\(m(x)= 0\)</span>, since the GP is flexible enough to model the mean arbitrarly well.</p>
+<p>It is common to use a mean function of <span class="math notranslate nohighlight">\(m(x)= 0\)</span>, since the GP is flexible enough to model the mean arbitrarly well.</p>
 <div class="section" id="noise-free-observations">
 <h2><a class="reference internal" href="noise_free_gaussian_process_regression.html"><span class="doc std std-doc">Noise free observations</span></a><a class="headerlink" href="#noise-free-observations" title="Permalink to this headline">¶</a></h2>
 <p>We assume that the obserations are noise free. In this case the Gaussian process has to interpolate the observations.</p>

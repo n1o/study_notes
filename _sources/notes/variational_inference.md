@@ -43,10 +43,10 @@ $$
 L(q) = -J(q) = -KL(q||p^*) + \log Z \le \log Z = \log p(D)
 $$
 
-To get the thightest lowerbound we set $q = p^*$
+To get the tightest lower-bound we set $q = p^*$
 
 ## [Mean field method](mean_field_method.md)
-One of the most polular variational inference methods. It assumes that the posterior is fully factorized approximation of the form:
+One of the most popular variational inference methods. It assumes that the posterior is fully factorized approximation of the form:
 
 $$q(x) = \prod_{i=1} ^D q_i(x)$$
 

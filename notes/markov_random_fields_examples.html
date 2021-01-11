@@ -2076,7 +2076,7 @@ commentsRunWhenDOMLoaded(addUtterances);
 <div class="section" id="ising-model">
 <h2>Ising model<a class="headerlink" href="#ising-model" title="Permalink to this headline">¶</a></h2>
 <p>The Ising model is an example of an MRF that arose from statistical physics. It was originally used for modeling the behavior of magnets. In particular, let <span class="math notranslate nohighlight">\(y_s \in \{-1, +1 \}\)</span> represent the spin of an atom, which can either be spin down or up. In some magnets, called ferro-magnets, neighboring spins tend to line up in the same direction, whereas in other kinds of magnets, called anti-ferromagnets, the spins “want” to be different from their neighbors.</p>
-<p>We can model this as an MRF. We create a graph in the form of a 2D or 3D lattice and connect neighboring variables. Then we define the following pariwise clique potential:</p>
+<p>It is represented as a 2D or 3D lattice with connected neighboring variables. The pairwise clique potential is defined as:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
  \psi_{st}(y_s, y_t) = \begin{pmatrix}
@@ -2084,9 +2084,9 @@ commentsRunWhenDOMLoaded(addUtterances);
  \end{pmatrix}
 \end{split}\]</div>
 <ul class="simple">
-<li><p><span class="math notranslate nohighlight">\(w_{st}\)</span> is the strength between nodes s and t. If two notes of a graph are not connected, then we set it to 0.</p></li>
+<li><p><span class="math notranslate nohighlight">\(w_{st}\)</span> is the strength between nodes s and t. (if two nodes are not connected than it is 0)</p></li>
 </ul>
-<p>Here the weight matrix <span class="math notranslate nohighlight">\(W\)</span> is symmetric, and we ofthen assume that all the edges have strength J.</p>
+<p>Here the weight matrix <span class="math notranslate nohighlight">\(W\)</span> is symmetric, and we often assume that all the edges have strength J.</p>
 <p>If all the weights are positive, <span class="math notranslate nohighlight">\(J &gt; 0\)</span>, then neighboring spins are likely to be in the same state; this can be used to model ferromagnets, and is an example of an associative Markov network. If the weights are sufficiently strong, the corresponding probability distribution will have two modes, corresponding to the all <span class="math notranslate nohighlight">\(+1\)</span> state and the all <span class="math notranslate nohighlight">\(-1\)</span> state. These are called the ground states of the system.</p>
 <p>If all of the weights are negative, <span class="math notranslate nohighlight">\(J &lt; 0\)</span>, then the spins want to be different from their neighbors; this can be used to model an anti-ferromagnet, and results in a frustrated system, in which not all the constraints can be satisfied at the same time. The corresponding probability distribution will have multiple modes. Interestingly, computing the partition function <span class="math notranslate nohighlight">\(Z(J)\)</span> can be done in polynomial time for associative Markov networks, but is NP-hard in general.</p>
 </div>

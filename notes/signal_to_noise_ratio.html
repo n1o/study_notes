@@ -2047,6 +2047,7 @@ commentsRunWhenDOMLoaded(addUtterances);
                 
   <div class="section" id="signal-to-noise-ratio">
 <h1>Signal to noise ratio<a class="headerlink" href="#signal-to-noise-ratio" title="Permalink to this headline">¶</a></h1>
+<p>Compares the level of a desired signal to the level of background noise. A ratio higher than 1:1 indicates more signal than noise.</p>
 <p>Given a Linear Gaussian system:</p>
 <div class="math notranslate nohighlight">
 \[x \sim \mathcal{N}(\mu_0, \Sigma_0)\]</div>
@@ -2059,7 +2060,7 @@ $<span class="math notranslate nohighlight">\(y = x  + \epsilon\)</span>$</p>
 <p>Then the signal to noise ratio is:</p>
 <div class="math notranslate nohighlight">
 \[
-SNR \triangleq \frac{E[x^2]}{E[\epsilon^2]} = \frac{
+SNR \triangleq \frac{E[X^2]}{E[\epsilon^2]} = \frac{
 \Sigma_0 + \mu_0^2}{
 \Sigma_y}
 \]</div>

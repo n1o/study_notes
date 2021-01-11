@@ -2072,14 +2072,14 @@ commentsRunWhenDOMLoaded(addUtterances);
 <p>We can view it as a measure of dissimilarity of two probability distributions <span class="math notranslate nohighlight">\(p\)</span> and <span class="math notranslate nohighlight">\(q\)</span>.</p>
 <div class="math notranslate nohighlight">
 \[ KL(p||q) \triangleq \sum_{k=1}^K p_k \log \frac{p_k}{q_k}\]</div>
-<p>Where we can replace the sum for an itegral from pdfs.</p>
+<p>Where we can replace the sum for an integral from PDFs.</p>
 <p>We can expand this into:
 $<span class="math notranslate nohighlight">\( KL(p||q) \triangleq \sum_k p_k \log p_k - \sum_k p_k \log q_k = -H(p) + H(p,q)\)</span>$</p>
 <p>Where:</p>
 <ul class="simple">
 <li><p><span class="math notranslate nohighlight">\(H(p,q)\)</span> is the <strong>cross entropy</strong> <span class="math notranslate nohighlight">\(H(p,q) \triangleq -\sum_k p_k \log q_k\)</span>.</p></li>
 </ul>
-<p>Here cross entropy is the average number of bits needed to encode data coming from a source with distribution p where we use model q to define our codebook.</p>
+<p>Here cross entropy is the average number of bits needed to encode data coming from a source with distribution p where we use model q to define our code-book.</p>
 <p>From this we can express KL divergence as the average number of extra bits needed to encode the data, due to the fact that we use distribution q to encode the data instead of the true distribution p.</p>
 <div class="section" id="properties">
 <h2>Properties<a class="headerlink" href="#properties" title="Permalink to this headline">¶</a></h2>

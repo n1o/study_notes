@@ -2063,11 +2063,11 @@ commentsRunWhenDOMLoaded(addUtterances);
                 
   <div class="section" id="rejection-sampling">
 <h1>Rejection sampling<a class="headerlink" href="#rejection-sampling" title="Permalink to this headline">¶</a></h1>
-<p>We assume that <span class="math notranslate nohighlight">\(P(x) = P^*(x)/Z\)</span> is too compicated to draw samples directly. And we assume we have a simpler proposal density <span class="math notranslate nohighlight">\(Q(x)\)</span> which we can evaluate (within a multiplicative factor <span class="math notranslate nohighlight">\(Z_Q\)</span>), and from which we can draw sammples. Further we assume that we know the value of a constnat c such that:</p>
+<p>We assume that <span class="math notranslate nohighlight">\(P(x) = P^*(x)/Z\)</span> is too complicated to draw samples directly. And we assume we have a simpler proposal density <span class="math notranslate nohighlight">\(Q(x)\)</span> which we can evaluate (within a multiplicative factor <span class="math notranslate nohighlight">\(Z_Q\)</span>), and from which we can draw samples. Further we assume that we know the value of a constant c such that:</p>
 <div class="math notranslate nohighlight">
 \[ cQ^{*}(x) &gt; P^*(x) \text{, for all x}\]</div>
 <p><img alt="" src="../_images/rejection_sampling.png" /></p>
-<p>Afther that we generate a uniformly distributed random variable from the interval <span class="math notranslate nohighlight">\([0, cQ^*(x)]\)</span>. Now we compare u to <span class="math notranslate nohighlight">\(P^*(x)\)</span>.  If <span class="math notranslate nohighlight">\(u &gt; P^*(x)\)</span> then we reject x otherwise we accept it.</p>
+<p>After that we generate a uniformly distributed random variable from the interval <span class="math notranslate nohighlight">\([0, cQ^*(x)]\)</span>. Now we compare u to <span class="math notranslate nohighlight">\(P^*(x)\)</span>.  If <span class="math notranslate nohighlight">\(u &gt; P^*(x)\)</span> then we reject x otherwise we accept it.</p>
 <p>Rejection sampling works best if Q is a good approximation of P. And we need to choose <span class="math notranslate nohighlight">\(c\)</span> to be as small as possible.</p>
 <div class="section" id="remarks">
 <h2>Remarks<a class="headerlink" href="#remarks" title="Permalink to this headline">¶</a></h2>

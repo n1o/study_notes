@@ -2049,8 +2049,12 @@ commentsRunWhenDOMLoaded(addUtterances);
                 
   <div class="section" id="kalman-smoothing-algorithm">
 <h1>Kalman smoothing algorithm<a class="headerlink" href="#kalman-smoothing-algorithm" title="Permalink to this headline">¶</a></h1>
-<p><a class="reference internal" href="kalman_filtering.html"><span class="doc std std-doc">Kalman filtering</span></a> works online, where it sequentially computes <span class="math notranslate nohighlight">\(p(z_t| y_{1:t})​\)</span> for each t. However in offline setting we can compute <span class="math notranslate nohighlight">\(p(z_t|y_{1:T})​\)</span> afther all the data has arrived. In this setting the posterior uncertainity will be significantly reduced.</p>
-<p>The algorithm is known as <strong>Kalman smoothing</strong> and it is analogous to the forward-backward algorithm in <a class="reference internal" href="hidden_markov_models.html"><span class="doc std std-doc">HMM</span></a>, with some small differences.</p>
+<p><a class="reference internal" href="kalman_filtering.html"><span class="doc std std-doc">Kalman filtering</span></a> updates the belief as the data arrives.</p>
+<p><strong>Kalman smoothing</strong> computes the posterior:</p>
+<div class="math notranslate nohighlight">
+\[p(z_t| y_{1:t})\]</div>
+<p>after we observed all the data, this reduces the posterior uncertainty significantly.</p>
+<p>It is analogous to the forward-backward algorithm in <a class="reference internal" href="hidden_markov_models.html"><span class="doc std std-doc">HMM</span></a>, with some small differences.</p>
 </div>
 
     <script type="text/x-thebe-config">

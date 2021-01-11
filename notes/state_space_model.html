@@ -2106,7 +2106,13 @@ commentsRunWhenDOMLoaded(addUtterances);
 <li><p>The observation noise is Gaussian</p></li>
 </ol>
 <p>If all the parameters <span class="math notranslate nohighlight">\(\theta_t = (A_t, B_t, C_t, D_t, Q_t, R_t)\)</span> are independent of time, the model is called <strong>stationary</strong>.</p>
-<p>LG-SSM is important because it supports exact inference. And if the initial belief state <span class="math notranslate nohighlight">\(p(z_1) = N(\mu_{1|0}, \Sigma_{1|0})\)</span> then all subsequent belief states will be also Gaussian, <span class="math notranslate nohighlight">\(p(z_t| y_{1:t}) = N(\mu_{t|t}, \Sigma_{t|t})\)</span>. And we can compute these quantities efficiently using the <a class="reference internal" href="kalman_filtering.html"><span class="doc std std-doc">Kalman filtering</span></a> algorithm.</p>
+<p>LG-SSM supports exact inference. The initial belief state is a Gaussian:</p>
+<div class="math notranslate nohighlight">
+\[p(z_1) = N(\mu_{1|0}, \Sigma_{1|0})\]</div>
+<p>All subsequent belief states are also Gaussian:</p>
+<div class="math notranslate nohighlight">
+\[p(z_t| y_{1:t}) = N(\mu_{t|t}, \Sigma_{t|t})\]</div>
+<p><a class="reference internal" href="kalman_filtering.html"><span class="doc std std-doc">Kalman filtering</span></a> algorithm can compute this quantities efficiently.</p>
 </div>
 <div class="section" id="application-of-ssm">
 <h2>Application of SSM<a class="headerlink" href="#application-of-ssm" title="Permalink to this headline">¶</a></h2>

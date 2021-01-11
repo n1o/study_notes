@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Parametrization of Markov Random Fields &#8212; study-notes</title>
+    <title>Clustering &#8212; study-notes</title>
     
   <link rel="stylesheet" href="../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
 
@@ -90,8 +90,6 @@ commentsRunWhenDOMLoaded(addUtterances);
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Kernel density estimation (KDE)" href="kernel_density_estimation.html" />
-    <link rel="prev" title="Gaussian process latent variable model" href="gaussian_process_latent_variable_model.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -128,7 +126,7 @@ commentsRunWhenDOMLoaded(addUtterances);
   </a>
  </li>
 </ul>
-<ul class="current nav sidenav_l1">
+<ul class="nav sidenav_l1">
  <li class="toctree-l1">
   <a class="reference internal" href="logistic_regression.html">
    Logistic regression
@@ -680,8 +678,8 @@ commentsRunWhenDOMLoaded(addUtterances);
    Gaussian process latent variable model
   </a>
  </li>
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
+ <li class="toctree-l1">
+  <a class="reference internal" href="markov_random_fields_parametrization.html">
    Parametrization of Markov Random Fields
   </a>
  </li>
@@ -2015,7 +2013,7 @@ commentsRunWhenDOMLoaded(addUtterances);
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../_sources/notes/markov_random_fields_parametrization.md"><button type="button"
+        <a class="dropdown-buttons" href="../_sources/notes/clustering.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.md</button></a>
         <!-- Download PDF via print -->
@@ -2046,14 +2044,36 @@ commentsRunWhenDOMLoaded(addUtterances);
         <nav id="bd-toc-nav">
             <ul class="nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#the-hammersley-clifford-theorem">
-   The Hammersley-Clifford theorem
+  <a class="reference internal nav-link" href="#similarity-based-clustering">
+   Similarity based clustering
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#representing-potential-functions">
-   Representing potential functions
+  <a class="reference internal nav-link" href="#feature-based-clustering">
+   Feature based clustering
   </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#flat-clustering">
+   Flat clustering
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#hierarchical-clustering">
+   Hierarchical clustering
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#bottom-up-agglomerative-clustering">
+     Bottom-up (agglomerative ) clustering
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#top-down-or-divisible-clustering">
+     Top-down or divisible clustering.
+    </a>
+   </li>
+  </ul>
  </li>
 </ul>
 
@@ -2066,55 +2086,38 @@ commentsRunWhenDOMLoaded(addUtterances);
         
               <div>
                 
-  <div class="section" id="parametrization-of-markov-random-fields">
-<h1>Parametrization of Markov Random Fields<a class="headerlink" href="#parametrization-of-markov-random-fields" title="Permalink to this headline">¶</a></h1>
-<p>Unfortunately representing joint distributions in Undirected graphical models is less natural than in DGM.</p>
-<div class="section" id="the-hammersley-clifford-theorem">
-<h2>The Hammersley-Clifford theorem<a class="headerlink" href="#the-hammersley-clifford-theorem" title="Permalink to this headline">¶</a></h2>
-<p>Since there is no topological ordering associated with an undirected graph, we can’t use the chain rule to represent <span class="math notranslate nohighlight">\(p(y)\)</span>. So instead of associating CPDs with each node, we associate <strong>potential functions</strong> or <strong>factors</strong> with each maximal clique in the graph. We will denote this potential function for clique c as</p>
-<div class="math notranslate nohighlight">
-\[\psi_c (y_c|\theta_c)\]</div>
-<p>A potential function is non-negative function of its arguments. The join distribution is then defined to be proportional to the product of clique potentials.</p>
-<p>More formally this is called the <em>Hammersley-Clifford</em> theorem</p>
-<p><em>A positive distribution <span class="math notranslate nohighlight">\(p(y) &gt; 0\)</span> satisfies the CI properties of an undirected graph G iff p can be represented as a product of factors, one per maximal clique, i.e.,</em></p>
-<div class="math notranslate nohighlight">
-\[p(y|\theta) =  \frac{1}{Z(\theta)} \prod_{c \in C}  \psi_c(y_c|\theta) \]</div>
-<p><em>where C is the set of all the (maximal) cliques of G and <span class="math notranslate nohighlight">\(Z(\theta)\)</span> is the <strong>partition function</strong> given by</em></p>
-<div class="math notranslate nohighlight">
-\[Z(\theta) \triangleq \sum_x \prod_{c \in C} \psi_c (y_c|\theta_c) \]</div>
-<p><em>this partition function is what ensures the overall distribution sums to 1</em></p>
-<blockquote>
-<div><p>Example</p>
-<p><img alt="" src="../_images/markov_random_fields_parametrization.png" />
-$<span class="math notranslate nohighlight">\( p(y|\theta) = \frac{1}{Z(\theta)} \psi_{123}(y_1, y_2, y_3)\psi_{234}(y_2, y_3, y_4) \phi_{35}(y_3,y_5) \\ Z(\theta) = \sum_y \psi_{123}(y_1, y_2, y_3)\psi_{234}(y_2, y_3, y_4) \phi_{35}(y_3,y_5)\)</span>$</p>
-</div></blockquote>
-<p>There is a deep connection between UGMs and statistical physics. We can convert the <strong>Gibs distribution</strong>:
-$<span class="math notranslate nohighlight">\(
-p(y|\theta) = \frac{1}{Z(\theta)}\exp(- \sum_c E[y_c|\theta_c])
-\)</span>$</p>
-<ul class="simple">
-<li><p><span class="math notranslate nohighlight">\(E[y_c] &gt; 0\)</span> is the energy function associated with the variables in clique c</p></li>
-</ul>
-<p>We can convert it to an UGM:</p>
-<div class="math notranslate nohighlight">
-\[
-\psi_c(y_c|\theta) = \exp(-E[y_c|\theta_c])
-\]</div>
-<p>This forms the base of <strong>energy based models</strong>. Here high probability states correspond to low energy configurations.</p>
+  <div class="section" id="clustering">
+<h1>Clustering<a class="headerlink" href="#clustering" title="Permalink to this headline">¶</a></h1>
+<p>I the process of grouping similar objects together.</p>
+<div class="section" id="similarity-based-clustering">
+<h2>Similarity based clustering<a class="headerlink" href="#similarity-based-clustering" title="Permalink to this headline">¶</a></h2>
+<p>The input to the algorithm is an dissimilarity matrix or distance matrix D. Here we an easily include domain specific similarity or kernel function.</p>
 </div>
-<div class="section" id="representing-potential-functions">
-<h2>Representing potential functions<a class="headerlink" href="#representing-potential-functions" title="Permalink to this headline">¶</a></h2>
-<p>If the variables are discrete, we can represent the potential function or energy functions as tables of number just as with CPT. However, potentials are not probabilities. They rather represent the “compatibility” between the different assignments to the potential.</p>
-<p>A general approach is to define log potentials as linear functions of the parameters:</p>
-<div class="math notranslate nohighlight">
-\[\log \psi_c(y_c) \triangleq \phi_c(y_c)^T\theta_c \]</div>
-<ul class="simple">
-<li><p><span class="math notranslate nohighlight">\(\phi_c(y_c)\)</span> is a feature vector derived from the values of the variables <span class="math notranslate nohighlight">\(y_c\)</span>.</p></li>
-</ul>
-<p>The resulting log probabilities have the form:</p>
-<div class="math notranslate nohighlight">
-\[ \log p(y|\theta) = \sum_c \phi_c(y_c)^T\theta_c - \log Z(\theta) \]</div>
-<p>These are also known as <strong>maximum entropy</strong> or <strong>log linear</strong> models.</p>
+<div class="section" id="feature-based-clustering">
+<h2>Feature based clustering<a class="headerlink" href="#feature-based-clustering" title="Permalink to this headline">¶</a></h2>
+<p>The input to the algorithm is an feature matrix or design matrix X. We can apply it to raw, potentially noisy data.</p>
+<p>We can have the following output</p>
+</div>
+<div class="section" id="flat-clustering">
+<h2>Flat clustering<a class="headerlink" href="#flat-clustering" title="Permalink to this headline">¶</a></h2>
+<p>We partition objects into disjoint sets.</p>
+</div>
+<div class="section" id="hierarchical-clustering">
+<h2>Hierarchical clustering<a class="headerlink" href="#hierarchical-clustering" title="Permalink to this headline">¶</a></h2>
+<p>We create a nested tree of partitions. Algorithms are deterministic, and do not need to specify the number of clusters.</p>
+<p>Produce clusters that are nested inside each other.
+There are 2 main approaches to hierarchical clustering:</p>
+<div class="section" id="bottom-up-agglomerative-clustering">
+<h3>Bottom-up (agglomerative ) clustering<a class="headerlink" href="#bottom-up-agglomerative-clustering" title="Permalink to this headline">¶</a></h3>
+<p>The most similar groups are merged at each step.</p>
+</div>
+<div class="section" id="top-down-or-divisible-clustering">
+<h3>Top-down or divisible clustering.<a class="headerlink" href="#top-down-or-divisible-clustering" title="Permalink to this headline">¶</a></h3>
+<p>Groups are split using various criteria.</p>
+<blockquote>
+<div><p>Booth methods take as an input a dissimilarity matrix between the objects, and booth are just heuristics, they do not optimize any well defined function. Hence it is hard to asses the quality of the clustering they produce.</p>
+</div></blockquote>
+</div>
 </div>
 </div>
 
@@ -2146,8 +2149,6 @@ p(y|\theta) = \frac{1}{Z(\theta)}\exp(- \sum_c E[y_c|\theta_c])
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="gaussian_process_latent_variable_model.html" title="previous page">Gaussian process latent variable model</a>
-    <a class='right-next' id="next-link" href="kernel_density_estimation.html" title="next page">Kernel density estimation (KDE)</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">
