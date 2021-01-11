@@ -3,16 +3,16 @@
 
 The Ising model is an example of an MRF that arose from statistical physics. It was originally used for modeling the behavior of magnets. In particular, let $y_s \in \{-1, +1 \}$ represent the spin of an atom, which can either be spin down or up. In some magnets, called ferro-magnets, neighboring spins tend to line up in the same direction, whereas in other kinds of magnets, called anti-ferromagnets, the spins “want” to be different from their neighbors.
 
-We can model this as an MRF. We create a graph in the form of a 2D or 3D lattice and connect neighboring variables. Then we define the following pariwise clique potential:
+It is represented as a 2D or 3D lattice with connected neighboring variables. The pairwise clique potential is defined as:
 
 $$
  \psi_{st}(y_s, y_t) = \begin{pmatrix}
      e^{w_{st}} & e^{-w_{st}} \\ e^{-w_{st}} &  e^{w_{st}}
  \end{pmatrix}
 $$
-* $w_{st}$ is the strength between nodes s and t. If two notes of a graph are not connected, then we set it to 0.
+* $w_{st}$ is the strength between nodes s and t. (if two nodes are not connected than it is 0)
 
-Here the weight matrix $W$ is symmetric, and we ofthen assume that all the edges have strength J. 
+Here the weight matrix $W$ is symmetric, and we often assume that all the edges have strength J. 
 
 If all the weights are positive, $J > 0$, then neighboring spins are likely to be in the same state; this can be used to model ferromagnets, and is an example of an associative Markov network. If the weights are sufficiently strong, the corresponding probability distribution will have two modes, corresponding to the all $+1$ state and the all $-1$ state. These are called the ground states of the system.
 

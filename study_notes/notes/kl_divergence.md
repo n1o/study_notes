@@ -6,7 +6,7 @@ We can view it as a measure of dissimilarity of two probability distributions $p
 
 $$ KL(p||q) \triangleq \sum_{k=1}^K p_k \log \frac{p_k}{q_k}$$
 
-Where we can replace the sum for an itegral from pdfs.
+Where we can replace the sum for an integral from PDFs.
 
 We can expand this into:
 $$ KL(p||q) \triangleq \sum_k p_k \log p_k - \sum_k p_k \log q_k = -H(p) + H(p,q)$$
@@ -14,7 +14,7 @@ $$ KL(p||q) \triangleq \sum_k p_k \log p_k - \sum_k p_k \log q_k = -H(p) + H(p,q
 Where:
 * $H(p,q)$ is the **cross entropy** $H(p,q) \triangleq -\sum_k p_k \log q_k$. 
 
-Here cross entropy is the average number of bits needed to encode data coming from a source with distribution p where we use model q to define our codebook.
+Here cross entropy is the average number of bits needed to encode data coming from a source with distribution p where we use model q to define our code-book.
 
 From this we can express KL divergence as the average number of extra bits needed to encode the data, due to the fact that we use distribution q to encode the data instead of the true distribution p.
 

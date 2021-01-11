@@ -42,7 +42,7 @@ $$
 * $A_{eq} = [X, I,I]$
 
 
-Alternativelly we can choose to minimize the **Hubert loss**. 
+Alteratively we can choose to minimize the **Hubert loss**. 
 
 $$L_H(r, \delta) = \begin{cases} r^2/2 & \text{ if } |r| \le \delta \\ \delta|r| - \delta^2/2 & \text{ if } |r| > \delta \end{cases} $$
 
