@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Computer Vision neural networks &#8212; study-notes</title>
+    <title>Generative Adiversal Networks (GAN) &#8212; study-notes</title>
     
   <link rel="stylesheet" href="../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
 
@@ -2014,7 +2014,7 @@ commentsRunWhenDOMLoaded(addUtterances);
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../_sources/notes/neural_networks_computer_vision.md"><button type="button"
+        <a class="dropdown-buttons" href="../_sources/notes/generative_adiversal_networks.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.md</button></a>
         <!-- Download PDF via print -->
@@ -2045,13 +2045,8 @@ commentsRunWhenDOMLoaded(addUtterances);
         <nav id="bd-toc-nav">
             <ul class="nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#filter">
-   Filter
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#alexnet">
-   Alexnet
+  <a class="reference internal nav-link" href="#cyclegan">
+   CycleGAN
   </a>
  </li>
 </ul>
@@ -2065,15 +2060,15 @@ commentsRunWhenDOMLoaded(addUtterances);
         
               <div>
                 
-  <div class="section" id="computer-vision-neural-networks">
-<h1>Computer Vision neural networks<a class="headerlink" href="#computer-vision-neural-networks" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="filter">
-<h2>Filter<a class="headerlink" href="#filter" title="Permalink to this headline">¶</a></h2>
-<p>Filters reduce the dimensionality,</p>
-</div>
-<div class="section" id="alexnet">
-<h2>Alexnet<a class="headerlink" href="#alexnet" title="Permalink to this headline">¶</a></h2>
-<p><img alt="" src="../_images/alex_net_architecture.png" /></p>
+  <div class="section" id="generative-adiversal-networks-gan">
+<h1>Generative Adiversal Networks (GAN)<a class="headerlink" href="#generative-adiversal-networks-gan" title="Permalink to this headline">¶</a></h1>
+<p>The basic idea is to have two competing networks (Generator &lt;=&gt; Discriminator). The first generates fake pictures (or other things) from random noise, and the second discriminator serves a judge to determine if the picture is fake. By imporoving the generation of fake we can get to a point where the judge cannot determine if it is fake or not.</p>
+<div class="section" id="cyclegan">
+<h2>CycleGAN<a class="headerlink" href="#cyclegan" title="Permalink to this headline">¶</a></h2>
+<p>GANs are not really stable during training, the idea is to have two sets of generator and judges.</p>
+<p>The first generator networks takes an real image (example a Horse) and turns it into an another image (zebra) passes to an discriminator who than judges if it is true or fake. The generated image is than passed to an second Generator network that tries to transform it back to the real image (Horse) and pass it to the Second Discirimnator to determine if it fake or true.</p>
+<p><img alt="" src="../_images/cycle_gan.png" /></p>
+<p>The training proceeds until we generate images that can fool booth discriminators.</p>
 </div>
 </div>
 
