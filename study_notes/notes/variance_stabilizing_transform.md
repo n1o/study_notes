@@ -1,6 +1,11 @@
+---
+source: http://users.stat.ufl.edu/~winner/sta6207/transform.pdf
+---
 # Variance stabilizing transformation
 
-Suppose $E[X] = \mu$ and $var[X] = \sigma^2(\mu)$. Let $Y = f(x)$ we pefrom a taylor series expansion:
+It is a transformation, that will give a random variable approximately constant variance.
+
+Suppose $E[X] = \mu$ and $var[X] = \sigma^2(\mu)$. Let $Y = f(x)$ we perform a taylor series expansion:
 
 $$
 Y \approx f(\mu) + (X - \mu)f'(\mu)

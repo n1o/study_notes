@@ -58,14 +58,14 @@ A necessary condition to have a unique stationary distribution is that the state
 
 We also require that we end up in the same stationary distribution no matter where we start. Hence we say that:
 
-A chain has a limiting distribution if $\pi_j \lim_{n \rightarrow \infty} A_{ij}^n$ exists and is independent of $i$, for all $j$. If this holds then the long-run distribution over states will be indepdent of the starting state:
+A chain has a limiting distribution if $\pi_j \lim_{n \rightarrow \infty} A_{ij}^n$ exists and is independent of $i$, for all $j$. If this holds then the long-run distribution over states will be independent of the starting state:
 
 $$
 P(X_t = j) = \sum_t P(X_0 = i)A_{ij}(t) \rightarrow \pi_t \\
 t \rightarrow \infty
 $$
 
-Hence we require the chain to be apperiodic, which is only if all the states in the chain are aperiodic. (There is no closed loop we cannot escape.)
+Hence we require the chain to be aperiodic, which is only if all the states in the chain are periodic. (There is no closed loop we cannot escape.)
 
 **Theorem**:
 

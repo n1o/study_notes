@@ -33,7 +33,15 @@ $$
 
 If all the parameters $\theta_t = (A_t, B_t, C_t, D_t, Q_t, R_t)$ are independent of time, the model is called **stationary**.
 
-LG-SSM is important because it supports exact inference. And if the initial belief state $p(z_1) = N(\mu_{1|0}, \Sigma_{1|0})$ then all subsequent belief states will be also Gaussian, $p(z_t| y_{1:t}) = N(\mu_{t|t}, \Sigma_{t|t})$. And we can compute these quantities efficiently using the [Kalman filtering](kalman_filtering.md) algorithm.
+LG-SSM supports exact inference. The initial belief state is a Gaussian:
+
+$$p(z_1) = N(\mu_{1|0}, \Sigma_{1|0})$$
+
+All subsequent belief states are also Gaussian:
+
+$$p(z_t| y_{1:t}) = N(\mu_{t|t}, \Sigma_{t|t})$$
+
+[Kalman filtering](kalman_filtering.md) algorithm can compute this quantities efficiently.
 
 ## Application of SSM
 
