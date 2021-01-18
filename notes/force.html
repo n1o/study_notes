@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Uniform circular motion &#8212; study-notes</title>
+    <title>Force and motion &#8212; study-notes</title>
     
   <link rel="stylesheet" href="../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
 
@@ -2014,7 +2014,7 @@ commentsRunWhenDOMLoaded(addUtterances);
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../_sources/notes/uniform_circular_motion.md"><button type="button"
+        <a class="dropdown-buttons" href="../_sources/notes/force.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.md</button></a>
         <!-- Download PDF via print -->
@@ -2039,6 +2039,32 @@ commentsRunWhenDOMLoaded(addUtterances);
     <!-- Table of contents -->
     <div class="d-none d-md-block col-md-2 bd-toc show">
         
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#force">
+   Force
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#types-of-forces">
+     Types of forces
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#resultant-of-force-super-position-of-forces">
+   Resultant of force (super position of forces)
+  </a>
+ </li>
+</ul>
+
+        </nav>
+        
     </div>
 </div>
     <div id="main-content" class="row">
@@ -2046,39 +2072,42 @@ commentsRunWhenDOMLoaded(addUtterances);
         
               <div>
                 
-  <div class="section" id="uniform-circular-motion">
-<h1>Uniform circular motion<a class="headerlink" href="#uniform-circular-motion" title="Permalink to this headline">¶</a></h1>
-<p>We move in a circle with constant speed. Thus there is acceleration that is perpendicular to the path (If it would be along than we would increase the speed).</p>
-<p><img alt="" src="../_images/circular_motion.png" /></p>
-<p>The velocity at each point changes, while the acceleration always points towards the Origin of the circle. The magnitude of the change of velocity is defined as:</p>
+  <div class="section" id="force-and-motion">
+<h1>Force and motion<a class="headerlink" href="#force-and-motion" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="force">
+<h2>Force<a class="headerlink" href="#force" title="Permalink to this headline">¶</a></h2>
+<p>Describes interactions between two objects or an object and environment.</p>
+<p><a class="reference internal" href="newtons_laws.html"><span class="doc std std-doc">Newtons Laws</span></a> gives us an toolkit how to handle these interactions.</p>
+<div class="section" id="types-of-forces">
+<h3>Types of forces<a class="headerlink" href="#types-of-forces" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>contact (Between two objects)</p>
+<ul>
+<li><p>normal force (<span class="math notranslate nohighlight">\(\vec{n}\)</span>) object rests on a surface the normal force is perpendicular to the surface (surface pushes the object upwards)</p></li>
+<li><p>friction (<span class="math notranslate nohighlight">\(\vec{f}\)</span>) acts parallel to the surface (if we slide something there is friction, it is always opposite to the direction it moves)</p></li>
+</ul>
+</li>
+<li><p>tension (<span class="math notranslate nohighlight">\(\vec{t}\)</span>) force applied to an object pulled by a rope</p></li>
+<li><p>weight (<span class="math notranslate nohighlight">\(\vec{v}\)</span>) gravitational attraction</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="resultant-of-force-super-position-of-forces">
+<h2>Resultant of force (super position of forces)<a class="headerlink" href="#resultant-of-force-super-position-of-forces" title="Permalink to this headline">¶</a></h2>
+<p>If two forces act on the same object at the same time, the effect is the same as if a single force would act.</p>
 <div class="math notranslate nohighlight">
-\[
-|\Delta \vec{v}| = \frac{v_1}{R}\Delta s
-\]</div>
-<p>From this we can calculate the average acceleration:</p>
+\[\begin{split}
+\vec{R} = \vec{F}_1 + \vec{F}_2 \\
+\end{split}\]</div>
+<p><img alt="" src="../_images/rectulant_of_force.png" /></p>
+<p>We can express any force by its components:</p>
 <div class="math notranslate nohighlight">
-\[
-a_{av} = \frac{|\Delta \vec{v}|}{\Delta t} = \frac{v_1}{R}\frac{\Delta s}{\Delta t}
-\]</div>
-<p>The instantaneous acceleration is:</p>
-<div class="math notranslate nohighlight">
-\[
-a = \lim_{\Delta t \rightarrow 0} 
- \frac{v_1}{R}\frac{\Delta s}{\Delta t} =  \frac{v_1}{R} \lim_{\Delta t \rightarrow 0} \frac{\Delta s}{\Delta t}
-\]</div>
-<p>The limit of <span class="math notranslate nohighlight">\(\frac{\Delta s}{\Delta t}\)</span> is the speed <span class="math notranslate nohighlight">\(v_1\)</span> at point A, which is constant at every point on the path. This makes:</p>
-<div class="math notranslate nohighlight">
-\[
-\lim_{\Delta t \rightarrow 0} \frac{\Delta s}{\Delta t} = v
-\]</div>
-<p>And the acceleration is:
-$<span class="math notranslate nohighlight">\(
-a_{rad} = \frac{v^2}{R}
-\)</span>$</p>
-<blockquote>
-<div><p>This acceleration is <strong>radial</strong> (points always to the center of the circle, and perpendicular to the objects velocity)
-It is proportional to the square of speed <span class="math notranslate nohighlight">\(a_{rad}\propto v^2\)</span> and inversely proportional to the radius <span class="math notranslate nohighlight">\(a_{rad} \propto \frac{1}{R}\)</span></p>
-</div></blockquote>
+\[\begin{split}
+\vec{R} = \vec{F}_1 + \vec{F}_2 + \cdots = \sum \vec{F} \\
+R_x = \sum \vec{F}_x \\
+R_y = \sum \vec{F}_y
+\end{split}\]</div>
+</div>
 </div>
 
     <script type="text/x-thebe-config">

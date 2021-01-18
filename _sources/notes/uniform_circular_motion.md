@@ -3,7 +3,7 @@ We move in a circle with constant speed. Thus there is acceleration that is perp
 
 ![](../.images/physics/circular_motion.png)
 
-The velocity at each point changes, while the acceleration always points towards the Origin of the circle. The magintude of the change of velocity is defined as:
+The velocity at each point changes, while the acceleration always points towards the Origin of the circle. The magnitude of the change of velocity is defined as:
 
 $$
 |\Delta \vec{v}| = \frac{v_1}{R}\Delta s
@@ -33,5 +33,5 @@ $$
 a_{rad} = \frac{v^2}{R}
 $$
 
-> This acceleration is **radial** (points allways to the center of the circle, and perpendicular to the objects velocity)
+> This acceleration is **radial** (points always to the center of the circle, and perpendicular to the objects velocity)
 > It is proportional to the square of speed $a_{rad}\propto v^2$ and inversely proportional to the radius $a_{rad} \propto \frac{1}{R}$

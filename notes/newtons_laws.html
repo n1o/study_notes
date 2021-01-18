@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Uniform circular motion &#8212; study-notes</title>
+    <title>Newtons Laws &#8212; study-notes</title>
     
   <link rel="stylesheet" href="../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
 
@@ -2014,7 +2014,7 @@ commentsRunWhenDOMLoaded(addUtterances);
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../_sources/notes/uniform_circular_motion.md"><button type="button"
+        <a class="dropdown-buttons" href="../_sources/notes/newtons_laws.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.md</button></a>
         <!-- Download PDF via print -->
@@ -2039,6 +2039,49 @@ commentsRunWhenDOMLoaded(addUtterances);
     <!-- Table of contents -->
     <div class="d-none d-md-block col-md-2 bd-toc show">
         
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#first-newtons-law">
+   First newtons law
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#inertia">
+     Inertia
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#equilibrium-zero-resultant-force-no-force-at-all">
+     Equilibrium (zero resultant force, no force at all)
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#newtons-second-law">
+   Newtons second law
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#mass-and-weight">
+     Mass and Weight
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#newtons-third-law">
+   Newtons Third Law
+  </a>
+ </li>
+</ul>
+
+        </nav>
+        
     </div>
 </div>
     <div id="main-content" class="row">
@@ -2046,39 +2089,77 @@ commentsRunWhenDOMLoaded(addUtterances);
         
               <div>
                 
-  <div class="section" id="uniform-circular-motion">
-<h1>Uniform circular motion<a class="headerlink" href="#uniform-circular-motion" title="Permalink to this headline">¶</a></h1>
-<p>We move in a circle with constant speed. Thus there is acceleration that is perpendicular to the path (If it would be along than we would increase the speed).</p>
-<p><img alt="" src="../_images/circular_motion.png" /></p>
-<p>The velocity at each point changes, while the acceleration always points towards the Origin of the circle. The magnitude of the change of velocity is defined as:</p>
-<div class="math notranslate nohighlight">
-\[
-|\Delta \vec{v}| = \frac{v_1}{R}\Delta s
-\]</div>
-<p>From this we can calculate the average acceleration:</p>
-<div class="math notranslate nohighlight">
-\[
-a_{av} = \frac{|\Delta \vec{v}|}{\Delta t} = \frac{v_1}{R}\frac{\Delta s}{\Delta t}
-\]</div>
-<p>The instantaneous acceleration is:</p>
-<div class="math notranslate nohighlight">
-\[
-a = \lim_{\Delta t \rightarrow 0} 
- \frac{v_1}{R}\frac{\Delta s}{\Delta t} =  \frac{v_1}{R} \lim_{\Delta t \rightarrow 0} \frac{\Delta s}{\Delta t}
-\]</div>
-<p>The limit of <span class="math notranslate nohighlight">\(\frac{\Delta s}{\Delta t}\)</span> is the speed <span class="math notranslate nohighlight">\(v_1\)</span> at point A, which is constant at every point on the path. This makes:</p>
-<div class="math notranslate nohighlight">
-\[
-\lim_{\Delta t \rightarrow 0} \frac{\Delta s}{\Delta t} = v
-\]</div>
-<p>And the acceleration is:
-$<span class="math notranslate nohighlight">\(
-a_{rad} = \frac{v^2}{R}
-\)</span>$</p>
+  <div class="section" id="newtons-laws">
+<h1>Newtons Laws<a class="headerlink" href="#newtons-laws" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="first-newtons-law">
+<h2>First newtons law<a class="headerlink" href="#first-newtons-law" title="Permalink to this headline">¶</a></h2>
 <blockquote>
-<div><p>This acceleration is <strong>radial</strong> (points always to the center of the circle, and perpendicular to the objects velocity)
-It is proportional to the square of speed <span class="math notranslate nohighlight">\(a_{rad}\propto v^2\)</span> and inversely proportional to the radius <span class="math notranslate nohighlight">\(a_{rad} \propto \frac{1}{R}\)</span></p>
+<div><p>Every object continues either at rest or in constant motion in a straight line, unless it is forced to change that state by forces acting on it.</p>
 </div></blockquote>
+<p>Alternatively we can say than an object acted on by no force moves with constant velocity (maybe zero), thus with zero acceleration.</p>
+<div class="section" id="inertia">
+<h3>Inertia<a class="headerlink" href="#inertia" title="Permalink to this headline">¶</a></h3>
+<p>It is the tendency of an object to remain at rest or to keep moving.</p>
+<blockquote>
+<div><p>If we catch an base ball, it wants to keep moving.</p>
+</div></blockquote>
+</div>
+<div class="section" id="equilibrium-zero-resultant-force-no-force-at-all">
+<h3>Equilibrium (zero resultant force, no force at all)<a class="headerlink" href="#equilibrium-zero-resultant-force-no-force-at-all" title="Permalink to this headline">¶</a></h3>
+<p>An object acted on by no force, or by several forces whose vector sum is zero.</p>
+<div class="math notranslate nohighlight">
+\[
+\vec{R} = \sum \vec{F} = 0
+\]</div>
+</div>
+</div>
+<div class="section" id="newtons-second-law">
+<h2>Newtons second law<a class="headerlink" href="#newtons-second-law" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>The vector sum of all the forces acting on an object equals to object mass times it acceleration.</p>
+</div></blockquote>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\sum \vec{F} = m \vec{a} \\ \sum \vec{F}_x = ma_x \\ \sum \vec{F}_y = ma_y
+\end{split}\]</div>
+<p>The units are <strong>Newton</strong>
+$<span class="math notranslate nohighlight">\(
+1 N = (1 kg)(1 m/s^2)
+\)</span>$</p>
+<p><img alt="" src="../_images/second_newton_acceleration.png" /></p>
+<p>If we apply Force on an object it will accelerate, the amount of acceleration depends on its mass
+$<span class="math notranslate nohighlight">\(
+a = \frac{\sum \vec{F}}{m}
+\)</span>$</p>
+<p>An heavier object will accelerate slower than an lighter under the same force.</p>
+<p><img alt="" src="../_images/acceleration_heavy_object.png" /></p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+m_1 a_1 = m_2 a_2 \\ 
+\frac{m_2}{m_1} = \frac{a_1}{a_2}
+\end{split}\]</div>
+<div class="section" id="mass-and-weight">
+<h3>Mass and Weight<a class="headerlink" href="#mass-and-weight" title="Permalink to this headline">¶</a></h3>
+<p><strong>Weight</strong> is the mass of the object times acceleration due gravity.
+$<span class="math notranslate nohighlight">\(
+w = mg
+\)</span>$</p>
+<ul class="simple">
+<li><p>m mass</p></li>
+<li><p><span class="math notranslate nohighlight">\(g = -9.8m/s^2\)</span></p></li>
+</ul>
+<p><strong>Mass</strong> is the proportion of the Force required to accelerate an object:</p>
+<div class="math notranslate nohighlight">
+\[
+m = \frac{F}{a}
+\]</div>
+</div>
+</div>
+<div class="section" id="newtons-third-law">
+<h2>Newtons Third Law<a class="headerlink" href="#newtons-third-law" title="Permalink to this headline">¶</a></h2>
+<p>For two interacting objects, <span class="math notranslate nohighlight">\(\vec{F}_{A \text{ on } B} = -\vec{F}_{B \text{ on } A}\)</span>. To every action there is always opposed and equal reaction.</p>
+<p><img alt="" src="../_images/newton_action_reaction.png" /></p>
+</div>
 </div>
 
     <script type="text/x-thebe-config">

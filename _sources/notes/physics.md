@@ -10,3 +10,6 @@ Here a projective given an initial velocity follows a path determined by the eff
 
 ### [Uniform circular Motion](uniform_circular_motion.md
 Movement in a circle with constant speed.
+
+## [Force](force.md)
+### [Newtons laws](newtons_laws.md)
