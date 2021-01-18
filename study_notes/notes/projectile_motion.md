@@ -29,7 +29,7 @@ We can specify the velocity of a projectile as function of time:
 
 $$
 x =x_0 + v_{0x}t \\
-y = y_0 + y_{0y}t - \frac{1}{2}g^2t \\
+y = y_0 + y_{0y}t - \frac{1}{2}gt^2 \\
 v_x = v_0 \cos \theta_0 \\
 v_y = v_0 \sin \theta_0 - gt
 $$
