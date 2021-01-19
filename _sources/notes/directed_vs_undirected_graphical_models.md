@@ -16,7 +16,7 @@ But in DGMs, CI properties can be non-monotonic, since conditioning on extra var
 Some distributions can be perfectly modeled by either a DGM or a UGM; the resulting graphs are called **decomposable** or **cordal**. Roughly speaking, this means that if we collapse together all the variables in each maximal clique, to make "mega variable", the resulting graph will be a tree. 
 
 ## Advantages of UGM vs DGM
-1. UGMs are symmetric and are more natural for certain domains, such as spatial or relational data. 
+1. UGMs are symmetric and are more natural for certain domains, such as spatial or relational data, where there is no clear causal relationship.
 2. [Conditional random fields](conditional_random_fields.md) work better than discriminative DGMs
 
 ## Disadvantages of UGM vs DGM

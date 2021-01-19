@@ -74,7 +74,7 @@ $$
 * $g_k^T = \nabla L(\theta_k)$
 * $\frac{1}{t_k}I \approx \nabla^2L(\theta_k)$ approximate the Hessian so we have first order method
 
-We can simplify by droping terms that do not depend on z and multiply by $t_k$. The gradient is zero.
+We can simplify by dropping terms that do not depend on z and multiply by $t_k$. The gradient is zero.
 
 $$
 \theta_{k+1} = \argmin_z [t_k R(z) + ||z - u_k||_2^2 ] = prox_{t_kR}(u_k) \\
@@ -85,4 +85,4 @@ $$
 Depending on $R(\theta)$ we get:
 * $R(\theta) = 0$ we get gradient descent
 * $R(\theta) = I_C(\theta)$ we get projected gradient
-* $R(\theta) = \lambda ||\theta||_1$ we get iterative soft tresholding
+* $R(\theta) = \lambda ||\theta||_1$ we get iterative soft threshing 
