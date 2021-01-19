@@ -1,4 +1,4 @@
-# D-separation
+# D-separation (Directed-Separation)
 
 If we have 3 nodes A, B and C. Given the following structures we can derive independence assumptions
 
@@ -32,9 +32,9 @@ We can look at these in terms of probabilities to make more sense:
 
    $$p(x,z|y) = \frac{p(x)p(z)p(y|x,z)}{p(y)} \Rightarrow x \cancel{\perp} z| y$$
 
-   However $p(x,z) = p(x)p(z)$, x and z are marginaly independent. The condition on a common child at the bottom of a v-strucutre makes its parents become dependent. This effect is called **explaining away, inter-causal reasoning, Berkson's paradox**. 
+   However $p(x,z) = p(x)p(z)$, x and z are marginally independent. The condition on a common child at the bottom of a v-structure makes its parents become dependent. This effect is called **explaining away, inter-causal reasoning, Berkson's paradox**. 
 
-   An example would be 2 coins flips, they are iiid, but if we would condtion on their sum sudenly it provides us information about those flips.
+   An example would be 2 coins flips, they are iid, but if we would condition on their sum sudenly it provides us information about those flips.
 
 ## Bayes Ball algorithm
 

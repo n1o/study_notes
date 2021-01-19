@@ -1,4 +1,5 @@
 # Gradient descent
+
 The direction of steepest descent is an obvious choice for the [descent direction](local_descent.md) $d$. Following this direction we are guaranteed to improve if the objective function is smooth and the step size is sufficiently small. The direction of steepest descent is the direction opposite to the gradient.
 
 $$
@@ -34,7 +35,7 @@ $$
 d^{(k=1)} = \frac{\nabla f(x^{(k)} + \alpha d^{(k)})}{|| \nabla f(x^{(k)} + \alpha d^{(k)}) ||}
 $$
 
-We can substitue it in the equation before:
+We can substitute it in the equation before:
 
 $$
 d^{(k+1)T} d^{(k)} = 0
