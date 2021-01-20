@@ -1,23 +1,42 @@
-# Markov random fileds (Undirected graphical models (UGM))
+# Markov random field (MRF)
 
-The are essentially graphical models where we do not define edge orientations. This is useful since sometimes defining conditional independence between nodes is not straight forward. 
+The are essentially [graphical models](graphical_models.md) where we do not define edge orientations. This is useful in cases when Conditional independence is not straight forward to define (Spatial models). 
 
-The main advantages of UGMs over DGMs are:
+## Formal Definition
+A Markov random field is a probability distribution $p$ over variables $x_1, \cdots, x_n$ defined by an undirected graph G in which nodes correspond to variables $x_i$. 
 
-1. They are symmetric and therefore more “natural” for certain domains, such as spatial or relational data
-2. Discriminative UGMs (aka conditional random fields, or CRFs), which define conditional densities of the form $p(y|x)$, work better than discriminative DGMs,
+$$
+p(x_1, \cdots, x_n) = \frac{1}{Z} \prod_{c \in C} \phi_c(x_c) \\
+Z = \sum_{x_1, \cdots, x_n}\prod_{c \in C} \phi_c(x_c)
+$$
 
-The main disadvantages of UGMs compared to DGMs are
+* C is the set of [cliques](graph_terminology.md) of G
+* $\phi_c$ is the [potential function](markov_random_fields_potential_function.md)
+* Z is the partition function (normalization constant)
 
-1. The [parameters are less interpretable](markov_random_fields_parametrization.md) and less modular.
-2. Parameter estimation is computationally more expensive.
+This definition will satisfy [conditional independence properties of a graph G](markov_random_fields_hammersley_clifford.md).
 
-# [Examples](markov_random_fields_examples.md)
+## [Examples](markov_random_fields_examples.md)
 * Ising model
 * Hoppfiled model
 * Pots model
 
-# Learning
-ML and MAP estimation on MRF is quite computationally expensive. For this reason it is rare to perform Bayesian inference for the parameters of MRF.
+## Learning
+ML and MAP estimation on MRF is quite computationally expensive. For this reason it is rare to perform Bayesian inference for the parameters of MRF. They are done using gradient optimization algorithms.
 
-They are done using gradient optimization algorithms.
+## Statistical Physics
+The [Gibs distribution](gibs_distribution.md) can convert it to an UGM:
+
+$$
+\psi_c(y_c|\theta) = \exp(-E[y_c|\theta_c])
+$$
+
+This forms the base of **energy based models**. Here high probability states correspond to low energy configurations.
+
+## [Directed vs Undirected models](directed_vs_undirected_graphical_models.md)
+
+## Bayesian Networks are special case of MRF
+Bayesian networks are MRF where clique factor are conditional probability distributions, they imply directed acyclic structure in graphs
+
+## [Factor graphs](factor_graph.md)
+We can view MRFs in a way where factors and variables are explicit and separate in the representation. 

@@ -21,4 +21,7 @@ Some distributions can be perfectly modeled by either a DGM or a UGM; the result
 
 ## Disadvantages of UGM vs DGM
 1. Parameters are less interpretable and less modular
-2. Parameter estimation is more expensive
+2. Parameter estimation is more expensive. Computing the normalization constant Z in general is NP hard.
+
+## Rule of Thumb 
+Use [Bayesian networks](directed_graphical_models.md) whenever possible, switch to [MRF](markov_random_fields.md) when there is no natural way to model the problem with directed graph.

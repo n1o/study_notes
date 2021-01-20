@@ -1,8 +1,12 @@
-# Conditional independence in [Undirected graphical models](markov_random_fields.md)
+# Conditional independence in [Markov Random Fields](markov_random_fields.md)
+
+Two nodes A and B are graph separated if there is no path form A to B. Or we can say that A and B are dependent if they are connected by a path of unobserved variables.
 
 ## Global Markov property
 
-In UGM we define conditional independence relationship via simple graph separation. For a set of nodes A,B and C we can say that $x_A \perp_G x_B | x_c​$ iff C separates A from B in graph G.  This means when we remove all the nodes in C, if there are no paths connecting any node in A to any node in B, then the Ci property holds. This is called the **Global Markov property** for UGMs.
+In [MRF](markov_random_fields.md) we define conditional independence relationship via simple graph separation. 
+
+For a set of nodes A,B and C we can say that $x_A \perp_G x_B | x_c​$ iff C separates A from B in graph G.  This means when we remove all the nodes in C, if there are no paths connecting any node in A to any node in B, then the Ci property holds. This is called the **Global Markov property** for UGMs.
 
 ![](../.images/machine_learning/markov_random_field_example.png)
 We have:
@@ -11,7 +15,7 @@ $$\{  1,2 \} \perp \{ 6,7 \} | \{3, 4, 5 \}$$
 
 ## Markov blanket
 
-Is the smalles st of nodes that renders a node $t​$ conditionally independent lf all the other nodes in the graph is called $t​$'s **Markov Blanket**, and it is denoted $mb(t)​$. Formaly this is:
+Is the smallest number of nodes that renders a node $t​$ conditionally independent lf all the other nodes in the graph is called $t​$'s **Markov Blanket**, and it is denoted $mb(t)​$. Formally this is:
 
 $$ t \perp V /\ cl(t)| mb(t) $$
 
@@ -60,4 +64,3 @@ We need to interconnect 2,3 since they have an common child 5, and we interconne
 **Downside of normalization** is that we loose some CI information, and therefore we cannot use the normalized UGM to determine the Ci properties of DGM. 
 
 
-### Comparison of directed and undirected graphical models

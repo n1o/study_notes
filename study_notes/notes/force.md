@@ -16,7 +16,7 @@ Describes interactions between two objects or an object and environment.
 If two forces act on the same object at the same time, the effect is the same as if a single force would act.
 
 $$
-\vec{R} = \vec{F}_1 + \vec{F}_2 \\
+\vec{R} = \vec{F}_1 + \vec{F}_2
 $$
 
 ![](../.images/physics/rectulant_of_force.png)
