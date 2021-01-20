@@ -71,4 +71,4 @@ A forrest is a set of trees
 A subgraph $G_A$ is the graph creted by using the nodes in A and their corresponding edge $G_A = (V_A, E_A)$
 
 ## Clique
-For an undirected graph, a clique is a set of nodes that are all neighbours of each other. A **maximal clique** is a clique which cannot be made any larger without loosing the clique property.
+For an undirected graph, a clique is a set of nodes that are all neighbors of each other. A **maximal clique** is a clique which cannot be made any larger without loosing the clique property.

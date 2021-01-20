@@ -269,7 +269,7 @@ commentsRunWhenDOMLoaded(addUtterances);
   <a class="reference internal" href="markov_random_fields_conditional_independence.html">
    Conditional independence in
    <span class="xref myst">
-    Undirected graphical models
+    Markov Random Fields
    </span>
   </a>
  </li>
@@ -731,11 +731,6 @@ commentsRunWhenDOMLoaded(addUtterances);
  <li class="toctree-l1">
   <a class="reference internal" href="gaussian_process_latent_variable_model.html">
    Gaussian process latent variable model
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="markov_random_fields_parametrization.html">
-   Parametrization of Markov Random Fields
   </a>
  </li>
  <li class="toctree-l1">
@@ -2118,19 +2113,7 @@ commentsRunWhenDOMLoaded(addUtterances);
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="markov_random_fields.html">
-   Markov random fileds (Undirected graphical models (UGM))
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="markov_random_fields.html#examples">
-   <span class="xref myst">
-    Examples
-   </span>
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="markov_random_fields.html#learning">
-   Learning
+   Markov random field (MRF)
   </a>
  </li>
  <li class="toctree-l1">
@@ -2263,6 +2246,11 @@ commentsRunWhenDOMLoaded(addUtterances);
    Disadvantages of UGM vs DGM
   </a>
  </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#rule-of-thumb">
+   Rule of Thumb
+  </a>
+ </li>
 </ul>
 
         </nav>
@@ -2295,8 +2283,12 @@ commentsRunWhenDOMLoaded(addUtterances);
 <h2>Disadvantages of UGM vs DGM<a class="headerlink" href="#disadvantages-of-ugm-vs-dgm" title="Permalink to this headline">¶</a></h2>
 <ol class="simple">
 <li><p>Parameters are less interpretable and less modular</p></li>
-<li><p>Parameter estimation is more expensive</p></li>
+<li><p>Parameter estimation is more expensive. Computing the normalization constant Z in general is NP hard.</p></li>
 </ol>
+</div>
+<div class="section" id="rule-of-thumb">
+<h2>Rule of Thumb<a class="headerlink" href="#rule-of-thumb" title="Permalink to this headline">¶</a></h2>
+<p>Use <a class="reference internal" href="directed_graphical_models.html"><span class="doc std std-doc">Bayesian networks</span></a> whenever possible, switch to <a class="reference internal" href="markov_random_fields.html"><span class="doc std std-doc">MRF</span></a> when there is no natural way to model the problem with directed graph.</p>
 </div>
 </div>
 

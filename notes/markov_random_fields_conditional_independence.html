@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Conditional independence in Undirected graphical models &#8212; study-notes</title>
+    <title>Conditional independence in Markov Random Fields &#8212; study-notes</title>
     
   <link rel="stylesheet" href="../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
 
@@ -269,7 +269,7 @@ commentsRunWhenDOMLoaded(addUtterances);
   <a class="current reference internal" href="#">
    Conditional independence in
    <span class="xref myst">
-    Undirected graphical models
+    Markov Random Fields
    </span>
   </a>
  </li>
@@ -731,11 +731,6 @@ commentsRunWhenDOMLoaded(addUtterances);
  <li class="toctree-l1">
   <a class="reference internal" href="gaussian_process_latent_variable_model.html">
    Gaussian process latent variable model
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="markov_random_fields_parametrization.html">
-   Parametrization of Markov Random Fields
   </a>
  </li>
  <li class="toctree-l1">
@@ -2118,19 +2113,7 @@ commentsRunWhenDOMLoaded(addUtterances);
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="markov_random_fields.html">
-   Markov random fileds (Undirected graphical models (UGM))
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="markov_random_fields.html#examples">
-   <span class="xref myst">
-    Examples
-   </span>
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="markov_random_fields.html#learning">
-   Learning
+   Markov random field (MRF)
   </a>
  </li>
  <li class="toctree-l1">
@@ -2278,11 +2261,6 @@ commentsRunWhenDOMLoaded(addUtterances);
      Undirected alternative to d-separation
     </a>
    </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#comparison-of-directed-and-undirected-graphical-models">
-     Comparison of directed and undirected graphical models
-    </a>
-   </li>
   </ul>
  </li>
 </ul>
@@ -2296,11 +2274,13 @@ commentsRunWhenDOMLoaded(addUtterances);
         
               <div>
                 
-  <div class="section" id="conditional-independence-in-undirected-graphical-models">
-<h1>Conditional independence in <a class="reference internal" href="markov_random_fields.html"><span class="doc std std-doc">Undirected graphical models</span></a><a class="headerlink" href="#conditional-independence-in-undirected-graphical-models" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="conditional-independence-in-markov-random-fields">
+<h1>Conditional independence in <a class="reference internal" href="markov_random_fields.html"><span class="doc std std-doc">Markov Random Fields</span></a><a class="headerlink" href="#conditional-independence-in-markov-random-fields" title="Permalink to this headline">¶</a></h1>
+<p>Two nodes A and B are graph separated if there is no path form A to B. Or we can say that A and B are dependent if they are connected by a path of unobserved variables.</p>
 <div class="section" id="global-markov-property">
 <h2>Global Markov property<a class="headerlink" href="#global-markov-property" title="Permalink to this headline">¶</a></h2>
-<p>In UGM we define conditional independence relationship via simple graph separation. For a set of nodes A,B and C we can say that <span class="math notranslate nohighlight">\(x_A \perp_G x_B | x_c​\)</span> iff C separates A from B in graph G.  This means when we remove all the nodes in C, if there are no paths connecting any node in A to any node in B, then the Ci property holds. This is called the <strong>Global Markov property</strong> for UGMs.</p>
+<p>In <a class="reference internal" href="markov_random_fields.html"><span class="doc std std-doc">MRF</span></a> we define conditional independence relationship via simple graph separation.</p>
+<p>For a set of nodes A,B and C we can say that <span class="math notranslate nohighlight">\(x_A \perp_G x_B | x_c​\)</span> iff C separates A from B in graph G.  This means when we remove all the nodes in C, if there are no paths connecting any node in A to any node in B, then the Ci property holds. This is called the <strong>Global Markov property</strong> for UGMs.</p>
 <p><img alt="" src="../_images/markov_random_field_example.png" />
 We have:</p>
 <div class="math notranslate nohighlight">
@@ -2308,7 +2288,7 @@ We have:</p>
 </div>
 <div class="section" id="markov-blanket">
 <h2>Markov blanket<a class="headerlink" href="#markov-blanket" title="Permalink to this headline">¶</a></h2>
-<p>Is the smalles st of nodes that renders a node <span class="math notranslate nohighlight">\(t​\)</span> conditionally independent lf all the other nodes in the graph is called <span class="math notranslate nohighlight">\(t​\)</span>‘s <strong>Markov Blanket</strong>, and it is denoted <span class="math notranslate nohighlight">\(mb(t)​\)</span>. Formaly this is:</p>
+<p>Is the smallest number of nodes that renders a node <span class="math notranslate nohighlight">\(t​\)</span> conditionally independent lf all the other nodes in the graph is called <span class="math notranslate nohighlight">\(t​\)</span>‘s <strong>Markov Blanket</strong>, and it is denoted <span class="math notranslate nohighlight">\(mb(t)​\)</span>. Formally this is:</p>
 <div class="math notranslate nohighlight">
 \[ t \perp V /\ cl(t)| mb(t) \]</div>
 <ul class="simple">
@@ -2346,9 +2326,6 @@ G \Rightarrow L \Rightarrow P \Rightarrow G
 <p><img alt="" src="../_images/ugm_normalization.png" /></p>
 <p>We need to interconnect 2,3 since they have an common child 5, and we interconnect 4,5,6 since they have a common child 7.</p>
 <p><strong>Downside of normalization</strong> is that we loose some CI information, and therefore we cannot use the normalized UGM to determine the Ci properties of DGM.</p>
-</div>
-<div class="section" id="comparison-of-directed-and-undirected-graphical-models">
-<h3>Comparison of directed and undirected graphical models<a class="headerlink" href="#comparison-of-directed-and-undirected-graphical-models" title="Permalink to this headline">¶</a></h3>
 </div>
 </div>
 </div>

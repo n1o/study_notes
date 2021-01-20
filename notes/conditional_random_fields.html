@@ -269,7 +269,7 @@ commentsRunWhenDOMLoaded(addUtterances);
   <a class="reference internal" href="markov_random_fields_conditional_independence.html">
    Conditional independence in
    <span class="xref myst">
-    Undirected graphical models
+    Markov Random Fields
    </span>
   </a>
  </li>
@@ -731,11 +731,6 @@ commentsRunWhenDOMLoaded(addUtterances);
  <li class="toctree-l1">
   <a class="reference internal" href="gaussian_process_latent_variable_model.html">
    Gaussian process latent variable model
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="markov_random_fields_parametrization.html">
-   Parametrization of Markov Random Fields
   </a>
  </li>
  <li class="toctree-l1">
@@ -2118,19 +2113,7 @@ commentsRunWhenDOMLoaded(addUtterances);
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="markov_random_fields.html">
-   Markov random fileds (Undirected graphical models (UGM))
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="markov_random_fields.html#examples">
-   <span class="xref myst">
-    Examples
-   </span>
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="markov_random_fields.html#learning">
-   Learning
+   Markov random field (MRF)
   </a>
  </li>
  <li class="toctree-l1">
@@ -2248,6 +2231,25 @@ commentsRunWhenDOMLoaded(addUtterances);
     <!-- Table of contents -->
     <div class="d-none d-md-block col-md-2 bd-toc show">
         
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#features">
+   Features
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#chain-crf">
+   Chain CRF
+  </a>
+ </li>
+</ul>
+
+        </nav>
+        
     </div>
 </div>
     <div id="main-content" class="row">
@@ -2257,20 +2259,31 @@ commentsRunWhenDOMLoaded(addUtterances);
                 
   <div class="section" id="conditional-random-fields-crfs">
 <h1>Conditional random fields (CRFs)<a class="headerlink" href="#conditional-random-fields-crfs" title="Permalink to this headline">¶</a></h1>
-<p>A <strong>conditional random fields (CRF)</strong> , sometimes called <strong>discriminative random field</strong>, is just a version of MRF, where all the clique potentials are conditioned on the input feature:</p>
+<p>A <strong>conditional random fields (CRF)</strong> , sometimes called <strong>discriminative random field</strong>, is just a version of <a class="reference internal" href="markov_random_fields.html"><span class="doc std std-doc">MRF</span></a>, where all the clique potentials are conditioned on the input feature:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+p(y|x) = \frac{1}{Z(x)} \prod_c\phi_c(y_c|x_c) \\
+Z(x) = \sum_{y \in Y} \prod_c\phi_c(y_c|x_c)
+\end{split}\]</div>
+<p>The partition constant depends on x, therefore we can say it is a function of x. We can say that conditional random fields instantiate a new Markov Random Field for each input x.</p>
+<div class="section" id="features">
+<h2>Features<a class="headerlink" href="#features" title="Permalink to this headline">¶</a></h2>
+<p>In general we assume that the potential functions are:</p>
 <div class="math notranslate nohighlight">
 \[
-p(y|x,w) = \frac{1}{Z(x,w)} \prod_c\psi_c(y_c|x,w)
-\]</div>
-<p>A CRF can be thought as a structured output extension of logistic regression, where we model the correlation among the outputs labels conditioned on the input features. We usually assume a log-linear representation of the potentials:</p>
-<div class="math notranslate nohighlight">
-\[
-\psi_c(y_c|x,w) = \exp(w_c^T\phi(x, y_c))
+\phi_c(x_c,y_c) = \exp(w_c^Tf_c(x_c,y_c))
 \]</div>
 <ul class="simple">
-<li><p><span class="math notranslate nohighlight">\(\phi(x| y_c)\)</span> is a feature vector derived from the global inputs x and the local set of labels <span class="math notranslate nohighlight">\(y_c\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(f_c(x_c,y_c)\)</span> describes the compatibility between <span class="math notranslate nohighlight">\(x_c\)</span> and <span class="math notranslate nohighlight">\(y_c\)</span></p></li>
 </ul>
-<p>This is just an discriminative version of a <a class="reference internal" href="markov_random_fields.html"><span class="doc std std-doc">markov random field</span></a>.</p>
+<p>Here <span class="math notranslate nohighlight">\(x\)</span> can be arbitrary complex, since it is always observed it does not affect computation.
+This can be generalized, for an example we model <span class="math notranslate nohighlight">\(p(x,y)\)</span> using an MRF, we fit two distribution to the data <span class="math notranslate nohighlight">\(p(y|x)\)</span> and <span class="math notranslate nohighlight">\(p(x)\)</span>. But if we are interested only in predicting y given x, we can skip modeling <span class="math notranslate nohighlight">\(p(x)\)</span> (we may not have enough data to fit booth). THis can speed up computation.</p>
+</div>
+<div class="section" id="chain-crf">
+<h2>Chain CRF<a class="headerlink" href="#chain-crf" title="Permalink to this headline">¶</a></h2>
+<p>If we assume that <span class="math notranslate nohighlight">\(p(y|x)\)</span> is a chain CRF, with two types of factors, (an example image factors) <span class="math notranslate nohighlight">\(\phi(x_i|y_i)\)</span> for <span class="math notranslate nohighlight">\(i=1,\cdots, n\)</span>, which assigns higher values to <span class="math notranslate nohighlight">\(y_i\)</span> which are consistent with input <span class="math notranslate nohighlight">\(x_i\)</span>, and pairwise factors <span class="math notranslate nohighlight">\(\phi(y_i, y_{i+1})\)</span> for <span class="math notranslate nohighlight">\(i=1,\cdots,n-1\)</span>.</p>
+<p>We can view <span class="math notranslate nohighlight">\(\phi(x_i|y_i)\)</span> as probabilities <span class="math notranslate nohighlight">\(p(y_i|x_i)\)</span> and <span class="math notranslate nohighlight">\(\phi(y_i|y_{i+1})\)</span> are some co-occurrences.</p>
+</div>
 </div>
 
     <script type="text/x-thebe-config">
