@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Variable elimination algorithm &#8212; study-notes</title>
+    <title>Variable elimination motivation &#8212; study-notes</title>
     
   <link rel="stylesheet" href="../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
 
@@ -91,8 +91,6 @@ commentsRunWhenDOMLoaded(addUtterances);
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Shannon infromation content of an outcome" href="shannon_information_content.html" />
-    <link rel="prev" title="Noise-free Gaussian Process Regression" href="noise_free_gaussian_process_regression.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -129,7 +127,7 @@ commentsRunWhenDOMLoaded(addUtterances);
   </a>
  </li>
 </ul>
-<ul class="current nav sidenav_l1">
+<ul class="nav sidenav_l1">
  <li class="toctree-l1">
   <a class="reference internal" href="signal_to_noise_ratio.html">
    Signal to noise ratio
@@ -905,8 +903,8 @@ commentsRunWhenDOMLoaded(addUtterances);
    </span>
   </a>
  </li>
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
+ <li class="toctree-l1">
+  <a class="reference internal" href="variable_elimination.html">
    Variable elimination algorithm
   </a>
  </li>
@@ -2206,7 +2204,7 @@ commentsRunWhenDOMLoaded(addUtterances);
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../_sources/notes/variable_elimination.md"><button type="button"
+        <a class="dropdown-buttons" href="../_sources/notes/variable_elimination_motivation.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.md</button></a>
         <!-- Download PDF via print -->
@@ -2231,20 +2229,6 @@ commentsRunWhenDOMLoaded(addUtterances);
     <!-- Table of contents -->
     <div class="d-none d-md-block col-md-2 bd-toc show">
         
-        <div class="tocsection onthispage pt-5 pb-3">
-            <i class="fas fa-list"></i> Contents
-        </div>
-        <nav id="bd-toc-nav">
-            <ul class="nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#computational-complexity-of-ve">
-   Computational complexity of VE
-  </a>
- </li>
-</ul>
-
-        </nav>
-        
     </div>
 </div>
     <div id="main-content" class="row">
@@ -2252,45 +2236,37 @@ commentsRunWhenDOMLoaded(addUtterances);
         
               <div>
                 
-  <div class="section" id="variable-elimination-algorithm">
-<h1>Variable elimination algorithm<a class="headerlink" href="#variable-elimination-algorithm" title="Permalink to this headline">¶</a></h1>
-<p>It is algorithm for exact inference in <a class="reference internal" href="graphical_models.html"><span class="doc std std-doc">graphical models</span></a>.</p>
-<p>The main <a class="reference internal" href="variable_elimination_motivation.html"><span class="doc std std-doc">motivation behind variable elimination</span></a> is to reduce the runtime of inference by leverage factorization of our probability distribution.</p>
-<p>This extends Belief propagation so we can compute <span class="math notranslate nohighlight">\(p(x_q|x_p)\)</span> for any kind of graph.</p>
-<blockquote>
-<div><p>Example of getting an job given some conditions
-<img alt="" src="../_images/variable_elimination_example.png" /></p>
-</div></blockquote>
-<p>This has the form:</p>
+  <div class="section" id="variable-elimination-motivation">
+<h1>Variable elimination motivation<a class="headerlink" href="#variable-elimination-motivation" title="Permalink to this headline">¶</a></h1>
+<p>Let assume the following Bayesian network:</p>
 <div class="math notranslate nohighlight">
 \[
-P(C,D, I,G, S,L, J,H) = P(C)P(D|C)P(I)P(G|I,D)P(S|I)P(L|G)P(J|L, S)P(H|G, J)
+p(x_1,\cdots, x_n) = p(x_1)\prod_{i=2}^n p(x_i|x_{i-1})
 \]</div>
-<p>We can convert to an UGM where we define a potential function for every CPD yielding:</p>
+<p>If we want to find the marginal probability <span class="math notranslate nohighlight">\(p(x_n)\)</span>, the naive way is to sum over the probability of all <span class="math notranslate nohighlight">\(k^{n-1}\)</span> assignments:</p>
 <div class="math notranslate nohighlight">
 \[
-P(C,D,I,G,S,L,J,H) = \psi_C(C) \psi_D(D,C) \psi_I(I) \psi_G(G,I,D) \psi_S(S,I) \psi_L(J,L,S) \psi_H(H,G,J)
+p(x_n) = \sum_{x_1}\cdots \sum_{x_{n-1}} p(x_1, \cdots, x_n)
 \]</div>
-<p>The UGM has more edges than the DAG. Since <strong>normalization</strong> connect all the unmarried nodes.  Now if we want to compute <span class="math notranslate nohighlight">\(p(J=1)​\)</span>, the marginal probability that a person will get a job. This can be achieved by summing up all the possible variables:</p>
-<div class="math notranslate nohighlight">
-\[P(J) = \sum_L \sum _S \sum_G \sum_H \sum_I \sum_D \sum_C p(C,D,I,G,S,L,J,H)​\]</div>
-<p>This can take <span class="math notranslate nohighlight">\(O(2^7)\)</span> time.</p>
-<p>We can reduce on this if we manage to push sums inside products. This is the key idea behind <strong>variable elimination</strong> algorithm called <strong>bucket elimination</strong>.</p>
+<p>unfortunately this has a runtime of <span class="math notranslate nohighlight">\(O(k^n)\)</span> which is not trackable for high n.</p>
+<p>If we leverage the factorization of <span class="math notranslate nohighlight">\(p\)</span>, we can push some sums inside:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
-p(J) = \sum_{L,S,G,H,I,D,C} p(C,D,I,G,S,L,J,H) = \\
-\sum_{L,S,G,H,I,D,C} \psi_C(C) \psi(D,C)\psi_I(I)\psi_G(G,I,D)\psi_S(S,I)\psi_L(L,G) \psi_j(J,L,S)\psi_H(H,G,J) \\ 
-= \sum_{LS}\psi_J(J,L,S) \sum_G \psi_G \psi_G(L,G) \sum_H \psi_H(H,G,J)\sum_I \psi_s(S,I)\psi_I(I)\sum_D \psi_G(G,I,D) \sum_C \psi_C(C) \psi_D(D,C)
+p(x_n) = \sum_{x_1} \cdots \sum_{x_{n-1}}p(x_1) \prod_{i=1}^n p(x_i|x_{i-1}) \\ 
+= \sum_{x_{n-1}}p(x_n|x_{n-1})\sum_{x_{n-2}}p(x_{n-1}|x_{n-2})\cdots \sum_{x_1} p(x_2|x_1)p(x_1)
 \end{split}\]</div>
-<p>Now we can evaluate this expression, working right to left as:</p>
-<p><img alt="" src="../_images/variable_eliminatino_left_to_right.png" /></p>
-<p>We can use this to compute any marginal of interest like <span class="math notranslate nohighlight">\(p(J)\)</span> or <span class="math notranslate nohighlight">\(p(J,H)\)</span>. To compute the conditional, we can take ratio of two marginals, where the visible variables have been clamped to their known values.</p>
-<p>Unfortunately <strong>Variable elimination</strong> can be exponentially slow in the worst case.</p>
-<div class="section" id="computational-complexity-of-ve">
-<h2>Computational complexity of VE<a class="headerlink" href="#computational-complexity-of-ve" title="Permalink to this headline">¶</a></h2>
-<p>The running time of VE is exponential in the size of the largest factor, since we have to sum over all of the corresponding variables. Some of the factors come from the original model, bu <strong>new factors</strong> are created in the process of summing out. Therefore if we are not careful we can introduce unnecessary factors, and slow down the computation.</p>
-<p>The order in which we perform summation is known as <strong>elimination order</strong>. This can have a large impact on the size of the intermediate factors that are created.  Unfortunately finding the best elimination order is NP hard.</p>
-</div>
+<p>The summing starts from <span class="math notranslate nohighlight">\(x_1\)</span> and ends with <span class="math notranslate nohighlight">\(x_{n-1}\)</span>, therefore we first sum out <span class="math notranslate nohighlight">\(x_1\)</span> resulting an intermediate factor:</p>
+<div class="math notranslate nohighlight">
+\[
+\tau(x_2) = \sum_{x_1}p(x_2|x_1)p(x_1)
+\]</div>
+<p>This takes <span class="math notranslate nohighlight">\(k^2\)</span> since we sum over <span class="math notranslate nohighlight">\(x_1\)</span> for each assignment to <span class="math notranslate nohighlight">\(x_2\)</span> (we can think about this factor as a table of k values (not necessarily probabilities) for each assignment to <span class="math notranslate nohighlight">\(x_2\)</span>). Now our marginal probability becomes:</p>
+<div class="math notranslate nohighlight">
+\[
+p(x_n) = \sum_{x_{n-1}}p(x_n|x_{n-1})\sum_{x_{n-2}}p(x_{n-1}|x_{n-2})\cdots \sum_{x_2} p(x_3|x_2)p(x_2)\tau(x_2)
+\]</div>
+<p>We can now compute the next factor <span class="math notranslate nohighlight">\(\tau(x_3) = \sum_{x_2} p(x_3|x_2) \tau(x_2)\)</span> and repeat until we left only with <span class="math notranslate nohighlight">\(x_n\)</span>, each step taking <span class="math notranslate nohighlight">\(O(k^2)\)</span> time with <span class="math notranslate nohighlight">\(O(n)\)</span> steps, therefore the inference now takes <span class="math notranslate nohighlight">\(O(nk^2)\)</span> time.</p>
+<p>At each step we eliminate a variable (thus the name) and replace it with a factor.</p>
 </div>
 
     <script type="text/x-thebe-config">
@@ -2321,8 +2297,6 @@ p(J) = \sum_{L,S,G,H,I,D,C} p(C,D,I,G,S,L,J,H) = \\
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="noise_free_gaussian_process_regression.html" title="previous page">Noise-free <span class="xref myst">Gaussian Process Regression</span></a>
-    <a class='right-next' id="next-link" href="shannon_information_content.html" title="next page">Shannon infromation content of an outcome</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">

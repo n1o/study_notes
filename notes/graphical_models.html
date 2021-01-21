@@ -2243,6 +2243,35 @@ commentsRunWhenDOMLoaded(addUtterances);
    </span>
   </a>
  </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#markov-random-field">
+   <span class="xref myst">
+    Markov random field
+   </span>
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#inference">
+   Inference
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#marginal-inference">
+     Marginal inference
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#maximum-a-posteriori-map-inference">
+     Maximum a posteriori (MAP) inference
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#approximate-inference">
+     Approximate inference
+    </a>
+   </li>
+  </ul>
+ </li>
 </ul>
 
         </nav>
@@ -2259,7 +2288,37 @@ commentsRunWhenDOMLoaded(addUtterances);
 <p>A graphical model is a way to represent a <a class="reference internal" href="probability.html"><span class="doc std std-doc">joint distribution</span></a> by making <a class="reference internal" href="probability_independence.html"><span class="doc std std-doc">CI assumptions</span></a>, in particular, the nodes in the graph represent random variables, and the (lack of) edges represent CI assumptions.</p>
 <div class="section" id="directed-graphical-moels">
 <h2><a class="reference internal" href="directed_graphical_models.html"><span class="doc std std-doc">Directed graphical moels</span></a><a class="headerlink" href="#directed-graphical-moels" title="Permalink to this headline">¶</a></h2>
-<p>The edges in the graph are directed. [Inference] is rather straight forward</p>
+<p>The edges in the graph are directed.</p>
+</div>
+<div class="section" id="markov-random-field">
+<h2><a class="reference internal" href="markov_random_fields.html"><span class="doc std std-doc">Markov random field</span></a><a class="headerlink" href="#markov-random-field" title="Permalink to this headline">¶</a></h2>
+<p>The edges in the graph have no orientation.</p>
+</div>
+<div class="section" id="inference">
+<h2>Inference<a class="headerlink" href="#inference" title="Permalink to this headline">¶</a></h2>
+<p>There are two common types of questions we ask.</p>
+<div class="section" id="marginal-inference">
+<h3>Marginal inference<a class="headerlink" href="#marginal-inference" title="Permalink to this headline">¶</a></h3>
+<p>What is the probability of a given variable in our model after we sum everything else out:
+$<span class="math notranslate nohighlight">\(
+p(y=1) =\sum_{x1} \sum_{x_2} \cdots \sum_{x_n} p(y=1|x_1, x_2,\cdots,x_n)
+\)</span>$</p>
+</div>
+<div class="section" id="maximum-a-posteriori-map-inference">
+<h3>Maximum a posteriori (MAP) inference<a class="headerlink" href="#maximum-a-posteriori-map-inference" title="Permalink to this headline">¶</a></h3>
+<p>What is the most likely assignment to the variables in the model:</p>
+<div class="math notranslate nohighlight">
+\[
+\max_{x_1, x_2,\cdots, x_n} = p(y=1|,1, x_2, \cdots, x_n)
+\]</div>
+<p>In general an exact answer is NP-hard. Tractable computation depends on the structure of the graph that describes that  probability. In cases when exact inference is not tractable we result to approximate inference.</p>
+</div>
+<div class="section" id="approximate-inference">
+<h3>Approximate inference<a class="headerlink" href="#approximate-inference" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p><a class="reference internal" href="variable_elimination.html"><span class="doc std std-doc">variable elimination</span></a></p></li>
+</ul>
+</div>
 </div>
 </div>
 

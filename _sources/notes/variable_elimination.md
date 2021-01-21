@@ -1,5 +1,9 @@
 # Variable elimination algorithm
 
+It is algorithm for exact inference in [graphical models](graphical_models.md). 
+
+The main [motivation behind variable elimination](variable_elimination_motivation.md) is to reduce the runtime of inference by leverage factorization of our probability distribution. 
+
 This extends Belief propagation so we can compute $p(x_q|x_p)$ for any kind of graph. 
 
 > Example of getting an job given some conditions
