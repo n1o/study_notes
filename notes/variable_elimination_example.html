@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Variable elimination algorithm &#8212; study-notes</title>
+    <title>Variable elimination example &#8212; study-notes</title>
     
   <link rel="stylesheet" href="../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
 
@@ -91,8 +91,6 @@ commentsRunWhenDOMLoaded(addUtterances);
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Shannon infromation content of an outcome" href="shannon_information_content.html" />
-    <link rel="prev" title="Noise-free Gaussian Process Regression" href="noise_free_gaussian_process_regression.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -129,7 +127,7 @@ commentsRunWhenDOMLoaded(addUtterances);
   </a>
  </li>
 </ul>
-<ul class="current nav sidenav_l1">
+<ul class="nav sidenav_l1">
  <li class="toctree-l1">
   <a class="reference internal" href="signal_to_noise_ratio.html">
    Signal to noise ratio
@@ -905,8 +903,8 @@ commentsRunWhenDOMLoaded(addUtterances);
    </span>
   </a>
  </li>
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
+ <li class="toctree-l1">
+  <a class="reference internal" href="variable_elimination.html">
    Variable elimination algorithm
   </a>
  </li>
@@ -2206,7 +2204,7 @@ commentsRunWhenDOMLoaded(addUtterances);
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../_sources/notes/variable_elimination.md"><button type="button"
+        <a class="dropdown-buttons" href="../_sources/notes/variable_elimination_example.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.md</button></a>
         <!-- Download PDF via print -->
@@ -2231,57 +2229,6 @@ commentsRunWhenDOMLoaded(addUtterances);
     <!-- Table of contents -->
     <div class="d-none d-md-block col-md-2 bd-toc show">
         
-        <div class="tocsection onthispage pt-5 pb-3">
-            <i class="fas fa-list"></i> Contents
-        </div>
-        <nav id="bd-toc-nav">
-            <ul class="nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#factors">
-   Factors
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#factor-operations">
-   Factor operations
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#product-operation">
-     Product operation
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#marginalization-operation">
-     Marginalization operation
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#ordering">
-   Ordering
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#algorithm">
-   Algorithm
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#run-time">
-   Run time
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#choosing-ordering">
-   Choosing Ordering
-  </a>
- </li>
-</ul>
-
-        </nav>
-        
     </div>
 </div>
     <div id="main-content" class="row">
@@ -2289,100 +2236,35 @@ commentsRunWhenDOMLoaded(addUtterances);
         
               <div>
                 
-  <div class="section" id="variable-elimination-algorithm">
-<h1>Variable elimination algorithm<a class="headerlink" href="#variable-elimination-algorithm" title="Permalink to this headline">¶</a></h1>
-<p>It is algorithm for exact inference in <a class="reference internal" href="graphical_models.html"><span class="doc std std-doc">graphical models</span></a>.</p>
-<p>The main <a class="reference internal" href="variable_elimination_motivation.html"><span class="doc std std-doc">motivation behind variable elimination</span></a> is to reduce the runtime of inference by leverage factorization of our probability distribution.</p>
-<div class="section" id="factors">
-<h2>Factors<a class="headerlink" href="#factors" title="Permalink to this headline">¶</a></h2>
-<p>We express an given graphical model as a product of factors.</p>
+  <div class="section" id="variable-elimination-example">
+<h1>Variable elimination example<a class="headerlink" href="#variable-elimination-example" title="Permalink to this headline">¶</a></h1>
+<p>Lets look at the following <a class="reference internal" href="directed_graphical_models.html"><span class="doc std std-doc">Bayesian Network</span></a>:</p>
+<p><img alt="" src="../_images/grade-model.png" /></p>
+<p>This model corresponds to the following distribution:</p>
 <div class="math notranslate nohighlight">
 \[
-p(x_1,\cdots, x_n) = \prod_{c \in C}\phi_c(x_c)
+p(l,g,i,d,s) = p(l|g)p(s|i)p(i)p(g|i,d)p(d)
 \]</div>
-<p>These factors are:</p>
-<ul class="simple">
-<li><p>In <a class="reference internal" href="directed_graphical_models.html"><span class="doc std std-doc">Bayesian Networks</span></a> factors correspond to conditional probability distributions</p></li>
-<li><p>In <a class="reference internal" href="markov_random_fields.html"><span class="doc std std-doc">Markov Random Fields</span></a> they encode an unnormalized distribution, to get the marginals we first compute the partition functions using Variable elimination, than we compute unnormalized marginals and than we divide by the partition function.</p></li>
-</ul>
-</div>
-<div class="section" id="factor-operations">
-<h2>Factor operations<a class="headerlink" href="#factor-operations" title="Permalink to this headline">¶</a></h2>
-<p>We repeatedly perform two factor operations</p>
-<ol class="simple">
-<li><p>Product</p></li>
-<li><p>Marginalization</p></li>
-</ol>
-<div class="section" id="product-operation">
-<h3>Product operation<a class="headerlink" href="#product-operation" title="Permalink to this headline">¶</a></h3>
-<p>We define the product of two factors as a new factor:</p>
+<p>Our goal is to find <span class="math notranslate nohighlight">\(p(l)\)</span> by eliminating variables according to the topological ordering in the graph.</p>
+<p>We going to eliminate in the order</p>
 <div class="math notranslate nohighlight">
-\[
-\phi_x(x_c) = \phi_1(x_c^{(1)} \times \phi_2(x_c^{(2)})
-\]</div>
-<ul class="simple">
-<li><p>The scope of <span class="math notranslate nohighlight">\(\phi_3\)</span> is defined as the union of variables in the scopes of <span class="math notranslate nohighlight">\(\phi_1, \phi_2\)</span></p></li>
-<li><p><span class="math notranslate nohighlight">\(x_c^i\)</span> denotes an assignment ot the variables in scope of <span class="math notranslate nohighlight">\(\phi_i\)</span> defined by the restriction of <span class="math notranslate nohighlight">\(x_c\)</span> to that scope</p></li>
-</ul>
-<blockquote>
-<div><p>Example:</p>
+\[d,i,s,g\]</div>
+<p>At each step we create a factor:
+$<span class="math notranslate nohighlight">\(
+\tau_1(g,i) = \sum_d p(g|i,d)p(d) \\ 
+\tau_2(g,s) = \sum_i \tau_1(g,i)p(i)p(s|i) \\
+\tau_3(g) = \sum_s\tau_2(g,s)
+\)</span>$</p>
+<p>The last step is to eliminate g, thus we get:</p>
 <div class="math notranslate nohighlight">
-\[\phi_3(a,b,c) = \phi_1(a,b)\times \phi_2(b,c)\]</div>
-</div></blockquote>
-</div>
-<div class="section" id="marginalization-operation">
-<h3>Marginalization operation<a class="headerlink" href="#marginalization-operation" title="Permalink to this headline">¶</a></h3>
-<p>Locally eliminates a set of variables form a factor, for example if we have a factor <span class="math notranslate nohighlight">\(\phi(X,Y)\)</span>, marginalizing Y produces a new factor:</p>
-<div class="math notranslate nohighlight">
-\[
-\tau(x)\sum_y \phi(x,y)
-\]</div>
-<p>This makes <span class="math notranslate nohighlight">\(\tau\)</span> a marginalized factor, this marginalized factor in general is not a probability distribution.</p>
-<blockquote>
-<div><p>Example we have a factor <span class="math notranslate nohighlight">\(\phi(A,B,C\)</span>) and we marginalize over B</p>
-<p><img alt="" src="../_images/factor_marginalization.png" /></p>
-</div></blockquote>
-</div>
-</div>
-<div class="section" id="ordering">
-<h2>Ordering<a class="headerlink" href="#ordering" title="Permalink to this headline">¶</a></h2>
-<p>In variable elimination we need to determine the order in which the variables will be eliminated. (If we perform this elimination on a DAG, we can use the ordering implied by it).</p>
-<ul class="simple">
-<li><p>The ordering can have an dramatic impact on the runtime</p></li>
-<li><p>Finding the <strong>best ordering is NP-hard</strong></p></li>
-</ul>
-</div>
-<div class="section" id="algorithm">
-<h2>Algorithm<a class="headerlink" href="#algorithm" title="Permalink to this headline">¶</a></h2>
-<p>We loop over variables as ordered by an ordering O, and eliminate them in that ordering. This corresponds to choosing a sum and “pushing it in” as far as possible inside the product of the factors.</p>
-<blockquote>
-<div><p>For each variable <span class="math notranslate nohighlight">\(X_i\)</span> (ordered according to O)</p>
-<ol class="simple">
-<li><p>Multiply all factor <span class="math notranslate nohighlight">\(\phi_i\)</span> containing <span class="math notranslate nohighlight">\(X_i\)</span></p></li>
-<li><p>Marginalize out <span class="math notranslate nohighlight">\(X_i\)</span> to obtain a new factor <span class="math notranslate nohighlight">\(\tau\)</span></p></li>
-<li><p>Replace the factors <span class="math notranslate nohighlight">\(\phi_i\)</span> with <span class="math notranslate nohighlight">\(\tau\)</span></p></li>
-</ol>
-<p><a class="reference internal" href="variable_elimination_example.html"><span class="doc std std-doc">Example</span></a></p>
-</div></blockquote>
-</div>
-<div class="section" id="run-time">
-<h2>Run time<a class="headerlink" href="#run-time" title="Permalink to this headline">¶</a></h2>
-<div class="math notranslate nohighlight">
-\[O(nk^{M+1})\]</div>
-<ul class="simple">
-<li><p>M is the maximum size of any factor <span class="math notranslate nohighlight">\(\tau\)</span> formed during the process</p></li>
-<li><p>n is the number of variables</p></li>
-</ul>
-</div>
-<div class="section" id="choosing-ordering">
-<h2>Choosing Ordering<a class="headerlink" href="#choosing-ordering" title="Permalink to this headline">¶</a></h2>
-<p>Choosing an optimal ordering is NP-hard. Thus we use heuristics:</p>
-<ul class="simple">
-<li><p><em>Min-neighbors</em>: Choose a variable with the fewest dependent variables.</p></li>
-<li><p><em>Min-weight</em>: Choose variables to minimize the product of the cardinalities of its dependent variables</p></li>
-<li><p><em>Min-fill</em>: Choose vertices to minimize the size of the factor that will be added to the graph.</p></li>
-</ul>
-</div>
+\[\begin{split}
+p(l) = \sum_g p(l|g)\tau_3(g) \\
+p(l) = \sum_g p(l|g)\sum_s\sum_ip(s|i)p(i)\sum_dp(g|i,d)p(d)
+\end{split}\]</div>
+<p>This takes up at most <span class="math notranslate nohighlight">\(O(k^3)\)</span></p>
+<p>If we would choose an different ordering it would be different.
+If we choose to eliminate <span class="math notranslate nohighlight">\(g\)</span> first we would have to transform the factors <span class="math notranslate nohighlight">\(p(g|i,d)p(l|g)\)</span> into <span class="math notranslate nohighlight">\(\tau(d,il)\)</span> this would require <span class="math notranslate nohighlight">\(O(k^4)\)</span> (k times for each conditional variable, and k times for each value of g). If we would have an factor <span class="math notranslate nohighlight">\(p(g|s)\)</span> we would require to eliminate it too and it would result in <span class="math notranslate nohighlight">\(\tau(d,i,l,s)\)</span> which would take <span class="math notranslate nohighlight">\(O(k^5)\)</span>.</p>
+<p>We can see that the ordering is making an large difference.</p>
 </div>
 
     <script type="text/x-thebe-config">
@@ -2413,8 +2295,6 @@ p(x_1,\cdots, x_n) = \prod_{c \in C}\phi_c(x_c)
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="noise_free_gaussian_process_regression.html" title="previous page">Noise-free <span class="xref myst">Gaussian Process Regression</span></a>
-    <a class='right-next' id="next-link" href="shannon_information_content.html" title="next page">Shannon infromation content of an outcome</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">
