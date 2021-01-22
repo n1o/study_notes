@@ -1,50 +1,81 @@
 # Variable elimination algorithm
 
-It is algorithm for exact inference in [graphical models](graphical_models.md). 
+It is algorithm for exact inference in [graphical models](graphical_models.md).  
 
-The main [motivation behind variable elimination](variable_elimination_motivation.md) is to reduce the runtime of inference by leverage factorization of our probability distribution. 
+The main [motivation behind variable elimination](variable_elimination_motivation.md) is to reduce the runtime of inference by leverage factorization of our probability distribution.
 
-This extends Belief propagation so we can compute $p(x_q|x_p)$ for any kind of graph. 
-
-> Example of getting an job given some conditions
-> ![](../.images/machine_learning/variable_elimination_example.png)
-
-This has the form:
+## Factors
+We express an given graphical model as a product of factors.
 
 $$
-P(C,D, I,G, S,L, J,H) = P(C)P(D|C)P(I)P(G|I,D)P(S|I)P(L|G)P(J|L, S)P(H|G, J)
+p(x_1,\cdots, x_n) = \prod_{c \in C}\phi_c(x_c)
 $$
 
-We can convert to an UGM where we define a potential function for every CPD yielding:
+These factors are:
+* In [Bayesian Networks](directed_graphical_models.md) factors correspond to conditional probability distributions
+* In [Markov Random Fields](markov_random_fields.md) they encode an unnormalized distribution, to get the marginals we first compute the partition functions using Variable elimination, than we compute unnormalized marginals and than we divide by the partition function.
+
+
+## Factor operations
+We repeatedly perform two factor operations
+1. Product
+2. Marginalization
+
+### Product operation
+
+We define the product of two factors as a new factor:
 
 $$
-P(C,D,I,G,S,L,J,H) = \psi_C(C) \psi_D(D,C) \psi_I(I) \psi_G(G,I,D) \psi_S(S,I) \psi_L(J,L,S) \psi_H(H,G,J)
+\phi_x(x_c) = \phi_1(x_c^{(1)} \times \phi_2(x_c^{(2)})
 $$
 
-The UGM has more edges than the DAG. Since **normalization** connect all the unmarried nodes.  Now if we want to compute $p(J=1)​$, the marginal probability that a person will get a job. This can be achieved by summing up all the possible variables:
+* The scope of $\phi_3$ is defined as the union of variables in the scopes of $\phi_1, \phi_2$
+* $x_c^i$ denotes an assignment ot the variables in scope of $\phi_i$ defined by the restriction of $x_c$ to that scope
 
-$$P(J) = \sum_L \sum _S \sum_G \sum_H \sum_I \sum_D \sum_C p(C,D,I,G,S,L,J,H)​$$
+>Example: 
+>
+> $$\phi_3(a,b,c) = \phi_1(a,b)\times \phi_2(b,c)$$
 
-This can take $O(2^7)$ time. 
+### Marginalization operation
 
-We can reduce on this if we manage to push sums inside products. This is the key idea behind **variable elimination** algorithm called **bucket elimination**.
+Locally eliminates a set of variables form a factor, for example if we have a factor $\phi(X,Y)$, marginalizing Y produces a new factor:
 
 $$
-p(J) = \sum_{L,S,G,H,I,D,C} p(C,D,I,G,S,L,J,H) = \\
-\sum_{L,S,G,H,I,D,C} \psi_C(C) \psi(D,C)\psi_I(I)\psi_G(G,I,D)\psi_S(S,I)\psi_L(L,G) \psi_j(J,L,S)\psi_H(H,G,J) \\ 
-= \sum_{LS}\psi_J(J,L,S) \sum_G \psi_G \psi_G(L,G) \sum_H \psi_H(H,G,J)\sum_I \psi_s(S,I)\psi_I(I)\sum_D \psi_G(G,I,D) \sum_C \psi_C(C) \psi_D(D,C)
+\tau(x)\sum_y \phi(x,y)
 $$
 
-Now we can evaluate this expression, working right to left as:
+This makes $\tau$ a marginalized factor, this marginalized factor in general is not a probability distribution.
 
-![](../.images/machine_learning/variable_eliminatino_left_to_right.png)
+> Example we have a factor $\phi(A,B,C$) and we marginalize over B
+> 
+>![](../.images/machine_learning/factor_marginalization.png)
 
-We can use this to compute any marginal of interest like $p(J)$ or $p(J,H)$. To compute the conditional, we can take ratio of two marginals, where the visible variables have been clamped to their known values. 
+## Ordering
+In variable elimination we need to determine the order in which the variables will be eliminated. (If we perform this elimination on a DAG, we can use the ordering implied by it).
 
-Unfortunately **Variable elimination** can be exponentially slow in the worst case.
+* The ordering can have an dramatic impact on the runtime
+* Finding the **best ordering is NP-hard**
 
-## Computational complexity of VE
+## Algorithm
+We loop over variables as ordered by an ordering O, and eliminate them in that ordering. This corresponds to choosing a sum and "pushing it in" as far as possible inside the product of the factors. 
 
-The running time of VE is exponential in the size of the largest factor, since we have to sum over all of the corresponding variables. Some of the factors come from the original model, bu **new factors** are created in the process of summing out. Therefore if we are not careful we can introduce unnecessary factors, and slow down the computation.
+> For each variable $X_i$ (ordered according to O)
+> 1. Multiply all factor $\phi_i$ containing $X_i$
+> 2. Marginalize out $X_i$ to obtain a new factor $\tau$
+> 3. Replace the factors $\phi_i$ with $\tau$
+> 
+> [Example](variable_elimination_example.md)
 
-The order in which we perform summation is known as **elimination order**. This can have a large impact on the size of the intermediate factors that are created.  Unfortunately finding the best elimination order is NP hard. 
+## Run time
+$$O(nk^{M+1})$$
+
+* M is the maximum size of any factor $\tau$ formed during the process 
+* n is the number of variables
+
+## Choosing Ordering
+
+Choosing an optimal ordering is NP-hard. Thus we use heuristics:
+
+* *Min-neighbors*: Choose a variable with the fewest dependent variables.
+* *Min-weight*: Choose variables to minimize the product of the cardinalities of its dependent variables
+* *Min-fill*: Choose vertices to minimize the size of the factor that will be added to the graph.
