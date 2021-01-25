@@ -5,7 +5,7 @@ If we want to use [variable elimination](variable_elimination.md) compute the ma
 This is optimal, the largest clique formed during VE has size 2. At each step we compute the factor $\tau_k$ which eliminates $x_j$:
 
 $$
-\tau_k(x_k) \sum_{x_j} \phi(x_k,x_j)\tau_j(x_j)
+\tau_k(x_k) = \sum_{x_j} \phi(x_k,x_j)\tau_j(x_j)
 $$
 
 * $x_k$ is the parent of $x_j$ in the tree.
@@ -36,5 +36,5 @@ This message passing algorithm can be summarized as follows:
 Used for marginal inference (computing $p(x_i)$) it is the generalization of [forwards-backwards](infference_in_hidden_markov_models.md)) algorithm from chains to trees.
 
 
-### [Max-product message passing](max_product_message_passing.md)
+### [Max-product message passing
 Used For MAP inference (computing $\max_{x_1, \cdots, x_n} p(x_1, \cdots, x_n$)
