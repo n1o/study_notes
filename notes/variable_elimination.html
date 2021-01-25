@@ -1636,7 +1636,7 @@ commentsRunWhenDOMLoaded(addUtterances);
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="belief_propagation.html">
-   Belief propagation for trees
+   Belief propagation
   </a>
  </li>
  <li class="toctree-l1">
@@ -2278,6 +2278,11 @@ commentsRunWhenDOMLoaded(addUtterances);
    Choosing Ordering
   </a>
  </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#cons">
+   Cons
+  </a>
+ </li>
 </ul>
 
         </nav>
@@ -2382,6 +2387,16 @@ p(x_1,\cdots, x_n) = \prod_{c \in C}\phi_c(x_c)
 <li><p><em>Min-weight</em>: Choose variables to minimize the product of the cardinalities of its dependent variables</p></li>
 <li><p><em>Min-fill</em>: Choose vertices to minimize the size of the factor that will be added to the graph.</p></li>
 </ul>
+</div>
+<div class="section" id="cons">
+<h2>Cons<a class="headerlink" href="#cons" title="Permalink to this headline">¶</a></h2>
+<p>An important shortcoming of VE is that we can compute the marginals <span class="math notranslate nohighlight">\(p(Y|E=e)\)</span> for undirected and directed networks, but if we want to ask different queries <span class="math notranslate nohighlight">\(p(Y_2|E=e_2)\)</span> we have to start form scratch.</p>
+<p>Fortunately we can tune this by caching intermediate factors <span class="math notranslate nohighlight">\(\tau\)</span> and use them to answer other marginal queries.</p>
+<p>There are two common algorithms:</p>
+<ol class="simple">
+<li><p><a class="reference internal" href="belief_propagation.html"><span class="doc std std-doc">Belief propagation</span></a> which can be applied to tree-structured graphs</p></li>
+<li><p><a class="reference internal" href="junction_tree_algorithm.html"><span class="doc std std-doc">Junction tree algorithm</span></a> which can be applied to general networks.</p></li>
+</ol>
 </div>
 </div>
 

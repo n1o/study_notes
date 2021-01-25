@@ -79,3 +79,14 @@ Choosing an optimal ordering is NP-hard. Thus we use heuristics:
 * *Min-neighbors*: Choose a variable with the fewest dependent variables.
 * *Min-weight*: Choose variables to minimize the product of the cardinalities of its dependent variables
 * *Min-fill*: Choose vertices to minimize the size of the factor that will be added to the graph.
+
+
+## Cons
+An important shortcoming of VE is that we can compute the marginals $p(Y|E=e)$ for undirected and directed networks, but if we want to ask different queries $p(Y_2|E=e_2)$ we have to start form scratch.
+
+Fortunately we can tune this by caching intermediate factors $\tau$ and use them to answer other marginal queries.
+
+There are two common algorithms:
+
+1. [Belief propagation](belief_propagation.md) which can be applied to tree-structured graphs
+2. [Junction tree algorithm](junction_tree_algorithm.md) which can be applied to general networks.

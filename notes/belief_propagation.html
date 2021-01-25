@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Belief propagation for trees &#8212; study-notes</title>
+    <title>Belief propagation &#8212; study-notes</title>
     
   <link rel="stylesheet" href="../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
 
@@ -1636,7 +1636,7 @@ commentsRunWhenDOMLoaded(addUtterances);
  </li>
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
-   Belief propagation for trees
+   Belief propagation
   </a>
  </li>
  <li class="toctree-l1">
@@ -2237,31 +2237,25 @@ commentsRunWhenDOMLoaded(addUtterances);
         <nav id="bd-toc-nav">
             <ul class="nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#serial-protocol">
-   Serial protocol
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#forward-pass">
-   Forward pass
+  <a class="reference internal nav-link" href="#variants">
+   Variants
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#compute-the-messages">
-     Compute the messages
+    <a class="reference internal nav-link" href="#sum-product-message-passing">
+     <span class="xref myst">
+      Sum product message passing
+     </span>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#max-product-message-passing">
+     <span class="xref myst">
+      Max-product message passing
+     </span>
     </a>
    </li>
   </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#downward-pass">
-   Downward pass
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#parallel-protocol">
-   Parallel protocol
-  </a>
  </li>
 </ul>
 
@@ -2274,109 +2268,44 @@ commentsRunWhenDOMLoaded(addUtterances);
         
               <div>
                 
-  <div class="section" id="belief-propagation-for-trees">
-<h1>Belief propagation for trees<a class="headerlink" href="#belief-propagation-for-trees" title="Permalink to this headline">¶</a></h1>
-<p>It is generalization of the <a class="reference internal" href="infference_in_hidden_markov_models.html"><span class="doc std std-doc">forwards-backwards</span></a>) algorithm from chains to trees (it is also known as the <strong>sum-product algorithm</strong>)</p>
-<div class="section" id="serial-protocol">
-<h2>Serial protocol<a class="headerlink" href="#serial-protocol" title="Permalink to this headline">¶</a></h2>
-<p>Let assume a pairwise <a class="reference internal" href="markov_random_fields.html"><span class="doc std std-doc">MRF</span></a>:</p>
+  <div class="section" id="belief-propagation">
+<h1>Belief propagation<a class="headerlink" href="#belief-propagation" title="Permalink to this headline">¶</a></h1>
+<p>If we want to use <a class="reference internal" href="variable_elimination.html"><span class="doc std std-doc">variable elimination</span></a> compute the marginal for <span class="math notranslate nohighlight">\(p(x_i)\)</span>, we can find an optimal ordering by rooting the tree at <span class="math notranslate nohighlight">\(p(x_i)\)</span> and iterating trough nodes in <a class="reference internal" href="post_order_traversal.html"><span class="doc std std-doc">post-order</span></a>.</p>
+<p>This is optimal, the largest clique formed during VE has size 2. At each step we compute the factor <span class="math notranslate nohighlight">\(\tau_k\)</span> which eliminates <span class="math notranslate nohighlight">\(x_j\)</span>:</p>
 <div class="math notranslate nohighlight">
 \[
-p(x|v) = \frac{1}{Z(v)}\prod_{s \in V}\psi_x(x_s) \prod_{(x,t) \in \mathcal{E}} \psi_{s,t} (x_s, x_t)
+\tau_k(x_k) \sum_{x_j} \phi(x_k,x_j)\tau_j(x_j)
 \]</div>
 <ul class="simple">
-<li><p><span class="math notranslate nohighlight">\(\psi_s\)</span> is the local evidence of node s</p></li>
-<li><p><span class="math notranslate nohighlight">\(\psi_{st}\)</span> is the potential for edge <span class="math notranslate nohighlight">\(s - t\)</span>.</p></li>
+<li><p><span class="math notranslate nohighlight">\(x_k\)</span> is the parent of <span class="math notranslate nohighlight">\(x_j\)</span> in the tree.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\tau_j(x_j)\)</span> can we viewed as a message that <span class="math notranslate nohighlight">\(x_j\)</span> sends to <span class="math notranslate nohighlight">\(x_k\)</span> that summarizes all the information from subtree rooted at <span class="math notranslate nohighlight">\(x_j\)</span></p></li>
 </ul>
-<p>We can implement BP for undirected trees as follows:</p>
-<ol class="simple">
-<li><p>Pick an arbitrary node and call it the root r.</p></li>
-<li><p>Orient all the edges away from r (“pick up the graph” and let all the edges “dangle down” ) this gives a notion of parents and children.</p></li>
-<li><p>Send messages from leaves to the root (<strong>collect evidence</strong> phase)</p></li>
-<li><p>Send messages back down from the root (<strong>distribute evidence</strong> phase)</p></li>
-</ol>
-<p><img alt="" src="../_images/belief_propagation_message_passing.png" />
-First picture is the collect evidence phase, the second the distribute evidence phase.</p>
-</div>
-<div class="section" id="forward-pass">
-<h2>Forward pass<a class="headerlink" href="#forward-pass" title="Permalink to this headline">¶</a></h2>
-<p>We want to compute the belief state at node t. We initially condition the belief only on evidence that is at or below <span class="math notranslate nohighlight">\(t\)</span> in the graf:</p>
-<div class="math notranslate nohighlight">
-\[\text{bel}_t^-(x_t) = p(x_t|v_t^-)\]</div>
-<p>This a “bottom-up belief state”. We compute the “messages” from t’s children, about what <span class="math notranslate nohighlight">\(t\)</span> should know about the evidence <span class="math notranslate nohighlight">\(t\)</span> children subtrees.</p>
+<p>At the next step we pass <span class="math notranslate nohighlight">\(\tau_k(x_k)\)</span> to <span class="math notranslate nohighlight">\(x_l\)</span> (parent of node <span class="math notranslate nohighlight">\(x_k\)</span>) to be marginalized out:</p>
 <div class="math notranslate nohighlight">
 \[
-\text{bel}_t^{-1} = p(x_t|v_t^{-1}) = \frac{1}{\psi_t}(x_t) = \prod_{c \in ch(t)} m_{c \rightarrow t}^-(x_t)
+\tau_l(x_l) = \sum_{x_k} \phi(x_l,x_k)\tau_k(x_k)
 \]</div>
-<ul class="simple">
-<li><p><span class="math notranslate nohighlight">\(m_{s\rightarrow t}^- (x_t) = p(x_t| v_{st}^-)\)</span> where <span class="math notranslate nohighlight">\(v_{st}^-\)</span> is all the evidence on the downstream side of the edge <span class="math notranslate nohighlight">\(s-t\)</span></p></li>
-</ul>
-<p>Now we can compute the bottom-up belief state at t as:</p>
-<ul class="simple">
-<li><p><span class="math notranslate nohighlight">\(w_t(x_t) \propto p(x_t|v_t)\)</span> is the local evidence for node t</p></li>
-<li><p><span class="math notranslate nohighlight">\(Z_t\)</span> is the local normalization constant</p></li>
-</ul>
-<p>He we just multiply all the incoming messages from our children and well as the incoming messages from our local evidence, and then normalize.</p>
-<div class="section" id="compute-the-messages">
-<h3>Compute the messages<a class="headerlink" href="#compute-the-messages" title="Permalink to this headline">¶</a></h3>
-<div class="math notranslate nohighlight">
-\[m_{s \rightarrow t}(x_t)​\]</div>
-<ul class="simple">
-<li><p>s is one of t’s children</p></li>
-</ul>
-<div class="math notranslate nohighlight">
-\[\text{bel}_s^{-} (x_s) = p(x_s| v_s^-)​\]</div>
-<p>We can compute the message as:</p>
-<div class="math notranslate nohighlight">
-\[
-m_{s \rightarrow t}^- (x_t) = \sum_{st}(x_s, x_t) \text{bel}_s^{-1}(x_s)
-\]</div>
+<p>There <span class="math notranslate nohighlight">\(tau_k\)</span> sends all the information about the subtree rooted at <span class="math notranslate nohighlight">\(x_k\)</span> up its parent <span class="math notranslate nohighlight">\(x_j\)</span>. This process goes on until we reach the root node <span class="math notranslate nohighlight">\(x_i\)</span>, here we receive information from all of its intermediate children, marginalizing them out to get the final marginal.</p>
+<p>This message passing can be visualized using arrows on a tree:</p>
 <blockquote>
-<div><p>W convert belief about <span class="math notranslate nohighlight">\(x_s​\)</span> about belief about <span class="math notranslate nohighlight">\(x_t​\)</span> by using the edge potential <span class="math notranslate nohighlight">\(\psi_{st}​\)</span>.</p>
+<div><p>We use VE to compute the marginal of <span class="math notranslate nohighlight">\(x_3\)</span></p>
+<p><img alt="" src="../_images/belief_propagation_message_passing_upward.png" /></p>
 </div></blockquote>
-<p>We continue this way up the tree, until we reach the root. Once at the root, we have seen all the evidence in the tree, so we can compute our local belief state at the root:</p>
-<div class="math notranslate nohighlight">
-\[
-\text{bel}_r(x_r) = p(x_r|v) = p(x_t| v_r^{-1}) \propto \psi_r(x_r)\prod_{c \in \text{ch}(r)} m^-_{c \rightarrow r}(x_r)
-\]</div>
-<p>This completes the upwards pass, which is analogous to the forwards pass in an HMM.</p>
-<p>We can compute the probability of the evidence by collecting the normalization constants:</p>
-<div class="math notranslate nohighlight">
-\[
-p(v) = \prod_tZ_t
-\]</div>
+<p>Now if we want to compute the marginal for <span class="math notranslate nohighlight">\(p(x_k)\)</span> we run VE with <span class="math notranslate nohighlight">\(x_k\)</span> at the root, waiting until <span class="math notranslate nohighlight">\(x_k\)</span> receives all messages from its children. The key is that <span class="math notranslate nohighlight">\(x_k\)</span> receives from <span class="math notranslate nohighlight">\(x_j\)</span> is the same as it received when <span class="math notranslate nohighlight">\(x_i\)</span> was at the root, because of this we can quickly compute the marginal. The only messages we need to recompute are those from <span class="math notranslate nohighlight">\(x_i\)</span> to <span class="math notranslate nohighlight">\(x_k\)</span>.</p>
+<p>This message passing algorithm can be summarized as follows:</p>
+<blockquote>
+<div><p>A node <span class="math notranslate nohighlight">\(x_i\)</span> sends a message to a neighbor <span class="math notranslate nohighlight">\(x_j\)</span> whenever it has received messages from all nodes besides <span class="math notranslate nohighlight">\(x_j\)</span>. This happens after precisely <span class="math notranslate nohighlight">\(2|E|\)</span> steps, since each edge can receive messages only twice once form <span class="math notranslate nohighlight">\(x_i \rightarrow x_j\)</span>, and once from the opposite direction.</p>
+</div></blockquote>
+<div class="section" id="variants">
+<h2>Variants<a class="headerlink" href="#variants" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="sum-product-message-passing">
+<h3><a class="reference internal" href="sum_product_message_passing.html"><span class="doc std std-doc">Sum product message passing</span></a><a class="headerlink" href="#sum-product-message-passing" title="Permalink to this headline">¶</a></h3>
+<p>Used for marginal inference (computing <span class="math notranslate nohighlight">\(p(x_i)\)</span>) it is the generalization of <a class="reference internal" href="infference_in_hidden_markov_models.html"><span class="doc std std-doc">forwards-backwards</span></a>) algorithm from chains to trees.</p>
 </div>
+<div class="section" id="max-product-message-passing">
+<h3><a class="reference internal" href="max_product_message_passing.html"><span class="doc std std-doc">Max-product message passing</span></a><a class="headerlink" href="#max-product-message-passing" title="Permalink to this headline">¶</a></h3>
+<p>Used For MAP inference (computing <span class="math notranslate nohighlight">\(\max_{x_1, \cdots, x_n} p(x_1, \cdots, x_n\)</span>)</p>
 </div>
-<div class="section" id="downward-pass">
-<h2>Downward pass<a class="headerlink" href="#downward-pass" title="Permalink to this headline">¶</a></h2>
-<p>To compute the belief state for s, we need to combine the bottom-up belief for <span class="math notranslate nohighlight">\(s\)</span> with a top-down message from t. This summarizes all the information in the rest of the graph:</p>
-<div class="math notranslate nohighlight">
-\[m_{t \rightarrow s}^+ (x_s) \triangleq p(x_t| v^+_{st})\]</div>
-<ul class="simple">
-<li><p><span class="math notranslate nohighlight">\(v_{st}^+\)</span> is all the evidence on the upstream side of the <span class="math notranslate nohighlight">\(s-t\)</span> edge</p></li>
-</ul>
-<p><strong>Belief state for s</strong></p>
-<div class="math notranslate nohighlight">
-\[
-\text{bel}_s(x_s) = p(x_s|v) \propto \text{bel}_s^-(x_s) \prod_{t \in \text{pa}(s)} m_{t \rightarrow s}^+ (x_t)
-\]</div>
-<p>In the downward message <span class="math notranslate nohighlight">\(m_{t \rightarrow s}^+\)</span> we want to include the information that t has received, except for the information that s sent:</p>
-<div class="math notranslate nohighlight">
-\[
-m_{t \rightarrow s}^+ (x_s) = p(x_s| v_{st}^+) = \sum_{x_t} \psi_{st}(x_s, x_t) \frac{\text{bel}_t(x_t)}{m_{s \rightarrow t^-(x_t)}}
-\]</div>
-<p>We plug in <span class="math notranslate nohighlight">\(bel_t\)</span>:</p>
-<div class="math notranslate nohighlight">
-\[
-m_{t \rightarrow s}^+ (x_s) = \sum_{x_t}\psi_{st}(x_s, x_t)\psi_t(x_t) \prod_{c \in \text{ch}(t), c \ne s}m_{c \rightarrow t}^-(x_t)\prod_{p \in \text{pa}(t)} m_{p \rightarrow t}^+ (x_t)
-\]</div>
-<p>Here we multiply together all the messages coming into <span class="math notranslate nohighlight">\(t\)</span> from all nodes except for the recipient <span class="math notranslate nohighlight">\(s\)</span>, combine together and then pass through the edge potential <span class="math notranslate nohighlight">\(\psi_{st}​\)</span>.</p>
-<p>The version of BP in which we use division is called <strong>belief updating</strong>, and the version in which we multiply all-but-one of the messages is called <strong>sum-product</strong>.</p>
-</div>
-<div class="section" id="parallel-protocol">
-<h2>Parallel protocol<a class="headerlink" href="#parallel-protocol" title="Permalink to this headline">¶</a></h2>
-<p>Unfortunately serial protocol cannot handle graphs with loops, hence wee need to consider a parallel version of BF, wich gives equivalent results to the serial version but is less efficient.</p>
-<p>The main idea is that all nodes receive messages from their neighbors in parallel, they then update their belief states, and finally they send new messages back out to their neighbors.</p>
 </div>
 </div>
 
