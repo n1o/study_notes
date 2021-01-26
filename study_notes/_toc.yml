@@ -6,6 +6,7 @@ sections:
 - file: notes/fisher_information_matrix
 - file: notes/beta_distribution
 - file: notes/condiitional_expectations
+- file: notes/gibs_distribution
 - file: notes/exponential_family_bayesian_view
 - file: notes/softmax_function
 - file: notes/bayesian_model_averaging
@@ -15,6 +16,7 @@ sections:
 - file: notes/expectations
 - file: notes/adam
 - file: notes/directed_vs_undirected_graphical_models
+- file: notes/newtons_laws
 - file: notes/absolute_median_deviation
 - file: notes/graphical_models
 - file: notes/variational_free_energy
@@ -29,6 +31,7 @@ sections:
 - file: notes/probability
 - file: notes/markov_assumption
 - file: notes/first_order_methods
+- file: notes/post_order_traversal
 - file: notes/conjugate_prior
 - file: notes/glm_mle_map_estimation
 - file: notes/slice_sampling
@@ -78,7 +81,7 @@ sections:
 - file: notes/naive_bayes
 - file: notes/hierarchical_adaptive_lasso
 - file: notes/gaussian_process_latent_variable_model
-- file: notes/markov_random_fields_parametrization
+- file: notes/markov_random_fields_potential_function
 - file: notes/kernel_density_estimation
 - file: notes/probabilistic_matrix_factorization
 - file: notes/entropy
@@ -121,6 +124,7 @@ sections:
 - file: notes/order_statistiics_quantiles
 - file: notes/kl_divergence
 - file: notes/schur_complement
+- file: notes/sum_product_message_passing
 - file: notes/d-separation
 - file: notes/exponential_family_maximum_entropy
 - file: notes/noisy_gaussian_process_regression
@@ -131,10 +135,12 @@ sections:
 - file: notes/bayesian_information_criterion
 - file: notes/sumarizing_posterior_distributions
 - file: notes/hamiltonian_monte_carlo
+- file: notes/junction_tree_example
 - file: notes/linear_regression
 - file: notes/hamiltonian_monte_carlo_tunning
 - file: notes/wolfe_conditions
 - file: notes/uniform_circular_motion
+- file: notes/markov_random_fields_hammersley_clifford
 - file: notes/mixture_models_parameter_estimation
 - file: notes/area_and_volume
 - file: notes/mixture_model_examples
@@ -147,6 +153,7 @@ sections:
 - file: notes/estimator
 - file: notes/common_bayesian_loss_functions
 - file: notes/student_t_distribution
+- file: notes/variable_elimination_example
 - file: notes/chi_square_distribution
 - file: notes/learning_in_directed_graphical_models
 - file: notes/hinge_loss
@@ -164,7 +171,9 @@ sections:
 - file: notes/gaussian_distribution_information_form
 - file: notes/kernel
 - file: notes/generative_adiversal_networks
+- file: notes/variable_elimination_motivation
 - file: notes/linear_discriminant_analysis
+- file: notes/max_product_message_passing
 - file: notes/bayesian_t_test
 - file: notes/clustering
 - file: notes/bonferroni_correction
@@ -175,6 +184,7 @@ sections:
 - file: notes/em_theory
 - file: notes/association_rules
 - file: notes/univariate_gaussian_exponential_family
+- file: notes/force
 - file: notes/convolution_of_functions_of_random_variables
 - file: notes/law_of_total_probability
 - file: notes/bayes_factor
@@ -278,7 +288,9 @@ sections:
 - file: notes/metropolis_hastings_proposal_distribution
 - file: notes/least_angle_regression_and_shrinkage
 - file: notes/empirical_distribution
+- file: notes/factor_graph
 - file: notes/quadratic_to_linear_discriminant_analysis
 - file: notes/coordinate_descent
 - file: notes/gaussian_discriminant_analysis
 - file: notes/beta_binomial
+- file: notes/independence_map_of_g
