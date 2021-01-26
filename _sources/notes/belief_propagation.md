@@ -17,7 +17,7 @@ $$
 \tau_l(x_l) = \sum_{x_k} \phi(x_l,x_k)\tau_k(x_k)
 $$
 
-There $tau_k$ sends all the information about the subtree rooted at $x_k$ up its parent $x_j$. This process goes on until we reach the root node $x_i$, here we receive information from all of its intermediate children, marginalizing them out to get the final marginal.
+There $\tau_k$ sends all the information about the subtree rooted at $x_k$ up its parent $x_j$. This process goes on until we reach the root node $x_i$, here we receive information from all of its intermediate children, marginalizing them out to get the final marginal.
 
 This message passing can be visualized using arrows on a tree:
 
@@ -36,5 +36,5 @@ This message passing algorithm can be summarized as follows:
 Used for marginal inference (computing $p(x_i)$) it is the generalization of [forwards-backwards](infference_in_hidden_markov_models.md)) algorithm from chains to trees.
 
 
-### [Max-product message passing
+### [Max-product message passing](max_product_message_passing.md)
 Used For MAP inference (computing $\max_{x_1, \cdots, x_n} p(x_1, \cdots, x_n$)

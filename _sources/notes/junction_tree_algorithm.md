@@ -1,5 +1,13 @@
 # Junction tree algorithm
-It generalized [belief propagation](belief_propagation.md) to arbitrary graphs. 
+
+Here we want to perform inference on a graph. In most cases this is not tractable. Thus we try to massage the graph into something that resembles a tree, and run message passing on this graph. We can view it as a generalization of  [belief propagation](belief_propagation.md) to graphs. 
+
+## High level overview
+We partition the graph into clusters of variables, variables inside a cluster are tightly coupled; however interactions among clusters have a tree structure. (clusters are influenced only by its neighbors). If the cluster-level problem can be solved exactly, we have a globally tractable solution.
+
+## [Example](junction_tree_example.md)
+
+## OLD!
 
 ## Crating a junction tree
 The basic idea of JTA is:
