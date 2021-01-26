@@ -2270,15 +2270,8 @@ commentsRunWhenDOMLoaded(addUtterances);
         <nav id="bd-toc-nav">
             <ul class="nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#high-level-overview">
-   High level overview
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#example">
-   <span class="xref myst">
-    Example
-   </span>
+  <a class="reference internal nav-link" href="#junction-trees">
+   Junction trees
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -2320,12 +2313,10 @@ commentsRunWhenDOMLoaded(addUtterances);
   <div class="section" id="junction-tree-algorithm">
 <h1>Junction tree algorithm<a class="headerlink" href="#junction-tree-algorithm" title="Permalink to this headline">¶</a></h1>
 <p>Here we want to perform inference on a graph. In most cases this is not tractable. Thus we try to massage the graph into something that resembles a tree, and run message passing on this graph. We can view it as a generalization of  <a class="reference internal" href="belief_propagation.html"><span class="doc std std-doc">belief propagation</span></a> to graphs.</p>
-<div class="section" id="high-level-overview">
-<h2>High level overview<a class="headerlink" href="#high-level-overview" title="Permalink to this headline">¶</a></h2>
-<p>We partition the graph into clusters of variables, variables inside a cluster are tightly coupled; however interactions among clusters have a tree structure. (clusters are influenced only by its neighbors). If the cluster-level problem can be solved exactly, we have a globally tractable solution.</p>
-</div>
-<div class="section" id="example">
-<h2><a class="reference internal" href="junction_tree_example.html"><span class="doc std std-doc">Example</span></a><a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="junction-trees">
+<h2>Junction trees<a class="headerlink" href="#junction-trees" title="Permalink to this headline">¶</a></h2>
+<p>The idea behind junction three algorithm is to turn a graph into a tree of clusters, that are amenable to variable elimination (<a class="reference internal" href="junction_tree_example.html"><span class="doc std std-doc">Example</span></a>). Than we perform message passing on this tree.</p>
+<p>Suppose we have an undirected graphical model G (or normalized directed)</p>
 </div>
 <div class="section" id="old">
 <h2>OLD!<a class="headerlink" href="#old" title="Permalink to this headline">¶</a></h2>

@@ -2,10 +2,11 @@
 
 Here we want to perform inference on a graph. In most cases this is not tractable. Thus we try to massage the graph into something that resembles a tree, and run message passing on this graph. We can view it as a generalization of  [belief propagation](belief_propagation.md) to graphs. 
 
-## High level overview
-We partition the graph into clusters of variables, variables inside a cluster are tightly coupled; however interactions among clusters have a tree structure. (clusters are influenced only by its neighbors). If the cluster-level problem can be solved exactly, we have a globally tractable solution.
+## Junction trees
+The idea behind junction three algorithm is to turn a graph into a tree of clusters, that are amenable to variable elimination ([Example](junction_tree_example.md)). Than we perform message passing on this tree.
 
-## [Example](junction_tree_example.md)
+Suppose we have an undirected graphical model G (or normalized directed)
+
 
 ## OLD!
 

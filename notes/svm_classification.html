@@ -2286,7 +2286,7 @@ commentsRunWhenDOMLoaded(addUtterances);
 \xi_i \ge 0 \\
 y_i(x_i^T + w_0) \ge 1 - \epsilon_i; i = 1: N
 \end{split}\]</div>
-<p><a class="reference internal" href="#"><span class="doc std std-doc">Solution</span></a></p>
+<p><a class="reference internal" href="svm_classification_example.html"><span class="doc std std-doc">Solution</span></a></p>
 <p>This is an quadratic program. And standard solvers solve it in <span class="math notranslate nohighlight">\(O(N^3)\)</span>, however there are specialized algorithms like <strong>sequential minimal optimization (SMO)</strong> than in practice take <span class="math notranslate nohighlight">\(O(N^2)\)</span> for large problems it is best to use a linear SVM which can be trained in <span class="math notranslate nohighlight">\(O(N)\)</span></p>
 <p>The solution has the from of</p>
 <div class="math notranslate nohighlight">
