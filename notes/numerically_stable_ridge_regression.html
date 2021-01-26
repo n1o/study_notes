@@ -909,7 +909,7 @@ commentsRunWhenDOMLoaded(addUtterances);
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="plate_notation.html">
-   Plate notatioin
+   Plate notation
   </a>
  </li>
  <li class="toctree-l1">
@@ -958,16 +958,6 @@ commentsRunWhenDOMLoaded(addUtterances);
  <li class="toctree-l1">
   <a class="reference internal" href="inequalities.html">
    Inequalities
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="inequalities.html#markov-inequality">
-   Markov inequality
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="inequalities.html#chebyshev">
-   Chebyshev
   </a>
  </li>
  <li class="toctree-l1">
@@ -1033,21 +1023,6 @@ commentsRunWhenDOMLoaded(addUtterances);
  <li class="toctree-l1">
   <a class="reference internal" href="importance_sampling.html">
    Importance sampling
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="importance_sampling.html#choosing-the-approximation-function-q">
-   Choosing the approximation function Q
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="importance_sampling.html#accuracy-and-efficiency-of-importance-sampling-estimates">
-   Accuracy and efficiency of importance sampling estimates
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="importance_sampling.html#importance-resampling-sir-sampling-importance-resampling">
-   Importance resampling (SIR sampling-importance resampling)
   </a>
  </li>
  <li class="toctree-l1">
@@ -1715,13 +1690,6 @@ commentsRunWhenDOMLoaded(addUtterances);
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="#d-n">
-   <span class="math notranslate nohighlight">
-    \(D &gt;&gt; N\)
-   </span>
-  </a>
- </li>
- <li class="toctree-l1">
   <a class="reference internal" href="inverse_gamma.html">
    Inverse Gamma
   </a>
@@ -2147,11 +2115,6 @@ commentsRunWhenDOMLoaded(addUtterances);
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="line_search.html#approximate-line-search">
-   Approximate Line search
-  </a>
- </li>
- <li class="toctree-l1">
   <a class="reference internal" href="learning_in_state_space_models.html">
    Learning for LG-SSM
   </a>
@@ -2301,12 +2264,7 @@ commentsRunWhenDOMLoaded(addUtterances);
         </div>
         <nav id="bd-toc-nav">
             <ul class="nav section-nav flex-column">
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#">
-   Numerically stable ridge regression computation
-  </a>
- </li>
- <li class="toc-h1 nav-item toc-entry">
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#d-n">
    <span class="math notranslate nohighlight">
     \(D &gt;&gt; N\)
@@ -2348,14 +2306,14 @@ commentsRunWhenDOMLoaded(addUtterances);
 <p>Now our ridge estimate is:</p>
 <div class="math notranslate nohighlight">
 \[\hat{w}_{ridge}= R^{-1}R^{-T}R^T Q^T \tilde{y} = R^{-1}Q\tilde{y} \]</div>
-</div>
 <div class="section" id="d-n">
-<h1><span class="math notranslate nohighlight">\(D &gt;&gt; N\)</span><a class="headerlink" href="#d-n" title="Permalink to this headline">¶</a></h1>
+<h2><span class="math notranslate nohighlight">\(D &gt;&gt; N\)</span><a class="headerlink" href="#d-n" title="Permalink to this headline">¶</a></h2>
 <p>Than we first perform the <a class="reference internal" href="singular_value_decomposition.html"><span class="doc std std-doc">SVD</span></a> of <span class="math notranslate nohighlight">\(X = USV^T\)</span> and define <span class="math notranslate nohighlight">\(Z = US\)</span> than the estimation of ridge becomes:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split} \tilde{w}_{ridge} = V(Z^TZ + \lambda I_N)^{-1}Z^Ty \\ 
 = V(S^2 + \lambda I_N)^{-1}SU^Ty\end{split}\]</div>
 <p>Here the intuition is that we replace a D dimensional vectors <span class="math notranslate nohighlight">\(x_i\)</span> by N dimensional <span class="math notranslate nohighlight">\(z_i\)</span> and perform the penalized fit. And than we transform the N dimensional solution to the D dimensional solution by multiplying by V. Geometrically it can be viewed as the rotation to a new coordinate system, in which all but the first N coordinates are 0. The overal time it takes is <span class="math notranslate nohighlight">\(O(DN^2)\)</span>. We can connect this result to <a class="reference internal" href="ridge_regression_pca.html"><span class="doc std std-doc">PCA</span></a>.</p>
+</div>
 </div>
 
     <script type="text/x-thebe-config">

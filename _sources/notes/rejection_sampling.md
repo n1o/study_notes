@@ -10,5 +10,5 @@ After that we generate a uniformly distributed random variable from the interval
 
 Rejection sampling works best if Q is a good approximation of P. And we need to choose $c$ to be as small as possible. 
 
-### Remarks 
+## Remarks 
 In high dimensions we have to set $c$ to be large, which will make the acceptance ration rare. Thus it will take ages.

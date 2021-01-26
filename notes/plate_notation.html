@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Plate notatioin &#8212; study-notes</title>
+    <title>Plate notation &#8212; study-notes</title>
     
   <link rel="stylesheet" href="../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
 
@@ -909,7 +909,7 @@ commentsRunWhenDOMLoaded(addUtterances);
  </li>
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
-   Plate notatioin
+   Plate notation
   </a>
  </li>
  <li class="toctree-l1">
@@ -958,16 +958,6 @@ commentsRunWhenDOMLoaded(addUtterances);
  <li class="toctree-l1">
   <a class="reference internal" href="inequalities.html">
    Inequalities
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="inequalities.html#markov-inequality">
-   Markov inequality
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="inequalities.html#chebyshev">
-   Chebyshev
   </a>
  </li>
  <li class="toctree-l1">
@@ -1033,21 +1023,6 @@ commentsRunWhenDOMLoaded(addUtterances);
  <li class="toctree-l1">
   <a class="reference internal" href="importance_sampling.html">
    Importance sampling
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="importance_sampling.html#choosing-the-approximation-function-q">
-   Choosing the approximation function Q
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="importance_sampling.html#accuracy-and-efficiency-of-importance-sampling-estimates">
-   Accuracy and efficiency of importance sampling estimates
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="importance_sampling.html#importance-resampling-sir-sampling-importance-resampling">
-   Importance resampling (SIR sampling-importance resampling)
   </a>
  </li>
  <li class="toctree-l1">
@@ -1715,13 +1690,6 @@ commentsRunWhenDOMLoaded(addUtterances);
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="numerically_stable_ridge_regression.html#d-n">
-   <span class="math notranslate nohighlight">
-    \(D &gt;&gt; N\)
-   </span>
-  </a>
- </li>
- <li class="toctree-l1">
   <a class="reference internal" href="inverse_gamma.html">
    Inverse Gamma
   </a>
@@ -2147,11 +2115,6 @@ commentsRunWhenDOMLoaded(addUtterances);
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="line_search.html#approximate-line-search">
-   Approximate Line search
-  </a>
- </li>
- <li class="toctree-l1">
   <a class="reference internal" href="learning_in_state_space_models.html">
    Learning for LG-SSM
   </a>
@@ -2303,18 +2266,18 @@ commentsRunWhenDOMLoaded(addUtterances);
         
               <div>
                 
-  <div class="section" id="plate-notatioin">
-<h1>Plate notatioin<a class="headerlink" href="#plate-notatioin" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="plate-notation">
+<h1>Plate notation<a class="headerlink" href="#plate-notation" title="Permalink to this headline">¶</a></h1>
 <p>If we assume that the data is iid. There is a more compact representation for data.</p>
 <p>The equation:
 $<span class="math notranslate nohighlight">\(p(\theta|D) = p(\theta) [\prod_{i=1}^N p(x_i|\theta)]\)</span>$</p>
 <p>Can be expressed as:</p>
 <p><img alt="" src="../_images/plane_partitioning.png" /></p>
-<p>The picture with a plate represents that the total number of <span class="math notranslate nohighlight">\(X_i\)</span> is N. And it can be expanded as on the left. Here we assume that the data is conditioinaly independent only on the prameters <span class="math notranslate nohighlight">\(\theta\)</span>, and it does not matter in which the data arrives. We say the data is <strong>exchangable</strong>.</p>
-<p>A <strong>plate</strong> is a little box arround the repeated variables, and the convention is that nodes within the box will get repeated when the model is <strong>unrolled</strong>. The number of copies or repetitions is written in the bottom right corner of the box.</p>
+<p>The picture with a plate represents that the total number of <span class="math notranslate nohighlight">\(X_i\)</span> is N. And it can be expanded as on the left. Here we assume that the data is conditionally independent only on the parameters <span class="math notranslate nohighlight">\(\theta\)</span>, and it does not matter in which the data arrives. We say the data is <strong>exchangeable</strong>.</p>
+<p>A <strong>plate</strong> is a little box around the repeated variables, and the convention is that nodes within the box will get repeated when the model is <strong>unrolled</strong>. The number of copies or repetitions is written in the bottom right corner of the box.</p>
 <p>An more complex example:</p>
 <p><img alt="" src="../_images/naive_bayes_plate_notation.png" /></p>
-<p>On the left we show a naive Bayes classifier that has been “unrolled” for <span class="math notranslate nohighlight">\(D\)</span> features, but uses a plate to represent repetition over cases <span class="math notranslate nohighlight">\(i = 1 : N\)</span>. The version on the right shows the same model using nested plate notation. When a variable is inside two plates, it will have two sub-indices. For example, we write <span class="math notranslate nohighlight">\(\theta_{jc}\)</span> to represent the parameter for feature <span class="math notranslate nohighlight">\(j\)</span> in class-conditional density <span class="math notranslate nohighlight">\(c\)</span>. What is not clear is that <span class="math notranslate nohighlight">\(\theta_{jc}\)</span> is used to generate <span class="math notranslate nohighlight">\(x_{ij}\)</span> iff <span class="math notranslate nohighlight">\(y_i = c\)</span> otherwise ignored. This is an example of <strong>context pecific independence</strong> since the CI relationship <span class="math notranslate nohighlight">\(x_{ij} \perp \theta_{jc}\)</span>  hold if <span class="math notranslate nohighlight">\(y_i \ne c\)</span></p>
+<p>On the left we show a naive Bayes classifier that has been “unrolled” for <span class="math notranslate nohighlight">\(D\)</span> features, but uses a plate to represent repetition over cases <span class="math notranslate nohighlight">\(i = 1 : N\)</span>. The version on the right shows the same model using nested plate notation. When a variable is inside two plates, it will have two sub-indices. For example, we write <span class="math notranslate nohighlight">\(\theta_{jc}\)</span> to represent the parameter for feature <span class="math notranslate nohighlight">\(j\)</span> in class-conditional density <span class="math notranslate nohighlight">\(c\)</span>. What is not clear is that <span class="math notranslate nohighlight">\(\theta_{jc}\)</span> is used to generate <span class="math notranslate nohighlight">\(x_{ij}\)</span> iff <span class="math notranslate nohighlight">\(y_i = c\)</span> otherwise ignored. This is an example of <strong>context specific independence</strong> since the CI relationship <span class="math notranslate nohighlight">\(x_{ij} \perp \theta_{jc}\)</span>  hold if <span class="math notranslate nohighlight">\(y_i \ne c\)</span></p>
 </div>
 
     <script type="text/x-thebe-config">

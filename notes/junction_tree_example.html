@@ -909,7 +909,7 @@ commentsRunWhenDOMLoaded(addUtterances);
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="plate_notation.html">
-   Plate notatioin
+   Plate notation
   </a>
  </li>
  <li class="toctree-l1">
@@ -958,16 +958,6 @@ commentsRunWhenDOMLoaded(addUtterances);
  <li class="toctree-l1">
   <a class="reference internal" href="inequalities.html">
    Inequalities
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="inequalities.html#markov-inequality">
-   Markov inequality
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="inequalities.html#chebyshev">
-   Chebyshev
   </a>
  </li>
  <li class="toctree-l1">
@@ -1033,21 +1023,6 @@ commentsRunWhenDOMLoaded(addUtterances);
  <li class="toctree-l1">
   <a class="reference internal" href="importance_sampling.html">
    Importance sampling
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="importance_sampling.html#choosing-the-approximation-function-q">
-   Choosing the approximation function Q
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="importance_sampling.html#accuracy-and-efficiency-of-importance-sampling-estimates">
-   Accuracy and efficiency of importance sampling estimates
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="importance_sampling.html#importance-resampling-sir-sampling-importance-resampling">
-   Importance resampling (SIR sampling-importance resampling)
   </a>
  </li>
  <li class="toctree-l1">
@@ -1715,13 +1690,6 @@ commentsRunWhenDOMLoaded(addUtterances);
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="numerically_stable_ridge_regression.html#d-n">
-   <span class="math notranslate nohighlight">
-    \(D &gt;&gt; N\)
-   </span>
-  </a>
- </li>
- <li class="toctree-l1">
   <a class="reference internal" href="inverse_gamma.html">
    Inverse Gamma
   </a>
@@ -2147,11 +2115,6 @@ commentsRunWhenDOMLoaded(addUtterances);
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="line_search.html#approximate-line-search">
-   Approximate Line search
-  </a>
- </li>
- <li class="toctree-l1">
   <a class="reference internal" href="learning_in_state_space_models.html">
    Learning for LG-SSM
   </a>
@@ -2305,6 +2268,28 @@ commentsRunWhenDOMLoaded(addUtterances);
                 
   <div class="section" id="junction-tree-example">
 <h1>Junction tree example<a class="headerlink" href="#junction-tree-example" title="Permalink to this headline">¶</a></h1>
+<p>Lets define the following <a class="reference internal" href="markov_random_fields.html"><span class="doc std std-doc">MRF</span></a>:</p>
+<div class="math notranslate nohighlight">
+\[
+p(x_1, x_2, \cdots, x_n) = \frac{1}{Z}\prod_{c \in C} \phi_c(x_c)
+\]</div>
+<p>We assume that cliques <span class="math notranslate nohighlight">\(c\)</span> have some path structure, meaning that we can find an ordering <span class="math notranslate nohighlight">\(x_c^{(1)}, x_c^{(2)}, \cdots, x_c^{(n)}\)</span> with property that <span class="math notranslate nohighlight">\(x_i \in x_c^{(j)}\)</span> and <span class="math notranslate nohighlight">\(x_i\in x_c^{(k)}\)</span> for some variables <span class="math notranslate nohighlight">\(x_i\)</span>, then <span class="math notranslate nohighlight">\(x_i \in x_c^{(l)}\)</span> for all <span class="math notranslate nohighlight">\(x_c^{(l)}\)</span> on the path between <span class="math notranslate nohighlight">\(x_c^{(l)}\)</span> and <span class="math notranslate nohighlight">\(x_c^{(k)}\)</span>.
+This assumption is known as <strong>running intersection (RIP)</strong> property.</p>
+<p><img alt="" src="../_images/junctionpath.png" /></p>
+<blockquote>
+<div><p>This is an MRF whose cliques are organized in a chain structure. Round nodes are cliques and variables in their scope; rectangular nodes are sepsets, which are variables forming the intersection of two neighboring cliques.</p>
+</div></blockquote>
+<p>We can compute the marginal probability <span class="math notranslate nohighlight">\(p(x_1)\)</span>, by using a form of <a class="reference internal" href="variable_elimination.html"><span class="doc std std-doc">variable elimination</span></a> to “push” certain variables deeper into the product of cluster potentials.</p>
+<div class="math notranslate nohighlight">
+\[
+\phi(x_1) \sum_{x_2}\phi(x_1, x_2)\sum_x \phi(x_1, x_2, x_3)\sum_{x_5}\phi(x_1, x_3, x_5)\sum_{x_6}\phi(x_2, x_5, x_6)
+\]</div>
+<p>Here we first eliminate <span class="math notranslate nohighlight">\(x_6\)</span> which creates a factor</p>
+<div class="math notranslate nohighlight">
+\[\tau(x_2,x_3, x_5) = \phi(x_2, x_3, x_5)\sum_{x_6}\phi(x_2,x_5,x_6)\]</div>
+<p>Than we continue with <span class="math notranslate nohighlight">\(x_5\)</span> and so on.</p>
+<p>At each step we marginalize out the variables that are not in the scope of its neighbors. (this marginalization can be viewed as computing messages over variables it shares with the neighbor).</p>
+<p>Running intersection property is what enables to push sums in all the way to the last factor. We eliminate <span class="math notranslate nohighlight">\(x_6\)</span> since we know that only the last cluster will carry this variable (not present in neighboring cluster), it cannot be anywhere else in the graph without violating the Running intersection property.</p>
 </div>
 
     <script type="text/x-thebe-config">

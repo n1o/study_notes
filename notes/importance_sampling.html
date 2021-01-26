@@ -909,7 +909,7 @@ commentsRunWhenDOMLoaded(addUtterances);
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="plate_notation.html">
-   Plate notatioin
+   Plate notation
   </a>
  </li>
  <li class="toctree-l1">
@@ -958,16 +958,6 @@ commentsRunWhenDOMLoaded(addUtterances);
  <li class="toctree-l1">
   <a class="reference internal" href="inequalities.html">
    Inequalities
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="inequalities.html#markov-inequality">
-   Markov inequality
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="inequalities.html#chebyshev">
-   Chebyshev
   </a>
  </li>
  <li class="toctree-l1">
@@ -1033,21 +1023,6 @@ commentsRunWhenDOMLoaded(addUtterances);
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
    Importance sampling
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="#choosing-the-approximation-function-q">
-   Choosing the approximation function Q
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="#accuracy-and-efficiency-of-importance-sampling-estimates">
-   Accuracy and efficiency of importance sampling estimates
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="#importance-resampling-sir-sampling-importance-resampling">
-   Importance resampling (SIR sampling-importance resampling)
   </a>
  </li>
  <li class="toctree-l1">
@@ -1715,13 +1690,6 @@ commentsRunWhenDOMLoaded(addUtterances);
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="numerically_stable_ridge_regression.html#d-n">
-   <span class="math notranslate nohighlight">
-    \(D &gt;&gt; N\)
-   </span>
-  </a>
- </li>
- <li class="toctree-l1">
   <a class="reference internal" href="inverse_gamma.html">
    Inverse Gamma
   </a>
@@ -2147,11 +2115,6 @@ commentsRunWhenDOMLoaded(addUtterances);
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="line_search.html#approximate-line-search">
-   Approximate Line search
-  </a>
- </li>
- <li class="toctree-l1">
   <a class="reference internal" href="learning_in_state_space_models.html">
    Learning for LG-SSM
   </a>
@@ -2301,34 +2264,27 @@ commentsRunWhenDOMLoaded(addUtterances);
         </div>
         <nav id="bd-toc-nav">
             <ul class="nav section-nav flex-column">
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#">
-   Importance sampling
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#challanges">
+   Challanges
   </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#challanges">
-     Challanges
-    </a>
-   </li>
-  </ul>
  </li>
- <li class="toc-h1 nav-item toc-entry">
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#choosing-the-approximation-function-q">
    Choosing the approximation function Q
   </a>
  </li>
- <li class="toc-h1 nav-item toc-entry">
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#accuracy-and-efficiency-of-importance-sampling-estimates">
    Accuracy and efficiency of importance sampling estimates
   </a>
  </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#importance-resampling-sir-sampling-importance-resampling">
-   Importance resampling (SIR sampling-importance resampling)
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#importance-re-sampling-sir-sampling-importance-re-sampling">
+   Importance re-sampling (SIR sampling-importance re-sampling)
   </a>
   <ul class="nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#remarks">
      Remarks
     </a>
@@ -2363,13 +2319,12 @@ commentsRunWhenDOMLoaded(addUtterances);
 <p>It is difficult ot estimate how reliable the estimator <span class="math notranslate nohighlight">\(\bar{\Phi}\)</span> is. The variance of this estimator is hard to estimate. (The empirical variance of <span class="math notranslate nohighlight">\(w_r\)</span> and <span class="math notranslate nohighlight">\(w_r \phi(x^r)\)</span> are not necessarily similar to the true variacnes).</p>
 <p>It can happen that <span class="math notranslate nohighlight">\(Q(x)\)</span> is small where <span class="math notranslate nohighlight">\(|\phi(x)P^*(x)|\)</span> is large, then there is a possibility that even afther many samples <span class="math notranslate nohighlight">\(x^r\)</span> non of them would fall in that region. In this case the estimator for <span class="math notranslate nohighlight">\(\Phi\)</span> would be drastically wrong.</p>
 </div>
-</div>
 <div class="section" id="choosing-the-approximation-function-q">
-<h1>Choosing the approximation function Q<a class="headerlink" href="#choosing-the-approximation-function-q" title="Permalink to this headline">¶</a></h1>
+<h2>Choosing the approximation function Q<a class="headerlink" href="#choosing-the-approximation-function-q" title="Permalink to this headline">¶</a></h2>
 <p>Importance sampling is NOT useful if the importance weights wary substatially. The worst scenario is when the importance ratios are small with high probability, and huge with small probability. This happens if P has wider tails than Q.</p>
 </div>
 <div class="section" id="accuracy-and-efficiency-of-importance-sampling-estimates">
-<h1>Accuracy and efficiency of importance sampling estimates<a class="headerlink" href="#accuracy-and-efficiency-of-importance-sampling-estimates" title="Permalink to this headline">¶</a></h1>
+<h2>Accuracy and efficiency of importance sampling estimates<a class="headerlink" href="#accuracy-and-efficiency-of-importance-sampling-estimates" title="Permalink to this headline">¶</a></h2>
 <p>We can analyze the distribution of importance weights to discover possible problems. In general if the largest ratio is too large compared to the average, then the estimates are ofthen poor.</p>
 <p>If the wariance of the weights is finite we can estimate the effective sample size:</p>
 <div class="math notranslate nohighlight">
@@ -2379,8 +2334,8 @@ commentsRunWhenDOMLoaded(addUtterances);
 </ul>
 <p>If this quantity is small, then there are a few extremly large weights, that influce the distribution.</p>
 </div>
-<div class="section" id="importance-resampling-sir-sampling-importance-resampling">
-<h1>Importance resampling (SIR sampling-importance resampling)<a class="headerlink" href="#importance-resampling-sir-sampling-importance-resampling" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="importance-re-sampling-sir-sampling-importance-re-sampling">
+<h2>Importance re-sampling (SIR sampling-importance re-sampling)<a class="headerlink" href="#importance-re-sampling-sir-sampling-importance-re-sampling" title="Permalink to this headline">¶</a></h2>
 <p>Here we want to take importance weights drawn by importance sampling and transform them so we obtain independent samples with equal weights.</p>
 <p>We assume that we have S samples <span class="math notranslate nohighlight">\(\{ \theta^1, \cdots, \theta^S \}\)</span> using importance sampling, where each sample <span class="math notranslate nohighlight">\(\theta^i\)</span> has the weights <span class="math notranslate nohighlight">\(w(\theta^i) = \frac{p^*(\theta^s| s)}{g(\theta)}\)</span></p>
 <p><strong>Steps</strong></p>
@@ -2390,9 +2345,10 @@ commentsRunWhenDOMLoaded(addUtterances);
 <li><p>Repat without replacement <span class="math notranslate nohighlight">\(k-2\)</span> times.</p></li>
 </ol>
 <div class="section" id="remarks">
-<h2>Remarks<a class="headerlink" href="#remarks" title="Permalink to this headline">¶</a></h2>
+<h3>Remarks<a class="headerlink" href="#remarks" title="Permalink to this headline">¶</a></h3>
 <p>Importance sampler should be a distribution that has heavy tails.
 It is nearly impossible to use in high dimenssion since it will be dominated by a few huge weights.</p>
+</div>
 </div>
 </div>
 

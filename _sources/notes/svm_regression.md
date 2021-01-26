@@ -1,4 +1,4 @@
-## [SVM](support_vector_machines.md) for regression.
+# [SVM](support_vector_machines.md) for regression.
 We enforce sparsity by using for the loss function a variant of **Hubert loss** function called the **epsilon insensitive loss function** defined as:
 
 $$
@@ -62,4 +62,4 @@ $$
     \hat{y}(x) = \hat{w}_0 +\sum_i \alpha_i k(x_i, x)
 $$
 
-Hence we get a kernelized solution. 
+Hence we get a kernellized solution. 

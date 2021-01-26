@@ -4,7 +4,7 @@ It is quite simple, and efficient if used in the right setting. A more appropria
 
 Exactly mimize alog coordinates, or blocks of variables, in a sequential fashion.\
 
-### Coordinate wise minimum
+## Coordinate wise minimum
 
 We have a convex differentiable function $f: R^n \rightarrow R$, if we are at a point x such that $f(x)$ is minimized along each coordiate axis, the we have found a global minimizer.
 

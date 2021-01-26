@@ -909,7 +909,7 @@ commentsRunWhenDOMLoaded(addUtterances);
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="plate_notation.html">
-   Plate notatioin
+   Plate notation
   </a>
  </li>
  <li class="toctree-l1">
@@ -958,16 +958,6 @@ commentsRunWhenDOMLoaded(addUtterances);
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
    Inequalities
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="#markov-inequality">
-   Markov inequality
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="#chebyshev">
-   Chebyshev
   </a>
  </li>
  <li class="toctree-l1">
@@ -1033,21 +1023,6 @@ commentsRunWhenDOMLoaded(addUtterances);
  <li class="toctree-l1">
   <a class="reference internal" href="importance_sampling.html">
    Importance sampling
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="importance_sampling.html#choosing-the-approximation-function-q">
-   Choosing the approximation function Q
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="importance_sampling.html#accuracy-and-efficiency-of-importance-sampling-estimates">
-   Accuracy and efficiency of importance sampling estimates
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="importance_sampling.html#importance-resampling-sir-sampling-importance-resampling">
-   Importance resampling (SIR sampling-importance resampling)
   </a>
  </li>
  <li class="toctree-l1">
@@ -1715,13 +1690,6 @@ commentsRunWhenDOMLoaded(addUtterances);
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="numerically_stable_ridge_regression.html#d-n">
-   <span class="math notranslate nohighlight">
-    \(D &gt;&gt; N\)
-   </span>
-  </a>
- </li>
- <li class="toctree-l1">
   <a class="reference internal" href="inverse_gamma.html">
    Inverse Gamma
   </a>
@@ -2147,11 +2115,6 @@ commentsRunWhenDOMLoaded(addUtterances);
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="line_search.html#approximate-line-search">
-   Approximate Line search
-  </a>
- </li>
- <li class="toctree-l1">
   <a class="reference internal" href="learning_in_state_space_models.html">
    Learning for LG-SSM
   </a>
@@ -2301,36 +2264,27 @@ commentsRunWhenDOMLoaded(addUtterances);
         </div>
         <nav id="bd-toc-nav">
             <ul class="nav section-nav flex-column">
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#">
-   Inequalities
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#cauchy-schwartz">
+   Cauchy-Schwartz
   </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#cauchy-schwartz">
-     Cauchy-Schwartz
-    </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#second-order-method">
-       Second order method
-      </a>
-     </li>
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#jensens-inequality-and-convexity">
-       Jensens inequality and convexity
-      </a>
-     </li>
-    </ul>
-   </li>
-  </ul>
  </li>
- <li class="toc-h1 nav-item toc-entry">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#second-order-method">
+   Second order method
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#jensens-inequality-and-convexity">
+   Jensens inequality and convexity
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#markov-inequality">
    Markov inequality
   </a>
  </li>
- <li class="toc-h1 nav-item toc-entry">
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#chebyshev">
    Chebyshev
   </a>
@@ -2361,8 +2315,9 @@ commentsRunWhenDOMLoaded(addUtterances);
 <div class="math notranslate nohighlight">
 \[E[X \times 1] \le \sqrt{E[X^2]E[1^2]} \Rightarrow E[X^2] \ge (E[X])^2 \]</div>
 <p>This can than be showed that the sample standard deviation is biased.</p>
+</div>
 <div class="section" id="second-order-method">
-<h3>Second order method<a class="headerlink" href="#second-order-method" title="Permalink to this headline">¶</a></h3>
+<h2>Second order method<a class="headerlink" href="#second-order-method" title="Permalink to this headline">¶</a></h2>
 <p>Let X be a random variable, now we want to bound the probability of <span class="math notranslate nohighlight">\(P(X=0)\)</span>. As an example that X is the number of questions that we get wrong. Thus we want to find a bound on the probability that we wont make a mistake.</p>
 <p>To to this we start with an indicator variable:
 $<span class="math notranslate nohighlight">\( X = XI(X&gt;0) = P(X&gt;0)\)</span>$</p>
@@ -2371,13 +2326,11 @@ $<span class="math notranslate nohighlight">\( X = XI(X&gt;0) = P(X&gt;0)\)</spa
 <p><img alt="" src="notes/inequalities.assets/second_order_method.png" /></p>
 </div>
 <div class="section" id="jensens-inequality-and-convexity">
-<h3>Jensens inequality and convexity<a class="headerlink" href="#jensens-inequality-and-convexity" title="Permalink to this headline">¶</a></h3>
+<h2>Jensens inequality and convexity<a class="headerlink" href="#jensens-inequality-and-convexity" title="Permalink to this headline">¶</a></h2>
 <p>Tels us about the relationship between</p>
 </div>
-</div>
-</div>
 <div class="section" id="markov-inequality">
-<h1>Markov inequality<a class="headerlink" href="#markov-inequality" title="Permalink to this headline">¶</a></h1>
+<h2>Markov inequality<a class="headerlink" href="#markov-inequality" title="Permalink to this headline">¶</a></h2>
 <p>It gives us bounds on the probability that a random variable will take extreme values (far from the mean) in its tails. We require that this distribution has a stable mean.</p>
 <p>Markov inequality gives bounds on its mean.</p>
 <div class="math notranslate nohighlight">
@@ -2385,11 +2338,12 @@ $<span class="math notranslate nohighlight">\( X = XI(X&gt;0) = P(X&gt;0)\)</spa
 <p>Thus as an example if <span class="math notranslate nohighlight">\(a = 3E[X]\)</span> than we have <span class="math notranslate nohighlight">\(P(X \ge 3E[X]) \le 1/3\)</span> thus we cannot have more than 1/3 of the population having the probability greater than 3 times the average.</p>
 </div>
 <div class="section" id="chebyshev">
-<h1>Chebyshev<a class="headerlink" href="#chebyshev" title="Permalink to this headline">¶</a></h1>
+<h2>Chebyshev<a class="headerlink" href="#chebyshev" title="Permalink to this headline">¶</a></h2>
 <p>Gives us an upper bound on the probability that a r.v is being more than c standard deviations away from its mean.</p>
 <div class="math notranslate nohighlight">
 \[ P(|X - \mu| \ge c \sigma) \le \frac{1}{c^2}\]</div>
 <p>Thus as an example we cannot have more than 25% of the population be father away than two standard deviations from the mean.</p>
+</div>
 </div>
 
     <script type="text/x-thebe-config">
