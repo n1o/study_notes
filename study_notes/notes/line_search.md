@@ -1,4 +1,4 @@
-## Line search 
+# Line search 
 Lets assume we have already chosen the [descent direction](local_descent.md) $d$. And we want to choose the step factor $\alpha$ to choose the next design point. One approach is to use line search, which select the step factor that minimizes:
 
 $$

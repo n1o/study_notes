@@ -1,4 +1,4 @@
-## EM For PPCA
+# EM For PPCA
 
 This is an [expectation maximization algorithm](em_algorithm.md) for Probabilistic PCA but it works in the limit $\sigma^2 \rightarrow 0$
 
@@ -13,7 +13,7 @@ The Physical analogy can be explained as:
 
 Here we can view starts as points an the black line as a string connected to a rod. In the E step, we hold the rod fixed, and let the attachment points slide around so as to minimize the spring energy (which is proportional to the sum of squared residuals). In the M step, we hold the attachment points fixed and let the rod rotate so as to minimize the spring energy.
 
-### Advantages of EM for PCA
+## Advantages of EM for PCA
 
 * Can be faster 
 * Can be implemented online fashion

@@ -1,4 +1,4 @@
-## Importance sampling
+# Importance sampling
 
 If we can evaluate $P(x)$ at any point x up to a multiplicative constant $P(x) = P^*(x)/Z$, but $P(x)$ to complex to sample directly. Now we take a simpler distribution $Q(x)$ which we can draw samples from directly, up to a multiplicative constant $Q(x) =Q^*(x) / Z_Q$.
 
@@ -16,7 +16,7 @@ $$\Phi \equiv \frac{\sum_r w_r \phi(x^r)}{\sum_r w_r} $$
 
 Here if $Q(x)$ is non-zero for all x where $P(x)$ is nonzero then the value of $\bar{\Phi } \rightarrow \Phi$ as the number of samples increases. And $\phi(x)$ is our expectation we want to estimate under $P(x)$.
 
-### Challanges
+## Challanges
 It is difficult ot estimate how reliable the estimator $\bar{\Phi}$ is. The variance of this estimator is hard to estimate. (The empirical variance of $w_r$ and $w_r \phi(x^r)$ are not necessarily similar to the true variacnes). 
 
 It can happen that $Q(x)$ is small where $|\phi(x)P^*(x)|$ is large, then there is a possibility that even afther many samples $x^r$ non of them would fall in that region. In this case the estimator for $\Phi$ would be drastically wrong. 
@@ -41,7 +41,7 @@ If this quantity is small, then there are a few extremly large weights, that inf
 
 
 
-## Importance resampling (SIR sampling-importance resampling)
+## Importance re-sampling (SIR sampling-importance re-sampling)
 
 Here we want to take importance weights drawn by importance sampling and transform them so we obtain independent samples with equal weights.
 

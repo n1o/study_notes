@@ -7,6 +7,7 @@ $$
 $$
 
 This is again non differentiable, so we introduce slack variables
+
 $$
 \min_{w, w_0, \xi} \frac{1}{2}||w||^2 + C \sum_{i=1}N\xi_i \\ 
 \text{ s.t} \\

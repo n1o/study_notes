@@ -7,7 +7,7 @@ y = 10^{\log y} \\
 y = 10^x
 $$
 
-### Natural logarithm
+## Natural logarithm
 Here the base is $e$
 
 $$
@@ -16,7 +16,7 @@ y = e^{\ln y} \\
 y = e^x
 $$
 
-### Rules
+## Rules
 $$
 \log (ab) = \log a + \log b \\
 \log (a/b) = \log a - \log b \\

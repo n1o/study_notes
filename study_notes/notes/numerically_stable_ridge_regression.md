@@ -1,4 +1,4 @@
-## Numerically stable ridge regression computation
+# Numerically stable ridge regression computation
 
 In general [ridge regression](ridge_regression.md) works better statistically, and it is also easier to numerically fit since $(\lambda I_D + X^TX)$ is much better conditioned especially for large $\lambda$ . But in general we do not want to invert it. ($N^3$)
 
