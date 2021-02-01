@@ -26,7 +26,7 @@ The main application of Hopfield networks is as an associative memory or content
 
 They also can be interpreted as **recurrent neural networks**. 
 
-A **Boltzmann machine** generalizes the Hopfield / Ising model by including some hidden nodes, which makes the model representationally more powerful. Inference in such models often uses Gibbs sampling, which is a stochastic version of ICM.
+A **Boltzmann machine** generalizes the Hopfield / Ising model by including some hidden nodes, which makes the model representational more powerful. Inference in such models often uses Gibbs sampling, which is a stochastic version of ICM.
 
 ## Potts model
 

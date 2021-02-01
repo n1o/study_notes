@@ -1,6 +1,6 @@
 # Variable elimination algorithm
 
-It is algorithm for exact inference in [graphical models](graphical_models.md).  
+It is algorithm for exact marginal inference in [graphical models](graphical_models.md).  
 
 The main [motivation behind variable elimination](variable_elimination_motivation.md) is to reduce the runtime of inference by leverage factorization of our probability distribution.
 

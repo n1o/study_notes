@@ -5,7 +5,7 @@ It is an variant of [belief propagation](belief_propagation.md) used to compute 
 While there is a node $x_i$ ready to transmit to $x_j$ it sends the message:
 
 $$
-m_{i \rightarrow j}(x_j) = \sum_{x_i} \phi(x_i)\phi(x_i,x_j) \prod_{l \in N(i)\backslash j} m_{l\rightarrow i}(x_i)
+m_{i \rightarrow j}(x_j) = \sum_{x_i} [\phi(x_i)\phi(x_i,x_j) \prod_{l \in N(i)\backslash j} m_{l\rightarrow i}(x_i)]
 $$
 
 * $N(i)\backslash j$ set of nodes that are neighbors of i excluding j.
@@ -17,6 +17,13 @@ We can use the computed messages to answer any marginal query over $x_i$:
 $$
 p(x_i) \propto \phi(x_i) \prod_{l \in N(i)} m_{l \rightarrow i} (x_i)
 $$
+
+## Example
+![](../.images/machine_learning/belief_prop_sum_prod_example.png)
+
+## Serial protocol
+
+![](../.images/machine_learning/belif_prop_serial_protocol.jpg)
 
 ## Algorithm for factor trees
 
@@ -30,3 +37,4 @@ v_{\text{var}(i)\rightarrow \text{fac}(s)}(x_i) = \prod_{t \in N(i)\backslash s}
 $$
 
 ![](../.images/machine_learning/factor-graph-messages.png)
+

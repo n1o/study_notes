@@ -11,7 +11,7 @@ This assumption is known as **running intersection (RIP)** property.
 
 ![](../.images/machine_learning/junctionpath.png)
 
-> This is an MRF whose cliques are organized in a chain structure. Round nodes are cliques and variables in their scope; rectangular nodes are sepsets, which are variables forming the intersection of two neighboring cliques.
+> This is an MRF whose cliques are organized in a chain structure. Round nodes are cliques and variables in their scope; rectangular nodes are sepsets (separation sets), which are variables forming the intersection of two neighboring cliques.
 
 We can compute the marginal probability $p(x_1)$, by using a form of [variable elimination](variable_elimination.md) to "push" certain variables deeper into the product of cluster potentials.
 
@@ -28,3 +28,7 @@ Than we continue with $x_5$ and so on.
 At each step we marginalize out the variables that are not in the scope of its neighbors. (this marginalization can be viewed as computing messages over variables it shares with the neighbor).
 
 Running intersection property is what enables to push sums in all the way to the last factor. We eliminate $x_6$ since we know that only the last cluster will carry this variable (not present in neighboring cluster), it cannot be anywhere else in the graph without violating the Running intersection property. 
+
+## Defining a good junction tree
+* *By hand*: If a model has an regular structure for which there is an obvious structure. An example if the model is a grid, in that case clusters have associated with pairs of adjacent rows (or columns) in the grid.
+* *Using variable elimination*: If we run variable elimination implicitly generates a junction tree over variables. Thus we can use heuristics similar how we choose an ordering for variable elimination.

@@ -5,43 +5,55 @@ Here we want to perform inference on a graph. In most cases this is not tractabl
 ## Junction trees
 The idea behind junction three algorithm is to turn a graph into a tree of clusters, that are amenable to variable elimination ([Example](junction_tree_example.md)). Than we perform message passing on this tree.
 
-Suppose we have an undirected graphical model G (or normalized directed)
+Suppose we have an undirected graphical model G (or normalized directed). A junction tree $T=(C,E_T)$ over $G=(X,E_G)$ is a tree whose nodes $c \in C$ are associated with subsets $x_c \in X$ of the graph vertices (sets of variables); the junction tree has to satisfy:
 
+* Family preservation: For each factor $\phi$, there is a cluster $c$ such that $\text{Scope}[\phi] \in x_c$
+* Running intersection: For every pair of clusters $c^{(i)}, c^{(j)}$, every cluster on the path between $c^{(i)}, c^{(j)}$ contains $x_c^{(i)} \cap x_c^{(j)}$
 
-## OLD!
+> Example
+> 
+> A Graph G and junction tree T. MRF potentials are denoted using different colors, circles are nodes of a junction tree, rectangular nodes are sepsets (separation sets), which is a set of variables shared by neighboring clusters
+> 
+> ![](../.images/machine_learning/junctiontree.png)
 
-## Crating a junction tree
-The basic idea of JTA is:
+There always exists a trivial junction tree that has one node containing all the variables, however this will result in inefficient marginalization algorithm.
 
-First we run the [variable elimination](variable_elimination.md) algorithm "symbolically", adding fill-in edges as we go, according to a given elimination ordering. The resulting graph will be a [chordal graph](chordal_graph.md).
+Optimal trees have small and modular clusters. Finding an optimal tree is NP-hard. Thus we use heuristics to find "good junction trees". (There is a special case when we can find an optimal junction tree when G is a tree. Than we define an cluster for each edge in the tree.)
 
-Having this chordal graph, we can extract its maximal cliques. In general finding max cliques is computationally hard, but for this special graph it can be done efficiently.
+## JT Algorithm
+It an form of message passing, it can be viewed as [variable elimination](variable_elimination.md) on a junction tree.
 
-> Example:
-> ![](../.images/machine_learning/junction_tree_algorithm.png)
+First we define the potential $\psi_c(x_c)$ for each cluster c as the product of all the factors in $\phi$ in G that have been assigned to c. (this is well defined because of family preservation property). We get the following joint distribution:
 
-It turns out that the cliques of a chordal graph can be arranged into a special kind of tree known as **junction tree** (on the picture it is on the bottom). This enjoys the **running intersecion property** (RIP), which means that any subset of nodes containing a given variable forms a connected component. 
+$$
+p(x_1, \cdots, x_n) = \frac{1}{N} \prod_{c \in C}\psi_c(x_c)
+$$
 
-In the example we can see that node I occurs in the two adjacent three nodes, so they can share information about this variable. This holds for all the other variables.
+At each step we choose a pair of adjacent clusters $c^{(i)}, c^{(j)}$ in T and compute a message whose scope is the sepset S_{ij} between two clusters.
 
-We can show that if a tree satisfies the running intersection property, then applying BP to this tree will return the exact values of $p(x_c|v)$ for each node c in the tree. From this we can extract the node and edge marginal $p(x_t|v)$ and $p(x_s,x_t|v)$ from the original model by marginalizing the clique distribution. 
+$$
+m_{i\rightarrow j}(S_{ij}) = \sum_{x_c \backslash S_{ij}} \psi_c(x_c)\prod_{l \in N(i) \backslash j} m_{l \rightarrow i}(S_{li})
+$$
 
-## Message passing on a junction tree
-If we have created an junction tree, we can use it for inference. The process is similar to belief propagation on a tree. There are 2 version:
+We choose $c^{(i)}, c^{(j)}$ only if $c^{(i)}$ has received messages from all of its neighbors except $c^{(j)}$. This procedure terminates in $2|E_T|$ steps. After termination we define the belief for each cluster based on all the messages that it receives:
 
-* sum-product form also known as **Shafer-Shenoy** algorithm
-* belief updating form also known as **Hugin**
+$$
+B_c(x_c) = \psi_c(x_c) \prod_{l \in N(i)} m_{l \rightarrow i}(S_{ij})
+$$
 
-## Computational complexity of JTA
-If all nodes are discrete with K states each, it is clear that the JTA takes
+This updates are known as *Shafer-Shenoy*. After all the messages have been passed, beliefs will be proportional to the marginal probabilities over their scopes $B_c(x_c) \propto p(x_c)$. We can answer queries of the form $\tilde{p}(x)$ for $x \in x_c$ by marginalizing the variable in its belief:
 
-$$O(|C|K^{w+1})$$
+$$
+\tilde{p}(x) = \sum_{x_c \backslash c} B_c(x_c)
+$$
 
-*  $|C|$ is the number of cliques
-*  $w$ is the size of the largest clique -1 
+To get normalized probabilities we divide by the partition function:
 
+$$
+Z = \sum_{x_c}B_c(x_c)
+$$
 
-Unfortunately choosing a triangulation to minimize the tree width is NP hard. Unfortunately JTA does not work with continuous variables, except they are jointly Gaussian.
+We prefer small clusters, the run time is exponential in the size of the largest cluster (marginalizing out variables from cluster has to be done brute force).
 
 ## Limitations
 Does not work with continuous variables, unless we have joint Gaussian distributions.

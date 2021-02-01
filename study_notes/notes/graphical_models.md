@@ -13,17 +13,17 @@ The edges in the graph have no orientation.
 
 There are two common types of questions we ask.
 
-### Marginal inference
+### [Marginal inference](variable_elimination.md)
 What is the probability of a given variable in our model after we sum everything else out:
 $$
 p(y=1) =\sum_{x1} \sum_{x_2} \cdots \sum_{x_n} p(y=1|x_1, x_2,\cdots,x_n)
 $$
 
-### Maximum a posteriori (MAP) inference
+### [Maximum a posteriori (MAP) inference](map_inference_in_graphical_models.md)
 What is the most likely assignment to the variables in the model:
 
 $$
-\max_{x_1, x_2,\cdots, x_n} = p(y=1|,1, x_2, \cdots, x_n)
+\max_{x_1, x_2,\cdots, x_n} = p(y=1|x_1, x_2, \cdots, x_n)
 $$
 
 In general an exact answer is NP-hard. Tractable computation depends on the structure of the graph that describes that  probability. In cases when exact inference is not tractable we result to approximate inference.
