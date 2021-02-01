@@ -1861,7 +1861,7 @@ commentsRunWhenDOMLoaded(addUtterances);
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="loopy_belief_propagation.html">
-   Loopy belief propagation
+   Loopy belief propagation (LPB)
   </a>
  </li>
  <li class="toctree-l1">
@@ -2275,23 +2275,8 @@ commentsRunWhenDOMLoaded(addUtterances);
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#old">
-   OLD!
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#crating-a-junction-tree">
-   Crating a junction tree
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#message-passing-on-a-junction-tree">
-   Message passing on a junction tree
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#computational-complexity-of-jta">
-   Computational complexity of JTA
+  <a class="reference internal nav-link" href="#jt-algorithm">
+   JT Algorithm
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -2316,42 +2301,48 @@ commentsRunWhenDOMLoaded(addUtterances);
 <div class="section" id="junction-trees">
 <h2>Junction trees<a class="headerlink" href="#junction-trees" title="Permalink to this headline">¶</a></h2>
 <p>The idea behind junction three algorithm is to turn a graph into a tree of clusters, that are amenable to variable elimination (<a class="reference internal" href="junction_tree_example.html"><span class="doc std std-doc">Example</span></a>). Than we perform message passing on this tree.</p>
-<p>Suppose we have an undirected graphical model G (or normalized directed)</p>
-</div>
-<div class="section" id="old">
-<h2>OLD!<a class="headerlink" href="#old" title="Permalink to this headline">¶</a></h2>
-</div>
-<div class="section" id="crating-a-junction-tree">
-<h2>Crating a junction tree<a class="headerlink" href="#crating-a-junction-tree" title="Permalink to this headline">¶</a></h2>
-<p>The basic idea of JTA is:</p>
-<p>First we run the <a class="reference internal" href="variable_elimination.html"><span class="doc std std-doc">variable elimination</span></a> algorithm “symbolically”, adding fill-in edges as we go, according to a given elimination ordering. The resulting graph will be a <a class="reference internal" href="chordal_graph.html"><span class="doc std std-doc">chordal graph</span></a>.</p>
-<p>Having this chordal graph, we can extract its maximal cliques. In general finding max cliques is computationally hard, but for this special graph it can be done efficiently.</p>
+<p>Suppose we have an undirected graphical model G (or normalized directed). A junction tree <span class="math notranslate nohighlight">\(T=(C,E_T)\)</span> over <span class="math notranslate nohighlight">\(G=(X,E_G)\)</span> is a tree whose nodes <span class="math notranslate nohighlight">\(c \in C\)</span> are associated with subsets <span class="math notranslate nohighlight">\(x_c \in X\)</span> of the graph vertices (sets of variables); the junction tree has to satisfy:</p>
+<ul class="simple">
+<li><p>Family preservation: For each factor <span class="math notranslate nohighlight">\(\phi\)</span>, there is a cluster <span class="math notranslate nohighlight">\(c\)</span> such that <span class="math notranslate nohighlight">\(\text{Scope}[\phi] \in x_c\)</span></p></li>
+<li><p>Running intersection: For every pair of clusters <span class="math notranslate nohighlight">\(c^{(i)}, c^{(j)}\)</span>, every cluster on the path between <span class="math notranslate nohighlight">\(c^{(i)}, c^{(j)}\)</span> contains <span class="math notranslate nohighlight">\(x_c^{(i)} \cap x_c^{(j)}\)</span></p></li>
+</ul>
 <blockquote>
-<div><p>Example:
-<img alt="" src="../_images/junction_tree_algorithm.png" /></p>
+<div><p>Example</p>
+<p>A Graph G and junction tree T. MRF potentials are denoted using different colors, circles are nodes of a junction tree, rectangular nodes are sepsets (separation sets), which is a set of variables shared by neighboring clusters</p>
+<p><img alt="" src="../_images/junctiontree.png" /></p>
 </div></blockquote>
-<p>It turns out that the cliques of a chordal graph can be arranged into a special kind of tree known as <strong>junction tree</strong> (on the picture it is on the bottom). This enjoys the <strong>running intersecion property</strong> (RIP), which means that any subset of nodes containing a given variable forms a connected component.</p>
-<p>In the example we can see that node I occurs in the two adjacent three nodes, so they can share information about this variable. This holds for all the other variables.</p>
-<p>We can show that if a tree satisfies the running intersection property, then applying BP to this tree will return the exact values of <span class="math notranslate nohighlight">\(p(x_c|v)\)</span> for each node c in the tree. From this we can extract the node and edge marginal <span class="math notranslate nohighlight">\(p(x_t|v)\)</span> and <span class="math notranslate nohighlight">\(p(x_s,x_t|v)\)</span> from the original model by marginalizing the clique distribution.</p>
+<p>There always exists a trivial junction tree that has one node containing all the variables, however this will result in inefficient marginalization algorithm.</p>
+<p>Optimal trees have small and modular clusters. Finding an optimal tree is NP-hard. Thus we use heuristics to find “good junction trees”. (There is a special case when we can find an optimal junction tree when G is a tree. Than we define an cluster for each edge in the tree.)</p>
 </div>
-<div class="section" id="message-passing-on-a-junction-tree">
-<h2>Message passing on a junction tree<a class="headerlink" href="#message-passing-on-a-junction-tree" title="Permalink to this headline">¶</a></h2>
-<p>If we have created an junction tree, we can use it for inference. The process is similar to belief propagation on a tree. There are 2 version:</p>
-<ul class="simple">
-<li><p>sum-product form also known as <strong>Shafer-Shenoy</strong> algorithm</p></li>
-<li><p>belief updating form also known as <strong>Hugin</strong></p></li>
-</ul>
-</div>
-<div class="section" id="computational-complexity-of-jta">
-<h2>Computational complexity of JTA<a class="headerlink" href="#computational-complexity-of-jta" title="Permalink to this headline">¶</a></h2>
-<p>If all nodes are discrete with K states each, it is clear that the JTA takes</p>
+<div class="section" id="jt-algorithm">
+<h2>JT Algorithm<a class="headerlink" href="#jt-algorithm" title="Permalink to this headline">¶</a></h2>
+<p>It an form of message passing, it can be viewed as <a class="reference internal" href="variable_elimination.html"><span class="doc std std-doc">variable elimination</span></a> on a junction tree.</p>
+<p>First we define the potential <span class="math notranslate nohighlight">\(\psi_c(x_c)\)</span> for each cluster c as the product of all the factors in <span class="math notranslate nohighlight">\(\phi\)</span> in G that have been assigned to c. (this is well defined because of family preservation property). We get the following joint distribution:</p>
 <div class="math notranslate nohighlight">
-\[O(|C|K^{w+1})\]</div>
-<ul class="simple">
-<li><p><span class="math notranslate nohighlight">\(|C|\)</span> is the number of cliques</p></li>
-<li><p><span class="math notranslate nohighlight">\(w\)</span> is the size of the largest clique -1</p></li>
-</ul>
-<p>Unfortunately choosing a triangulation to minimize the tree width is NP hard. Unfortunately JTA does not work with continuous variables, except they are jointly Gaussian.</p>
+\[
+p(x_1, \cdots, x_n) = \frac{1}{N} \prod_{c \in C}\psi_c(x_c)
+\]</div>
+<p>At each step we choose a pair of adjacent clusters <span class="math notranslate nohighlight">\(c^{(i)}, c^{(j)}\)</span> in T and compute a message whose scope is the sepset S_{ij} between two clusters.</p>
+<div class="math notranslate nohighlight">
+\[
+m_{i\rightarrow j}(S_{ij}) = \sum_{x_c \backslash S_{ij}} \psi_c(x_c)\prod_{l \in N(i) \backslash j} m_{l \rightarrow i}(S_{li})
+\]</div>
+<p>We choose <span class="math notranslate nohighlight">\(c^{(i)}, c^{(j)}\)</span> only if <span class="math notranslate nohighlight">\(c^{(i)}\)</span> has received messages from all of its neighbors except <span class="math notranslate nohighlight">\(c^{(j)}\)</span>. This procedure terminates in <span class="math notranslate nohighlight">\(2|E_T|\)</span> steps. After termination we define the belief for each cluster based on all the messages that it receives:</p>
+<div class="math notranslate nohighlight">
+\[
+B_c(x_c) = \psi_c(x_c) \prod_{l \in N(i)} m_{l \rightarrow i}(S_{ij})
+\]</div>
+<p>This updates are known as <em>Shafer-Shenoy</em>. After all the messages have been passed, beliefs will be proportional to the marginal probabilities over their scopes <span class="math notranslate nohighlight">\(B_c(x_c) \propto p(x_c)\)</span>. We can answer queries of the form <span class="math notranslate nohighlight">\(\tilde{p}(x)\)</span> for <span class="math notranslate nohighlight">\(x \in x_c\)</span> by marginalizing the variable in its belief:</p>
+<div class="math notranslate nohighlight">
+\[
+\tilde{p}(x) = \sum_{x_c \backslash c} B_c(x_c)
+\]</div>
+<p>To get normalized probabilities we divide by the partition function:</p>
+<div class="math notranslate nohighlight">
+\[
+Z = \sum_{x_c}B_c(x_c)
+\]</div>
+<p>We prefer small clusters, the run time is exponential in the size of the largest cluster (marginalizing out variables from cluster has to be done brute force).</p>
 </div>
 <div class="section" id="limitations">
 <h2>Limitations<a class="headerlink" href="#limitations" title="Permalink to this headline">¶</a></h2>

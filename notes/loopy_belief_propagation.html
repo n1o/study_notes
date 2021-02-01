@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Loopy belief propagation &#8212; study-notes</title>
+    <title>Loopy belief propagation (LPB) &#8212; study-notes</title>
     
   <link rel="stylesheet" href="../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
 
@@ -1861,7 +1861,7 @@ commentsRunWhenDOMLoaded(addUtterances);
  </li>
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
-   Loopy belief propagation
+   Loopy belief propagation (LPB)
   </a>
  </li>
  <li class="toctree-l1">
@@ -2264,6 +2264,25 @@ commentsRunWhenDOMLoaded(addUtterances);
     <!-- Table of contents -->
     <div class="d-none d-md-block col-md-2 bd-toc show">
         
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#pairwise-models">
+   Pairwise models
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#properties">
+   Properties
+  </a>
+ </li>
+</ul>
+
+        </nav>
+        
     </div>
 </div>
     <div id="main-content" class="row">
@@ -2271,11 +2290,23 @@ commentsRunWhenDOMLoaded(addUtterances);
         
               <div>
                 
-  <div class="section" id="loopy-belief-propagation">
-<h1>Loopy belief propagation<a class="headerlink" href="#loopy-belief-propagation" title="Permalink to this headline">¶</a></h1>
-<p>It is essentially belief propagation, that is applied to graphs, even if they have loops. This method is simple and ofthen works well in practice, outperforming the mean field.</p>
-<p>Unfortunatelly we have <strong>no guarantees</strong> that if it is applied to loopy graphs, that it will converge.</p>
-<p>An popular version of error correcting code called <strong>turbo codes</strong> (But also low density parity check (LDPC)) can be viewed as an instance of BP applied to a certain king od graph.</p>
+  <div class="section" id="loopy-belief-propagation-lpb">
+<h1>Loopy belief propagation (LPB)<a class="headerlink" href="#loopy-belief-propagation-lpb" title="Permalink to this headline">¶</a></h1>
+<p>For many graphs it is hard to find a good <a class="reference internal" href="junction_tree_algorithm.html"><span class="doc std std-doc">junction tree</span></a>, in some cases, we may not need an exact solution and we are satisfied with a quick approximation.</p>
+<p>Loopy belief propagation (LBP) is a technique for performing approximate inference on complex (non-tree structured) graphs.</p>
+<div class="section" id="pairwise-models">
+<h2>Pairwise models<a class="headerlink" href="#pairwise-models" title="Permalink to this headline">¶</a></h2>
+<p>Lets assume we have a pairwise <a class="reference internal" href="markov_random_fields.html"><span class="doc std std-doc">MRF</span></a>. The idea of LBP is to disregard loops in the graph and perform message passing. Given an ordering on the edges, for each time <span class="math notranslate nohighlight">\(t\)</span> we iterate over a pair of adjacent variables <span class="math notranslate nohighlight">\(x_i,x_j\)</span> in that order we perform the update:</p>
+<div class="math notranslate nohighlight">
+\[
+m_{i\rightarrow j}^{t+1} = \sum_{x_i}\phi(x_i)\phi(x_i,x_j)\prod_{l \in N(i)\backslash j} m_{l\rightarrow i}^t (x_i)
+\]</div>
+<p>We perform these updates for a fixed number of steps (or until converged, since the messages do not change).</p>
+</div>
+<div class="section" id="properties">
+<h2>Properties<a class="headerlink" href="#properties" title="Permalink to this headline">¶</a></h2>
+<p>Heuristics shows this works well in practice, but it may not converge. It will probably converge on trees and on graphs with at most one cycle. If the method does not converge, its beliefs may not necessarily equal the true marginals (but in practices they will be close).</p>
+</div>
 </div>
 
     <script type="text/x-thebe-config">

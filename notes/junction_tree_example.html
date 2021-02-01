@@ -1861,7 +1861,7 @@ commentsRunWhenDOMLoaded(addUtterances);
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="loopy_belief_propagation.html">
-   Loopy belief propagation
+   Loopy belief propagation (LPB)
   </a>
  </li>
  <li class="toctree-l1">
@@ -2264,6 +2264,20 @@ commentsRunWhenDOMLoaded(addUtterances);
     <!-- Table of contents -->
     <div class="d-none d-md-block col-md-2 bd-toc show">
         
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#defining-a-good-junction-tree">
+   Defining a good junction tree
+  </a>
+ </li>
+</ul>
+
+        </nav>
+        
     </div>
 </div>
     <div id="main-content" class="row">
@@ -2282,7 +2296,7 @@ p(x_1, x_2, \cdots, x_n) = \frac{1}{Z}\prod_{c \in C} \phi_c(x_c)
 This assumption is known as <strong>running intersection (RIP)</strong> property.</p>
 <p><img alt="" src="../_images/junctionpath.png" /></p>
 <blockquote>
-<div><p>This is an MRF whose cliques are organized in a chain structure. Round nodes are cliques and variables in their scope; rectangular nodes are sepsets, which are variables forming the intersection of two neighboring cliques.</p>
+<div><p>This is an MRF whose cliques are organized in a chain structure. Round nodes are cliques and variables in their scope; rectangular nodes are sepsets (separation sets), which are variables forming the intersection of two neighboring cliques.</p>
 </div></blockquote>
 <p>We can compute the marginal probability <span class="math notranslate nohighlight">\(p(x_1)\)</span>, by using a form of <a class="reference internal" href="variable_elimination.html"><span class="doc std std-doc">variable elimination</span></a> to “push” certain variables deeper into the product of cluster potentials.</p>
 <div class="math notranslate nohighlight">
@@ -2295,6 +2309,13 @@ This assumption is known as <strong>running intersection (RIP)</strong> property
 <p>Than we continue with <span class="math notranslate nohighlight">\(x_5\)</span> and so on.</p>
 <p>At each step we marginalize out the variables that are not in the scope of its neighbors. (this marginalization can be viewed as computing messages over variables it shares with the neighbor).</p>
 <p>Running intersection property is what enables to push sums in all the way to the last factor. We eliminate <span class="math notranslate nohighlight">\(x_6\)</span> since we know that only the last cluster will carry this variable (not present in neighboring cluster), it cannot be anywhere else in the graph without violating the Running intersection property.</p>
+<div class="section" id="defining-a-good-junction-tree">
+<h2>Defining a good junction tree<a class="headerlink" href="#defining-a-good-junction-tree" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><em>By hand</em>: If a model has an regular structure for which there is an obvious structure. An example if the model is a grid, in that case clusters have associated with pairs of adjacent rows (or columns) in the grid.</p></li>
+<li><p><em>Using variable elimination</em>: If we run variable elimination implicitly generates a junction tree over variables. Thus we can use heuristics similar how we choose an ordering for variable elimination.</p></li>
+</ul>
+</div>
 </div>
 
     <script type="text/x-thebe-config">

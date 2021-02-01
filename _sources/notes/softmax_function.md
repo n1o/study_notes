@@ -13,4 +13,4 @@ $$ \mathcal{S}(\eta / T)_c = \begin{cases}
     0.0  & \text{ otherwise }
 \end{cases} $$
 
-Esentially the lower the temperature the more the time the distribution spends in the most probable state. As the temperature increases it spends more time uniformly.
+Essentially the lower the temperature the more the time the distribution spends in the most probable state. As the temperature increases it spends more time uniformly.

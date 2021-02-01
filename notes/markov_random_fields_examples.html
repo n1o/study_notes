@@ -1861,7 +1861,7 @@ commentsRunWhenDOMLoaded(addUtterances);
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="loopy_belief_propagation.html">
-   Loopy belief propagation
+   Loopy belief propagation (LPB)
   </a>
  </li>
  <li class="toctree-l1">
@@ -2319,7 +2319,7 @@ commentsRunWhenDOMLoaded(addUtterances);
 <p>A Hopfield network is a fully connected Ising model with a symmetric weight matrix, <span class="math notranslate nohighlight">\(W = W^T\)</span> . These weights, plus the bias terms <span class="math notranslate nohighlight">\(b\)</span>, can be learned from training data using (approximate) maximum likelihood.</p>
 <p>The main application of Hopfield networks is as an associative memory or content addressable memory. The idea is this: suppose we train on a set of fully observed bit vectors, corresponding to patterns we want to memorize. Then, at test time, we present a partial pattern to the network. We would like to <strong>estimate the missing variables</strong>; this is called <strong>pattern completion</strong>.</p>
 <p>They also can be interpreted as <strong>recurrent neural networks</strong>.</p>
-<p>A <strong>Boltzmann machine</strong> generalizes the Hopfield / Ising model by including some hidden nodes, which makes the model representationally more powerful. Inference in such models often uses Gibbs sampling, which is a stochastic version of ICM.</p>
+<p>A <strong>Boltzmann machine</strong> generalizes the Hopfield / Ising model by including some hidden nodes, which makes the model representational more powerful. Inference in such models often uses Gibbs sampling, which is a stochastic version of ICM.</p>
 </div>
 <div class="section" id="potts-model">
 <h2>Potts model<a class="headerlink" href="#potts-model" title="Permalink to this headline">¶</a></h2>

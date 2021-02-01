@@ -1861,7 +1861,7 @@ commentsRunWhenDOMLoaded(addUtterances);
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="loopy_belief_propagation.html">
-   Loopy belief propagation
+   Loopy belief propagation (LPB)
   </a>
  </li>
  <li class="toctree-l1">
@@ -2275,6 +2275,16 @@ commentsRunWhenDOMLoaded(addUtterances);
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#example">
+   Example
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#serial-protocol">
+   Serial protocol
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#algorithm-for-factor-trees">
    Algorithm for factor trees
   </a>
@@ -2298,7 +2308,7 @@ commentsRunWhenDOMLoaded(addUtterances);
 <p>While there is a node <span class="math notranslate nohighlight">\(x_i\)</span> ready to transmit to <span class="math notranslate nohighlight">\(x_j\)</span> it sends the message:</p>
 <div class="math notranslate nohighlight">
 \[
-m_{i \rightarrow j}(x_j) = \sum_{x_i} \phi(x_i)\phi(x_i,x_j) \prod_{l \in N(i)\backslash j} m_{l\rightarrow i}(x_i)
+m_{i \rightarrow j}(x_j) = \sum_{x_i} [\phi(x_i)\phi(x_i,x_j) \prod_{l \in N(i)\backslash j} m_{l\rightarrow i}(x_i)]
 \]</div>
 <ul class="simple">
 <li><p><span class="math notranslate nohighlight">\(N(i)\backslash j\)</span> set of nodes that are neighbors of i excluding j.</p></li>
@@ -2309,6 +2319,14 @@ m_{i \rightarrow j}(x_j) = \sum_{x_i} \phi(x_i)\phi(x_i,x_j) \prod_{l \in N(i)\b
 \[
 p(x_i) \propto \phi(x_i) \prod_{l \in N(i)} m_{l \rightarrow i} (x_i)
 \]</div>
+</div>
+<div class="section" id="example">
+<h2>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
+<p><img alt="" src="../_images/belief_prop_sum_prod_example.png" /></p>
+</div>
+<div class="section" id="serial-protocol">
+<h2>Serial protocol<a class="headerlink" href="#serial-protocol" title="Permalink to this headline">¶</a></h2>
+<p><img alt="" src="../_images/belif_prop_serial_protocol.jpg" /></p>
 </div>
 <div class="section" id="algorithm-for-factor-trees">
 <h2>Algorithm for factor trees<a class="headerlink" href="#algorithm-for-factor-trees" title="Permalink to this headline">¶</a></h2>
