@@ -12,4 +12,19 @@ Here a projective given an initial velocity follows a path determined by the eff
 Movement in a circle with constant speed.
 
 ## [Force](force.md)
+Here we describe interactions between objects or objects and nature.
 ### [Newtons laws](newtons_laws.md)
+First law states than an object travels at constant velocity (or rest) if no forces is acted upon. 
+
+Second tels us the relationship between Force mass and acceleration. 
+
+The Third law is about equilibrium, every force has an equal opposite reaction.
+### [Contact force](contact_force_friction.md)
+Describes forces that an object excerpts when we try to move it. If we pull/push an object it will excerpt friction, that is in the opposite direction of the acted forces.
+### [Drag Force](drag_force.md)
+If something falls in the air, there is drag. Drag pushes an object back.
+
+### [Elastic Forces](elastic_forces.md)
+Here we study the behavior of springs, how they expand and contract under force.
+
+### [Four fundamental forces of nature](forces_in_nature.md)
