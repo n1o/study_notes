@@ -2262,6 +2262,55 @@ commentsRunWhenDOMLoaded(addUtterances);
     <!-- Table of contents -->
     <div class="d-none d-md-block col-md-2 bd-toc show">
         
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#linear-programming">
+   Linear Programming
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#dual-decomposition">
+   Dual decomposition
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#how-to-compute-l-delta">
+     How to compute
+     <span class="math notranslate nohighlight">
+      \(L(\delta)\)
+     </span>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#recovering-map-assignment">
+     Recovering MAP assignment
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#local-search">
+   Local search
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#branch-and-bound">
+   Branch and bound
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#simulated-annealing">
+   Simulated annealing
+  </a>
+ </li>
+</ul>
+
+        </nav>
+        
     </div>
 </div>
     <div id="main-content" class="row">
@@ -2293,6 +2342,127 @@ p(x) = \frac{1}{Z} \exp [ -\sum_u E_u(x_u) - \sum_{u,v \in E} E_{uv}(x_u,x_v)]
 \[
 \max_x p(x) = \min_x [\sum_u E_u(x_u) + \sum_{u,v\ in E} E_{u,v}(x_u, x_v)]
 \]</div>
+<p>For each node u, we can normalize energies such that <span class="math notranslate nohighlight">\(E_u \ge 0\)</span>, and either <span class="math notranslate nohighlight">\(E_u(0)=0\)</span> or <span class="math notranslate nohighlight">\(E_u(1)=0\)</span>. We replace <span class="math notranslate nohighlight">\(E_u\)</span> with <span class="math notranslate nohighlight">\(E_u' = E_u - \min E_u\)</span> (this is equivalent to multiplying the unnormalized probability distribution by a nonnegative constant <span class="math notranslate nohighlight">\(e^{\min E_u}\)</span>). This wont change the probability distribution.</p>
+<p>We can formulate energy minimization in this type of model as min-cut problem in an augmented graph <span class="math notranslate nohighlight">\(G'\)</span>.</p>
+<p><span class="math notranslate nohighlight">\(G'\)</span> is constructed by adding special source sing nodes <span class="math notranslate nohighlight">\(s,t\)</span> to our PGM graph, node s is connected to nodes u with <span class="math notranslate nohighlight">\(E_u(0) =0\)</span> by an edge with weights <span class="math notranslate nohighlight">\(E_u(1)\)</span>, the node <span class="math notranslate nohighlight">\(t\)</span> is connected to nodes <span class="math notranslate nohighlight">\(v\)</span> with <span class="math notranslate nohighlight">\(E_v(1)=0\)</span> by an edge with weights <span class="math notranslate nohighlight">\(E_v(0)\)</span>. At last all the edges of the original graph get <span class="math notranslate nohighlight">\(E_{uv}\)</span> as their weight.</p>
+<p>By construction the cost of minimal cut in this graph equal the minimum energy in the model. In particular, all nodes on the s side of the cut receive an assignment of 0, and all nodes on the t side receive an assignment of 1. The edges between the nodes that disagree are precisely the one in the minimal cut.</p>
+<div class="section" id="linear-programming">
+<h2>Linear Programming<a class="headerlink" href="#linear-programming" title="Permalink to this headline">¶</a></h2>
+<p>We can find MAP in a pairwise MRF using <a class="reference internal" href="linear_programming.html"><span class="doc std std-doc">Integer linear programming</span></a>. We start by introducing two types of indicator variables:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\mu_i(x_i)\)</span> for each <span class="math notranslate nohighlight">\(i \in V\)</span> and state <span class="math notranslate nohighlight">\(x_i\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\mu_{ij}(x_i, x_j)\)</span> for each edge <span class="math notranslate nohighlight">\((i,j) in E\)</span> and pair of states <span class="math notranslate nohighlight">\(x_i,x_j\)</span></p></li>
+</ul>
+<p>The MAP objective has the form:</p>
+<div class="math notranslate nohighlight">
+\[
+\max_{\mu} \sum_{i \in V}\sum_{x_i} \theta_i(x_i)\mu_i(x_i) + \sum_{i,j\in E}\sum_{x_i,x_j} \theta_{ij}(x_i,x_j)\mu_{ij}(x_i, x_j)
+\]</div>
+<p>We introduce the following constraints:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\mu_i(x_i) \in \{0,1\}; \space\forall i, x_i \\
+\sum_{x_i}\mu_i(x_i) = 1; \space \forall i \\
+\mu_{ij}(x_i,x_j) \in \{ 0,1\}; \space \forall i, j \in E, x_i,x_j \\
+\sum_{x_i,x_j}\mu_{ij}(x_i,x_j) = 1; \space \forall i, j \in E \\
+\sum_{x_i}\mu_{ij}(x_i,x_j) = \mu_j(x_j); \space \forall i, j \in E, x_j \\
+\sum_{x_j}\mu_{ij}(x_i,x_j) = \mu_i(x_i); \space \forall i, j \in E, x_i
+\end{split}\]</div>
+<p>Where we have to relax the constraints <span class="math notranslate nohighlight">\(x \in \{ 0,1\}\)</span> to <span class="math notranslate nohighlight">\(0 \le x \le 1\)</span> and use an LP solver. This solution is only an approximation. For a special case of tree-structured graphs, is however optimal.</p>
+</div>
+<div class="section" id="dual-decomposition">
+<h2>Dual decomposition<a class="headerlink" href="#dual-decomposition" title="Permalink to this headline">¶</a></h2>
+<p>Lets assume we have the following MRF</p>
+<div class="math notranslate nohighlight">
+\[
+\max_x \sum_{i \in V} \theta_i(x_i) + \sum_{f \in F}\theta_f(x_f)
+\]</div>
+<ul class="simple">
+<li><p>F are factors (Edge potentials in an pairwise MRF)</p></li>
+</ul>
+<p>This objective is difficult to optimize because the potentials are coupled. Lets consider an alternative objective:</p>
+<div class="math notranslate nohighlight">
+\[
+\sum_{i \in V}\max_{x_i} \theta_i(x_i) + \sum_{f \in F} \max_{x^f} \theta_f(x^f)
+\]</div>
+<p>This is easy to optimize, but produces only an upper bound to the true MAP. To make this relaxation tight we have to introduce constraints that encourage consistency between the potentials:</p>
+<div class="math notranslate nohighlight">
+\[
+x_i^f - x_i = 0; \space \forall f, \forall i \in f
+\]</div>
+<p>The idea of dual decomposition is to find an middle ground between these two objectives.</p>
+<p>To do this we form the following Lagrangian:</p>
+<div class="math notranslate nohighlight">
+\[
+L(\delta, x^f,x) = \sum_{i \in V} \theta_i(x_i) + \sum_{f \in F}\theta_f(x^f) + \sum_{f \in F} \sum_{i \in f} \sum_{x'_i} \delta_{fi}(x'i)(I_{x'_i = x_i - I_{x'_i=x_i^f}})
+\]</div>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\delta\)</span> Lagrange multipliers</p></li>
+</ul>
+<p>The Lagrangian is an upper bound on <span class="math notranslate nohighlight">\(p^*\)</span> (optimal solution)</p>
+<div class="math notranslate nohighlight">
+\[
+L(\delta) = \max_{x^f,x} L(\delta, x^f, x) \ge p^*; \space \forall \delta
+\]</div>
+<p>To get an thigh bound we optimize <span class="math notranslate nohighlight">\(L(\delta)\)</span> over <span class="math notranslate nohighlight">\(\delta\)</span>. Thus if we find an optimal <span class="math notranslate nohighlight">\(\delta^*\)</span> we have:</p>
+<div class="math notranslate nohighlight">
+\[
+L(\delta^*) = p^*
+\]</div>
+<p>To get <span class="math notranslate nohighlight">\(L(\theta)\)</span> we re-parametrize the Lagrangian as:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+L(\theta) = \sum_{i \in V} \max_{x_i} (\theta_i(x_i) + \sum_{f:i \in f}\delta_{fi}(x_i)) + \sum_{f \in F} \max_{x^f} (\theta_f(x^g) + \sum_{i \in f}\delta_{fi}(x_i)) \\
+= \sum_{i \in V}\max_{x_i}\theta_i^{-\delta}(x_i) + \sum_{f\in F}\max_{x^f}\theta_f^{-\delta}(x^f)
+\end{split}\]</div>
+<p>We want to find <span class="math notranslate nohighlight">\(\bar{x}\)</span> such that <span class="math notranslate nohighlight">\(\bar{x_i} \in \arg \max_{x_i} \theta^{-\bar{\delta}}(x_i)\)</span> and  <span class="math notranslate nohighlight">\(\bar{x_f} \in \arg \max_{x_f} \theta^{-\bar{\delta}}(x^f)\)</span>, than we have:</p>
+<div class="math notranslate nohighlight">
+\[
+L(\bar{\delta}) = \sum_{i \in V}\theta_i^{-\bar{\delta}} (\bar{x}_i) + \sum_{f \in F}(\bar{x}^f) = \sum_{i \in V} \theta_i(\bar{x_i}) + \sum_{f\in F}\theta_f(\bar{x}^f)
+\]</div>
+<p>The first equation hold by definition of <span class="math notranslate nohighlight">\(L(\delta)\)</span> the second holds because Lagrange multipliers cancel when <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(x^f\)</span> agree.</p>
+<p>By definition of <span class="math notranslate nohighlight">\(p^*\)</span> we have that:</p>
+<div class="math notranslate nohighlight">
+\[
+\sum_{i \in V} \theta_i(\bar{x}_i) + \sum_{f \in F} \theta_f(\bar{x}^f) \le p^* \le L(\delta) 
+\]</div>
+<p>Which implies that <span class="math notranslate nohighlight">\(L(\bar{\delta}) = p^*\)</span></p>
+<p>Thus we can find <span class="math notranslate nohighlight">\(p^*\)</span> by finding a <span class="math notranslate nohighlight">\(\delta\)</span> at which the local sub-problems agree with each other. (This is common in practice)</p>
+<div class="section" id="how-to-compute-l-delta">
+<h3>How to compute <span class="math notranslate nohighlight">\(L(\delta)\)</span><a class="headerlink" href="#how-to-compute-l-delta" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Subgradient descent</p></li>
+<li><p>Block coordinate descent</p></li>
+</ul>
+</div>
+<div class="section" id="recovering-map-assignment">
+<h3>Recovering MAP assignment<a class="headerlink" href="#recovering-map-assignment" title="Permalink to this headline">¶</a></h3>
+<p>If <span class="math notranslate nohighlight">\(x, x^f\)</span> agree on the factors for some <span class="math notranslate nohighlight">\(\delta\)</span> we have an optimal solution. If they do nto agree, than finding MAP is NP-hard.</p>
+</div>
+</div>
+<div class="section" id="local-search">
+<h2>Local search<a class="headerlink" href="#local-search" title="Permalink to this headline">¶</a></h2>
+<p>We start with an arbitrary assignment and perform moves on the joint assignment that locally increase the probability. Hwe have no guarantees, however we can use prior knowledge to find effective moves, in practices this performs well.</p>
+</div>
+<div class="section" id="branch-and-bound">
+<h2>Branch and bound<a class="headerlink" href="#branch-and-bound" title="Permalink to this headline">¶</a></h2>
+<p>We perform exhaustive search over the space of assignments, while pruning branches that can be provably shown not to contain MAP assignments.</p>
+</div>
+<div class="section" id="simulated-annealing">
+<h2>Simulated annealing<a class="headerlink" href="#simulated-annealing" title="Permalink to this headline">¶</a></h2>
+<p>Here we sample from</p>
+<div class="math notranslate nohighlight">
+\[p_t(x) \propto \exp(\frac{1}{t} \sum_{x \in C} \theta_c(x_c))\]</div>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(t\)</span> is the temperature</p>
+<ul>
+<li><p><span class="math notranslate nohighlight">\(t \rightarrow \infty\)</span> than <span class="math notranslate nohighlight">\(p_t\)</span> is close to unniform</p></li>
+<li><p><span class="math notranslate nohighlight">\(t \rightarrow 0\)</span> than <span class="math notranslate nohighlight">\(p_t\)</span> places more weight on <span class="math notranslate nohighlight">\(\arg \max_x \sum_{x\in C} \theta_c(x_c)\)</span> (this is what we are interested in)</p></li>
+</ul>
+</li>
+</ul>
+<p>We start with high t, and gradually decrease it. If the cooling rate is sufficiently slow, we are guaranteed to find the mode of our distribution. In practice finding this rate is hard.</p>
+</div>
 </div>
 
     <script type="text/x-thebe-config">

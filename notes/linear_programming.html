@@ -2274,6 +2274,18 @@ commentsRunWhenDOMLoaded(addUtterances);
    Standard Form
   </a>
  </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#integer-linear-programming-ilp">
+   Integer linear programming (ILP)
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#rounding">
+     Rounding
+    </a>
+   </li>
+  </ul>
+ </li>
 </ul>
 
         </nav>
@@ -2297,6 +2309,17 @@ commentsRunWhenDOMLoaded(addUtterances);
 Ax \le b \\
 x \ge 0
 \end{split}\]</div>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(x \in R^n\)</span></p></li>
+</ul>
+</div>
+<div class="section" id="integer-linear-programming-ilp">
+<h2>Integer linear programming (ILP)<a class="headerlink" href="#integer-linear-programming-ilp" title="Permalink to this headline">¶</a></h2>
+<p>Here we require that <span class="math notranslate nohighlight">\(x \in \{0,1\}^2\)</span>. In general this is NP hard and we use heuristics.</p>
+<div class="section" id="rounding">
+<h3>Rounding<a class="headerlink" href="#rounding" title="Permalink to this headline">¶</a></h3>
+<p>Here we relax <span class="math notranslate nohighlight">\(x \in \{ 0,1\}^n\)</span> to <span class="math notranslate nohighlight">\(0 \le x \le 1\)</span> solve a LP and than round to the closes integer value. It works well in practice and has theoretical guarantees for some classes of ILP.</p>
+</div>
 </div>
 </div>
 
