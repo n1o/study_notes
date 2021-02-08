@@ -489,17 +489,10 @@ commentsRunWhenDOMLoaded(addUtterances);
  </li>
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
-   Inference in hidden markov models
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="#forward">
-   Forward
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="#backward">
-   Backward
+   Inference in
+   <span class="xref myst">
+    hidden markov models
+   </span>
   </a>
  </li>
  <li class="toctree-l1">
@@ -2271,23 +2264,28 @@ commentsRunWhenDOMLoaded(addUtterances);
             <ul class="nav section-nav flex-column">
  <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#">
-   Inference in hidden markov models
-  </a>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#forward">
-   Forward
-  </a>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#backward">
-   Backward
+   Inference in
+   <span class="xref myst">
+    hidden markov models
+   </span>
   </a>
  </li>
  <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#forward-backward">
    Forward-Backward
   </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#forward">
+     Forward
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#backward">
+     Backward
+    </a>
+   </li>
+  </ul>
  </li>
  <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#map-estimation-viberty">
@@ -2306,16 +2304,39 @@ commentsRunWhenDOMLoaded(addUtterances);
               <div>
                 
   <div class="section" id="inference-in-hidden-markov-models">
-<h1>Inference in hidden markov models<a class="headerlink" href="#inference-in-hidden-markov-models" title="Permalink to this headline">¶</a></h1>
-</div>
-<div class="section" id="forward">
-<h1>Forward<a class="headerlink" href="#forward" title="Permalink to this headline">¶</a></h1>
-</div>
-<div class="section" id="backward">
-<h1>Backward<a class="headerlink" href="#backward" title="Permalink to this headline">¶</a></h1>
+<h1>Inference in <a class="reference internal" href="hidden_markov_models.html"><span class="doc std std-doc">hidden markov models</span></a><a class="headerlink" href="#inference-in-hidden-markov-models" title="Permalink to this headline">¶</a></h1>
+<p>The main idea is how to perform marginal inference on the hidden states given observed. Or perform parameter estimation and so on.</p>
 </div>
 <div class="section" id="forward-backward">
 <h1>Forward-Backward<a class="headerlink" href="#forward-backward" title="Permalink to this headline">¶</a></h1>
+<p>For a hidden markov model of a form:</p>
+<p><img alt="" src="../_images/hmm_example_1.png" /></p>
+<p>We are given:</p>
+<ul class="simple">
+<li><p>initial probabilities <span class="math notranslate nohighlight">\(p(z_1)\)</span></p></li>
+<li><p>transition probabilities <span class="math notranslate nohighlight">\(p(z_{k+1}|z_k)\)</span></p></li>
+<li><p>emission probabilities <span class="math notranslate nohighlight">\(p(x_k|z_k)\)</span></p></li>
+</ul>
+<p>The main goal of the Forward-Backward algorithm is to compute the marginals of form:</p>
+<div class="math notranslate nohighlight">
+\[
+p(z_k|x_{1:n}) \propto p(z_k,x_{1:n}) = p(x_{k+1:n}|z_k)p(z_k,x_{1:k})
+\]</div>
+<p>This estimation consists of two steps:</p>
+<ol class="simple">
+<li><p>Forward pass <span class="math notranslate nohighlight">\(p(z_k,x_{1:k})\)</span></p></li>
+<li><p>Backward pass <span class="math notranslate nohighlight">\(p(x_{k+1:n}|z_k)\)</span></p></li>
+</ol>
+<blockquote>
+<div><p>Example:</p>
+<p><img alt="" src="../_images/forward_backward_marginal.png" /></p>
+</div></blockquote>
+<div class="section" id="forward">
+<h2>Forward<a class="headerlink" href="#forward" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="backward">
+<h2>Backward<a class="headerlink" href="#backward" title="Permalink to this headline">¶</a></h2>
+</div>
 </div>
 <div class="section" id="map-estimation-viberty">
 <h1>MAP estimation (Viberty)<a class="headerlink" href="#map-estimation-viberty" title="Permalink to this headline">¶</a></h1>

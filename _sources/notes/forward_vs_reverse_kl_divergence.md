@@ -12,11 +12,15 @@ This is infinite if $p(x) = 0$ and $q(x) \ge 0$. Thus if $p(x) = 0$ we must ensu
 
 ## Forward $KL(p||q)$ (M-projection, moment projection) 
 
-
 $$K(p||q) = \sum_x p(x) \ln \frac{p(x)}{q(x)} $$
 
 This is inifinite if $q(x) = 0$ and $p(x) > 0$. So if $p(x) > 0$ we must ensure that $q(x) > 0$. We say that the forward KL is **zero avoiding for q**. Hence **q will typically over-estimate the support of p**.
 
+> ![](../.images/machine_learning/kldiv.png)
+> a) KL(p||q)
+> b,cc) KL(q||p)
+> 
+> We can see that KL(p||q) overestimates but KL(q||p) chooses only one mode 
 ## Alpha divergence
 
 Ofthen if we minimize $K(q||p)$ where $q$ is factorized, the result in an approximation that is overconfident. 

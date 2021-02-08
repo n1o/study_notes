@@ -489,17 +489,10 @@ commentsRunWhenDOMLoaded(addUtterances);
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="infference_in_hidden_markov_models.html">
-   Inference in hidden markov models
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="infference_in_hidden_markov_models.html#forward">
-   Forward
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="infference_in_hidden_markov_models.html#backward">
-   Backward
+   Inference in
+   <span class="xref myst">
+    hidden markov models
+   </span>
   </a>
  </li>
  <li class="toctree-l1">
@@ -2294,13 +2287,14 @@ commentsRunWhenDOMLoaded(addUtterances);
 <p>The corresponding join distribution has the form:</p>
 <div class="math notranslate nohighlight">
 \[
-p(z_{1:T}, x_{1:T}) = p(z_{1:T})p(x_{1:T}|z_{1:T}) = [p(z_1)\prod_{t=2}^T p(z_t|z_{t-1})][\prod_{t=1}^T p(x_t|z_tff )]
+p(z_{1:T}, x_{1:T}) = p(z_{1:T})p(x_{1:T}|z_{1:T}) = [p(z_1)\prod_{t=2}^T p(z_t|z_{t-1})][\prod_{t=1}^T p(x_t|z_t)]
 \]</div>
 <ul class="simple">
 <li><p><span class="math notranslate nohighlight">\(p(z_t| z_{t-1}) = (i,j)\)</span> are the transition probabilities between hidden states, T is a transition (stochastic) matrix</p></li>
 <li><p><span class="math notranslate nohighlight">\(p(x| z_{k} =i) = \epsilon_i(x)\)</span> are the emission probabilities, this is the probability that we emit x given that our hidden state is z.</p></li>
 <li><p><span class="math notranslate nohighlight">\(p(z_1)\)</span> is the initial distribution</p></li>
 </ul>
+<p>These values are given before.</p>
 <p>This factorization enables us to perform tractable inference in Hidden Markov models. Since the observations are conditionally dependent only on the given hidden state.</p>
 <p>If the observations are continuous than the observation model can be an conditional Gaussian:</p>
 <div class="math notranslate nohighlight">

@@ -489,17 +489,10 @@ commentsRunWhenDOMLoaded(addUtterances);
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="infference_in_hidden_markov_models.html">
-   Inference in hidden markov models
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="infference_in_hidden_markov_models.html#forward">
-   Forward
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="infference_in_hidden_markov_models.html#backward">
-   Backward
+   Inference in
+   <span class="xref myst">
+    hidden markov models
+   </span>
   </a>
  </li>
  <li class="toctree-l1">
@@ -2298,20 +2291,22 @@ commentsRunWhenDOMLoaded(addUtterances);
 <p>Our goal is to solve this optimization problem:</p>
 <div class="math notranslate nohighlight">
 \[min_{q_1, \cdots, q_D } KL(q||p) \]</div>
-<p>Here we optimize over the parameters of each marginal distribution <span class="math notranslate nohighlight">\(q_i\)</span>. This can be solved using <a class="reference internal" href="coordinate_descent.html"><span class="doc std std-doc">coordinate descent method</span></a>. Where at each step we make the following update:</p>
+<p>Here we optimize over the parameters of each marginal distribution <span class="math notranslate nohighlight">\(q_i\)</span>. This can be solved using <a class="reference internal" href="coordinate_descent.html"><span class="doc std std-doc">coordinate descent method</span></a> over <span class="math notranslate nohighlight">\(q_j\)</span>, where we iterate over <span class="math notranslate nohighlight">\(j=1,2,\cdots, n\)</span> and for each <span class="math notranslate nohighlight">\(j\)</span> we optimize <span class="math notranslate nohighlight">\(KL(q||p)\)</span> over <span class="math notranslate nohighlight">\(q_j\)</span> while keeping the other “coordinates” <span class="math notranslate nohighlight">\(q_{-j} = \prod_{j\ne i} q_i\)</span> fixed. The optimization for one coordinate has the following form:</p>
 <div class="math notranslate nohighlight">
-\[ \log q_j(x_j) = E_{-q_j}[\log \tilde{p}(x)] + const ​\]</div>
+\[ \log q_j(x_j) = E_{-q_j}[\log \tilde{p}(x)] + \text{const} ​\]</div>
 <ul class="simple">
 <li><p><span class="math notranslate nohighlight">\(\tilde{p}(x) = p(x,D)\)</span> is the unnormalized posterior</p></li>
 <li><p><span class="math notranslate nohighlight">\(E_{-q_j} [f(x)]\)</span> is a notation that we take expectation over <span class="math notranslate nohighlight">\(f(x)\)</span>, with respect all the variables except <span class="math notranslate nohighlight">\(x_j\)</span></p></li>
 <li><p>Here at each update step we replace the neighboring values by their mean value, hence the name mean field.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\text{const}\)</span> is a normalization constant for the new distribution.</p></li>
 </ul>
 <p>For example if we have 3 variables:
 $<span class="math notranslate nohighlight">\(
 E_{-q_2}[f(x)] = \sum_{x_1}\sum_{x_2}q(x_1)q_3(x_3)f(x_1, x_2, x_3)
-\)</span><span class="math notranslate nohighlight">\(
-When we update \)</span>q_j<span class="math notranslate nohighlight">\( we only need to reason about the variables which share a factor with \)</span>x_j$, the other terms get absrobed into the constant term.</p>
+\)</span>$</p>
+<p>When we update <span class="math notranslate nohighlight">\(q_j\)</span> we only need to reason about the variables which share a factor with <span class="math notranslate nohighlight">\(x_j\)</span> (its markov blanket), the other terms get absorbed into the constant term.</p>
 <p>Mean field method can be used to infer discrete or continuous latent quantities, using variety of parametric forms for <span class="math notranslate nohighlight">\(q_i\)</span>.</p>
+<p>In the end factors <span class="math notranslate nohighlight">\(q_j(x_j)\)</span> are not quite equal to the true marginals <span class="math notranslate nohighlight">\(p_q(x_j)\)</span> but are often good enough for practical purposes.</p>
 <div class="section" id="derivation-of-the-mean-filed-update-equation">
 <h2>Derivation of the mean filed update equation<a class="headerlink" href="#derivation-of-the-mean-filed-update-equation" title="Permalink to this headline">¶</a></h2>
 <p>//TODO prove this</p>

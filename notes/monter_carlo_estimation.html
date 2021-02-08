@@ -489,17 +489,10 @@ commentsRunWhenDOMLoaded(addUtterances);
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="infference_in_hidden_markov_models.html">
-   Inference in hidden markov models
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="infference_in_hidden_markov_models.html#forward">
-   Forward
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="infference_in_hidden_markov_models.html#backward">
-   Backward
+   Inference in
+   <span class="xref myst">
+    hidden markov models
+   </span>
   </a>
  </li>
  <li class="toctree-l1">
@@ -2295,7 +2288,7 @@ commentsRunWhenDOMLoaded(addUtterances);
 <p>Computing distributions of a function of an rv using just change of variables can be challenging. There is an alternative way. First we generate S samples from the distribution <span class="math notranslate nohighlight">\(x_1, \cdots, x_S\)</span>. Given these samples we can approximate the distribution of <span class="math notranslate nohighlight">\(f(X)\)</span>, using the empirical distribution of <span class="math notranslate nohighlight">\(\{f(x_i) \}_{s=1}^S\)</span>. Hence we can use Monte Carlo to approximate expected value’s of functions of random variables.</p>
 <div class="section" id="mean">
 <h2>Mean<a class="headerlink" href="#mean" title="Permalink to this headline">¶</a></h2>
-<p>To compute a mean we just have to caclulate the arithmetic mean of the function applied to the samples:</p>
+<p>To compute a mean we just have to calculate the arithmetic mean of the function applied to the samples:</p>
 <div class="math notranslate nohighlight">
 \[ E[f(X)] = \int f(x)p(x)dx \approx \frac{1}{S} \sum_{s=1}^S f(x_s)\]</div>
 <p>where:</p>

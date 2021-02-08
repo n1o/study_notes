@@ -489,17 +489,10 @@ commentsRunWhenDOMLoaded(addUtterances);
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="infference_in_hidden_markov_models.html">
-   Inference in hidden markov models
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="infference_in_hidden_markov_models.html#forward">
-   Forward
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="infference_in_hidden_markov_models.html#backward">
-   Backward
+   Inference in
+   <span class="xref myst">
+    hidden markov models
+   </span>
   </a>
  </li>
  <li class="toctree-l1">
@@ -2318,6 +2311,12 @@ commentsRunWhenDOMLoaded(addUtterances);
 <div class="math notranslate nohighlight">
 \[K(p||q) = \sum_x p(x) \ln \frac{p(x)}{q(x)} \]</div>
 <p>This is inifinite if <span class="math notranslate nohighlight">\(q(x) = 0\)</span> and <span class="math notranslate nohighlight">\(p(x) &gt; 0\)</span>. So if <span class="math notranslate nohighlight">\(p(x) &gt; 0\)</span> we must ensure that <span class="math notranslate nohighlight">\(q(x) &gt; 0\)</span>. We say that the forward KL is <strong>zero avoiding for q</strong>. Hence <strong>q will typically over-estimate the support of p</strong>.</p>
+<blockquote>
+<div><p><img alt="" src="../_images/kldiv.png" />
+a) KL(p||q)
+b,cc) KL(q||p)</p>
+<p>We can see that KL(p||q) overestimates but KL(q||p) chooses only one mode</p>
+</div></blockquote>
 </div>
 <div class="section" id="alpha-divergence">
 <h2>Alpha divergence<a class="headerlink" href="#alpha-divergence" title="Permalink to this headline">¶</a></h2>

@@ -126,7 +126,7 @@ Which implies that $L(\bar{\delta}) = p^*$
 Thus we can find $p^*$ by finding a $\delta$ at which the local sub-problems agree with each other. (This is common in practice)
 
 ### How to compute $L(\delta)$
-* Subgradient descent
+* Sub-gradient descent
 * Block coordinate descent
 
 ### Recovering MAP assignment
