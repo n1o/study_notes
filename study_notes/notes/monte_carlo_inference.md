@@ -13,4 +13,6 @@ All these quantities can be [approximated](monter_carlo_estimation.md) by $E[f|D
 
 ## [Rejection Sampling](rejection_sampling.md)
 
-## Importance Sampling
+## [Importance Sampling](importance_sampling.md
+
+## [Hamiltonian monte carlo](hamiltonian_monte_carlo.md)

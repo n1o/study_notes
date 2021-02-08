@@ -3,7 +3,7 @@
 Computing distributions of a function of an rv using just change of variables can be challenging. There is an alternative way. First we generate S samples from the distribution $x_1, \cdots, x_S$. Given these samples we can approximate the distribution of $f(X)$, using the empirical distribution of $\{f(x_i) \}_{s=1}^S$. Hence we can use Monte Carlo to approximate expected value's of functions of random variables. 
 
 ## Mean
-To compute a mean we just have to caclulate the arithmetic mean of the function applied to the samples:
+To compute a mean we just have to calculate the arithmetic mean of the function applied to the samples:
 
 $$ E[f(X)] = \int f(x)p(x)dx \approx \frac{1}{S} \sum_{s=1}^S f(x_s)$$
 

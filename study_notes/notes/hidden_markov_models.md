@@ -7,12 +7,14 @@ A hidden markov model HMM consists of discrete-time discrete-state Markov chain,
 The corresponding join distribution has the form:
 
 $$
-p(z_{1:T}, x_{1:T}) = p(z_{1:T})p(x_{1:T}|z_{1:T}) = [p(z_1)\prod_{t=2}^T p(z_t|z_{t-1})][\prod_{t=1}^T p(x_t|z_tff )]
+p(z_{1:T}, x_{1:T}) = p(z_{1:T})p(x_{1:T}|z_{1:T}) = [p(z_1)\prod_{t=2}^T p(z_t|z_{t-1})][\prod_{t=1}^T p(x_t|z_t)]
 $$
 
 * $p(z_t| z_{t-1}) = (i,j)$ are the transition probabilities between hidden states, T is a transition (stochastic) matrix
 * $p(x| z_{k} =i) = \epsilon_i(x)$ are the emission probabilities, this is the probability that we emit x given that our hidden state is z.
 * $p(z_1)$ is the initial distribution
+
+These values are given before.
 
 This factorization enables us to perform tractable inference in Hidden Markov models. Since the observations are conditionally dependent only on the given hidden state.
 

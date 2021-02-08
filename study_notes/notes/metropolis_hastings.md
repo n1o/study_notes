@@ -4,7 +4,7 @@ Metropolis Hastings (HM) is an more general algorithm than can be used to draw s
 
 ## Basic idea
 
-The basic idea is that at each step, we propose to move from the current state $x$ to a new state $x'$ with probability $q(x'|x)$ where $q$ is called the **proposal distribution** (also called **kernel**). Where we can use any proposal distribution we want, subject to some conditions. A common choice is to use a symmetric Gaussian distribution centered at the current state, $q(x'|x) = N(x'|x, \Sigma)$ this is also called **random walk Metropolis algorithm**. If we use $q(x'|x).= q(x')$ where thenew state independent of the old state,  we get a method known as the **independence sampler**, which is similar to importance sampling.
+The basic idea is that at each step, we propose to move from the current state $x$ to a new state $x'$ with probability $q(x'|x)$ where $q$ is called the **proposal distribution** (also called **kernel**). Where we can use any proposal distribution we want, subject to some conditions. A common choice is to use a symmetric Gaussian distribution centered at the current state, $q(x'|x) = N(x'|x, \Sigma)$ this is also called **random walk Metropolis algorithm**. If we use $q(x'|x).= q(x')$ where the new state independent of the old state,  we get a method known as the **independence sampler**, which is similar to importance sampling.
 
 Having proposed a move to $x'$, we decide to whether to **accept** this proposal, or not to according to some formula, which ensures that the fraction of time spent in each state is proportional to $p^*(x)$. If the proposal is accepted, the new state is $x'$, otherwise the new state is the same as the current state x. 
 

@@ -43,3 +43,22 @@ f_{s,max} = \mu_s n
 $$
 
 * $\mu_s$ is the coefficient of static friction
+
+
+We can measure the static and kinetic friction coefficient of an object by placing it onto an elevated wooden surface (plywood sheet). 
+
+We find the angle at which the object starts to move, and an angle at which it moves at an constant speed.
+
+![](../.images/physics/measure_friction.png)
+
+The coefficient of static friction is at an angle at which the objects starts to move:
+
+$$
+\mu_s = \tan \theta_{\text{starts to move}}
+$$
+
+and the coefficient of kinetic friction is at the angle when the object moves at constant speed:
+
+$$
+\mu_k = \tan \theta_{\text{constant speed}}
+$$
