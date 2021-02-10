@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Directed graphical models &#8212; study-notes</title>
+    <title>Maximum Likelihood Learning (Estimation) &#8212; study-notes</title>
     
   <link rel="stylesheet" href="../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
 
@@ -91,8 +91,6 @@ commentsRunWhenDOMLoaded(addUtterances);
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Probability mass functions" href="probability_mass_density_function.html" />
-    <link rel="prev" title="Acceleration" href="one_dimensional_acceleration.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -129,7 +127,7 @@ commentsRunWhenDOMLoaded(addUtterances);
   </a>
  </li>
 </ul>
-<ul class="current nav sidenav_l1">
+<ul class="nav sidenav_l1">
  <li class="toctree-l1">
   <a class="reference internal" href="signal_to_noise_ratio.html">
    Signal to noise ratio
@@ -1970,13 +1968,13 @@ commentsRunWhenDOMLoaded(addUtterances);
    Acceleration
   </a>
  </li>
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
+ <li class="toctree-l1">
+  <a class="reference internal" href="directed_graphical_models.html">
    Directed graphical models
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="#examples">
+  <a class="reference internal" href="directed_graphical_models.html#examples">
    Examples
   </a>
  </li>
@@ -2232,7 +2230,7 @@ commentsRunWhenDOMLoaded(addUtterances);
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../_sources/notes/directed_graphical_models.md"><button type="button"
+        <a class="dropdown-buttons" href="../_sources/notes/maximum_likelihood_learning.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.md</button></a>
         <!-- Download PDF via print -->
@@ -2262,36 +2260,19 @@ commentsRunWhenDOMLoaded(addUtterances);
         </div>
         <nav id="bd-toc-nav">
             <ul class="nav section-nav flex-column">
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#">
-   Directed graphical models
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#loss-function">
+   Loss function
   </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#formal-definition">
-     Formal definition
-    </a>
-   </li>
-  </ul>
  </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#examples">
-   Examples
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#empirical-risk-and-overfitting">
+   Empirical Risk and Overfitting
   </a>
   <ul class="nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#naive-bayes">
-     Naive Bayes
-    </a>
-   </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#markov-and-hidden-markov-models">
-     Markov and hidden Markov Models
-    </a>
-   </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#learning">
-     Learning
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#generalization-error">
+     Generalization error
     </a>
    </li>
   </ul>
@@ -2307,68 +2288,65 @@ commentsRunWhenDOMLoaded(addUtterances);
         
               <div>
                 
-  <div class="section" id="directed-graphical-models">
-<h1>Directed graphical models<a class="headerlink" href="#directed-graphical-models" title="Permalink to this headline">¶</a></h1>
-<p>Use directed graphs (DAG) to represent probability distributions.</p>
-<p>Also known as</p>
-<ul class="simple">
-<li><p>Bayesian network,</p></li>
-<li><p>Belief networks, they representation is subjective.</p></li>
-<li><p>Casual network, directed arrows model casual relationship</p></li>
-</ul>
-<p>The key property of DAGs is that nodes can be ordered such that parents come before children. Given this ordering we define the <strong>ordered markov property</strong>, which assume that the children depend only on their parents, not on all the predecessors.</p>
+  <div class="section" id="maximum-likelihood-learning-estimation">
+<h1>Maximum Likelihood Learning (Estimation)<a class="headerlink" href="#maximum-likelihood-learning-estimation" title="Permalink to this headline">¶</a></h1>
+<p>Lets assume that we want to learn the full probability distribution, so we can answer any probabilistic inference query we want. This can be viewed as density estimation, where we want to construct a distribution <span class="math notranslate nohighlight">\(p\)</span> as close to the true distribution <span class="math notranslate nohighlight">\(p^*\)</span>. This closeness can be evaluated as:</p>
 <div class="math notranslate nohighlight">
-\[x_s \perp x_{preds(s) \ pa(s)} | x_{pa(s)} \]</div>
-<ul class="simple">
-<li><p>preds(s) are the predecessors of the node s</p></li>
-<li><p>pa(s) are the parents of node s</p></li>
-</ul>
-<p>Now we can simplify the join distribution of the following graph</p>
-<p><img alt="" src="../_images/directed_graphical_network.png" /></p>
+\[
+KL(p^*||p) = \sum_x p^*(x) \log \frac{p^*(x)}{p(x)} = -H(p^*) - E_{x \sim p^*}[\log p(x)]
+\]</div>
+<p>We can simplify since <span class="math notranslate nohighlight">\(H(^p*)\)</span> is independent of p, thus minimizing KL divergence is the same as maximizing the expected log-likelihood:</p>
 <div class="math notranslate nohighlight">
-\[\begin{split}
-p(x_{1:5}) = p(x_1)p(x_2|x_1)p(x_3| x_1, \cancel{x_2})p(x_4| \cancel{x_1}, x_2, x_3) p(x_5, \cancel{x_1}, \cancel{x_2}, x_3, \cancel{x_4}) \\ 
-= p(x_1)p(x_2|x_1)p(x_3|x_1)p(x_4|x_2, x_3)p(x_5|x_3)
-\end{split}\]</div>
-<div class="section" id="formal-definition">
-<h2>Formal definition<a class="headerlink" href="#formal-definition" title="Permalink to this headline">¶</a></h2>
-<p>Bayesian Network is a directed graph <span class="math notranslate nohighlight">\(G = (V,E)\)</span> together with:</p>
-<ul class="simple">
-<li><p>random variable <span class="math notranslate nohighlight">\(x_i\)</span> for each node <span class="math notranslate nohighlight">\(i \in V\)</span></p></li>
-<li><p>conditional probability distribution (CPD) <span class="math notranslate nohighlight">\(p(x_i| x_{pa(t)})\)</span> per node, specifying the probability of <span class="math notranslate nohighlight">\(x_i\)</span> conditioned on its parent’s values. (this is often defined as <a class="reference internal" href="probability_tables.html"><span class="doc std std-doc">probability tables</span></a>.)</p></li>
-</ul>
-<p>It defines the following joint probability distribution.
-$<span class="math notranslate nohighlight">\(p(x_{1:V}| G) = \prod_{t=1}^V p(x_i| x_{pa(t)})\)</span>$</p>
-<p>This probability distribution <span class="math notranslate nohighlight">\(p\)</span> defines an <a class="reference internal" href="independence_map_of_g.html"><span class="doc std std-doc">I-map (independence map)</span></a>.</p>
-<p>If each node has <span class="math notranslate nohighlight">\(O(F)\)</span> parents and K states the number of parameters in the model is <span class="math notranslate nohighlight">\(O(VK^F)\)</span>, which is much less than the <span class="math notranslate nohighlight">\(O(K^V)\)</span> needed by a model which makes no CI assumptions.</p>
-</div>
-</div>
-<div class="section" id="examples">
-<h1>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="naive-bayes">
-<h2>Naive Bayes<a class="headerlink" href="#naive-bayes" title="Permalink to this headline">¶</a></h2>
-<p>In naive bayes we assume that features are conditionally independent given the class label.</p>
+\[
+E_{x \sim p^*}[\log p(x)]
+\]</div>
+<p>Here we want to find <span class="math notranslate nohighlight">\(p\)</span> that assigns high probability to instances sampled from <span class="math notranslate nohighlight">\(p^*\)</span>. (We do not compute <span class="math notranslate nohighlight">\(H(p)\)</span> thus we do not know how far from optimum we are)</p>
+<p>In general we do not know <span class="math notranslate nohighlight">\(p^*\)</span>, thus we approximate the expected log likelihood with the empirical log-likelihood (MC estimate):</p>
 <div class="math notranslate nohighlight">
-\[p(y,x) = p(y) \prod_{j=1}^D p(x_j|y)\]</div>
-<p><img alt="" src="../_images/naive_bayes_as_graphical_model.png" /></p>
-</div>
-<div class="section" id="markov-and-hidden-markov-models">
-<h2>Markov and hidden Markov Models<a class="headerlink" href="#markov-and-hidden-markov-models" title="Permalink to this headline">¶</a></h2>
-<p><img alt="" src="../_images/markov_and_hidden_markov_models_directed_graph_example.png" /></p>
-<p>a) <strong>First order Markov chain</strong>, where the intermediate past <span class="math notranslate nohighlight">\(x_{t-1}\)</span> caputres everything wee need to know about the future.</p>
-<p>b) <strong>Second order Markov chain</strong> and it corresponds to the folowing conditional distribution:</p>
-<div class="math notranslate nohighlight">
-\[p(x_1,x_2) =  \prod_{t=3}^T p(x_t| x_{t-1}, x_{t-2})\]</div>
-<p>We can create higher order but then we need to have a lot of data.</p>
-<p>c) <a class="reference internal" href="hidden_markov_models.html"><span class="doc std std-doc">Hidden Markov model (HMM)</span></a> we assume that there is some hidden process that results in noisy observations.</p>
-<p>Here <span class="math notranslate nohighlight">\(z_t\)</span> is known as <strong>hidden variable</strong> “at time t” and <span class="math notranslate nohighlight">\(x_t\)</span> is the observed variable. And the CPD <span class="math notranslate nohighlight">\(p(z_t| z_{t-1})\)</span> is the <strong>transition model</strong> and the CPD <span class="math notranslate nohighlight">\(p(x_t|z_t)\)</span> is the <strong>observation model.</strong></p>
-<p>The hidden variables represent quantities of interest, and in general we want to estimate the hidden state given the data, i.e to compute <span class="math notranslate nohighlight">\(p(z_t|x_{1:t}, \theta)\)</span>. This process is called <strong>state estimation</strong>.</p>
-</div>
-<div class="section" id="learning">
-<h2>Learning<a class="headerlink" href="#learning" title="Permalink to this headline">¶</a></h2>
+\[
+E_{x\sim p^*}[\log p(x)] \approx \frac{1}{|D|} \sum_{x \in D}\log p(x)
+\]</div>
 <ul class="simple">
-<li><p><a class="reference internal" href="mle_for_bayesian_networks.html"><span class="doc std std-doc">MLE estimation</span></a></p></li>
+<li><p><span class="math notranslate nohighlight">\(D\)</span> is a dataset drawn i.i.d from <span class="math notranslate nohighlight">\(p^*\)</span></p></li>
 </ul>
+<p>The maximum likelihood learning is to estimate:</p>
+<div class="math notranslate nohighlight">
+\[
+\max_{p \in M} \frac{1}{|D|} \sum_{x \in D} \log p(x)
+\]</div>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(M\)</span> is a set of possible models we compare</p></li>
+</ul>
+<p>We can <a class="reference internal" href="mle_kl_divergence_proof.html"><span class="doc std std-doc">prove</span></a> the statement above using the empirical distribution.</p>
+<div class="section" id="loss-function">
+<h2>Loss function<a class="headerlink" href="#loss-function" title="Permalink to this headline">¶</a></h2>
+<p>A loss function generalizes the concept of maximum likelihood learning. A loss function <span class="math notranslate nohighlight">\(L(x,p)\)</span> measures the loss that a model distribution p makes on a particular instance x. Thus our goal is to find the model that minimizes the expected loss.</p>
+<div class="math notranslate nohighlight">
+\[
+E_{x \tilde p^*} [L(x,p)] \approx \frac{1}{|D|} \sum_{x\in D}L(x,p) 
+\]</div>
+<blockquote>
+<div><p>The log loss function corresponds to the maximum likelihood estimation</p>
+</div></blockquote>
+</div>
+<div class="section" id="empirical-risk-and-overfitting">
+<h2>Empirical Risk and Overfitting<a class="headerlink" href="#empirical-risk-and-overfitting" title="Permalink to this headline">¶</a></h2>
+<p>Empirical risk minimization can easily overfit, since we observe only a fraction of the data not the whole data generative process. Thus our model will not generalize. For choosing a good model it is important to take <a class="reference internal" href="bias_variance_tradeoff.html"><span class="doc std std-doc">bias-variance tradeoff</span></a> into account.</p>
+<p>Here we may ask how to avoid overfitting (having high variance). A good an efficient way is to introduce a regularizer therme <span class="math notranslate nohighlight">\(R(p)\)</span> to the loss function <span class="math notranslate nohighlight">\(L(x,p)\)</span> which will penalize complex p.</p>
+<div class="section" id="generalization-error">
+<h3>Generalization error<a class="headerlink" href="#generalization-error" title="Permalink to this headline">¶</a></h3>
+<p>If we train we minimize:</p>
+<div class="math notranslate nohighlight">
+\[
+\max_{p \in M} \frac{1}{|D|} \sum_{x \in D} \log p(x)
+\]</div>
+<p>However we are interested in minimizing:</p>
+<div class="math notranslate nohighlight">
+\[
+E_{x \sim p^*}[\log p(x)]
+\]</div>
+<p>Thus we cannot guarantee the quality of our model. Since D is just an sample from the true model, and we might get unlucky.</p>
+</div>
 </div>
 </div>
 
@@ -2400,8 +2378,6 @@ $<span class="math notranslate nohighlight">\(p(x_{1:V}| G) = \prod_{t=1}^V p(x_
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="one_dimensional_acceleration.html" title="previous page">Acceleration</a>
-    <a class='right-next' id="next-link" href="probability_mass_density_function.html" title="next page">Probability mass functions</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">
