@@ -63,3 +63,6 @@ Here $z_t$ is known as **hidden variable** "at time t" and $x_t$ is the observed
 
 The hidden variables represent quantities of interest, and in general we want to estimate the hidden state given the data, i.e to compute $p(z_t|x_{1:t}, \theta)$. This process is called **state estimation**. 
 
+## Learning
+
+* [MLE estimation](mle_for_bayesian_networks.md)
