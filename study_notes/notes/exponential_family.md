@@ -17,10 +17,10 @@ A distribution of the form:
 
 $$p(x|\theta) = \frac{1}{Z(\theta)} h(x) \exp{[\theta^T \phi(x)]} = h(x)\exp[\theta^T \phi(x) - A(\theta)]$$
 
-* $Z(\theta) = \int_{X^m} h(x) \exp[\theta^T \phi(x)]dx$  (this is the partition function)
+* $Z(\theta) = \int_{X^m} h(x) \exp[\theta^T \phi(x)]dx$ is the partition function, and it is log-convex in $\theta$
 * $h(x)$ is the scaling constnat ofthen set to 1.
 * $A(\theta) = \log Z(\theta)$ (log partition function or cumulant function)
-* $\theta$ is called the **natural parameters** of **canonical parameters**. 
+* $\theta$ is called the **natural parameters** or **canonical parameters**. Exponential families are log-concave in their natural parameters.
 * $\phi(x) \in R^d$ is called a vector of **sufficient statistics** , if $\phi(x) =x​$ we say it is a **natural exponential family**
 
 We can futher generalize the exponential family by writing:
@@ -60,3 +60,7 @@ The only family for which conjugate priors exists is the exponential family. Con
 
 The exponential family, is the distribution that makes the least number of assumptions about the data, subject to a specific set of user-specified constraints. In particular suppose all we know is the expected values of certain features or functions.
 
+Or we can say, that the distribution that maximizes the entropy $H(p)$ under constraint $E_p[\phi(x)] = \alpha$ (sufficient stats equal some parameter alpha) is the exponential family.
+
+## [Markov random fields](learning_markov_random_fields.md)
+If we learn markov random fields we extensively use exponential families.

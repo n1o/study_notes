@@ -2,25 +2,26 @@
 
 [KL divergence](kl_divergence.md) is not symmetric in its arguments, minimizing $K(q||p)$ wtr $q$ will give different behavior than minimizing $KL(p||q)$.
 
-## Reverse $KL(q||p)$  (I-projection, information projection)
-
-By definition we have:
-
-$$KL(q||p) = \sum_x q(x) \ln \frac{q(x)}{p(x)} $$
-
-This is infinite if $p(x) = 0$ and $q(x) \ge 0$. Thus if $p(x) = 0$ we must ensure $q(x) = 0$. We say that the reverse KL is **zero forcing for q.**  Hence **q will typically under-estimatethe support of p**.
-
-## Forward $KL(p||q)$ (M-projection, moment projection) 
-
-$$K(p||q) = \sum_x p(x) \ln \frac{p(x)}{q(x)} $$
-
-This is inifinite if $q(x) = 0$ and $p(x) > 0$. So if $p(x) > 0$ we must ensure that $q(x) > 0$. We say that the forward KL is **zero avoiding for q**. Hence **q will typically over-estimate the support of p**.
 
 > ![](../.images/machine_learning/kldiv.png)
 > a) KL(p||q)
 > b,cc) KL(q||p)
 > 
 > We can see that KL(p||q) overestimates but KL(q||p) chooses only one mode 
+
+## Reverse $KL(q||p)$  (I-projection, information projection)
+
+By definition we have:
+
+$$KL(q||p) = \sum_x q(x) \ln \frac{q(x)}{p(x)} $$
+
+This is infinite if $p(x) = 0$ and $q(x) \ge 0$. Thus if $p(x) = 0$ we must ensure $q(x) = 0$. We say that the reverse KL is **zero forcing for q.**  Hence **q will typically under-estimate's support of p**.
+
+## Forward $KL(p||q)$ (M-projection, moment projection) 
+
+$$K(p||q) = \sum_x p(x) \ln \frac{p(x)}{q(x)} $$
+
+This is inifinite if $q(x) = 0$ and $p(x) > 0$. So if $p(x) > 0$ we must ensure that $q(x) > 0$. We say that the forward KL is **zero avoiding for q**. Hence **q will typically over-estimate the support of p**. The reason why it is called moment-projection is that it forces $q$ to match the empirical moments of p.
 ## Alpha divergence
 
 Ofthen if we minimize $K(q||p)$ where $q$ is factorized, the result in an approximation that is overconfident. 
