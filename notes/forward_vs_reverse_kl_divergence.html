@@ -2299,24 +2299,24 @@ commentsRunWhenDOMLoaded(addUtterances);
   <div class="section" id="forward-vs-reverse-kl-divergence">
 <h1>Forward vs reverse KL divergence<a class="headerlink" href="#forward-vs-reverse-kl-divergence" title="Permalink to this headline">¶</a></h1>
 <p><a class="reference internal" href="kl_divergence.html"><span class="doc std std-doc">KL divergence</span></a> is not symmetric in its arguments, minimizing <span class="math notranslate nohighlight">\(K(q||p)\)</span> wtr <span class="math notranslate nohighlight">\(q\)</span> will give different behavior than minimizing <span class="math notranslate nohighlight">\(KL(p||q)\)</span>.</p>
-<div class="section" id="reverse-kl-q-p-i-projection-information-projection">
-<h2>Reverse <span class="math notranslate nohighlight">\(KL(q||p)\)</span>  (I-projection, information projection)<a class="headerlink" href="#reverse-kl-q-p-i-projection-information-projection" title="Permalink to this headline">¶</a></h2>
-<p>By definition we have:</p>
-<div class="math notranslate nohighlight">
-\[KL(q||p) = \sum_x q(x) \ln \frac{q(x)}{p(x)} \]</div>
-<p>This is infinite if <span class="math notranslate nohighlight">\(p(x) = 0\)</span> and <span class="math notranslate nohighlight">\(q(x) \ge 0\)</span>. Thus if <span class="math notranslate nohighlight">\(p(x) = 0\)</span> we must ensure <span class="math notranslate nohighlight">\(q(x) = 0\)</span>. We say that the reverse KL is <strong>zero forcing for q.</strong>  Hence <strong>q will typically under-estimatethe support of p</strong>.</p>
-</div>
-<div class="section" id="forward-kl-p-q-m-projection-moment-projection">
-<h2>Forward <span class="math notranslate nohighlight">\(KL(p||q)\)</span> (M-projection, moment projection)<a class="headerlink" href="#forward-kl-p-q-m-projection-moment-projection" title="Permalink to this headline">¶</a></h2>
-<div class="math notranslate nohighlight">
-\[K(p||q) = \sum_x p(x) \ln \frac{p(x)}{q(x)} \]</div>
-<p>This is inifinite if <span class="math notranslate nohighlight">\(q(x) = 0\)</span> and <span class="math notranslate nohighlight">\(p(x) &gt; 0\)</span>. So if <span class="math notranslate nohighlight">\(p(x) &gt; 0\)</span> we must ensure that <span class="math notranslate nohighlight">\(q(x) &gt; 0\)</span>. We say that the forward KL is <strong>zero avoiding for q</strong>. Hence <strong>q will typically over-estimate the support of p</strong>.</p>
 <blockquote>
 <div><p><img alt="" src="../_images/kldiv.png" />
 a) KL(p||q)
 b,cc) KL(q||p)</p>
 <p>We can see that KL(p||q) overestimates but KL(q||p) chooses only one mode</p>
 </div></blockquote>
+<div class="section" id="reverse-kl-q-p-i-projection-information-projection">
+<h2>Reverse <span class="math notranslate nohighlight">\(KL(q||p)\)</span>  (I-projection, information projection)<a class="headerlink" href="#reverse-kl-q-p-i-projection-information-projection" title="Permalink to this headline">¶</a></h2>
+<p>By definition we have:</p>
+<div class="math notranslate nohighlight">
+\[KL(q||p) = \sum_x q(x) \ln \frac{q(x)}{p(x)} \]</div>
+<p>This is infinite if <span class="math notranslate nohighlight">\(p(x) = 0\)</span> and <span class="math notranslate nohighlight">\(q(x) \ge 0\)</span>. Thus if <span class="math notranslate nohighlight">\(p(x) = 0\)</span> we must ensure <span class="math notranslate nohighlight">\(q(x) = 0\)</span>. We say that the reverse KL is <strong>zero forcing for q.</strong>  Hence <strong>q will typically under-estimate’s support of p</strong>.</p>
+</div>
+<div class="section" id="forward-kl-p-q-m-projection-moment-projection">
+<h2>Forward <span class="math notranslate nohighlight">\(KL(p||q)\)</span> (M-projection, moment projection)<a class="headerlink" href="#forward-kl-p-q-m-projection-moment-projection" title="Permalink to this headline">¶</a></h2>
+<div class="math notranslate nohighlight">
+\[K(p||q) = \sum_x p(x) \ln \frac{p(x)}{q(x)} \]</div>
+<p>This is inifinite if <span class="math notranslate nohighlight">\(q(x) = 0\)</span> and <span class="math notranslate nohighlight">\(p(x) &gt; 0\)</span>. So if <span class="math notranslate nohighlight">\(p(x) &gt; 0\)</span> we must ensure that <span class="math notranslate nohighlight">\(q(x) &gt; 0\)</span>. We say that the forward KL is <strong>zero avoiding for q</strong>. Hence <strong>q will typically over-estimate the support of p</strong>. The reason why it is called moment-projection is that it forces <span class="math notranslate nohighlight">\(q\)</span> to match the empirical moments of p.</p>
 </div>
 <div class="section" id="alpha-divergence">
 <h2>Alpha divergence<a class="headerlink" href="#alpha-divergence" title="Permalink to this headline">¶</a></h2>

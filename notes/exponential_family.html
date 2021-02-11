@@ -2310,6 +2310,13 @@ commentsRunWhenDOMLoaded(addUtterances);
    </span>
   </a>
  </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#markov-random-fields">
+   <span class="xref myst">
+    Markov random fields
+   </span>
+  </a>
+ </li>
 </ul>
 
         </nav>
@@ -2337,10 +2344,10 @@ commentsRunWhenDOMLoaded(addUtterances);
 <div class="math notranslate nohighlight">
 \[p(x|\theta) = \frac{1}{Z(\theta)} h(x) \exp{[\theta^T \phi(x)]} = h(x)\exp[\theta^T \phi(x) - A(\theta)]\]</div>
 <ul class="simple">
-<li><p><span class="math notranslate nohighlight">\(Z(\theta) = \int_{X^m} h(x) \exp[\theta^T \phi(x)]dx\)</span>  (this is the partition function)</p></li>
+<li><p><span class="math notranslate nohighlight">\(Z(\theta) = \int_{X^m} h(x) \exp[\theta^T \phi(x)]dx\)</span> is the partition function, and it is log-convex in <span class="math notranslate nohighlight">\(\theta\)</span></p></li>
 <li><p><span class="math notranslate nohighlight">\(h(x)\)</span> is the scaling constnat ofthen set to 1.</p></li>
 <li><p><span class="math notranslate nohighlight">\(A(\theta) = \log Z(\theta)\)</span> (log partition function or cumulant function)</p></li>
-<li><p><span class="math notranslate nohighlight">\(\theta\)</span> is called the <strong>natural parameters</strong> of <strong>canonical parameters</strong>.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\theta\)</span> is called the <strong>natural parameters</strong> or <strong>canonical parameters</strong>. Exponential families are log-concave in their natural parameters.</p></li>
 <li><p><span class="math notranslate nohighlight">\(\phi(x) \in R^d\)</span> is called a vector of <strong>sufficient statistics</strong> , if <span class="math notranslate nohighlight">\(\phi(x) =x​\)</span> we say it is a <strong>natural exponential family</strong></p></li>
 </ul>
 <p>We can futher generalize the exponential family by writing:</p>
@@ -2389,6 +2396,11 @@ commentsRunWhenDOMLoaded(addUtterances);
 <div class="section" id="maximum-entropy-derivation">
 <h2><a class="reference internal" href="exponential_family_maximum_entropy.html"><span class="doc std std-doc">Maximum entropy derivation</span></a><a class="headerlink" href="#maximum-entropy-derivation" title="Permalink to this headline">¶</a></h2>
 <p>The exponential family, is the distribution that makes the least number of assumptions about the data, subject to a specific set of user-specified constraints. In particular suppose all we know is the expected values of certain features or functions.</p>
+<p>Or we can say, that the distribution that maximizes the entropy <span class="math notranslate nohighlight">\(H(p)\)</span> under constraint <span class="math notranslate nohighlight">\(E_p[\phi(x)] = \alpha\)</span> (sufficient stats equal some parameter alpha) is the exponential family.</p>
+</div>
+<div class="section" id="markov-random-fields">
+<h2><a class="reference internal" href="learning_markov_random_fields.html"><span class="doc std std-doc">Markov random fields</span></a><a class="headerlink" href="#markov-random-fields" title="Permalink to this headline">¶</a></h2>
+<p>If we learn markov random fields we extensively use exponential families.</p>
 </div>
 </div>
 

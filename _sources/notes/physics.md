@@ -27,4 +27,13 @@ If something falls in the air, there is drag. Drag pushes an object back.
 ### [Elastic Forces](elastic_forces.md)
 Here we study the behavior of springs, how they expand and contract under force.
 
-### [Four fundamental forces of nature](forces_in_nature.md)
+### [Four fundamental forces of nature](forces_in_nature.md
+
+### [Newtons Law of gravitation](newtons_law_of_gravitation.md)
+Here we define the gravitation between two objects their masses, distance between them and the gravitational constant.
+
+### [Weight of an object](weight.md)
+The weight of an object is the total [gravitational force](newtons_law_of_gravitation.md) excreted on the object by all the other objects in the universe.
+
+### [Satellite motion](satellite_motion.md)
+

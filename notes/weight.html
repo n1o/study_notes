@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Learning Markov Random Fields &#8212; study-notes</title>
+    <title>Weight &#8212; study-notes</title>
     
   <link rel="stylesheet" href="../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
 
@@ -2230,7 +2230,7 @@ commentsRunWhenDOMLoaded(addUtterances);
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../_sources/notes/learning_markov_random_fields.md"><button type="button"
+        <a class="dropdown-buttons" href="../_sources/notes/weight.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.md</button></a>
         <!-- Download PDF via print -->
@@ -2255,51 +2255,6 @@ commentsRunWhenDOMLoaded(addUtterances);
     <!-- Table of contents -->
     <div class="d-none d-md-block col-md-2 bd-toc show">
         
-        <div class="tocsection onthispage pt-5 pb-3">
-            <i class="fas fa-list"></i> Contents
-        </div>
-        <nav id="bd-toc-nav">
-            <ul class="nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#exponential-families">
-   Exponential families
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#maximum-likelihood-learning">
-   <span class="xref myst">
-    Maximum likelihood learning
-   </span>
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#approximate-learning">
-   Approximate learning
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#pseudo-likelihood">
-     Pseudo likelihood
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#moment-matching">
-   Moment matching
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#learning-in-conditional-random-fields">
-   <span class="xref myst">
-    Learning in conditional random fields
-   </span>
-  </a>
- </li>
-</ul>
-
-        </nav>
-        
     </div>
 </div>
     <div id="main-content" class="row">
@@ -2307,100 +2262,24 @@ commentsRunWhenDOMLoaded(addUtterances);
         
               <div>
                 
-  <div class="section" id="learning-markov-random-fields">
-<h1>Learning Markov Random Fields<a class="headerlink" href="#learning-markov-random-fields" title="Permalink to this headline">¶</a></h1>
-<p><a class="reference internal" href="markov_random_fields.html"><span class="doc std std-doc">Markov Random fields</span></a> are more expressive than <a class="reference internal" href="directed_graphical_models.html"><span class="doc std std-doc">directed graphical models</span></a>, unfortunately this makes them harder to deal with.</p>
-<p>Lets assume an MRF of the form:</p>
+  <div class="section" id="weight">
+<h1>Weight<a class="headerlink" href="#weight" title="Permalink to this headline">¶</a></h1>
+<p>The weight of an object is the total <a class="reference internal" href="newtons_law_of_gravitation.html"><span class="doc std std-doc">gravitational force</span></a> excreted on the object by all the other objects in the universe.</p>
+<p>If an object is at the surface of the earth we can neglect all the other forces.</p>
+<p>If the earth would be a symmetric sphere with radius <span class="math notranslate nohighlight">\(R_E\)</span> and mass <span class="math notranslate nohighlight">\(m_E\)</span> the weight of an small object with mass <span class="math notranslate nohighlight">\(m\)</span> at the surface of the earth would be.</p>
+<div class="math notranslate nohighlight">
+\[
+w = F_g = \frac{G m m_E}{R^2_E}
+\]</div>
+<p>From this we can derive the gravitational constant:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
-p(x_1, \cdots, x_n) = \frac{1}{Z(\varphi)} \prod_{c \in C} \phi_c(x_c; \varphi) \\
-Z(\varphi) = \sum_{x_1, \cdots, x_n} \prod_{c \in C} \phi_c (x_c; \varphi)
+w = mg \\
+mg = \frac{Gmm_e}{R^2_E} \\
+g = \frac{Gm_E}{R^2_E}
 \end{split}\]</div>
-<p>We can parametrize p as follows:</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}
-p(x_1, \cdots, x_n) = \frac{1}{Z(\varphi)}\exp (\sum_{x \in C}\log \phi_c(x_c; \varphi)) \\
-= \frac{1}{Z(\varphi)} \exp (\sum_{c \in C} \sum_{x_c'}1 \{ x_c' = x_c \} \log \phi_c(x_c'; \varphi)) \\
-= \frac{\exp (\theta^T f(x))}{Z(\theta)}
-\end{split}\]</div>
-<ul class="simple">
-<li><p><span class="math notranslate nohighlight">\(f(x)\)</span> is a vector of indicator functions</p></li>
-<li><p><span class="math notranslate nohighlight">\(\theta\)</span> is the set of all the model parameters defined by <span class="math notranslate nohighlight">\(\log \phi_c(x'_c,\varphi)\)</span></p></li>
-<li><p><span class="math notranslate nohighlight">\(Z(\theta)\)</span> is the partition function (differs for each set of parameters <span class="math notranslate nohighlight">\(\theta\)</span>). In Bayesian networks we have <span class="math notranslate nohighlight">\(Z(\theta) = 1\)</span> for all <span class="math notranslate nohighlight">\(\theta\)</span>, in MRF we do not do this modelling assumptions, which makes it more flexible but harder to learn.</p></li>
-</ul>
-<div class="section" id="exponential-families">
-<h2>Exponential families<a class="headerlink" href="#exponential-families" title="Permalink to this headline">¶</a></h2>
-<p>The distribution:</p>
-<div class="math notranslate nohighlight">
-\[
-p(x;\theta) = \frac{\exp(\theta^T f(x))}{Z(\theta)}
-\]</div>
-<p>Is an example of <a class="reference internal" href="exponential_family.html"><span class="doc std std-doc">exponential families</span></a>, which have the following properties:</p>
-<ul class="simple">
-<li><p>log-concave in their natural parameter <span class="math notranslate nohighlight">\(\theta\)</span></p></li>
-<li><p><span class="math notranslate nohighlight">\(f(x)\)</span> is the vector of sufficient statistics, that fully describe the distribution p</p></li>
-<li><p>they make the fewest unnecessary assumptions about the data distribution.</p></li>
-</ul>
-</div>
-<div class="section" id="maximum-likelihood-learning">
-<h2><a class="reference internal" href="maximum_likelihood_markov_random_field.html"><span class="doc std std-doc">Maximum likelihood learning</span></a><a class="headerlink" href="#maximum-likelihood-learning" title="Permalink to this headline">¶</a></h2>
-<p>Here we assume the following log likelihood:
-$<span class="math notranslate nohighlight">\(
-\frac{1}{|D|} \log p(D;\theta) = \frac{1}{|D|}\sum_{x \in D}\theta^T f(x) - \log Z(\theta)
-\)</span>$</p>
-<p>Unfortunately optimizing this objective is intractable, because the gradient is intractable.</p>
-</div>
-<div class="section" id="approximate-learning">
-<h2>Approximate learning<a class="headerlink" href="#approximate-learning" title="Permalink to this headline">¶</a></h2>
-<p>We can reduce maximum-likelihood learning to inference in a sense that we may repeatedly use inference to compute the gradient and determine the model weights using gradient descent. We can leverage this to perform approximate inference as:</p>
-<ul class="simple">
-<li><p><a class="reference internal" href="gibs_sampling.html"><span class="doc std std-doc">Gibs sampling</span></a></p></li>
-<li><p><a class="reference internal" href="persistent_contrastive_divergence.html"><span class="doc std std-doc">Persistent contrastive divergence</span></a>. Here after a step of gradient descent, the model will change only a little, thus we keep sampling from the same Gibbs sampler instead of a new one.</p></li>
-</ul>
-<div class="section" id="pseudo-likelihood">
-<h3>Pseudo likelihood<a class="headerlink" href="#pseudo-likelihood" title="Permalink to this headline">¶</a></h3>
-<p>We replace the likelihood</p>
-<div class="math notranslate nohighlight">
-\[
-\frac{1}{D} \log p(D;\theta) =\frac{1}{|D|} \sum_{x \in D} \log p(x;\theta)
-\]</div>
-<p>with the following approximation:</p>
-<div class="math notranslate nohighlight">
-\[
-l_{\text{LP}} (\theta;D) = \frac{1}{|D|} \sum_{x \in D} \sum_{i} \log p(x_i|x_{N(i)};\theta)
-\]</div>
-<ul class="simple">
-<li><p><span class="math notranslate nohighlight">\(x_i\)</span> is the ith variable in x</p></li>
-<li><p><span class="math notranslate nohighlight">\(N(i)\)</span> are the neighbors of i in the graph g (markov blanket of i)</p></li>
-</ul>
-<p>Here <span class="math notranslate nohighlight">\(\log p(x_i|x_{N(i)};\theta)\)</span> involves only one variable <span class="math notranslate nohighlight">\(x_i\)</span> and the partition function is just a sum over all the values of one variable.</p>
-<p>The pseudo-likelihood assumes that <span class="math notranslate nohighlight">\(x_i\)</span> depends mainly on its neighbors in the graph, and ignores the dependencies on other, more distant, variables.</p>
-<p>Pseudo-likelihood is concave and works well in practice (there are some exceptions)</p>
-</div>
-</div>
-<div class="section" id="moment-matching">
-<h2>Moment matching<a class="headerlink" href="#moment-matching" title="Permalink to this headline">¶</a></h2>
-<p>If we take the log-likelihood:</p>
-<div class="math notranslate nohighlight">
-\[
-\frac{1}{|D|} \log p(D;\theta) = \frac{1}{|D|}\sum_{x \in D}\theta^T f(x) - \log Z(\theta)
-\]</div>
-<p>If we differentiate it we get:</p>
-<div class="math notranslate nohighlight">
-\[
-\frac{1}{|D|} \sum_{x\in D} f(x) - E_{x \sim p}[f(x)]
-\]</div>
-<p>This is the difference between the expectation of natural parameters under the empirical distribution and the model distribution. Since <span class="math notranslate nohighlight">\(f\)</span> in MRF is a vector of indicator functions for each variable of a clique one entry of <span class="math notranslate nohighlight">\(f = I[x_c - \bar{x}_c]\)</span>, the gradient is equal:</p>
-<div class="math notranslate nohighlight">
-\[
-\frac{1}{|D|} \sum_{x \in D} I[x_c = \bar{x}_c] - E_{x \sim p}[I[x_c = \bar{x}_c]]
-\]</div>
-<p>Thus by training MRF we force marginals to match the empirical marginals. This property is knows as moment matching. Since in maximum-likelihood we choose a distribution q to minimize the inclusive KL divergence <span class="math notranslate nohighlight">\(KL(p||q)\)</span> across q in an exponential family, the minimizer <span class="math notranslate nohighlight">\(q^*\)</span> will match the moments of the sufficient statistics to the corresponding moments of p. This is the reason why minimizing <span class="math notranslate nohighlight">\(KL(p||q)\)</span> is called moment matching.</p>
-</div>
-<div class="section" id="learning-in-conditional-random-fields">
-<h2><a class="reference internal" href="learning_in_conditonal_radom_fields.html"><span class="doc std std-doc">Learning in conditional random fields</span></a><a class="headerlink" href="#learning-in-conditional-random-fields" title="Permalink to this headline">¶</a></h2>
-<p>Here we extend learning to <a class="reference internal" href="conditional_random_fields.html"><span class="doc std std-doc">conditional random fields</span></a></p>
-</div>
+<p>Here we can see that the gravitational constant is independent of the objects weight and depends only on the mass of Earth (or other celestial object) and its Radius.</p>
+<p>The weight of an object decreases with the square of its distance from earth center.</p>
 </div>
 
     <script type="text/x-thebe-config">

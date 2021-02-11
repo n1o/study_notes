@@ -23,3 +23,5 @@ This can be generalized, for an example we model $p(x,y)$ using an MRF, we fit t
 If we assume that $p(y|x)$ is a chain CRF, with two types of factors, (an example image factors) $\phi(x_i|y_i)$ for $i=1,\cdots, n$, which assigns higher values to $y_i$ which are consistent with input $x_i$, and pairwise factors $\phi(y_i, y_{i+1})$ for $i=1,\cdots,n-1$. 
 
 We can view $\phi(x_i|y_i)$ as probabilities $p(y_i|x_i)$ and $\phi(y_i|y_{i+1})$ are some co-occurrences.
+
+## [Learning](learning_in_conditonal_radom_fields.md)

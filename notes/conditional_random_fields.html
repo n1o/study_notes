@@ -2272,6 +2272,13 @@ commentsRunWhenDOMLoaded(addUtterances);
    Chain CRF
   </a>
  </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#learning">
+   <span class="xref myst">
+    Learning
+   </span>
+  </a>
+ </li>
 </ul>
 
         </nav>
@@ -2309,6 +2316,9 @@ This can be generalized, for an example we model <span class="math notranslate n
 <h2>Chain CRF<a class="headerlink" href="#chain-crf" title="Permalink to this headline">¶</a></h2>
 <p>If we assume that <span class="math notranslate nohighlight">\(p(y|x)\)</span> is a chain CRF, with two types of factors, (an example image factors) <span class="math notranslate nohighlight">\(\phi(x_i|y_i)\)</span> for <span class="math notranslate nohighlight">\(i=1,\cdots, n\)</span>, which assigns higher values to <span class="math notranslate nohighlight">\(y_i\)</span> which are consistent with input <span class="math notranslate nohighlight">\(x_i\)</span>, and pairwise factors <span class="math notranslate nohighlight">\(\phi(y_i, y_{i+1})\)</span> for <span class="math notranslate nohighlight">\(i=1,\cdots,n-1\)</span>.</p>
 <p>We can view <span class="math notranslate nohighlight">\(\phi(x_i|y_i)\)</span> as probabilities <span class="math notranslate nohighlight">\(p(y_i|x_i)\)</span> and <span class="math notranslate nohighlight">\(\phi(y_i|y_{i+1})\)</span> are some co-occurrences.</p>
+</div>
+<div class="section" id="learning">
+<h2><a class="reference internal" href="learning_in_conditonal_radom_fields.html"><span class="doc std std-doc">Learning</span></a><a class="headerlink" href="#learning" title="Permalink to this headline">¶</a></h2>
 </div>
 </div>
 

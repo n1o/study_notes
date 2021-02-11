@@ -2257,6 +2257,20 @@ commentsRunWhenDOMLoaded(addUtterances);
     <!-- Table of contents -->
     <div class="d-none d-md-block col-md-2 bd-toc show">
         
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#vertical-circle">
+   Vertical circle
+  </a>
+ </li>
+</ul>
+
+        </nav>
+        
     </div>
 </div>
     <div id="main-content" class="row">
@@ -2297,6 +2311,42 @@ a_{rad} = \frac{v^2}{R}
 <div><p>This acceleration is <strong>radial</strong> (points always to the center of the circle, and perpendicular to the objects velocity)
 It is proportional to the square of speed <span class="math notranslate nohighlight">\(a_{rad}\propto v^2\)</span> and inversely proportional to the radius <span class="math notranslate nohighlight">\(a_{rad} \propto \frac{1}{R}\)</span></p>
 </div></blockquote>
+<p><img alt="" src="../_images/circular_motion_v2.png" /></p>
+<p>Since we move in a circle we can express the motion using time until a full revolution happens.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+v= \frac{2 \pi R}{T} \\
+a_{\text{rad}} = \frac{2\pi^3 R}{T^2}
+\end{split}\]</div>
+<p>Since there is inward acceleration, there must be a force that points inward.</p>
+<p><img alt="" src="../_images/circular_motion_inward_force.png" /></p>
+<p>This force can be expressed as:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+F_{\text{net}} = m a_{\text{rad}} \\
+F_{\text{net}} = m \frac{v^2}{R}
+\end{split}\]</div>
+<div class="section" id="vertical-circle">
+<h2>Vertical circle<a class="headerlink" href="#vertical-circle" title="Permalink to this headline">¶</a></h2>
+<p>There is a special case when we move in a vertical circle, an example is a Ferris wheel:</p>
+<p><img alt="" src="../_images/ferris_wheel_motion.png" /></p>
+<p>Here the force that act at the top of the wheel and at the bottom of the wheel are special.</p>
+<p>At the top:
+$<span class="math notranslate nohighlight">\(
+n_t + (-mg) = m(-a_{\text{rad}}) \\
+n_t + (-mg) = m(-\frac{v^2}{R}) \\
+n_t = mg(1 - \frac{v^2}{gR})
+\)</span>$</p>
+<p>The seat excerpts lower normal force.</p>
+<p>At the bottom:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+n_b + (-mg) = ma_{\text{rad}} \\
+n_b + (-mg) = m \frac{v^2}{R} \\
+n_b = mg(1+\frac{v^2}{gR})
+\end{split}\]</div>
+<p>The seat excerpts greater normal force.</p>
+</div>
 </div>
 
     <script type="text/x-thebe-config">
