@@ -643,17 +643,7 @@ commentsRunWhenDOMLoaded(addUtterances);
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="em_algorithm.html">
-   The EM Alogirthm
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="em_algorithm.html#theory">
-   Theory
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="em_algorithm.html#applications">
-   Applications
+   The EM Algorithm
   </a>
  </li>
  <li class="toctree-l1">
@@ -714,11 +704,6 @@ commentsRunWhenDOMLoaded(addUtterances);
  <li class="toctree-l1">
   <a class="reference internal" href="gaussian_mixture_model.html">
    Mixture of Gaussians
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="gaussian_mixture_model.html#em">
-   EM
   </a>
  </li>
  <li class="toctree-l1">
@@ -2071,28 +2056,6 @@ commentsRunWhenDOMLoaded(addUtterances);
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="bayesian_statistics.html#finding-the-posterior-distribution-inference">
-   Finding the posterior distribution (Inference)
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="bayesian_statistics.html#model-averaging">
-   <span class="xref myst">
-    Model averaging
-   </span>
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="bayesian_statistics.html#model-selection">
-   Model selection
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="bayesian_statistics.html#posterior-predictive-distribution">
-   Posterior predictive distribution
-  </a>
- </li>
- <li class="toctree-l1">
   <a class="reference internal" href="hidden_markov_models.html">
    Hidden Markov models
   </a>
@@ -2257,6 +2220,20 @@ commentsRunWhenDOMLoaded(addUtterances);
     <!-- Table of contents -->
     <div class="d-none d-md-block col-md-2 bd-toc show">
         
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#learning">
+   Learning
+  </a>
+ </li>
+</ul>
+
+        </nav>
+        
     </div>
 </div>
     <div id="main-content" class="row">
@@ -2266,13 +2243,40 @@ commentsRunWhenDOMLoaded(addUtterances);
                 
   <div class="section" id="latent-variable-models">
 <h1>Latent Variable Models<a class="headerlink" href="#latent-variable-models" title="Permalink to this headline">¶</a></h1>
-<p>Here we assume that observed variables are correlated because they arrise form a hidden common “cause”. Model with hidden variables are known as <strong>latent variable models (LVM)</strong>.</p>
+<p>Here we assume that observed variables are correlated because they arise form a hidden common “cause”. Model with hidden variables are known as <strong>latent variable models (LVM)</strong>.
+Our goal is to find the following joint distribution:</p>
+<div class="math notranslate nohighlight">
+\[
+p(x,z) = p(x|z)p(z)
+\]</div>
+<ul class="simple">
+<li><p>x is observed</p></li>
+<li><p>z is unobserved</p></li>
+</ul>
 <p>In general LVM are harder to fit, than models with no latent variables.  However they have significant advantages:</p>
 <ol class="simple">
 <li><p>They often have fewer parameters than models that directly represent correlation in the visible space</p></li>
-<li><p>The hidden variables in an LVMM can serve as <strong>bottleneck</strong>, which computes a copressed representation of the data.</p></li>
+<li><p>The hidden variables in an LVMM can serve as <strong>bottleneck</strong>, which computes a compressed representation of the data.</p></li>
 </ol>
 <p>Since latent variables can be used to explain the data generation process in general we are interested to find out something about <span class="math notranslate nohighlight">\(p(z| x)\)</span>. To find out something about our hidden variables given the observed ones.</p>
+<div class="section" id="learning">
+<h2>Learning<a class="headerlink" href="#learning" title="Permalink to this headline">¶</a></h2>
+<p>When we train an LVM model our goal si to maximize the marginal-log likelihood:</p>
+<div class="math notranslate nohighlight">
+\[
+\log p(D) = \sum_{x \in D} \log p(x) = \sum_{x \in D} \log [\sum_{z} p(x|z)p(z)]
+\]</div>
+<p>This optimization is difficult because of the summation inside the log cannot be decomposed into sum of log factors.</p>
+<p>If we look closer at a data point x:</p>
+<div class="math notranslate nohighlight">
+\[
+p(x) = \sum_z p(x|z)p(z)
+\]</div>
+<p>It is mixture of distributions <span class="math notranslate nohighlight">\(p(x|z)\)</span> with weights <span class="math notranslate nohighlight">\(p(z)\)</span>. If we assume that a single <span class="math notranslate nohighlight">\(p(x|z)\)</span> is from an <a class="reference internal" href="exponential_family.html"><span class="doc std std-doc">exponential family</span></a> it has a concave log-likelihood, but the log of a weighted mixture of such distribution is no longer concave. Thus our goal is non-convex and we have to use approximate learning algorithms.</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="em_algorithm.html"><span class="doc std std-doc">Expectation maximization</span></a></p></li>
+</ul>
+</div>
 </div>
 
     <script type="text/x-thebe-config">

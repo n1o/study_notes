@@ -2,13 +2,19 @@
 
 The most widely used [mixture model](mixture_models.md) is the **mixture of Gaussians** also known as **Gaussian mixture model (GMM)**. In this model each base distribution is a mixture of multivariate Gaussians with mean $\mu_k$ and covariance matrix $\Sigma_k$.
 
-$$p(x_i|\theta) = \sum_{k=1}^K \pi_k \mathcal{N}(x_i| \mu_k, \Sigma_k)$$
+$$
+p(x) = p(x|z)p(z) \\
+p(x_i|\theta) = \sum_{k=1}^K \pi_k \mathcal{N}(x_i| \mu_k, \Sigma_k)
+$$
 
+* $\pi_k = p(z=k)$
 * $\sum_k \pi_k = 1$ are the mixture weights
 
-![](../.images/machine_learning/mixture_of_gaussians.png)
+Here we assume that our observed data is comprised of K cluster with proportions specified by $\pi_1, \cdots, \pi_k$, where each cluster is a Gaussian.
 
-# EM
+![](../.images/machine_learning/gaussian_mixture_example.png)
+
+## EM
 One way to fit Gaussian mixture model is to use [EM](em_algorithm.md)
 
 We assume a known number of K mixture components:
@@ -58,4 +64,3 @@ $$
 This is intuitive the mean of cluster $k$ is just the weighted average of all points assigned to cluster k, and the covariance is proportional to the weighted empirical scatter matrix.
 
 Now we set $\theta^k = (\pi_k, \mu_k, \Sigma_k)$ for $k = 1 : K$ and go to the next E step.
-

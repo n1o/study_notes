@@ -643,17 +643,7 @@ commentsRunWhenDOMLoaded(addUtterances);
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="em_algorithm.html">
-   The EM Alogirthm
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="em_algorithm.html#theory">
-   Theory
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="em_algorithm.html#applications">
-   Applications
+   The EM Algorithm
   </a>
  </li>
  <li class="toctree-l1">
@@ -714,11 +704,6 @@ commentsRunWhenDOMLoaded(addUtterances);
  <li class="toctree-l1">
   <a class="reference internal" href="gaussian_mixture_model.html">
    Mixture of Gaussians
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="gaussian_mixture_model.html#em">
-   EM
   </a>
  </li>
  <li class="toctree-l1">
@@ -2071,28 +2056,6 @@ commentsRunWhenDOMLoaded(addUtterances);
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="#finding-the-posterior-distribution-inference">
-   Finding the posterior distribution (Inference)
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="#model-averaging">
-   <span class="xref myst">
-    Model averaging
-   </span>
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="#model-selection">
-   Model selection
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="#posterior-predictive-distribution">
-   Posterior predictive distribution
-  </a>
- </li>
- <li class="toctree-l1">
   <a class="reference internal" href="hidden_markov_models.html">
    Hidden Markov models
   </a>
@@ -2262,53 +2225,51 @@ commentsRunWhenDOMLoaded(addUtterances);
         </div>
         <nav id="bd-toc-nav">
             <ul class="nav section-nav flex-column">
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#">
-   Bayesian Statistics
-  </a>
- </li>
- <li class="toc-h1 nav-item toc-entry">
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#finding-the-posterior-distribution-inference">
    Finding the posterior distribution (Inference)
   </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#analytical-solution-using-conjugate-priors">
-     Analytical solution using conjugate priors
-    </a>
-   </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#markov-chain-monte-carlo">
-     <span class="xref myst">
-      Markov chain monte carlo
-     </span>
-    </a>
-   </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#variational-approximation-inference">
-     <span class="xref myst">
-      Variational approximation
-     </span>
-     (Inference)
-    </a>
-   </li>
-  </ul>
  </li>
- <li class="toc-h1 nav-item toc-entry">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#analytical-solution-using-conjugate-priors">
+   Analytical solution using conjugate priors
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#markov-chain-monte-carlo">
+   <span class="xref myst">
+    Markov chain monte carlo
+   </span>
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#variational-approximation-inference">
+   <span class="xref myst">
+    Variational approximation
+   </span>
+   (Inference)
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#model-averaging">
    <span class="xref myst">
     Model averaging
    </span>
   </a>
  </li>
- <li class="toc-h1 nav-item toc-entry">
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#model-selection">
    Model selection
   </a>
  </li>
- <li class="toc-h1 nav-item toc-entry">
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#posterior-predictive-distribution">
    Posterior predictive distribution
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#bayesian-learning-vs-maximum-likelihood">
+   Bayesian Learning vs Maximum Likelihood
   </a>
  </li>
 </ul>
@@ -2343,10 +2304,10 @@ p(\theta|D) \propto p(D|\theta) p(\theta) \\\end{split}\\p(\theta|D) =  \frac{p(
 <div class="math notranslate nohighlight">
 \[p(D) = \int_{\theta} p(D|\theta)p(\theta)\]</div>
 <p>This is aloso called the <a class="reference internal" href="computing_evidence.html"><span class="doc std std-doc"><strong>evidence</strong></span></a> and it is what makes Bayesian statistics hard! Since calculating the integral is notrivial.</p>
-</div>
 <div class="section" id="finding-the-posterior-distribution-inference">
-<h1>Finding the posterior distribution (Inference)<a class="headerlink" href="#finding-the-posterior-distribution-inference" title="Permalink to this headline">¶</a></h1>
+<h2>Finding the posterior distribution (Inference)<a class="headerlink" href="#finding-the-posterior-distribution-inference" title="Permalink to this headline">¶</a></h2>
 <p>There are multiple approaches how to find <span class="math notranslate nohighlight">\(p(\theta|D)\)</span> depending if we want an exact or approximate solution:</p>
+</div>
 <div class="section" id="analytical-solution-using-conjugate-priors">
 <h2>Analytical solution using conjugate priors<a class="headerlink" href="#analytical-solution-using-conjugate-priors" title="Permalink to this headline">¶</a></h2>
 <p>Computing <span class="math notranslate nohighlight">\(p(\theta|D)\)</span> can be nontrivial, but for some cases it can be achieved analyticaly. We require that we choose an <a class="reference internal" href="conjugate_prior.html"><span class="doc std std-doc">conjugate priors</span></a> to an likelihood.</p>
@@ -2364,18 +2325,22 @@ p(\theta|D) \approx q(\theta)
 \]</div>
 <p>We want this approximation to be tight ass possible.</p>
 </div>
-</div>
 <div class="section" id="model-averaging">
-<h1><a class="reference internal" href="bayesian_model_averaging.html"><span class="doc std std-doc">Model averaging</span></a><a class="headerlink" href="#model-averaging" title="Permalink to this headline">¶</a></h1>
+<h2><a class="reference internal" href="bayesian_model_averaging.html"><span class="doc std std-doc">Model averaging</span></a><a class="headerlink" href="#model-averaging" title="Permalink to this headline">¶</a></h2>
 <p>We can use the probability of the model <span class="math notranslate nohighlight">\(p(M|D)\)</span> to average over.</p>
 </div>
 <div class="section" id="model-selection">
-<h1>Model selection<a class="headerlink" href="#model-selection" title="Permalink to this headline">¶</a></h1>
+<h2>Model selection<a class="headerlink" href="#model-selection" title="Permalink to this headline">¶</a></h2>
 <p>Sometimes we need to choose the <a class="reference internal" href="bayesian_model_selection.html"><span class="doc std std-doc">best model</span></a></p>
 </div>
 <div class="section" id="posterior-predictive-distribution">
-<h1>Posterior predictive distribution<a class="headerlink" href="#posterior-predictive-distribution" title="Permalink to this headline">¶</a></h1>
+<h2>Posterior predictive distribution<a class="headerlink" href="#posterior-predictive-distribution" title="Permalink to this headline">¶</a></h2>
 <p>The posterior is our belief about the world. We can test if our belief is justified if it manages to predict observed quantities. By drawing from the posterior we get the <a class="reference internal" href="posterior_predictive_distribution.html"><span class="doc std std-doc">posterior predicitve distribution</span></a></p>
+</div>
+<div class="section" id="bayesian-learning-vs-maximum-likelihood">
+<h2>Bayesian Learning vs Maximum Likelihood<a class="headerlink" href="#bayesian-learning-vs-maximum-likelihood" title="Permalink to this headline">¶</a></h2>
+<p>Here we draw the basic difference between <a class="reference internal" href="maximum_likelihood_learning.html"><span class="doc std std-doc">maximum likelihood learning</span></a> and <a class="reference internal" href="bayesian_learning.html"><span class="doc std std-doc">Bayesian learning</span></a></p>
+</div>
 </div>
 
     <script type="text/x-thebe-config">

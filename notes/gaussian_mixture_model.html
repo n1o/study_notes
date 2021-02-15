@@ -643,17 +643,7 @@ commentsRunWhenDOMLoaded(addUtterances);
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="em_algorithm.html">
-   The EM Alogirthm
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="em_algorithm.html#theory">
-   Theory
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="em_algorithm.html#applications">
-   Applications
+   The EM Algorithm
   </a>
  </li>
  <li class="toctree-l1">
@@ -714,11 +704,6 @@ commentsRunWhenDOMLoaded(addUtterances);
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
    Mixture of Gaussians
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="#em">
-   EM
   </a>
  </li>
  <li class="toctree-l1">
@@ -2071,28 +2056,6 @@ commentsRunWhenDOMLoaded(addUtterances);
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="bayesian_statistics.html#finding-the-posterior-distribution-inference">
-   Finding the posterior distribution (Inference)
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="bayesian_statistics.html#model-averaging">
-   <span class="xref myst">
-    Model averaging
-   </span>
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="bayesian_statistics.html#model-selection">
-   Model selection
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="bayesian_statistics.html#posterior-predictive-distribution">
-   Posterior predictive distribution
-  </a>
- </li>
- <li class="toctree-l1">
   <a class="reference internal" href="hidden_markov_models.html">
    Hidden Markov models
   </a>
@@ -2262,27 +2225,20 @@ commentsRunWhenDOMLoaded(addUtterances);
         </div>
         <nav id="bd-toc-nav">
             <ul class="nav section-nav flex-column">
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#">
-   Mixture of Gaussians
-  </a>
- </li>
- <li class="toc-h1 nav-item toc-entry">
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#em">
    EM
   </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#e-step">
-     E step
-    </a>
-   </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#m-step">
-     M step
-    </a>
-   </li>
-  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#e-step">
+   E step
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#m-step">
+   M step
+  </a>
  </li>
 </ul>
 
@@ -2299,14 +2255,18 @@ commentsRunWhenDOMLoaded(addUtterances);
 <h1>Mixture of Gaussians<a class="headerlink" href="#mixture-of-gaussians" title="Permalink to this headline">¶</a></h1>
 <p>The most widely used <a class="reference internal" href="mixture_models.html"><span class="doc std std-doc">mixture model</span></a> is the <strong>mixture of Gaussians</strong> also known as <strong>Gaussian mixture model (GMM)</strong>. In this model each base distribution is a mixture of multivariate Gaussians with mean <span class="math notranslate nohighlight">\(\mu_k\)</span> and covariance matrix <span class="math notranslate nohighlight">\(\Sigma_k\)</span>.</p>
 <div class="math notranslate nohighlight">
-\[p(x_i|\theta) = \sum_{k=1}^K \pi_k \mathcal{N}(x_i| \mu_k, \Sigma_k)\]</div>
+\[\begin{split}
+p(x) = p(x|z)p(z) \\
+p(x_i|\theta) = \sum_{k=1}^K \pi_k \mathcal{N}(x_i| \mu_k, \Sigma_k)
+\end{split}\]</div>
 <ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\pi_k = p(z=k)\)</span></p></li>
 <li><p><span class="math notranslate nohighlight">\(\sum_k \pi_k = 1\)</span> are the mixture weights</p></li>
 </ul>
-<p><img alt="" src="../_images/mixture_of_gaussians.png" /></p>
-</div>
+<p>Here we assume that our observed data is comprised of K cluster with proportions specified by <span class="math notranslate nohighlight">\(\pi_1, \cdots, \pi_k\)</span>, where each cluster is a Gaussian.</p>
+<p><img alt="" src="../_images/gaussian_mixture_example.png" /></p>
 <div class="section" id="em">
-<h1>EM<a class="headerlink" href="#em" title="Permalink to this headline">¶</a></h1>
+<h2>EM<a class="headerlink" href="#em" title="Permalink to this headline">¶</a></h2>
 <p>One way to fit Gaussian mixture model is to use <a class="reference internal" href="em_algorithm.html"><span class="doc std std-doc">EM</span></a></p>
 <p>We assume a known number of K mixture components:</p>
 <div class="math notranslate nohighlight">
@@ -2319,6 +2279,7 @@ Q(\theta|\theta^{(t -1)} ) \triangleq E[\sum_i \log p(x_i, z_i |\theta)] \\
 <ul class="simple">
 <li><p><span class="math notranslate nohighlight">\(r_{ik} = p(z_i = k| x_i, \theta^{(t-1)})\)</span> is the responsibility that cluster k takes from data point i.</p></li>
 </ul>
+</div>
 <div class="section" id="e-step">
 <h2>E step<a class="headerlink" href="#e-step" title="Permalink to this headline">¶</a></h2>
 <p>This is the same for all mixture models</p>

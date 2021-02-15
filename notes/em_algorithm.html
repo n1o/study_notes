@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>The EM Alogirthm &#8212; study-notes</title>
+    <title>The EM Algorithm &#8212; study-notes</title>
     
   <link rel="stylesheet" href="../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
 
@@ -643,17 +643,7 @@ commentsRunWhenDOMLoaded(addUtterances);
  </li>
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
-   The EM Alogirthm
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="#theory">
-   Theory
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="#applications">
-   Applications
+   The EM Algorithm
   </a>
  </li>
  <li class="toctree-l1">
@@ -714,11 +704,6 @@ commentsRunWhenDOMLoaded(addUtterances);
  <li class="toctree-l1">
   <a class="reference internal" href="gaussian_mixture_model.html">
    Mixture of Gaussians
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="gaussian_mixture_model.html#em">
-   EM
   </a>
  </li>
  <li class="toctree-l1">
@@ -2071,28 +2056,6 @@ commentsRunWhenDOMLoaded(addUtterances);
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="bayesian_statistics.html#finding-the-posterior-distribution-inference">
-   Finding the posterior distribution (Inference)
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="bayesian_statistics.html#model-averaging">
-   <span class="xref myst">
-    Model averaging
-   </span>
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="bayesian_statistics.html#model-selection">
-   Model selection
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="bayesian_statistics.html#posterior-predictive-distribution">
-   Posterior predictive distribution
-  </a>
- </li>
- <li class="toctree-l1">
   <a class="reference internal" href="hidden_markov_models.html">
    Hidden Markov models
   </a>
@@ -2262,26 +2225,36 @@ commentsRunWhenDOMLoaded(addUtterances);
         </div>
         <nav id="bd-toc-nav">
             <ul class="nav section-nav flex-column">
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#">
-   The EM Alogirthm
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#formal-algorithm">
+   Formal Algorithm
   </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#basic-idea">
-     Basic idea
-    </a>
-   </li>
-  </ul>
  </li>
- <li class="toc-h1 nav-item toc-entry">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#detailed-overview">
+   Detailed overview
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#theory">
    Theory
   </a>
  </li>
- <li class="toc-h1 nav-item toc-entry">
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#applications">
    Applications
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#connection-to-variational-inference">
+   <span class="xref myst">
+    Connection to Variational Inference
+   </span>
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#properties">
+   Properties
   </a>
  </li>
 </ul>
@@ -2295,15 +2268,43 @@ commentsRunWhenDOMLoaded(addUtterances);
         
               <div>
                 
-  <div class="section" id="the-em-alogirthm">
-<h1>The EM Alogirthm<a class="headerlink" href="#the-em-alogirthm" title="Permalink to this headline">¶</a></h1>
-<p>Iterative algorithm with closed-form updates at each step. Exploits the fact that if the data were fully observed, then the ML/MAP estimate would be easy to compute. The algorithm iterates between 2 steps.</p>
+  <div class="section" id="the-em-algorithm">
+<h1>The EM Algorithm<a class="headerlink" href="#the-em-algorithm" title="Permalink to this headline">¶</a></h1>
+<p>Widely used algorithm for learning directed <a class="reference internal" href="latent_variable_models.html"><span class="doc std std-doc">latent-variable graphical models</span></a> of the form</p>
+<div class="math notranslate nohighlight">
+\[p(x,z|\theta)\]</div>
 <ul class="simple">
-<li><p>E step, Inferring the missing values given the parameters</p></li>
-<li><p>M step optimizing the parameters given the “filled in” data</p></li>
+<li><p><span class="math notranslate nohighlight">\(z\)</span> are latent variables</p></li>
+<li><p><span class="math notranslate nohighlight">\(\theta\)</span> are model parameters</p></li>
 </ul>
-<div class="section" id="basic-idea">
-<h2>Basic idea<a class="headerlink" href="#basic-idea" title="Permalink to this headline">¶</a></h2>
+<p>Since the latent variables are unobserved, they pose a challenge for optimization.</p>
+<p>The idea behind EM is that:</p>
+<ol class="simple">
+<li><p>If the latent variables where fully observed, we could optimize the log-likelihood exactly using previously seen closed form solution for <span class="math notranslate nohighlight">\(p(x,z)\)</span></p></li>
+<li><p>Knowing the parameters, we can often efficiently compute the posterior <span class="math notranslate nohighlight">\(p(z|x,\theta)\)</span> (for some models this is not true)</p></li>
+</ol>
+<p>The Algorithm works in two steps</p>
+<ol class="simple">
+<li><p>Given an estimate <span class="math notranslate nohighlight">\(\theta^t\)</span> of the parameters compute <span class="math notranslate nohighlight">\(p(z|x)\)</span> and use to “hallucinate” values for z.</p></li>
+<li><p>Find a new <span class="math notranslate nohighlight">\(\theta_{t+1}\)</span> by optimizing the resulting tractable objective.</p></li>
+</ol>
+<p>Hallucinating data means that it computes the mean expected log likelihood:</p>
+<div class="math notranslate nohighlight">
+\[
+E_{z \sim p(z|x)} \log p(x,z|\theta)
+\]</div>
+<p>If z is not too high dimensional we can compute this expectation. And since this expectation is outside the log, we can decompose it into a sum of log conditional probability distributions, that can be optimized independently.</p>
+<div class="section" id="formal-algorithm">
+<h2>Formal Algorithm<a class="headerlink" href="#formal-algorithm" title="Permalink to this headline">¶</a></h2>
+<p>For a dataset D we initialize <span class="math notranslate nohighlight">\(\theta_0\)</span> to some random value and for <span class="math notranslate nohighlight">\(t=1,2,\cdots,\)</span> we repeat until converged.</p>
+<ul class="simple">
+<li><p><strong>E-step</strong>: For each <span class="math notranslate nohighlight">\(x \in D\)</span>, compute the posterior <span class="math notranslate nohighlight">\(p(z|x,\theta)\)</span></p></li>
+<li><p><strong>M-step</strong>: Compute the new parameters via:
+$<span class="math notranslate nohighlight">\( \theta_{t+1} = \arg \max_{\theta} \sum_{x \in D} E_{z \sim p(z|x_t, \theta_t)} \log p(x,z|\theta) \)</span>$</p></li>
+</ul>
+</div>
+<div class="section" id="detailed-overview">
+<h2>Detailed overview<a class="headerlink" href="#detailed-overview" title="Permalink to this headline">¶</a></h2>
 <p>Let <span class="math notranslate nohighlight">\(x_i\)</span> be visible or observed variable in case i, and let <span class="math notranslate nohighlight">\(z_i\)</span> be the hidden or missing variables. The goal is to maximize the log likelihood function of the observed data:</p>
 <div class="math notranslate nohighlight">
 \[l(\theta) = \sum_{i=1}^N \sum_{i=1}^N \log p(x_i | \theta) = \sum_{i=1}^N \log [ \sum_{z_i} p(x_i, z_i | \theta)] \]</div>
@@ -2320,18 +2321,31 @@ commentsRunWhenDOMLoaded(addUtterances);
 <p>To perform MAP estimation we modify the M step as follows:</p>
 <div class="math notranslate nohighlight">
 \[ \theta^t = \arg \max_{\theta} Q(\theta, \theta^{t-1}) + \log p(\theta) \]</div>
-<p>The E step retains unchanged. The EM algorithm monotonicaly increases the log likelihood of the observed data.</p>
-</div>
+<p>The E step retains unchanged. The EM algorithm monotonically increases the log likelihood of the observed data.</p>
 </div>
 <div class="section" id="theory">
-<h1>Theory<a class="headerlink" href="#theory" title="Permalink to this headline">¶</a></h1>
+<h2>Theory<a class="headerlink" href="#theory" title="Permalink to this headline">¶</a></h2>
 <p><a class="reference internal" href="em_theory.html"><span class="doc std std-doc">EM monotonically decreases</span></a> the observed data log likelihood until it reaches a local maximum.</p>
 </div>
 <div class="section" id="applications">
-<h1>Applications<a class="headerlink" href="#applications" title="Permalink to this headline">¶</a></h1>
+<h2>Applications<a class="headerlink" href="#applications" title="Permalink to this headline">¶</a></h2>
+<p>We can apply it to <a class="reference internal" href="latent_variable_models.html"><span class="doc std std-doc">latent variable models</span></a> like:</p>
 <ul class="simple">
 <li><p><a class="reference internal" href="gaussian_mixture_model.html"><span class="doc std std-doc">Gaussian mixture model</span></a></p></li>
 </ul>
+</div>
+<div class="section" id="connection-to-variational-inference">
+<h2><a class="reference internal" href="em_as_variational_inference.html"><span class="doc std std-doc">Connection to Variational Inference</span></a><a class="headerlink" href="#connection-to-variational-inference" title="Permalink to this headline">¶</a></h2>
+<p>We can understand the behavior of EM by casting it in the framework of <a class="reference internal" href="variational_inference.html"><span class="doc std std-doc">variational inference</span></a>.</p>
+</div>
+<div class="section" id="properties">
+<h2>Properties<a class="headerlink" href="#properties" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>The marginal likelihood increases after each EM cycle</p></li>
+<li><p>The marginal likelihood is an upper-bounded by its true global maximum, and it increases at every step, EM must eventually convergence.</p></li>
+</ul>
+<p>Unfortunately here we optimize an non-convex objective, thus may not find an global optimum. In practice we tend to have multiple restarts of the algorithms, and find the best solution.</p>
+</div>
 </div>
 
     <script type="text/x-thebe-config">

@@ -31,7 +31,7 @@ $$p(D) = \int_{\theta} p(D|\theta)p(\theta)$$
 
 This is aloso called the [**evidence**](computing_evidence.md) and it is what makes Bayesian statistics hard! Since calculating the integral is notrivial.
 
-# Finding the posterior distribution (Inference)
+## Finding the posterior distribution (Inference)
 There are multiple approaches how to find $p(\theta|D)$ depending if we want an exact or approximate solution:
 
 ## Analytical solution using conjugate priors
@@ -49,11 +49,14 @@ p(\theta|D) \approx q(\theta)
 $$
 
 We want this approximation to be tight ass possible.
-# [Model averaging](bayesian_model_averaging.md)
+## [Model averaging](bayesian_model_averaging.md)
 We can use the probability of the model $p(M|D)$ to average over.
-# Model selection
+## Model selection
 Sometimes we need to choose the [best model](bayesian_model_selection.md)
 
-# Posterior predictive distribution
+## Posterior predictive distribution
 
 The posterior is our belief about the world. We can test if our belief is justified if it manages to predict observed quantities. By drawing from the posterior we get the [posterior predicitve distribution](posterior_predictive_distribution.md)
+
+## Bayesian Learning vs Maximum Likelihood
+Here we draw the basic difference between [maximum likelihood learning](maximum_likelihood_learning.md) and [Bayesian learning](bayesian_learning.md)
