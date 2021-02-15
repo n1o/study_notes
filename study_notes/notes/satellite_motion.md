@@ -23,7 +23,7 @@ $$
 If we put this together we get:
 
 $$
-T = \frac{2 \pi r}{v} = 2 \pi r \sqrt{\frac{r}{Gm_E}} = \frac{2\pi r^{3/2}}{\sqrt{Gm_e}}\\
+T = \frac{2 \pi r}{v} = 2 \pi r \sqrt{\frac{r}{Gm_E}} = \frac{2\pi r^{3/2}}{\sqrt{Gm_E}}\\
 T^2 = \frac{4\pi^2r^3}{Gm_E}
 $$
 

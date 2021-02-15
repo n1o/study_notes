@@ -66,3 +66,4 @@ The hidden variables represent quantities of interest, and in general we want to
 ## Learning
 
 * [MLE estimation](mle_for_bayesian_networks.md)
+* [Structure learning](structure_learning_bayesian_network.md) Here we try to learn the structure of the directed acyclic graph.
