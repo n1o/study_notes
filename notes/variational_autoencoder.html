@@ -2218,6 +2218,20 @@ commentsRunWhenDOMLoaded(addUtterances);
     <!-- Table of contents -->
     <div class="d-none d-md-block col-md-2 bd-toc show">
         
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#reparametrization-based-low-variance-gradient-estimator">
+   Reparametrization based low variance gradient estimator
+  </a>
+ </li>
+</ul>
+
+        </nav>
+        
     </div>
 </div>
     <div id="main-content" class="row">
@@ -2227,6 +2241,55 @@ commentsRunWhenDOMLoaded(addUtterances);
                 
   <div class="section" id="variational-auto-encoder">
 <h1>Variational auto-encoder<a class="headerlink" href="#variational-auto-encoder" title="Permalink to this headline">¶</a></h1>
+<p>It is an popular instantiation of <a class="reference internal" href="auto_encoding_variatonal_bayes.html"><span class="doc std std-doc">auto encoding variational bayes</span></a>. Where we combine:</p>
+<ol class="simple">
+<li><p><a class="reference internal" href="auto_encoding_variatonal_bayes.html"><span class="doc std std-doc">Autoencoding ELBO reformulation</span></a></p></li>
+<li><p><a class="reference internal" href="black_box_variational_inference.html"><span class="doc std std-doc">Black box variational inference approach</span></a></p></li>
+<li><p><a class="reference external" href="#reparametrization-based-low-variance-gradient-estimator">Reparametrization based low variance gradient estimator</a></p></li>
+</ol>
+<p>This algorithm is applicable to any deep generative model <span class="math notranslate nohighlight">\(p_{\theta}\)</span> with latent variables that is differentiable in <span class="math notranslate nohighlight">\(\theta\)</span>. The model <span class="math notranslate nohighlight">\(p\)</span> is parametrized as:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+p(x|z) = N(x| \vec{\mu}(z), \text{diag}(\vec{\sigma}(z))^2) \\
+p(z) = N(z| 0, I)
+\end{split}\]</div>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\vec{\mu}(z), \vec{\sigma}(z))\)</span>  are parametrized neural networks</p></li>
+</ul>
+<p>The model for <span class="math notranslate nohighlight">\(q\)</span> is:</p>
+<div class="math notranslate nohighlight">
+\[
+q(z|x) = N(z| \vec{\mu}(z), \text{diag}(\vec{\sigma}(z))^2))
+\]</div>
+<p>Similarly we have neural networks for <span class="math notranslate nohighlight">\(\mu, \sigma\)</span>.</p>
+<p>These choices for <span class="math notranslate nohighlight">\(p\)</span> and <span class="math notranslate nohighlight">\(q\)</span> alow simplify the auto-encoding ELBO. We can now use a closed form expression to compute the regularization term and use Monte-Carlo estimates for the reconstruction term.</p>
+<p>We may interpret the variational autoencoder as a <a class="reference internal" href="directed_graphical_models.html"><span class="doc std std-doc">directed</span></a> <a class="reference internal" href="latent_variable_models.html"><span class="doc std std-doc">latent-variable</span></a> probabilistic <a class="reference internal" href="graphical_models.html"><span class="doc std std-doc">graphical model</span></a>. We may also view it as a particular objective for training an auto-encoder neural network; unlike previous approaches, this objective derives reconstruction and regularization terms from a more principled, Bayesian perspective.</p>
+<div class="section" id="reparametrization-based-low-variance-gradient-estimator">
+<h2>Reparametrization based low variance gradient estimator<a class="headerlink" href="#reparametrization-based-low-variance-gradient-estimator" title="Permalink to this headline">¶</a></h2>
+<p>Under certain conditions we may express the distribution <span class="math notranslate nohighlight">\(q_{\phi}(z|x)\)</span> in a two step generative process:</p>
+<ol class="simple">
+<li><p>Sample a noise variable <span class="math notranslate nohighlight">\(\epsilon\)</span> like a standard normal N(0,1)
+<span class="math notranslate nohighlight">\(\epsilon \sim p(\epsilon)\)</span></p></li>
+<li><p>Apply deterministic transformation <span class="math notranslate nohighlight">\(g_{\phi}(\epsilon, x)\)</span> that maps the random noise into a more complex distribution.
+$<span class="math notranslate nohighlight">\(z = g_{\phi}(\epsilon, x)\)</span>$</p></li>
+</ol>
+<p>For many interesting classes of <span class="math notranslate nohighlight">\(q_{\phi}\)</span>, it is possible to choose a <span class="math notranslate nohighlight">\(g_{\phi}(\epsilon,x)\)</span> such that <span class="math notranslate nohighlight">\(z = g_{\phi}(\epsilon,x)\)</span> will be distributed acording to <span class="math notranslate nohighlight">\(q_{\phi}(z|x)\)</span>.</p>
+<p>Gaussian random variables provide the simplest example of the reparametrization trick.</p>
+<div class="math notranslate nohighlight">
+\[
+z = g_{\mu, \sigma}(\epsilon) = \mu + \epsilon \cdot \sigma
+\]</div>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\epsilon \sim N(0,1)\)</span></p></li>
+<li><p>z is also gaussian</p></li>
+</ul>
+<p>We can express the gradient of an expectation with respect to <span class="math notranslate nohighlight">\(q(z)\)</span> (for any f) as:</p>
+<div class="math notranslate nohighlight">
+\[
+\nabla_{\phi}E_{z \sim q_{\phi}}[f(x,z)] = \nabla_{\phi}E_{\epsilon \sim p(\epsilon}[f(x, g_{\phi}(\epsilon, x))] = E_{\epsilon \sim p(e)}[\nabla_{\phi}f(x, g_{\phi}(\epsilon, x))]
+\]</div>
+<p>The gradient is now inside the expectation, so we may take Monte Carlo samples to estimate the right-hand term. This approach has much lower variance than score function estimator and helps us to learn models that we otherwise could not.</p>
+</div>
 </div>
 
     <script type="text/x-thebe-config">

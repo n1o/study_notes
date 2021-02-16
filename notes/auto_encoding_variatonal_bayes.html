@@ -2218,6 +2218,22 @@ commentsRunWhenDOMLoaded(addUtterances);
     <!-- Table of contents -->
     <div class="d-none d-md-block col-md-2 bd-toc show">
         
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#black-box-variational-inference">
+   <span class="xref myst">
+    Black Box Variational inference
+   </span>
+  </a>
+ </li>
+</ul>
+
+        </nav>
+        
     </div>
 </div>
     <div id="main-content" class="row">
@@ -2227,7 +2243,27 @@ commentsRunWhenDOMLoaded(addUtterances);
                 
   <div class="section" id="auto-encoding-variational-bayes">
 <h1>Auto-encoding variational Bayes<a class="headerlink" href="#auto-encoding-variational-bayes" title="Permalink to this headline">¶</a></h1>
-<p>Based on <a class="reference internal" href="variational_inference.html"><span class="doc std std-doc">variational inference</span></a></p>
+<p>Based on <a class="reference internal" href="variational_inference.html"><span class="doc std std-doc">variational inference</span></a>. The main idea is to minimize the <a class="reference internal" href="evidence_lower_bound.html"><span class="doc std std-doc">evidence lower bound (ELBO)</span></a>.</p>
+<div class="math notranslate nohighlight">
+\[
+L(p_{\theta},q_{\phi}) = E_{q_{\phi}(z|x)}[\log p_{\theta}(x,z) - \log p_{\phi}(z|x)]
+\]</div>
+<p>Over the space of all <span class="math notranslate nohighlight">\(q_{\phi}\)</span>. The ELBO satisfies the equation:</p>
+<div class="math notranslate nohighlight">
+\[
+\log p_{\theta}(x) = KL(q_{\phi}(z|x)||p(z|x)) + L(p_{\theta},q_{\phi})
+\]</div>
+<p>ELBO satisfies:</p>
+<div class="math notranslate nohighlight">
+\[
+\log p_{\theta}(x) = KL(q_{\phi}(z|x)||p(z|x)) + L(p_{\theta},q_{\phi})
+\]</div>
+<p>X is fixed thus we can define <span class="math notranslate nohighlight">\(q(z|x)\)</span> to be conditioned on x. This means that we choose a different <span class="math notranslate nohighlight">\(q(z)\)</span> for every x, which will produce a better posterior approximation that always choosing the same <span class="math notranslate nohighlight">\(q(z)\)</span>.</p>
+<p>To optimize <span class="math notranslate nohighlight">\(p(z|x)\)</span> we could use <a class="reference internal" href="mean_field_method.html"><span class="doc std std-doc">mean field method</span></a>, but the accuracy is insufficient. The assumption that q is fully factored is too strong, and the <a class="reference internal" href="coordinate_descent.html"><span class="doc std std-doc">coordinate descent</span></a> is to simple.</p>
+<div class="section" id="black-box-variational-inference">
+<h2><a class="reference internal" href="black_box_variational_inference.html"><span class="doc std std-doc">Black Box Variational inference</span></a><a class="headerlink" href="#black-box-variational-inference" title="Permalink to this headline">¶</a></h2>
+<p>We try to build general approaches to optimize q that works for large classes of q.</p>
+</div>
 </div>
 
     <script type="text/x-thebe-config">

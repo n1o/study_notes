@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Variational inference &#8212; study-notes</title>
+    <title>Black-box variational inference &#8212; study-notes</title>
     
   <link rel="stylesheet" href="../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
 
@@ -91,8 +91,6 @@ commentsRunWhenDOMLoaded(addUtterances);
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Junction tree algorithm" href="junction_tree_algorithm.html" />
-    <link rel="prev" title="Mixture models" href="mixture_models.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -129,7 +127,7 @@ commentsRunWhenDOMLoaded(addUtterances);
   </a>
  </li>
 </ul>
-<ul class="current nav sidenav_l1">
+<ul class="nav sidenav_l1">
  <li class="toctree-l1">
   <a class="reference internal" href="signal_to_noise_ratio.html">
    Signal to noise ratio
@@ -806,8 +804,8 @@ commentsRunWhenDOMLoaded(addUtterances);
    Parameter estimation
   </a>
  </li>
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
+ <li class="toctree-l1">
+  <a class="reference internal" href="variational_inference.html">
    Variational inference
   </a>
  </li>
@@ -2195,7 +2193,7 @@ commentsRunWhenDOMLoaded(addUtterances);
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../_sources/notes/variational_inference.md"><button type="button"
+        <a class="dropdown-buttons" href="../_sources/notes/black_box_variational_inference.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.md</button></a>
         <!-- Download PDF via print -->
@@ -2226,10 +2224,13 @@ commentsRunWhenDOMLoaded(addUtterances);
         <nav id="bd-toc-nav">
             <ul class="nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#mean-field-method">
-   <span class="xref myst">
-    Mean field method
-   </span>
+  <a class="reference internal nav-link" href="#score-function-gradient-estimator">
+   Score function gradient estimator
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-sgvb-estimator">
+   The SGVB estimator
   </a>
  </li>
 </ul>
@@ -2243,57 +2244,49 @@ commentsRunWhenDOMLoaded(addUtterances);
         
               <div>
                 
-  <div class="section" id="variational-inference">
-<h1>Variational inference<a class="headerlink" href="#variational-inference" title="Permalink to this headline">¶</a></h1>
-<p>We try to approximate the posterior using a distribution from tractable family.</p>
-<div class="math notranslate nohighlight">
-\[
-p(\theta|D) \approx q(\theta)
-\]</div>
-<p>We assume that <span class="math notranslate nohighlight">\(q\)</span> has some free parameters that we can optimize,   make the approximation as tight as possible.</p>
-<p>To do this we usually minimize the KL divergence:</p>
-<div class="math notranslate nohighlight">
-\[
-KL(p^*||q) = \sum_x p^*(x) \log \frac{p^*(x)}{q(x)}
-\]</div>
+  <div class="section" id="black-box-variational-inference">
+<h1>Black-box <a class="reference internal" href="variational_inference.html"><span class="doc std std-doc">variational inference</span></a><a class="headerlink" href="#black-box-variational-inference" title="Permalink to this headline">¶</a></h1>
+<p>Black-box variational inference is a special class of <a class="reference internal" href="auto_encoding_variatonal_bayes.html"><span class="doc std std-doc">auto encoding variational inference</span></a> algorithms we assume that we can differentiate <span class="math notranslate nohighlight">\(q_{\phi}\)</span> with respect to <span class="math notranslate nohighlight">\(\phi\)</span> we can use using <a class="reference internal" href="gradient_descent.html"><span class="doc std std-doc">gradient descent</span></a> to maximize <a class="reference internal" href="evidence_lower_bound.html"><span class="doc std std-doc">ELBO</span></a>.</p>
+<p>The algorithm simultaneously performs gradient descent to update <span class="math notranslate nohighlight">\(\phi\)</span> and <span class="math notranslate nohighlight">\(\theta\)</span>.</p>
 <ul class="simple">
-<li><p><span class="math notranslate nohighlight">\(p^*(x)\)</span> is our posterior distribution.</p></li>
+<li><p>Optimizing over <span class="math notranslate nohighlight">\(\phi\)</span> keeps the ELBO tight around <span class="math notranslate nohighlight">\(\log p(x)\)</span></p></li>
+<li><p>Optimizing <span class="math notranslate nohighlight">\(\theta\)</span> pushes the lower bound up.</p></li>
 </ul>
-<p>This is hard to compute since the expectation <span class="math notranslate nohighlight">\(\sum_x p^*(x)\)</span> is not tractable. Instead we work with the <a class="reference internal" href="forward_vs_reverse_kl_divergence.html"><span class="doc std std-doc">reverse KL divergence</span></a></p>
+<div class="section" id="score-function-gradient-estimator">
+<h2>Score function gradient estimator<a class="headerlink" href="#score-function-gradient-estimator" title="Permalink to this headline">¶</a></h2>
+<p>To perform black-box variational inference, we need to compute the gradient:</p>
 <div class="math notranslate nohighlight">
 \[
-KL(q||p^*) = \sum_x q(x) \log \frac{q(x)}{p^*(x)}
+\nabla_{\theta, \phi}E_{q_{\phi}(z)}[\log p_{\theta}(x,z) - \log q_{\phi}(z)]
 \]</div>
-<p>If we choose <span class="math notranslate nohighlight">\(q\)</span> right this is tractable. But evaluating <span class="math notranslate nohighlight">\(p^*(x) = p(x|D)\)</span> point-wise is hard, since it requires to evaluate the normalization constant <span class="math notranslate nohighlight">\(Z = p(D)\)</span>. We have to use the un-normalized distribution:</p>
+<p>Taking the expectation with respect to q is not always possible. Thus we can make <a class="reference internal" href="monter_carlo_estimation.html"><span class="doc std std-doc">Monte Carlo estimates</span></a> of the gradient by sampling from <span class="math notranslate nohighlight">\(q\)</span>.</p>
+<p>This is easy to do for the gradient of <span class="math notranslate nohighlight">\(p\)</span>, we just swap the gradient and the expectation and estimate the following expression via Monte Carlo.</p>
 <div class="math notranslate nohighlight">
 \[
-\tilde{p}(x) = p^*(x)Z
+E_{q_{\phi(x)}}[\nabla_{\theta} \log p_{\phi}(x,z)]
 \]</div>
-<p>The objective function becomes:</p>
+<p>Taking the gradient with respect to q is more difficult, we cannot swap the gradient and the expectation, since the expectation is being taken with respect to the distribution that we are try to differentiate.</p>
+<p>Way can estimate the gradient a so-called score function estimator:</p>
 <div class="math notranslate nohighlight">
-\[\begin{split}
-J(q) = KL(q||\tilde{p}) \\ 
-= \sum_x q(x) \log \frac{q(x)}{Zp^*(x)} \\ 
-= \sum_x q(x) \log \frac{q(x)}{p^*(x)} - log Z \\
-= KL(q||p^*) - \log Z
-\end{split}\]</div>
-<p>Here Z is an constant, thus by minimizing <span class="math notranslate nohighlight">\(J(q)\)</span> we will force q to become close to <span class="math notranslate nohighlight">\(p^*\)</span>.</p>
-<p>KL divergence is nonnegative, thus <span class="math notranslate nohighlight">\(J(q)\)</span> can be viewed as an <strong>upper bound on the NLL(negative log likelihood)</strong>.</p>
+\[
+\nabla_{\phi}E_{q_{\phi}(z)}[\log p_{\theta}(x,z) - \log p_{\phi}(z)] = E_{q_{\phi}(z)}[(\log p_{\theta}(x,z) - \log q_{\phi}(z)) \nabla_{\phi} \log q_{\phi}(z)]
+\]</div>
+<p>We place the gradient inside the expectation, and we can evaluate it using Monte Carlo. This is called the score function estimator of the gradient.</p>
+<p>Biggest shortcoming of this estimator is that it has high variance. (High variance means that the observations are far away from the mean). In some cases the variance is so high that it cannot be used to learn many models.</p>
+</div>
+<div class="section" id="the-sgvb-estimator">
+<h2>The SGVB estimator<a class="headerlink" href="#the-sgvb-estimator" title="Permalink to this headline">¶</a></h2>
+<p>We reformulate ELBO as:</p>
 <div class="math notranslate nohighlight">
-\[\begin{split}
-L(q) = -J(q) = -KL(q||p^*) + \log Z \le \log Z = \log p(D) \\
-\log p(D) = KL(q||p) - J(q) \\
-\log p(D) \ge -J(q) \\
-\end{split}\]</div>
-<p>By minimizing <span class="math notranslate nohighlight">\(J(q)\)</span> we essentially maximize the lower-bound of the log likelihood <span class="math notranslate nohighlight">\(\log p(D)\)</span>. Because of this <span class="math notranslate nohighlight">\(-J(q)\)</span> is called the variational lower bound or <a class="reference internal" href="evidence_lower_bound.html"><span class="doc std std-doc">evidence lower bound (ELBO)</span></a>.</p>
-<div class="section" id="mean-field-method">
-<h2><a class="reference internal" href="mean_field_method.html"><span class="doc std std-doc">Mean field method</span></a><a class="headerlink" href="#mean-field-method" title="Permalink to this headline">¶</a></h2>
-<p>One of the most popular variational inference methods. It assumes that the posterior is fully factorized approximation of the form:</p>
-<div class="math notranslate nohighlight">
-\[q(x) = \prod_{i=1} ^D q_i(x)\]</div>
-<p>Our goal is to solve this optimization problem:</p>
-<div class="math notranslate nohighlight">
-\[min_{q_1, \cdots, q_D } KL(q||p) \]</div>
+\[
+\log p(x) \ge E_{q_{\phi}(z|x)} [ \log p_{\theta}(x|z)] - KL(q_{\phi}(z|x)|| p(z))
+\]</div>
+<p>This reparametrization can be interpreted as: First, we can think of x as an observed data point. The right-hand side consists of two terms, both involve taking a sample <span class="math notranslate nohighlight">\(z \sim q(z|x)\)</span>, which can be interpret as a code describing x. Where we call q as the encoder.</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\log p(x|z)\)</span> is the log-likelihood of the observed x given the code z that we have sampled. This term is maximized when <span class="math notranslate nohighlight">\(p(x|z)\)</span> assigns high probability to the original x. It is trying to reconstruct x given the code z, for that reason we call <span class="math notranslate nohighlight">\(p(x|z)\)</span> the decoder network ad the term is called the reconstruction error.</p></li>
+<li><p><span class="math notranslate nohighlight">\(KL(q_{\phi}(z|x)|| p(z))\)</span> is the divergence between <span class="math notranslate nohighlight">\(q(z|x)\)</span> and prior <span class="math notranslate nohighlight">\(p(z)\)</span> (unit Normal). This forces z to look Gaussian, and we call it the regularization term. It prevents <span class="math notranslate nohighlight">\(q(z|x)\)</span> from encoding identity mappings, and forces to learn more interesting representations.</p></li>
+</ul>
+<p>The optimization objective is to fit a <span class="math notranslate nohighlight">\(q(z|x)\)</span> that wil map x into a useful latent space z from which we are able to reconstruct x via <span class="math notranslate nohighlight">\(p(x|z)\)</span>. (this objective is reminiscent of auto-encoder neural network)</p>
 </div>
 </div>
 
@@ -2325,8 +2318,6 @@ L(q) = -J(q) = -KL(q||p^*) + \log Z \le \log Z = \log p(D) \\
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="mixture_models.html" title="previous page">Mixture models</a>
-    <a class='right-next' id="next-link" href="junction_tree_algorithm.html" title="next page">Junction tree algorithm</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">
