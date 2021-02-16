@@ -45,16 +45,7 @@ L(q) = -J(q) = -KL(q||p^*) + \log Z \le \log Z = \log p(D) \\
 \log p(D) \ge -J(q) \\
 $$
 
-By minimizing $J(q)$ we essentially maximize the lower-bound of the log likelihood $\log p(D)$. Because of this $-J(q)$ is called the variational lower bound or **evidence lower bound (ELBO)**
-
-## Evidence lower bound (ELBO)
-$$
-\log p(D) \ge E_{q(x)}[\log \tilde{p}(x) - \log q(x)] 
-$$
-
-The difference between $\log Z(\theta)$ and $-J(q)$ is exactly $KL(q||p)$. If we maximize the evidence-lower bound, we minimize $KL(q||p)$ by "squeezing" it between $-J(q)$ and $\log Z(\theta)$
-
-Alternatively we can view it as [variational free energy](variational_free_energy.md).
+By minimizing $J(q)$ we essentially maximize the lower-bound of the log likelihood $\log p(D)$. Because of this $-J(q)$ is called the variational lower bound or [evidence lower bound (ELBO)](evidence_lower_bound.md).
 
 ## [Mean field method](mean_field_method.md)
 One of the most popular variational inference methods. It assumes that the posterior is fully factorized approximation of the form:
