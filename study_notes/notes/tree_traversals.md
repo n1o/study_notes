@@ -62,7 +62,7 @@ Algorithm inorder(p):
 ![](../.images/algorithms/in_order.png)
 
 
-## Binary Search Tree
+## Binary inorder tree traversal
 This is a specially case of in order traversal when we have an ordered sequence in a binary tree. This structure has the name binary search tree. Let S be a set whose unique elements have an order relation. For example, S could be a set of integer. A binary search tree for S is a binary tree T such tat for each position p of T:
 
 *  Position p stores an element of S, denoted as e(p)
