@@ -16,6 +16,8 @@ $$ \log q_j(x_j) = E_{-q_j}[\log \tilde{p}(x)] + \text{const} ​$$
 * $E_{-q_j} [f(x)]$ is a notation that we take expectation over $f(x)$, with respect all the variables except $x_j$ 
 * Here at each update step we replace the neighboring values by their mean value, hence the name mean field.
 * $\text{const}$ is a normalization constant for the new distribution.
+* At each step we evaluate the Expectation with respect to the approximate posterior.
+
 
 For example if we have 3 variables:
 $$
