@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Black-box variational inference &#8212; study-notes</title>
+    <title>Tree traversal algorithms &#8212; study-notes</title>
     
   <link rel="stylesheet" href="../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
 
@@ -2193,7 +2193,7 @@ commentsRunWhenDOMLoaded(addUtterances);
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../_sources/notes/black_box_variational_inference.md"><button type="button"
+        <a class="dropdown-buttons" href="../_sources/notes/tree_traversals.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.md</button></a>
         <!-- Download PDF via print -->
@@ -2224,13 +2224,33 @@ commentsRunWhenDOMLoaded(addUtterances);
         <nav id="bd-toc-nav">
             <ul class="nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#score-function-gradient-estimator">
-   Score function gradient estimator
+  <a class="reference internal nav-link" href="#pre-order-traversal">
+   Pre order traversal
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#the-sgvb-estimator">
-   The SGVB estimator
+  <a class="reference internal nav-link" href="#post-order-traversal">
+   Post order traversal
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#bread-first-tree-traversal">
+   Bread first Tree traversal
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#inorder-traversal-of-binary-tree">
+   Inorder Traversal of Binary Tree
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#binary-search-tree">
+   Binary Search Tree
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#eulers-tour-traversal">
+   Eulers tour traversal
   </a>
  </li>
 </ul>
@@ -2244,49 +2264,85 @@ commentsRunWhenDOMLoaded(addUtterances);
         
               <div>
                 
-  <div class="section" id="black-box-variational-inference">
-<h1>Black-box variational inference<a class="headerlink" href="#black-box-variational-inference" title="Permalink to this headline">¶</a></h1>
-<p>Black-box <a class="reference internal" href="variational_inference.html"><span class="doc std std-doc">variational inference</span></a> is a special class of <a class="reference internal" href="auto_encoding_variatonal_bayes.html"><span class="doc std std-doc">auto encoding variational inference</span></a> algorithms we assume that we can differentiate <span class="math notranslate nohighlight">\(q_{\phi}\)</span> with respect to <span class="math notranslate nohighlight">\(\phi\)</span> we can use using <a class="reference internal" href="gradient_descent.html"><span class="doc std std-doc">gradient descent</span></a> to maximize <a class="reference internal" href="evidence_lower_bound.html"><span class="doc std std-doc">ELBO</span></a>.</p>
-<p>The algorithm simultaneously performs gradient descent to update <span class="math notranslate nohighlight">\(\phi\)</span> and <span class="math notranslate nohighlight">\(\theta\)</span>.</p>
-<ul class="simple">
-<li><p>Optimizing over <span class="math notranslate nohighlight">\(\phi\)</span> keeps the ELBO tight around <span class="math notranslate nohighlight">\(\log p(x)\)</span></p></li>
-<li><p>Optimizing <span class="math notranslate nohighlight">\(\theta\)</span> pushes the lower bound up.</p></li>
-</ul>
-<div class="section" id="score-function-gradient-estimator">
-<h2>Score function gradient estimator<a class="headerlink" href="#score-function-gradient-estimator" title="Permalink to this headline">¶</a></h2>
-<p>To perform black-box variational inference, we need to compute the gradient:</p>
-<div class="math notranslate nohighlight">
-\[
-\nabla_{\theta, \phi}E_{q_{\phi}(z)}[\log p_{\theta}(x,z) - \log q_{\phi}(z)]
-\]</div>
-<p>Taking the expectation with respect to q is not always possible. Thus we can make <a class="reference internal" href="monter_carlo_estimation.html"><span class="doc std std-doc">Monte Carlo estimates</span></a> of the gradient by sampling from <span class="math notranslate nohighlight">\(q\)</span>.</p>
-<p>This is easy to do for the gradient of <span class="math notranslate nohighlight">\(p\)</span>, we just swap the gradient and the expectation and estimate the following expression via Monte Carlo.</p>
-<div class="math notranslate nohighlight">
-\[
-E_{q_{\phi(x)}}[\nabla_{\theta} \log p_{\phi}(x,z)]
-\]</div>
-<p>Taking the gradient with respect to q is more difficult, we cannot swap the gradient and the expectation, since the expectation is being taken with respect to the distribution that we are try to differentiate.</p>
-<p>Way can estimate the gradient a so-called score function estimator:</p>
-<div class="math notranslate nohighlight">
-\[
-\nabla_{\phi}E_{q_{\phi}(z)}[\log p_{\theta}(x,z) - \log p_{\phi}(z)] = E_{q_{\phi}(z)}[(\log p_{\theta}(x,z) - \log q_{\phi}(z)) \nabla_{\phi} \log q_{\phi}(z)]
-\]</div>
-<p>We place the gradient inside the expectation, and we can evaluate it using Monte Carlo. This is called the score function estimator of the gradient.</p>
-<p>Biggest shortcoming of this estimator is that it has high variance. (High variance means that the observations are far away from the mean). In some cases the variance is so high that it cannot be used to learn many models.</p>
+  <div class="section" id="tree-traversal-algorithms">
+<h1>Tree traversal algorithms<a class="headerlink" href="#tree-traversal-algorithms" title="Permalink to this headline">¶</a></h1>
+<p>It is a systematic way of accessing, visiting all the position of a tree T.</p>
+<div class="section" id="pre-order-traversal">
+<h2>Pre order traversal<a class="headerlink" href="#pre-order-traversal" title="Permalink to this headline">¶</a></h2>
+<p>The root of T is visited first and then the subtrees rooted at its children are traversed recursively. If the tree is ordered, then the subtrees are traversed according to the order of the children.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Algorithm preorder(T, p):
+	perform the “visit” action 
+	for position p for each child c in T.children(p) do
+		preorder(T, c)
+</pre></div>
 </div>
-<div class="section" id="the-sgvb-estimator">
-<h2>The SGVB estimator<a class="headerlink" href="#the-sgvb-estimator" title="Permalink to this headline">¶</a></h2>
-<p>We reformulate ELBO as:</p>
-<div class="math notranslate nohighlight">
-\[
-\log p(x) \ge E_{q_{\phi}(z|x)} [ \log p_{\theta}(x|z)] - KL(q_{\phi}(z|x)|| p(z))
-\]</div>
-<p>This reparametrization can be interpreted as: First, we can think of x as an observed data point. The right-hand side consists of two terms, both involve taking a sample <span class="math notranslate nohighlight">\(z \sim q(z|x)\)</span>, which can be interpret as a code describing x. Where we call q as the encoder.</p>
+<p><img alt="" src="../_images/preorder_traversal.png" /></p>
+<p>Runs in O(n)</p>
+</div>
+<div class="section" id="post-order-traversal">
+<h2>Post order traversal<a class="headerlink" href="#post-order-traversal" title="Permalink to this headline">¶</a></h2>
+<p>It can be viewed as the opposite of the pre order traversal. It recursively traverses the subtree rooted at the children of the root first and then visits the root.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Algorithm postorder(T, p):
+	for each child c in T.children(p) do
+		postorder(T, c) 
+	perform the “visit” action for position p
+</pre></div>
+</div>
+<p><img alt="" src="../_images/post_order_traversal.png" /></p>
+<p>Runs in O(n)</p>
+</div>
+<div class="section" id="bread-first-tree-traversal">
+<h2>Bread first Tree traversal<a class="headerlink" href="#bread-first-tree-traversal" title="Permalink to this headline">¶</a></h2>
+<p>We first visit each element at depth d, before we visit elements at position at depth d+1. This is typical for games, we may explore all the possible moves 1 move in the future, 2 moves in the future and so on. This is an optimization since we cannot travel depth first since there is exponentially many moves.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Algorithm breadthfirst(T):
+	Initialize queue Q to contain T.root( )
+	while Q not empty do
+		p = Q.dequeue() {p is the oldest entry in the queue} 
+		perform the “visit” action for position p
+		for each child c in T.children(p) do
+			Q.enqueue(c) {add p’s children to the end of the
+</pre></div>
+</div>
+</div>
+<div class="section" id="inorder-traversal-of-binary-tree">
+<h2>Inorder Traversal of Binary Tree<a class="headerlink" href="#inorder-traversal-of-binary-tree" title="Permalink to this headline">¶</a></h2>
+<p>This is an algorithm specially for a binary tree. During an inorder traversal, we visit a position between the recursive traversals of its left and right subtrees. We can say that we go from left to right.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Algorithm inorder(p):
+	if p has a left child lc then
+		inorder(lc) {recursively traverse the left subtree of p} 
+	perform the “visit” action for position p
+	if p has a right child rc then
+		inorder(rc)
+</pre></div>
+</div>
+<p><img alt="" src="../_images/in_order.png" /></p>
+</div>
+<div class="section" id="binary-search-tree">
+<h2>Binary Search Tree<a class="headerlink" href="#binary-search-tree" title="Permalink to this headline">¶</a></h2>
+<p>This is a specially case of in order traversal when we have an ordered sequence in a binary tree. This structure has the name binary search tree. Let S be a set whose unique elements have an order relation. For example, S could be a set of integer. A binary search tree for S is a binary tree T such tat for each position p of T:</p>
 <ul class="simple">
-<li><p><span class="math notranslate nohighlight">\(\log p(x|z)\)</span> is the log-likelihood of the observed x given the code z that we have sampled. This term is maximized when <span class="math notranslate nohighlight">\(p(x|z)\)</span> assigns high probability to the original x. It is trying to reconstruct x given the code z, for that reason we call <span class="math notranslate nohighlight">\(p(x|z)\)</span> the decoder network ad the term is called the reconstruction error.</p></li>
-<li><p><span class="math notranslate nohighlight">\(KL(q_{\phi}(z|x)|| p(z))\)</span> is the divergence between <span class="math notranslate nohighlight">\(q(z|x)\)</span> and prior <span class="math notranslate nohighlight">\(p(z)\)</span> (unit Normal). This forces z to look Gaussian, and we call it the regularization term. It prevents <span class="math notranslate nohighlight">\(q(z|x)\)</span> from encoding identity mappings, and forces to learn more interesting representations.</p></li>
+<li><p>Position p stores an element of S, denoted as e(p)</p></li>
+<li><p>Elements stored in the left subtree of p (if any) are less than e(p).</p></li>
+<li><p>Elements stored in the right subtree of p (if any) are greater than e(p).</p></li>
 </ul>
-<p>The optimization objective is to fit a <span class="math notranslate nohighlight">\(q(z|x)\)</span> that wil map x into a useful latent space z from which we are able to reconstruct x via <span class="math notranslate nohighlight">\(p(x|z)\)</span>. (this objective is reminiscent of auto-encoder neural network)</p>
+<p><img alt="" src="../_images/binary_search_tree.png" /></p>
+</div>
+<div class="section" id="eulers-tour-traversal">
+<h2>Eulers tour traversal<a class="headerlink" href="#eulers-tour-traversal" title="Permalink to this headline">¶</a></h2>
+<p>The Euler tour traversal of a general tree T can be informally deﬁned as a “walk” around T,where we start by going from the root toward its leftmost child, viewing the edges of T as being “walls” that we always keep to our left.</p>
+<p><img alt="Euler tour traversal" src="../_images/euler_tour_traversal.png" /></p>
+<p>The time complexity is <span class="math notranslate nohighlight">\(O(n)\)</span> since we visit each node exactly two times. Here we can unify the notion of preorder and postorder traversal into:</p>
+<ul class="simple">
+<li><p>“pre visit” occurs when we first reach the position</p></li>
+<li><p>“post visit” when we proceed upward from that position</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Algorithm eulertour(T, p):
+	perform the “pre visit” action for position p
+	for each child c in T.children(p) do
+		eulertour(T, c) //recursion for each subtree
+	perform the “post visit” action for position p
+</pre></div>
+</div>
 </div>
 </div>
 

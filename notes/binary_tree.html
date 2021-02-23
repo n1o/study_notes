@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Black-box variational inference &#8212; study-notes</title>
+    <title>Binary Tree &#8212; study-notes</title>
     
   <link rel="stylesheet" href="../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
 
@@ -2193,7 +2193,7 @@ commentsRunWhenDOMLoaded(addUtterances);
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../_sources/notes/black_box_variational_inference.md"><button type="button"
+        <a class="dropdown-buttons" href="../_sources/notes/binary_tree.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.md</button></a>
         <!-- Download PDF via print -->
@@ -2224,13 +2224,18 @@ commentsRunWhenDOMLoaded(addUtterances);
         <nav id="bd-toc-nav">
             <ul class="nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#score-function-gradient-estimator">
-   Score function gradient estimator
+  <a class="reference internal nav-link" href="#linked-structure-for-binary-trees">
+   Linked Structure for Binary Trees
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#the-sgvb-estimator">
-   The SGVB estimator
+  <a class="reference internal nav-link" href="#array-based-representation-of-binary-trees">
+   Array-Based Representation of Binary Trees:
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#traversal">
+   Traversal
   </a>
  </li>
 </ul>
@@ -2244,49 +2249,41 @@ commentsRunWhenDOMLoaded(addUtterances);
         
               <div>
                 
-  <div class="section" id="black-box-variational-inference">
-<h1>Black-box variational inference<a class="headerlink" href="#black-box-variational-inference" title="Permalink to this headline">¶</a></h1>
-<p>Black-box <a class="reference internal" href="variational_inference.html"><span class="doc std std-doc">variational inference</span></a> is a special class of <a class="reference internal" href="auto_encoding_variatonal_bayes.html"><span class="doc std std-doc">auto encoding variational inference</span></a> algorithms we assume that we can differentiate <span class="math notranslate nohighlight">\(q_{\phi}\)</span> with respect to <span class="math notranslate nohighlight">\(\phi\)</span> we can use using <a class="reference internal" href="gradient_descent.html"><span class="doc std std-doc">gradient descent</span></a> to maximize <a class="reference internal" href="evidence_lower_bound.html"><span class="doc std std-doc">ELBO</span></a>.</p>
-<p>The algorithm simultaneously performs gradient descent to update <span class="math notranslate nohighlight">\(\phi\)</span> and <span class="math notranslate nohighlight">\(\theta\)</span>.</p>
-<ul class="simple">
-<li><p>Optimizing over <span class="math notranslate nohighlight">\(\phi\)</span> keeps the ELBO tight around <span class="math notranslate nohighlight">\(\log p(x)\)</span></p></li>
-<li><p>Optimizing <span class="math notranslate nohighlight">\(\theta\)</span> pushes the lower bound up.</p></li>
-</ul>
-<div class="section" id="score-function-gradient-estimator">
-<h2>Score function gradient estimator<a class="headerlink" href="#score-function-gradient-estimator" title="Permalink to this headline">¶</a></h2>
-<p>To perform black-box variational inference, we need to compute the gradient:</p>
-<div class="math notranslate nohighlight">
-\[
-\nabla_{\theta, \phi}E_{q_{\phi}(z)}[\log p_{\theta}(x,z) - \log q_{\phi}(z)]
-\]</div>
-<p>Taking the expectation with respect to q is not always possible. Thus we can make <a class="reference internal" href="monter_carlo_estimation.html"><span class="doc std std-doc">Monte Carlo estimates</span></a> of the gradient by sampling from <span class="math notranslate nohighlight">\(q\)</span>.</p>
-<p>This is easy to do for the gradient of <span class="math notranslate nohighlight">\(p\)</span>, we just swap the gradient and the expectation and estimate the following expression via Monte Carlo.</p>
-<div class="math notranslate nohighlight">
-\[
-E_{q_{\phi(x)}}[\nabla_{\theta} \log p_{\phi}(x,z)]
-\]</div>
-<p>Taking the gradient with respect to q is more difficult, we cannot swap the gradient and the expectation, since the expectation is being taken with respect to the distribution that we are try to differentiate.</p>
-<p>Way can estimate the gradient a so-called score function estimator:</p>
-<div class="math notranslate nohighlight">
-\[
-\nabla_{\phi}E_{q_{\phi}(z)}[\log p_{\theta}(x,z) - \log p_{\phi}(z)] = E_{q_{\phi}(z)}[(\log p_{\theta}(x,z) - \log q_{\phi}(z)) \nabla_{\phi} \log q_{\phi}(z)]
-\]</div>
-<p>We place the gradient inside the expectation, and we can evaluate it using Monte Carlo. This is called the score function estimator of the gradient.</p>
-<p>Biggest shortcoming of this estimator is that it has high variance. (High variance means that the observations are far away from the mean). In some cases the variance is so high that it cannot be used to learn many models.</p>
+  <div class="section" id="binary-tree">
+<h1>Binary Tree<a class="headerlink" href="#binary-tree" title="Permalink to this headline">¶</a></h1>
+<p>Binary <a class="reference internal" href="trees.html"><span class="doc std std-doc">tree</span></a> is an ordered tree with the following properties:</p>
+<ol class="simple">
+<li><p>Every node has at most two children</p></li>
+<li><p>Each child node is labeled as being either a left child or a right child</p></li>
+<li><p>A left child precedes a right child in the order of children of a node</p></li>
+</ol>
+<p>Examples:</p>
+<ol class="simple">
+<li><p>Answers to Yes-or-No questions (Decision tree).</p></li>
+<li><p>An arithmetic expression can be parsed in this way.</p></li>
+</ol>
+<p>We say a binary tree is proper if each node, except leaf nodes, has exactly 2 children. An nonempty proper binary three with <span class="math notranslate nohighlight">\(n_E\)</span> external nodes and <span class="math notranslate nohighlight">\(n_I\)</span> internal nodes holds <span class="math notranslate nohighlight">\(n_E = n_i + 1\)</span> (we can view the external node as a leaf).</p>
+<div class="section" id="linked-structure-for-binary-trees">
+<h2>Linked Structure for Binary Trees<a class="headerlink" href="#linked-structure-for-binary-trees" title="Permalink to this headline">¶</a></h2>
+<p>In an linked structure each node stores an reference to its parent, to his left and right child and the element it contains. If a node does not have any children then the left and right references are None. Each tree contains the root element of the tree and also its size.</p>
+<p><img alt="" src="../_images/linked_binary_tree.png" /></p>
 </div>
-<div class="section" id="the-sgvb-estimator">
-<h2>The SGVB estimator<a class="headerlink" href="#the-sgvb-estimator" title="Permalink to this headline">¶</a></h2>
-<p>We reformulate ELBO as:</p>
-<div class="math notranslate nohighlight">
-\[
-\log p(x) \ge E_{q_{\phi}(z|x)} [ \log p_{\theta}(x|z)] - KL(q_{\phi}(z|x)|| p(z))
-\]</div>
-<p>This reparametrization can be interpreted as: First, we can think of x as an observed data point. The right-hand side consists of two terms, both involve taking a sample <span class="math notranslate nohighlight">\(z \sim q(z|x)\)</span>, which can be interpret as a code describing x. Where we call q as the encoder.</p>
+<div class="section" id="array-based-representation-of-binary-trees">
+<h2>Array-Based Representation of Binary Trees:<a class="headerlink" href="#array-based-representation-of-binary-trees" title="Permalink to this headline">¶</a></h2>
+<p>We an number the positions of a binary tree T the following way:</p>
 <ul class="simple">
-<li><p><span class="math notranslate nohighlight">\(\log p(x|z)\)</span> is the log-likelihood of the observed x given the code z that we have sampled. This term is maximized when <span class="math notranslate nohighlight">\(p(x|z)\)</span> assigns high probability to the original x. It is trying to reconstruct x given the code z, for that reason we call <span class="math notranslate nohighlight">\(p(x|z)\)</span> the decoder network ad the term is called the reconstruction error.</p></li>
-<li><p><span class="math notranslate nohighlight">\(KL(q_{\phi}(z|x)|| p(z))\)</span> is the divergence between <span class="math notranslate nohighlight">\(q(z|x)\)</span> and prior <span class="math notranslate nohighlight">\(p(z)\)</span> (unit Normal). This forces z to look Gaussian, and we call it the regularization term. It prevents <span class="math notranslate nohighlight">\(q(z|x)\)</span> from encoding identity mappings, and forces to learn more interesting representations.</p></li>
+<li><p>If p is the root of T, then <span class="math notranslate nohighlight">\(f(p) = 0\)</span></p></li>
+<li><p>If p is the left child of position q, then <span class="math notranslate nohighlight">\(f(p) = 2f(q) + 1\)</span></p></li>
+<li><p>If p is the right child of position q, then <span class="math notranslate nohighlight">\(f(p) = 2f(q) + 2\)</span></p></li>
 </ul>
-<p>The optimization objective is to fit a <span class="math notranslate nohighlight">\(q(z|x)\)</span> that wil map x into a useful latent space z from which we are able to reconstruct x via <span class="math notranslate nohighlight">\(p(x|z)\)</span>. (this objective is reminiscent of auto-encoder neural network)</p>
+<p>Here the function <span class="math notranslate nohighlight">\(f\)</span> is known as a <em>level numbering</em> of the positions in a binary tree T.</p>
+<p><img alt="" src="../_images/array_based_binary_tree.png" /></p>
+<p>One advantage of an array-based representation of a binary tree is that a position p can be represented by a the single integer <span class="math notranslate nohighlight">\(f(p)\)</span> and position methods like root , parent, left, right can be implemented using simple arithmetic operations on the number f(p).</p>
+<p>Here deletions are expensive we may copy a lot of nodes <span class="math notranslate nohighlight">\(O(n)\)</span></p>
+</div>
+<div class="section" id="traversal">
+<h2>Traversal<a class="headerlink" href="#traversal" title="Permalink to this headline">¶</a></h2>
+<p>Here we look at possible ways we can <a class="reference internal" href="tree_traversals.html"><span class="doc std std-doc">traverse</span></a> a binary tree.</p>
 </div>
 </div>
 

@@ -2262,6 +2262,7 @@ commentsRunWhenDOMLoaded(addUtterances);
 <li><p><span class="math notranslate nohighlight">\(E_{-q_j} [f(x)]\)</span> is a notation that we take expectation over <span class="math notranslate nohighlight">\(f(x)\)</span>, with respect all the variables except <span class="math notranslate nohighlight">\(x_j\)</span></p></li>
 <li><p>Here at each update step we replace the neighboring values by their mean value, hence the name mean field.</p></li>
 <li><p><span class="math notranslate nohighlight">\(\text{const}\)</span> is a normalization constant for the new distribution.</p></li>
+<li><p>At each step we evaluate the Expectation with respect to the approximate posterior.</p></li>
 </ul>
 <p>For example if we have 3 variables:
 $<span class="math notranslate nohighlight">\(

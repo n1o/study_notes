@@ -1,11 +1,10 @@
-# Black-box [variational inference](variational_inference.md)
+# Black-box variational inference
 
-Black-box variational inference is a special class of [auto encoding variational inference](auto_encoding_variatonal_bayes.md) algorithms we assume that we can differentiate $q_{\phi}$ with respect to $\phi$ we can use using [gradient descent](gradient_descent.md) to maximize [ELBO](evidence_lower_bound.md).
+Black-box [variational inference](variational_inference.md) is a special class of [auto encoding variational inference](auto_encoding_variatonal_bayes.md) algorithms we assume that we can differentiate $q_{\phi}$ with respect to $\phi$ we can use using [gradient descent](gradient_descent.md) to maximize [ELBO](evidence_lower_bound.md).
 
 The algorithm simultaneously performs gradient descent to update $\phi$ and $\theta$. 
 * Optimizing over $\phi$ keeps the ELBO tight around $\log p(x)$
 * Optimizing $\theta$ pushes the lower bound up.
-
 
 ## Score function gradient estimator
 
