@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Search Trees &#8212; study-notes</title>
+    <title>AVL tree &#8212; study-notes</title>
     
   <link rel="stylesheet" href="../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
 
@@ -2193,7 +2193,7 @@ commentsRunWhenDOMLoaded(addUtterances);
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../_sources/notes/search_trees.md"><button type="button"
+        <a class="dropdown-buttons" href="../_sources/notes/avl_tree.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.md</button></a>
         <!-- Download PDF via print -->
@@ -2224,27 +2224,25 @@ commentsRunWhenDOMLoaded(addUtterances);
         <nav id="bd-toc-nav">
             <ul class="nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#binary-search-tree">
-   Binary Search Tree
+  <a class="reference internal nav-link" href="#update-operations">
+   Update operations
   </a>
   <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#searching">
-     Searching
-    </a>
-   </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#insertion">
      Insertion
     </a>
    </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#deletion">
+     Deletion
+    </a>
+   </li>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#balanced-search-trees">
-   <span class="xref myst">
-    Balanced search trees
-   </span>
+  <a class="reference internal nav-link" href="#performance">
+   Performance
   </a>
  </li>
 </ul>
@@ -2258,48 +2256,49 @@ commentsRunWhenDOMLoaded(addUtterances);
         
               <div>
                 
-  <div class="section" id="search-trees">
-<h1>Search Trees<a class="headerlink" href="#search-trees" title="Permalink to this headline">¶</a></h1>
-<p>The basic functionality of a search tree is:</p>
-<ul class="simple">
-<li><p><strong>M[k]</strong> finding an element by a key, or throwing an error if it does not exists</p></li>
-<li><p><strong>M[k] = v</strong> Associate a value v with key k in map M. (or replace)</p></li>
-<li><p><strong>del M[k]</strong> Remove from map M the item with key equal to k. Raise an error if k is not contained.</p></li>
-</ul>
-<div class="section" id="binary-search-tree">
-<h2>Binary Search Tree<a class="headerlink" href="#binary-search-tree" title="Permalink to this headline">¶</a></h2>
-<p>Binary trees are excellent for storing items of a map, assuming that the kays can be ordered. The <strong>binary search tree</strong> satisfies that:</p>
-<ol class="simple">
-<li><p>Keys stored in the left subtree of p are less than k</p></li>
-<li><p>Keys stored in the right subtree of p are greater than k</p></li>
-</ol>
-<p><img alt="" src="../_images/binary_search_tree_2.png" /></p>
-<p>In this tree we can perform an <a class="reference internal" href="tree_traversals.html"><span class="doc std std-doc">binary in order traversal</span></a>, thus we visit each position in increasing order of their keys.</p>
-<div class="section" id="searching">
-<h3>Searching<a class="headerlink" href="#searching" title="Permalink to this headline">¶</a></h3>
-<p>Runs in O(h), h is the depth of the search tree.</p>
-</div>
+  <div class="section" id="avl-tree">
+<h1>AVL tree<a class="headerlink" href="#avl-tree" title="Permalink to this headline">¶</a></h1>
+<p>We achieve a <a class="reference internal" href="balanced_search_trees.html"><span class="doc std std-doc">balanced tree</span></a> by introducing a constraint of logarithmic height of the tree.</p>
+<p><strong>Height-Balance property</strong>
+For every position p of T, the height of the children (siblings) of p differ by at most 1.</p>
+<p>Any binary search tree T that satisfies the height-balance property is said to be an <strong>AVL tree</strong>.</p>
+<p><img alt="" src="../_images/avl_tree.png" /></p>
+<p>The height of the nodes is above the node</p>
+<div class="section" id="update-operations">
+<h2>Update operations<a class="headerlink" href="#update-operations" title="Permalink to this headline">¶</a></h2>
+<p>Deletion an insertions are similar to standard binary trees, but we need to perform corrections so we satisfy the height balance property.</p>
 <div class="section" id="insertion">
 <h3>Insertion<a class="headerlink" href="#insertion" title="Permalink to this headline">¶</a></h3>
-<p>In case that we find an element we just replace it. If we fail to find the element, the search ends at a leaf.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Algorithm TreeInsert(T, k, v):
-    Input: A search key k to be associated with value v
-    p = TreeSearch(T,T.root(),k) 
-    if k == p.key() then
-        Set p’s value to v 
-    else if k &lt; p.key() then
-        add node with item (k,v) as left child of p 
-    else
-        add node with item (k,v) as right child of p
+<p>Insertion is the same as with the binary search tree, thus it results in a new node at position p, but may violate the height-balance property, but the only positions that may become unbalanced are the ancestors of p, because they are the only positions whose subtree has changed.</p>
+<p><img alt="" src="../_images/avl_insertion.png" /></p>
+<p>This fix is done by going up from the newly inserted position p until we find the first position z that is unbalanced. We take the child of z, y that has higher height (y has to be an ancestor of p), now we take a child of y, with higher position x. (this has to be an ancestor of p or p itself). We re-balance the subtree rooted at z by calling the <em>trinode restructuring</em>.</p>
+</div>
+<div class="section" id="deletion">
+<h3>Deletion<a class="headerlink" href="#deletion" title="Permalink to this headline">¶</a></h3>
+<p>Removal of a node can may violate the height-balance property in an AVL tree. In particular, if position p represents the parent of removed node in tree T, they may be an unbalanced node on the path from p to the root of T. In fact, there can be at most one such unbalanced node.</p>
+<p><img alt="avl_tree_deletion" src="../_images/avl_tree_deletion.png" /></p>
+<p>As with insertion we use <em>trinode restructuring</em> to restore balance in the tree T. Let z be the first unbalanced position encountered going up from p towards to the root of T, let y be the child of z with larger height (position y is the child of z and it is not an ancestor of p), let x be the left child of y on the same side as y; else (booth children of y have the same height), let x be the child of y on the same side as y (that is, if y is the left child of z, then x be the left child of y, else let x be the right child of y). In any case, we perform a <span class="math notranslate nohighlight">\(restructure(x)\)</span> operation. Unfortunately this may only restore height-balance property <strong>locally</strong>. Thus we have to still walk up T till we get to the root.</p>
+</div>
+</div>
+<div class="section" id="performance">
+<h2>Performance<a class="headerlink" href="#performance" title="Permalink to this headline">¶</a></h2>
+<ul>
+<li><p>These operation work in <span class="math notranslate nohighlight">\(O(\log n)\)</span>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">k</span> <span class="ow">in</span> <span class="n">T</span><span class="p">,</span> <span class="n">T</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="n">T</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">p</span><span class="p">),</span> <span class="k">del</span> <span class="n">T</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="n">T</span><span class="o">.</span><span class="n">find_position</span><span class="p">(</span><span class="n">k</span><span class="p">),</span> <span class="n">T</span><span class="o">.</span><span class="n">first</span><span class="p">(),</span> <span class="n">T</span><span class="o">.</span><span class="n">last</span><span class="p">(),</span> <span class="n">T</span><span class="o">.</span><span class="n">find_min</span><span class="p">(),</span> <span class="n">T</span><span class="o">.</span><span class="n">find_max</span><span class="p">(),</span> <span class="n">T</span><span class="o">.</span><span class="n">before</span><span class="p">(</span><span class="n">k</span><span class="p">),</span> <span class="n">T</span><span class="o">.</span><span class="n">after</span><span class="p">(</span><span class="n">k</span><span class="p">),</span> <span class="n">T</span><span class="o">.</span><span class="n">find_lt</span><span class="p">(</span><span class="n">k</span><span class="p">),</span> <span class="n">T</span><span class="o">.</span><span class="n">find_le</span><span class="p">(</span><span class="n">k</span><span class="p">),</span> <span class="n">T</span><span class="o">.</span><span class="n">find_gt</span><span class="p">(</span><span class="n">k</span><span class="p">),</span> <span class="n">T</span><span class="o">.</span><span class="n">find_ge</span><span class="p">(</span><span class="n">k</span><span class="p">),</span> 
 </pre></div>
 </div>
-<p>Here we insert 68 into a search tree:</p>
-<p><img alt="" src="../_images/search_tree_insert.png" /></p>
+</li>
+<li><p>These operations work in <span class="math notranslate nohighlight">\(O(s + h)\)</span>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">T</span><span class="o">.</span><span class="n">find_range</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">stop</span><span class="p">)</span>
+</pre></div>
 </div>
+</li>
+<li><p>These operations work in <span class="math notranslate nohighlight">\(O(n)\)</span>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">iter</span><span class="p">(</span><span class="n">T</span><span class="p">),</span> <span class="nb">reversed</span><span class="p">(</span><span class="n">T</span><span class="p">)</span>
+</pre></div>
 </div>
-<div class="section" id="balanced-search-trees">
-<h2><a class="reference internal" href="balanced_search_trees.html"><span class="doc std std-doc">Balanced search trees</span></a><a class="headerlink" href="#balanced-search-trees" title="Permalink to this headline">¶</a></h2>
-<p>The naive search tree provides O(n) worst case performance, thus we turn to a data-structure that has stronger guarantees. In general we need to keep the tree balanced, or to keep its height equal <span class="math notranslate nohighlight">\(h=[\log (n+1)] - 1\)</span>.</p>
+</li>
+</ul>
 </div>
 </div>
 

@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Search Trees &#8212; study-notes</title>
+    <title>Balanced Search Trees &#8212; study-notes</title>
     
   <link rel="stylesheet" href="../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
 
@@ -2193,7 +2193,7 @@ commentsRunWhenDOMLoaded(addUtterances);
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../_sources/notes/search_trees.md"><button type="button"
+        <a class="dropdown-buttons" href="../_sources/notes/balanced_search_trees.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.md</button></a>
         <!-- Download PDF via print -->
@@ -2224,27 +2224,8 @@ commentsRunWhenDOMLoaded(addUtterances);
         <nav id="bd-toc-nav">
             <ul class="nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#binary-search-tree">
-   Binary Search Tree
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#searching">
-     Searching
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#insertion">
-     Insertion
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#balanced-search-trees">
-   <span class="xref myst">
-    Balanced search trees
-   </span>
+  <a class="reference internal nav-link" href="#avl-trees">
+   [AVL trees]
   </a>
  </li>
 </ul>
@@ -2258,48 +2239,33 @@ commentsRunWhenDOMLoaded(addUtterances);
         
               <div>
                 
-  <div class="section" id="search-trees">
-<h1>Search Trees<a class="headerlink" href="#search-trees" title="Permalink to this headline">¶</a></h1>
-<p>The basic functionality of a search tree is:</p>
-<ul class="simple">
-<li><p><strong>M[k]</strong> finding an element by a key, or throwing an error if it does not exists</p></li>
-<li><p><strong>M[k] = v</strong> Associate a value v with key k in map M. (or replace)</p></li>
-<li><p><strong>del M[k]</strong> Remove from map M the item with key equal to k. Raise an error if k is not contained.</p></li>
-</ul>
-<div class="section" id="binary-search-tree">
-<h2>Binary Search Tree<a class="headerlink" href="#binary-search-tree" title="Permalink to this headline">¶</a></h2>
-<p>Binary trees are excellent for storing items of a map, assuming that the kays can be ordered. The <strong>binary search tree</strong> satisfies that:</p>
+  <div class="section" id="balanced-search-trees">
+<h1>Balanced Search Trees<a class="headerlink" href="#balanced-search-trees" title="Permalink to this headline">¶</a></h1>
+<p>Balanced <a class="reference internal" href="search_trees.html"><span class="doc std std-doc">search trees</span></a> try to keep its height equal <span class="math notranslate nohighlight">\(h=[\log (n+1)] - 1\)</span>, where n is the number of nodes.</p>
+<p>The primary operation to re-balance a tree is known as <strong>rotation</strong>. During rotation we “rotate” a child to be above its parent.</p>
+<p>We can preform two kinds of rotations</p>
 <ol class="simple">
-<li><p>Keys stored in the left subtree of p are less than k</p></li>
-<li><p>Keys stored in the right subtree of p are greater than k</p></li>
+<li><p>Transform the left formation to into the right</p></li>
+<li><p>Transform the right rotation to the left</p></li>
 </ol>
-<p><img alt="" src="../_images/binary_search_tree_2.png" /></p>
-<p>In this tree we can perform an <a class="reference internal" href="tree_traversals.html"><span class="doc std std-doc">binary in order traversal</span></a>, thus we visit each position in increasing order of their keys.</p>
-<div class="section" id="searching">
-<h3>Searching<a class="headerlink" href="#searching" title="Permalink to this headline">¶</a></h3>
-<p>Runs in O(h), h is the depth of the search tree.</p>
-</div>
-<div class="section" id="insertion">
-<h3>Insertion<a class="headerlink" href="#insertion" title="Permalink to this headline">¶</a></h3>
-<p>In case that we find an element we just replace it. If we fail to find the element, the search ends at a leaf.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Algorithm TreeInsert(T, k, v):
-    Input: A search key k to be associated with value v
-    p = TreeSearch(T,T.root(),k) 
-    if k == p.key() then
-        Set p’s value to v 
-    else if k &lt; p.key() then
-        add node with item (k,v) as left child of p 
-    else
-        add node with item (k,v) as right child of p
-</pre></div>
-</div>
-<p>Here we insert 68 into a search tree:</p>
-<p><img alt="" src="../_images/search_tree_insert.png" /></p>
-</div>
-</div>
-<div class="section" id="balanced-search-trees">
-<h2><a class="reference internal" href="balanced_search_trees.html"><span class="doc std std-doc">Balanced search trees</span></a><a class="headerlink" href="#balanced-search-trees" title="Permalink to this headline">¶</a></h2>
-<p>The naive search tree provides O(n) worst case performance, thus we turn to a data-structure that has stronger guarantees. In general we need to keep the tree balanced, or to keep its height equal <span class="math notranslate nohighlight">\(h=[\log (n+1)] - 1\)</span>.</p>
+<p><img alt="" src="../_images/rotation.png" /></p>
+<p>In the example <span class="math notranslate nohighlight">\(T_1\)</span> has keys less than that of position x, <span class="math notranslate nohighlight">\(T_2\)</span> has keys that are between x and y. And <span class="math notranslate nohighlight">\(T_3\)</span> has keys greater than at position y.</p>
+<p>To maintain the binary search tree property trough a rotation we note that if position x was a left child of position y prior to a rotation (and therefore the key of x is less than the key of y), then y becomes the right child of x after the rotation and vice versa.</p>
+<p>A single rotation modifies a constant number of parent-child relation-ship, it can be implemented in <span class="math notranslate nohighlight">\(O(1)\)</span> time with a linked binary tree representation.</p>
+<p>We can combine multiple rotations to provide broader re-balancing within a tree. An example is a <strong>trinode restrucutre</strong> (<span class="math notranslate nohighlight">\(O(1)\)</span>) where we consider a position x, its parent y and grand parent z.</p>
+<p><img alt="" src="../_images/trinode_rotation.png" /></p>
+<p>Algorithm restructure(x):</p>
+<p>Input: A position x of a binary search tree T that has both a parent y and a grandparent z</p>
+<p>Output: Tree T after a trinode restructuring (which corresponds to a single or double rotation) involving positions x, y,and z</p>
+<ol class="simple">
+<li><p>Let (a, b, c) be a left-to-right (inorder) listing of the positions x, y,and z,and let (T1,T2,T3,T4) be a left-to-right (inorder) listing of the four subtrees of x, y and z not rooted at x, y or z.</p></li>
+<li><p>Replace the subtree rooted at z with a new subtree rooted at b.</p></li>
+<li><p>Let a be the left child of b and let T1 and T2 be the left and right subtrees of a, respectively.</p></li>
+<li><p>Let c be the right child of b and let T3 and T4 be the left and right subtrees of c,respectively.</p></li>
+</ol>
+<div class="section" id="avl-trees">
+<h2>[AVL trees]<a class="headerlink" href="#avl-trees" title="Permalink to this headline">¶</a></h2>
+<p>We introduce a constraint of logarithmic height of the tree.</p>
 </div>
 </div>
 
