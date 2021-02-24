@@ -36,5 +36,18 @@ Algorithm TreeInsert(T, k, v):
 Here we insert 68 into a search tree:
 
 ![](../.images/algorithms/search_tree_insert.png)
+
+### Deletion
+Deletion may happen anywhere in the tree. First we need to find the position $p$ of the element we want to delete. If we find it there are two general cases:
+
+1. $p$ has at most one child, than we delete p and replace it with its child.
+2. $p$ has two children
+   1. We locate position r that is greatest key that is strictly less than at position $p$ (the right most postion of the left subtree of $p$)
+   2. We use $r$ as a replacement for the one being deleted at position p
+   3. Since r is the right most position in the subtree, it wont have a right child, therefore we can just simply delete $r$
+
+![](../.images/algorithms/binary_tree_deletion.png)
+
+Here we delete 88.
 ## [Balanced search trees](balanced_search_trees.md)
 The naive search tree provides O(n) worst case performance, thus we turn to a data-structure that has stronger guarantees. In general we need to keep the tree balanced, or to keep its height equal $h=[\log (n+1)] - 1$.

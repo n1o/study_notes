@@ -32,5 +32,8 @@ Output: Tree T after a trinode restructuring (which corresponds to a single or d
 3. Let a be the left child of b and let T1 and T2 be the left and right subtrees of a, respectively.
 4. Let c be the right child of b and let T3 and T4 be the left and right subtrees of c,respectively.
 
-## [AVL trees]
+## [AVL Trees](avl_tree.md)
 We introduce a constraint of logarithmic height of the tree.
+
+## [Splay Trees](splay_trees.md)
+They perform certain move-to-root operations called splaying, which is performed at the bottom most position p during every insertion, deletion and search. This results that more frequently accessed elements remain at the root, and reducing search time.
