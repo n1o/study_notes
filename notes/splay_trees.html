@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Search Trees &#8212; study-notes</title>
+    <title>Splay trees &#8212; study-notes</title>
     
   <link rel="stylesheet" href="../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
 
@@ -2193,7 +2193,7 @@ commentsRunWhenDOMLoaded(addUtterances);
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../_sources/notes/search_trees.md"><button type="button"
+        <a class="dropdown-buttons" href="../_sources/notes/splay_trees.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.md</button></a>
         <!-- Download PDF via print -->
@@ -2224,32 +2224,30 @@ commentsRunWhenDOMLoaded(addUtterances);
         <nav id="bd-toc-nav">
             <ul class="nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#binary-search-tree">
-   Binary Search Tree
+  <a class="reference internal nav-link" href="#splaying">
+   Splaying
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#searching">
-     Searching
+    <a class="reference internal nav-link" href="#zig-zig">
+     zig-zig
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#insertion">
-     Insertion
+    <a class="reference internal nav-link" href="#zig-zag">
+     zig-zag
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#deletion">
-     Deletion
+    <a class="reference internal nav-link" href="#zig">
+     zig
     </a>
    </li>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#balanced-search-trees">
-   <span class="xref myst">
-    Balanced search trees
-   </span>
+  <a class="reference internal nav-link" href="#rules-when-to-splay">
+   Rules when to splay
   </a>
  </li>
 </ul>
@@ -2263,64 +2261,38 @@ commentsRunWhenDOMLoaded(addUtterances);
         
               <div>
                 
-  <div class="section" id="search-trees">
-<h1>Search Trees<a class="headerlink" href="#search-trees" title="Permalink to this headline">¶</a></h1>
-<p>The basic functionality of a search tree is:</p>
+  <div class="section" id="splay-trees">
+<h1>Splay trees<a class="headerlink" href="#splay-trees" title="Permalink to this headline">¶</a></h1>
+<p>Are <a class="reference internal" href="balanced_search_trees.html"><span class="doc std std-doc">balanced binary search trees</span></a>. There is no strict enforce a logarithmic upper bound on the height of the tree. Instead, we perform certain move-to-root operations called splaying, which is performed at the bottom-most position p during every insertion, deletion, and search. This results that more frequently accessed elements remain at the root, and reducing search time. It allows us to guarantee a logarithmic amortized running time, for insertions, deletions, and searches.</p>
+<div class="section" id="splaying">
+<h2>Splaying<a class="headerlink" href="#splaying" title="Permalink to this headline">¶</a></h2>
+<p>Given a node x of a binary search tree T, we <strong>splay</strong> x by moving x to the root of T through a sequence of restructurings. The specific operations we perform to move x up depends upon the relative positions of x, its parent y, and x’s grandparent z (if exists). We consider the following cases</p>
+<div class="section" id="zig-zig">
+<h3>zig-zig<a class="headerlink" href="#zig-zig" title="Permalink to this headline">¶</a></h3>
+<p>The node x and its parent y are both left children or booth right children. We promote x, making y a child of x and z a child of y, while maintaining the inorder relationship of nodes in T.</p>
+<p><img alt="zig zig" src="../_images/splay_tree_zig_zig.png" /></p>
+</div>
+<div class="section" id="zig-zag">
+<h3>zig-zag<a class="headerlink" href="#zig-zag" title="Permalink to this headline">¶</a></h3>
+<p>One of x and y is left child and the other is a right child. In this case we promote x by making x have y and z as its children, while maintaining the inorder relationships of the nodes in T.</p>
+<p><img alt="zig zag" src="../_images/splay_tree_zig_zag.png" /></p>
+</div>
+<div class="section" id="zig">
+<h3>zig<a class="headerlink" href="#zig" title="Permalink to this headline">¶</a></h3>
+<p>X does not have a grandparent. In this case, we perform a single rotation to promote x over y, making y a child of x, while maintaining inorder relationship of the nodes int T.</p>
+<p><img alt="zag" src="../_images/splay_tree_zag.png" /></p>
+<p>A <strong>splay step</strong> consists of repeating these restructurings at x until x becomes the root of T,</p>
+</div>
+</div>
+<div class="section" id="rules-when-to-splay">
+<h2>Rules when to splay<a class="headerlink" href="#rules-when-to-splay" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li><p><strong>M[k]</strong> finding an element by a key, or throwing an error if it does not exists</p></li>
-<li><p><strong>M[k] = v</strong> Associate a value v with key k in map M. (or replace)</p></li>
-<li><p><strong>del M[k]</strong> Remove from map M the item with key equal to k. Raise an error if k is not contained.</p></li>
+<li><p>When searching for a key k, if k is found at position p, we splay p, else we splay the leaf position at which the search terminates unsuccessfully.</p></li>
+<li><p>When inserting a key k, we splay the newly created internal node where k gets inserted. Example of growing a new tree:
+<img alt="splay insertion" src="../_images/splay_insertions.png" /></p></li>
+<li><p>When deleting a key k, we splay the position p, that is the parent of the removed node
+<img alt="splay deletion" src="../_images/splay_deletion.png" /></p></li>
 </ul>
-<div class="section" id="binary-search-tree">
-<h2>Binary Search Tree<a class="headerlink" href="#binary-search-tree" title="Permalink to this headline">¶</a></h2>
-<p>Binary trees are excellent for storing items of a map, assuming that the kays can be ordered. The <strong>binary search tree</strong> satisfies that:</p>
-<ol class="simple">
-<li><p>Keys stored in the left subtree of p are less than k</p></li>
-<li><p>Keys stored in the right subtree of p are greater than k</p></li>
-</ol>
-<p><img alt="" src="../_images/binary_search_tree_2.png" /></p>
-<p>In this tree we can perform an <a class="reference internal" href="tree_traversals.html"><span class="doc std std-doc">binary in order traversal</span></a>, thus we visit each position in increasing order of their keys.</p>
-<div class="section" id="searching">
-<h3>Searching<a class="headerlink" href="#searching" title="Permalink to this headline">¶</a></h3>
-<p>Runs in O(h), h is the depth of the search tree.</p>
-</div>
-<div class="section" id="insertion">
-<h3>Insertion<a class="headerlink" href="#insertion" title="Permalink to this headline">¶</a></h3>
-<p>In case that we find an element we just replace it. If we fail to find the element, the search ends at a leaf.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Algorithm TreeInsert(T, k, v):
-    Input: A search key k to be associated with value v
-    p = TreeSearch(T,T.root(),k) 
-    if k == p.key() then
-        Set p’s value to v 
-    else if k &lt; p.key() then
-        add node with item (k,v) as left child of p 
-    else
-        add node with item (k,v) as right child of p
-</pre></div>
-</div>
-<p>Here we insert 68 into a search tree:</p>
-<p><img alt="" src="../_images/search_tree_insert.png" /></p>
-</div>
-<div class="section" id="deletion">
-<h3>Deletion<a class="headerlink" href="#deletion" title="Permalink to this headline">¶</a></h3>
-<p>Deletion may happen anywhere in the tree. First we need to find the position <span class="math notranslate nohighlight">\(p\)</span> of the element we want to delete. If we find it there are two general cases:</p>
-<ol class="simple">
-<li><p><span class="math notranslate nohighlight">\(p\)</span> has at most one child, than we delete p and replace it with its child.</p></li>
-<li><p><span class="math notranslate nohighlight">\(p\)</span> has two children</p>
-<ol class="simple">
-<li><p>We locate position r that is greatest key that is strictly less than at position <span class="math notranslate nohighlight">\(p\)</span> (the right most postion of the left subtree of <span class="math notranslate nohighlight">\(p\)</span>)</p></li>
-<li><p>We use <span class="math notranslate nohighlight">\(r\)</span> as a replacement for the one being deleted at position p</p></li>
-<li><p>Since r is the right most position in the subtree, it wont have a right child, therefore we can just simply delete <span class="math notranslate nohighlight">\(r\)</span></p></li>
-</ol>
-</li>
-</ol>
-<p><img alt="" src="../_images/binary_tree_deletion.png" /></p>
-<p>Here we delete 88.</p>
-</div>
-</div>
-<div class="section" id="balanced-search-trees">
-<h2><a class="reference internal" href="balanced_search_trees.html"><span class="doc std std-doc">Balanced search trees</span></a><a class="headerlink" href="#balanced-search-trees" title="Permalink to this headline">¶</a></h2>
-<p>The naive search tree provides O(n) worst case performance, thus we turn to a data-structure that has stronger guarantees. In general we need to keep the tree balanced, or to keep its height equal <span class="math notranslate nohighlight">\(h=[\log (n+1)] - 1\)</span>.</p>
 </div>
 </div>
 
