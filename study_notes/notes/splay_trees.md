@@ -6,7 +6,7 @@ Are [balanced binary search trees](balanced_search_trees.md). There is no strict
 Given a node x of a binary search tree T, we **splay** x by moving x to the root of T through a sequence of restructurings. The specific operations we perform to move x up depends upon the relative positions of x, its parent y, and x's grandparent z (if exists). We consider the following cases
 
 ### zig-zig
-The node x and its parent y are both left children or booth right children. We promote x, making y a child of x and z a child of y, while maintaining the inorder relationship of nodes in T.
+The node x and its parent y are both left children or booth, right children. We promote x, making y a child of x and z a child of y, while maintaining the inorder relationship of nodes in T.
 
 ![zig zig](../.images/algorithms/splay_tree_zig_zig.png)
 
@@ -18,7 +18,7 @@ One of x and y is left child and the other is a right child. In this case we pro
    
 ### zig 
 
-X does not have a grandparent. In this case, we perform a single rotation to promote x over y, making y a child of x, while maintaining inorder relationship of the nodes int T.
+X does not have a grandparent. In this case, we perform a single rotation to promote x over y, making y a child of x, while maintaining inorder relationship of the nodes in T.
 
 ![zag](../.images/algorithms/splay_tree_zag.png)
 
