@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Physics &#8212; study-notes</title>
+    <title>Power &#8212; study-notes</title>
     
   <link rel="stylesheet" href="../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
 
@@ -91,8 +91,6 @@ commentsRunWhenDOMLoaded(addUtterances);
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Latent Variable Models" href="latent_variable_models.html" />
-    <link rel="prev" title="Hypergradient Descent" href="hyper_gradient_descent.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -129,7 +127,7 @@ commentsRunWhenDOMLoaded(addUtterances);
   </a>
  </li>
 </ul>
-<ul class="current nav sidenav_l1">
+<ul class="nav sidenav_l1">
  <li class="toctree-l1">
   <a class="reference internal" href="signal_to_noise_ratio.html">
    Signal to noise ratio
@@ -523,8 +521,8 @@ commentsRunWhenDOMLoaded(addUtterances);
    Hypergradient Descent
   </a>
  </li>
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
+ <li class="toctree-l1">
+  <a class="reference internal" href="physics.html">
    Physics
   </a>
  </li>
@@ -2195,7 +2193,7 @@ commentsRunWhenDOMLoaded(addUtterances);
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../_sources/notes/physics.md"><button type="button"
+        <a class="dropdown-buttons" href="../_sources/notes/power.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.md</button></a>
         <!-- Download PDF via print -->
@@ -2226,123 +2224,14 @@ commentsRunWhenDOMLoaded(addUtterances);
         <nav id="bd-toc-nav">
             <ul class="nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#one-dimensional-movement">
-   <span class="xref myst">
-    One dimensional movement
-   </span>
+  <a class="reference internal nav-link" href="#units-of-power">
+   Units of Power
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#motion-in-a-plane">
-   <span class="xref myst">
-    Motion in a plane
-   </span>
+  <a class="reference internal nav-link" href="#instantaneous-power">
+   Instantaneous power
   </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#projectile-motion">
-     <span class="xref myst">
-      Projectile motion
-     </span>
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#uniform-circular-motion-uniform-circular-motion-md">
-     [Uniform circular Motion](uniform_circular_motion.md
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#force">
-   <span class="xref myst">
-    Force
-   </span>
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#newtons-laws">
-     <span class="xref myst">
-      Newtons laws
-     </span>
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#contact-force">
-     <span class="xref myst">
-      Contact force
-     </span>
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#drag-force">
-     <span class="xref myst">
-      Drag Force
-     </span>
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#elastic-forces">
-     <span class="xref myst">
-      Elastic Forces
-     </span>
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#four-fundamental-forces-of-nature-forces-in-nature-md">
-     [Four fundamental forces of nature](forces_in_nature.md
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#newtons-law-of-gravitation">
-     <span class="xref myst">
-      Newtons Law of gravitation
-     </span>
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#weight-of-an-object">
-     <span class="xref myst">
-      Weight of an object
-     </span>
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#satellite-motion">
-     <span class="xref myst">
-      Satellite motion
-     </span>
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#energy">
-   Energy
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#mechanical-energy">
-     <span class="xref myst">
-      Mechanical Energy
-     </span>
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#work">
-     <span class="xref myst">
-      Work
-     </span>
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#power">
-     <span class="xref myst">
-      Power
-     </span>
-    </a>
-   </li>
-  </ul>
  </li>
 </ul>
 
@@ -2355,70 +2244,46 @@ commentsRunWhenDOMLoaded(addUtterances);
         
               <div>
                 
-  <div class="section" id="physics">
-<h1>Physics<a class="headerlink" href="#physics" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="one-dimensional-movement">
-<h2><a class="reference internal" href="one_dimensional_motion.html"><span class="doc std std-doc">One dimensional movement</span></a><a class="headerlink" href="#one-dimensional-movement" title="Permalink to this headline">¶</a></h2>
+  <div class="section" id="power">
+<h1>Power<a class="headerlink" href="#power" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><p>Time rate at which work is done</p></li>
+</ul>
+<p>The average power</p>
+<div class="math notranslate nohighlight">
+\[
+P_{\text{av}} = \frac{\Delta w}{\Delta t}
+\]</div>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\Delta w\)</span> is the average quantity of work done</p></li>
+<li><p><span class="math notranslate nohighlight">\(\Delta t\)</span> is the time interval</p></li>
+</ul>
+<div class="section" id="units-of-power">
+<h2>Units of Power<a class="headerlink" href="#units-of-power" title="Permalink to this headline">¶</a></h2>
+<div class="math notranslate nohighlight">
+\[
+\text{Wat} = \frac{\text{Joule}}{\text{second}}
+\]</div>
 </div>
-<div class="section" id="motion-in-a-plane">
-<h2><a class="reference internal" href="motion_in_plane.html"><span class="doc std std-doc">Motion in a plane</span></a><a class="headerlink" href="#motion-in-a-plane" title="Permalink to this headline">¶</a></h2>
-<p>Here we move in a plane represented by x,y coordinates.</p>
-<div class="section" id="projectile-motion">
-<h3><a class="reference internal" href="projectile_motion.html"><span class="doc std std-doc">Projectile motion</span></a><a class="headerlink" href="#projectile-motion" title="Permalink to this headline">¶</a></h3>
-<p>Here a projective given an initial velocity follows a path determined by the effect of gravity and air resistance</p>
-</div>
-<div class="section" id="uniform-circular-motion-uniform-circular-motion-md">
-<h3>[Uniform circular Motion](uniform_circular_motion.md<a class="headerlink" href="#uniform-circular-motion-uniform-circular-motion-md" title="Permalink to this headline">¶</a></h3>
-<p>Movement in a circle with constant speed.</p>
-</div>
-</div>
-<div class="section" id="force">
-<h2><a class="reference internal" href="force.html"><span class="doc std std-doc">Force</span></a><a class="headerlink" href="#force" title="Permalink to this headline">¶</a></h2>
-<p>Here we describe interactions between objects or objects and nature.</p>
-<div class="section" id="newtons-laws">
-<h3><a class="reference internal" href="newtons_laws.html"><span class="doc std std-doc">Newtons laws</span></a><a class="headerlink" href="#newtons-laws" title="Permalink to this headline">¶</a></h3>
-<p>First law states than an object travels at constant velocity (or rest) if no forces is acted upon.</p>
-<p>Second tels us the relationship between Force mass and acceleration.</p>
-<p>The Third law is about equilibrium, every force has an equal opposite reaction.</p>
-</div>
-<div class="section" id="contact-force">
-<h3><a class="reference internal" href="contact_force_friction.html"><span class="doc std std-doc">Contact force</span></a><a class="headerlink" href="#contact-force" title="Permalink to this headline">¶</a></h3>
-<p>Describes forces that an object excerpts when we try to move it. If we pull/push an object it will excerpt friction, that is in the opposite direction of the acted forces.</p>
-</div>
-<div class="section" id="drag-force">
-<h3><a class="reference internal" href="drag_force.html"><span class="doc std std-doc">Drag Force</span></a><a class="headerlink" href="#drag-force" title="Permalink to this headline">¶</a></h3>
-<p>If something falls in the air, there is drag. Drag pushes an object back.</p>
-</div>
-<div class="section" id="elastic-forces">
-<h3><a class="reference internal" href="elastic_forces.html"><span class="doc std std-doc">Elastic Forces</span></a><a class="headerlink" href="#elastic-forces" title="Permalink to this headline">¶</a></h3>
-<p>Here we study the behavior of springs, how they expand and contract under force.</p>
-</div>
-<div class="section" id="four-fundamental-forces-of-nature-forces-in-nature-md">
-<h3>[Four fundamental forces of nature](forces_in_nature.md<a class="headerlink" href="#four-fundamental-forces-of-nature-forces-in-nature-md" title="Permalink to this headline">¶</a></h3>
-</div>
-<div class="section" id="newtons-law-of-gravitation">
-<h3><a class="reference internal" href="newtons_law_of_gravitation.html"><span class="doc std std-doc">Newtons Law of gravitation</span></a><a class="headerlink" href="#newtons-law-of-gravitation" title="Permalink to this headline">¶</a></h3>
-<p>Here we define the gravitation between two objects their masses, distance between them and the gravitational constant.</p>
-</div>
-<div class="section" id="weight-of-an-object">
-<h3><a class="reference internal" href="weight.html"><span class="doc std std-doc">Weight of an object</span></a><a class="headerlink" href="#weight-of-an-object" title="Permalink to this headline">¶</a></h3>
-<p>The weight of an object is the total <a class="reference internal" href="newtons_law_of_gravitation.html"><span class="doc std std-doc">gravitational force</span></a> excreted on the object by all the other objects in the universe.</p>
-</div>
-<div class="section" id="satellite-motion">
-<h3><a class="reference internal" href="satellite_motion.html"><span class="doc std std-doc">Satellite motion</span></a><a class="headerlink" href="#satellite-motion" title="Permalink to this headline">¶</a></h3>
-</div>
-</div>
-<div class="section" id="energy">
-<h2>Energy<a class="headerlink" href="#energy" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="mechanical-energy">
-<h3><a class="reference internal" href="mechanical_energy.html"><span class="doc std std-doc">Mechanical Energy</span></a><a class="headerlink" href="#mechanical-energy" title="Permalink to this headline">¶</a></h3>
-</div>
-<div class="section" id="work">
-<h3><a class="reference internal" href="work.html"><span class="doc std std-doc">Work</span></a><a class="headerlink" href="#work" title="Permalink to this headline">¶</a></h3>
-</div>
-<div class="section" id="power">
-<h3><a class="reference internal" href="power.html"><span class="doc std std-doc">Power</span></a><a class="headerlink" href="#power" title="Permalink to this headline">¶</a></h3>
-</div>
+<div class="section" id="instantaneous-power">
+<h2>Instantaneous power<a class="headerlink" href="#instantaneous-power" title="Permalink to this headline">¶</a></h2>
+<div class="math notranslate nohighlight">
+\[
+P = \lim_{\Delta t \rightarrow 0} \frac{\Delta w}{\Delta t}
+\]</div>
+<p>If forces act on a moving object, we can express the corresponding power in terms of force and velocity:</p>
+<div class="math notranslate nohighlight">
+\[
+P_{\text{av}} = \frac{F_{\parallel} \Delta s}{\Delta t} = F_{\parallel} v_{\text{av}}
+\]</div>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\Delta s\)</span> is the magnitude of displacement <span class="math notranslate nohighlight">\(\Delta \vec{s}\)</span></p></li>
+</ul>
+<p>Int the limit we get the instantaneous work:</p>
+<div class="math notranslate nohighlight">
+\[
+P = F_{\parallel} v
+\]</div>
 </div>
 </div>
 
@@ -2450,8 +2315,6 @@ commentsRunWhenDOMLoaded(addUtterances);
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="hyper_gradient_descent.html" title="previous page">Hypergradient Descent</a>
-    <a class='right-next' id="next-link" href="latent_variable_models.html" title="next page">Latent Variable Models</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">
