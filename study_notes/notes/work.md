@@ -51,3 +51,39 @@ Thus if we apply force we can change the kinetic energy of an object. The total 
 $$
 W_{\text{total}} = K_f - K_i = \Delta K
 $$
+
+## Work done by a varying force
+Here the force acting on a object varies in booth magnitude and direction, or force that acts on an object along a curved path. 
+
+First we assume we have a straight line direction, but we vary the force. To calculate the work done, we split into segments:
+
+$$
+w = F_1 \times \Delta x_1  + F_2 \times \Delta x_2  + \cdots \\
+w = \text{ are under the curve}
+$$
+
+![](../.images/physics/work_varying_force.png)
+
+Lets look a at a string. The force required to stretch a string ([hookes law](elastic_forces.md)) is:
+
+$$
+F = kx
+$$
+
+* $k$ force (spring) constant
+
+The work done by stretching a spring can be expressed as:
+
+![](../.images/physics/work_spring.png)
+
+Thus as we elongate the spring from zero, to maximum value x the work is:
+
+$$
+w = \frac{1}{2} x(kx) = \frac{1}{2}kx^2
+$$
+
+Thus as we double the elongation the work increases by a factor of 4. We can generalize this lets assume the string is stretched to $x_i$ and we stretch it to $x_f$ than the work done is:
+
+$$
+w = \frac{1}{2}kx_f^2 - \frac{1}{2}kx_f^2 
+$$

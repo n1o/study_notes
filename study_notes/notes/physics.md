@@ -40,4 +40,4 @@ The weight of an object is the total [gravitational force](newtons_law_of_gravit
 ## Energy
 ### [Mechanical Energy](mechanical_energy.md)
 ### [Work](work.md)
-
+### [Power](power.md)
