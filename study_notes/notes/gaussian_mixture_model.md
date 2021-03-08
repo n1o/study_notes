@@ -1,5 +1,4 @@
 # Mixture of Gaussians
-
 The most widely used [mixture model](mixture_models.md) is the **mixture of Gaussians** also known as **Gaussian mixture model (GMM)**. In this model each base distribution is a mixture of multivariate Gaussians with mean $\mu_k$ and covariance matrix $\Sigma_k$.
 
 $$
@@ -14,6 +13,7 @@ Here we assume that our observed data is comprised of K cluster with proportions
 
 ![](../.images/machine_learning/gaussian_mixture_example.png)
 
+The Gaussian mixture can be viewed as a **universal approximator**, we can approximate any smooth density with zero error if we have enough components.
 ## EM
 One way to fit Gaussian mixture model is to use [EM](em_algorithm.md)
 

@@ -2,8 +2,10 @@
 # Entropy
 Given we have a random variable $X$ with distribution $p$, we can say that the entropy of $H(X)$ is the measure of uncertainty. 
 
-$$H(X)  \triangleq - \sum_{x \in A_X} p(x) \log_2 p(x) \\ 
-= \sum_{x \in A_X} p(x) \log_2 \frac{1}{p(x)}$$
+$$H(X)  = - \sum_{x \in A_X} p(x) \log_2 p(x) \\ 
+= \sum_{x \in A_X} p(x) \log_2 \frac{1}{p(x)} \\ 
+= -E_{x \sim p(x)}[\log p(x)]
+$$
 
 It measures the information content of an event in **bits** (If we would use base $e$ for the logarithm, the units we would measure entropy would be **nats**). And it can be viewed as the average [information content of an outcome](./shannon_information_content.md).
 

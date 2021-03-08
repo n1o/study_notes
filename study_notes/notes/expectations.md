@@ -2,7 +2,7 @@
 Given an random variable $X$ with PDF $f(x)$ we define its expected value (**mean**) as:
 
 $$
-E[X] = \int_{-\infty}^{\infty} xp(x)dx
+E[X] = \int_{-\infty}^{\infty} xp(x)dx \\
 $$
 
 # Functions of random variables
@@ -10,7 +10,8 @@ $$
 Given a [function](functions_of_random_variables.md) $g: R \rightarrow R$, $g(X)$ is also an random variable we define its expectation as:
 
 $$
-E[g(X)] = \int_{-\infty}^{\infty} g(x)f(x)dx
+E[g(X)] = \int_{-\infty}^{\infty} g(x)p(x)dx \\ 
+= E_{x \sim p(x)}[g(x)]
 $$
 
 This is the weighted average of $g$. In the special case when $g$ is the *identity* function we get **mean**.
@@ -18,7 +19,7 @@ This is the weighted average of $g$. In the special case when $g$ is the *identi
 ## Properties
 * $E[a] = a$ for any constant $a$
 * $E[af(X)] = a E[f(X)]$ for any constant $a$
-* $E[f(X) + g(X)] = E[f(X)] + E[g(X)]$ Linearity 
+* $E[af(X) + bg(X)] = aE[f(X)] + bE[g(X)]$ Linearity 
 
 # Variance
 Variance of a random variable X is a measure how concentrated the distribution of a random variable X is around its mean. 
