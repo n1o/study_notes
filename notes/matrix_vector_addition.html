@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Red black trees &#8212; study-notes</title>
+    <title>Matrix vector addition &#8212; study-notes</title>
     
   <link rel="stylesheet" href="../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
 
@@ -2193,7 +2193,7 @@ commentsRunWhenDOMLoaded(addUtterances);
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../_sources/notes/red_black_trees.md"><button type="button"
+        <a class="dropdown-buttons" href="../_sources/notes/matrix_vector_addition.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.md</button></a>
         <!-- Download PDF via print -->
@@ -2218,49 +2218,6 @@ commentsRunWhenDOMLoaded(addUtterances);
     <!-- Table of contents -->
     <div class="d-none d-md-block col-md-2 bd-toc show">
         
-        <div class="tocsection onthispage pt-5 pb-3">
-            <i class="fas fa-list"></i> Contents
-        </div>
-        <nav id="bd-toc-nav">
-            <ul class="nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#connection-to-2-4-trees">
-   <span class="xref myst">
-    Connection to 2-4 trees
-   </span>
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#insertions">
-   Insertions
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#deletion">
-   Deletion
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#performance">
-   Performance
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#insertion-proposition">
-     Insertion proposition
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#deletion-preposition">
-     Deletion preposition
-    </a>
-   </li>
-  </ul>
- </li>
-</ul>
-
-        </nav>
-        
     </div>
 </div>
     <div id="main-content" class="row">
@@ -2268,82 +2225,13 @@ commentsRunWhenDOMLoaded(addUtterances);
         
               <div>
                 
-  <div class="section" id="red-black-trees">
-<h1>Red black trees<a class="headerlink" href="#red-black-trees" title="Permalink to this headline">¶</a></h1>
-<p><a class="reference internal" href="avl_tree.html"><span class="doc std std-doc">AVL trees</span></a> may require many trinode restrucutre operations (rotations) to be performed after deletion, and <a class="reference internal" href="2_4_trees.html"><span class="doc std std-doc">2-4 trees</span></a> may require many split or fusing operations to be performed after an insertion or removal.</p>
-<p>Red black trees use <span class="math notranslate nohighlight">\(O(1)\)</span> structural changes after an update in order to stay balanced.</p>
-<p>An red-black tree is a binary search tree with nodes colored red and black in a way that satisfies the following properties:</p>
-<ul class="simple">
-<li><p><strong>Root Property</strong> the root is black</p></li>
-<li><p><strong>Red property</strong> The child of a red node are black</p></li>
-<li><p><strong>Depth property</strong> All nodes with zero or one children are the same black depth, defined as the number of black ancestors.</p></li>
-</ul>
-<p><img alt="" src="../_images/red_black_tree_example.png" /></p>
-<p><em>The height of a red-black tree storing n entries is <span class="math notranslate nohighlight">\(O(\log n)\)</span>.</em></p>
-<div class="section" id="connection-to-2-4-trees">
-<h2><a class="reference internal" href="red_black_to_2_4_trees.html"><span class="doc std std-doc">Connection to 2-4 trees</span></a><a class="headerlink" href="#connection-to-2-4-trees" title="Permalink to this headline">¶</a></h2>
-<p>There is an connection between <a class="reference internal" href="2_4_trees.html"><span class="doc std std-doc">2-4 trees</span></a> and red black trees.</p>
-</div>
-<div class="section" id="insertions">
-<h2>Insertions<a class="headerlink" href="#insertions" title="Permalink to this headline">¶</a></h2>
-<p>Insertion is the same as in a binary tree, we allways insert at a null subtree, and we introduce a new leaf x at this possition. If x the only node of T, thus is at the root we color it black. In all other cases we color x red. The insertions preserves the root and depth properties of T, but may violate the red property.</p>
-<p>An example if x is not the root of T and the parent of y of x is red, then we have a parent and child (y and x) that are booth red. The root property is satisfied since y cannot be the root and be red, thus the parent z of y has to be black. Since x and its parent are red, but x’ grand parent z is black, this violation of red property is a <strong>double red</strong> at node x. To remedy we have to consider two cases:</p>
-<ol>
-<li><p><strong>The sibiling of s of y is Black (or None)</strong>
-To fix problem, we perform a <strong>trinode restructuring</strong> of T.</p>
-<ul class="simple">
-<li><p>Take node x, its parent y and grandparent z, relabel them a,b,c in left to right order, so that a,b and c will be visited in this order by an inorder tree traversal.</p></li>
-<li><p>Replace the grand parent z with the node labeled b, and make nodes a and c the children of b, keeping inorder relationship unchanged</p></li>
-<li><p><img alt="" src="../_images/red_black_insert.png" /></p></li>
-</ul>
-<p>After restructure we color b black and we color a and c red.</p>
-</li>
-<li><p><strong>The siblings s of y is Red</strong></p>
-<p>To fix this we do <strong>recoloring</strong>, we color y and s black and their parent z red (unless z is the root). Unless z is the root, the portion of any path trough the affected part of the tree is incident to exactly one black node, both before and after recoloring. Thus the black depth is unaffected after the recoloring. However, it is possible that the double-red problem reappears after such a recoloring higher up in the tree T, since z may have a red parent. If the double-red problem appears at z, then we repeat the consideration of the two cases at z. Thus a recoloring either eliminates the double red problem at node x, or propagates it to the grandparent z of x. We continue going up the tree until we finally resolve the double red-problem. The maximum number of recolorings cased by an insertions is no more than half the height of T.</p>
-<p><span class="xref myst">recolor_2_4_tree</span></p>
-</li>
-</ol>
-<p>Example:
-<img alt="" src="../_images/red_black_insertion_example.png" /></p>
-</div>
-<div class="section" id="deletion">
-<h2>Deletion<a class="headerlink" href="#deletion" title="Permalink to this headline">¶</a></h2>
-<p>We perform a binary search to find key k in T. Structurally the process results in the removal a node that has at most one child (either the one containing the key or its inorder predecesor) and the promotion of its remaining child (if any). If the removed node is red, it does not affect the black depths of any paths in the tree, nor introduce any red violations. If the removed node was black then it either had zero children or it had one child that was a red leaf. In the later case we restore the red-black property by recoloring the promoted child to black.</p>
-<p>A more complex case is when a (nonroot) black leaf is removed. Without rebalancing, such a change results in a deficit of one for the black depth along the path leading to the deleted item. By necessity, the removed node must have a sibling whose subree has black height 1 (given that this was a valid red-black tree prior to the deletion of the black leaf). To remedy this, we consider a more general scenario with a node z, that is known to have two subrees, <span class="math notranslate nohighlight">\(T_{\text{heavy}}\)</span> and <span class="math notranslate nohighlight">\(T_{\text{ligth}}\)</span>. The root of <span class="math notranslate nohighlight">\(T_{\text{ligth}}\)</span> is black and such that the black depth of <span class="math notranslate nohighlight">\(T_{\text{heavy}}\)</span> is exactly one more than that of <span class="math notranslate nohighlight">\(T_{\text{light}}\)</span>.</p>
-<p><img alt="" src="../_images/red_black_deletion_heavy_ligth.png" /></p>
-<p>In this case a removed black leaf, z is the parent of that leaf and <span class="math notranslate nohighlight">\(T_{\text{light}}\)</span> is trivially the empty subree that remains after the deletion.</p>
-<ol>
-<li><p><strong>Node y is Black and Has a Red child x</strong> We perform a <strong>trinode restructuring</strong>, thus we take node x its parent y and grandparent z label them left to right a,b,c we replace z with the node labeled b making it the parent of two. We color a and c black ad give b the former color of z. In this case the path to <span class="math notranslate nohighlight">\(T_{\text{light}}\)</span> in the result includes one additional black node after the restrucutre, thereby resolving its deficit. In contrast the number of black nodes on paths to any of the other tree subrees remains unchanged.</p>
-<p><img alt="" src="../_images/red_black_deletion_red_child.png" />
-This case corresponds to a transfer operation in the (2,4) tree T’ between two children of the node with z. Since y has a red child assures us that it represents either a 3-node or 4-node. In effect, the item previously stored at z is demoted to become a new 2-node to resolve the deficiency, while an item stored at y or its child is promoted to take the place of the item previosly stored at z.</p>
-</li>
-<li><p><strong>Node y is Black and Booth children of y are Black (or None)</strong>. We do a <strong>recoloring</strong>, we color y red and if z is red we color it black. This does not introduce any red-violations, because y does not have a red child.
-<img alt="" src="../_images/red_black_deletion_two_red_children.png" />
-Here we have 2 cases:</p>
-<p>a) z is originally red, reversing the colors of y and z resolves the black deficit in <span class="math notranslate nohighlight">\(T_{\text{light}}\)</span>
-b) z is originally black, recoloring y cases the entire subtree z to have a black deficit requiring a cascading remedy.</p>
-</li>
-<li><p><strong>Node y is Red</strong>
-Since y is red and <span class="math notranslate nohighlight">\(T_{\text{heavy}}\)</span> has black depth at least 1, z must be black and the two subtree of y must each have a black root adn a black depth equal to that of <span class="math notranslate nohighlight">\(T_{\text{heavy}}\)</span>. In this case we perform a rotation about y and z, and then recolor y black ad z red.</p>
-<p>This won’t immediately resolve the deficit, because z is an old subtree of y with black root <span class="math notranslate nohighlight">\(y'\)</span> and black height equal to that of the original <span class="math notranslate nohighlight">\(T_{\text{heavy}}\)</span>. We reapply the algorithm to resolve the deficit at z, knowing that the new child <span class="math notranslate nohighlight">\(y'\)</span>, that is the root of <span class="math notranslate nohighlight">\(T_{\text{heavy}}\)</span> is now black, and we can apply either Case 1 or Case 2.</p>
-<p><img alt="" src="../_images/red_black_deletion_red_left_heavy.png" />
-A rotation and recoloring about red node y and black node z,assuming a black deﬁcit at z. This operation does not affect the black depth of any paths through this portion of the tree. Furthermore, because y was originally red, the new subtree of z must have a black root y′ and must have black height equal to the original <span class="math notranslate nohighlight">\(T_{\text{heavy}}\)</span>. Therefore, a black deﬁcit remains at node z after the transformation.</p>
-</li>
-</ol>
-<p><img alt="" src="../_images/red_black_deletion_example.png" /></p>
-</div>
-<div class="section" id="performance">
-<h2>Performance<a class="headerlink" href="#performance" title="Permalink to this headline">¶</a></h2>
-<p>The asymptotical performance is identical to AVL tree or (2,4) tree. The primary advantage of a red-black tree is that an insertion or deletion requires only a constant number of restructuring operations. Where AVL and (2,4) require a logarithmic number of structural changes per map operation in the worst case).</p>
-<div class="section" id="insertion-proposition">
-<h3>Insertion proposition<a class="headerlink" href="#insertion-proposition" title="Permalink to this headline">¶</a></h3>
-<p>Insertions of an item in a a red-black tree storing n items can be done in <span class="math notranslate nohighlight">\(O(\log n)\)</span> time and requires <span class="math notranslate nohighlight">\(O(\log n)\)</span> recolorings and at most one trinode restructuring.</p>
-</div>
-<div class="section" id="deletion-preposition">
-<h3>Deletion preposition<a class="headerlink" href="#deletion-preposition" title="Permalink to this headline">¶</a></h3>
-<p>Deleting an item from a red black tree with n items takes <span class="math notranslate nohighlight">\(O(\log n)\)</span> time and performs <span class="math notranslate nohighlight">\(O(\log n)\)</span> recolorings and at most two restructuring operations.</p>
-</div>
-</div>
+  <div class="section" id="matrix-vector-addition">
+<h1>Matrix vector addition<a class="headerlink" href="#matrix-vector-addition" title="Permalink to this headline">¶</a></h1>
+<p>We can view matrix vector addition, that we add a vector to every row of the matrix:</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}\begin{split}
+C_{n \times m} = A_{n \times m} + b_{m} \\\end{split}\\C_{ij} = A_{ij} + b_j
+\end{aligned}\end{align} \]</div>
 </div>
 
     <script type="text/x-thebe-config">
