@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Bootstrap aggregation (Bagging) &#8212; study-notes</title>
+    <title>Dropout &#8212; study-notes</title>
     
   <link rel="stylesheet" href="../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
 
@@ -2158,7 +2158,7 @@ commentsRunWhenDOMLoaded(addUtterances);
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../_sources/notes/boostrap_aggregation.md"><button type="button"
+        <a class="dropdown-buttons" href="../_sources/notes/dropout.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.md</button></a>
         <!-- Download PDF via print -->
@@ -2183,6 +2183,40 @@ commentsRunWhenDOMLoaded(addUtterances);
     <!-- Table of contents -->
     <div class="d-none d-md-block col-md-2 bd-toc show">
         
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#intuition">
+   Intuition
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#predictions">
+   Predictions
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#weight-scaling-inference-rule">
+   Weight scaling inference rule
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#pros">
+   Pros
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#cons">
+   Cons
+  </a>
+ </li>
+</ul>
+
+        </nav>
+        
     </div>
 </div>
     <div id="main-content" class="row">
@@ -2190,10 +2224,53 @@ commentsRunWhenDOMLoaded(addUtterances);
         
               <div>
                 
-  <div class="section" id="bootstrap-aggregation-bagging">
-<h1>Bootstrap aggregation (Bagging)<a class="headerlink" href="#bootstrap-aggregation-bagging" title="Permalink to this headline">¶</a></h1>
-<p>The idea behind bootstrap aggregation is to combine multiple models to reduce error. If the errors of the models are uncorrelated than there will be an significant reduction, otherwise the ensemble will perform at least as well as any of its members.</p>
-<p>In bagging we construct k different k different datasets by drawing with replacement from the original dataset (on average 2/3 of the original dataset are found in the new dataset), than we train k models.</p>
+  <div class="section" id="dropout">
+<h1>Dropout<a class="headerlink" href="#dropout" title="Permalink to this headline">¶</a></h1>
+<p>Approximates the training an evaluating an <a class="reference internal" href="boostrap_aggregation.html"><span class="doc std std-doc">bagged</span></a> assemble of exponentially many neural networks. Dropout train an ensemble consiting of all subnetworks that can be formed by removing nonoutput units form an underlying base network (sets the weights to zero.)</p>
+<p><img alt="" src="../_images/dropout.png" /></p>
+<p>Each time we load an minibatch we sample a random bit max to apply to all input and hidden units. A mask for every unit is sampled independently, the probability of a sampling mask is set before training.</p>
+<p>The loss function with the bit max is :</p>
+<div class="math notranslate nohighlight">
+\[
+J(\theta, \mu)
+\]</div>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\mu\)</span> is the bit mask vector</p></li>
+</ul>
+<div class="section" id="intuition">
+<h2>Intuition<a class="headerlink" href="#intuition" title="Permalink to this headline">¶</a></h2>
+<p>Dropout trains an ensemble of models that share hidden units, this means hidden units have to perform well regardless of which other unit is included in the model, this forces redundancy in the network.</p>
+</div>
+<div class="section" id="predictions">
+<h2>Predictions<a class="headerlink" href="#predictions" title="Permalink to this headline">¶</a></h2>
+<p>To make predictions we have to evaluate:</p>
+<div class="math notranslate nohighlight">
+\[
+p(y|x) = \sum_{\mu}p(\mu) p(y|x, \mu)
+\]</div>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(p(\mu)\)</span> is the probability distribution used to sample <span class="math notranslate nohighlight">\(\mu\)</span> at training time</p></li>
+</ul>
+<p>This is intractable, in practice we have only 10-20 masks to achieve good performance.</p>
+</div>
+<div class="section" id="weight-scaling-inference-rule">
+<h2>Weight scaling inference rule<a class="headerlink" href="#weight-scaling-inference-rule" title="Permalink to this headline">¶</a></h2>
+<p>On average the probability that a weight is included in the model is 1/2 thus it is common after training to multiply the weights by 2.</p>
+</div>
+<div class="section" id="pros">
+<h2>Pros<a class="headerlink" href="#pros" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>cheap <span class="math notranslate nohighlight">\(O(n)\)</span> time and memory</p></li>
+<li><p>more effective than other inexpensive regularizers</p></li>
+<li><p>can be combined with other regularizers</p></li>
+</ul>
+</div>
+<div class="section" id="cons">
+<h2>Cons<a class="headerlink" href="#cons" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>limits the capacity of the model, and it can result in larger models</p></li>
+</ul>
+</div>
 </div>
 
     <script type="text/x-thebe-config">

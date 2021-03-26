@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Bootstrap aggregation (Bagging) &#8212; study-notes</title>
+    <title>Tangent prop &#8212; study-notes</title>
     
   <link rel="stylesheet" href="../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
 
@@ -2158,7 +2158,7 @@ commentsRunWhenDOMLoaded(addUtterances);
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../_sources/notes/boostrap_aggregation.md"><button type="button"
+        <a class="dropdown-buttons" href="../_sources/notes/tangent_prop.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.md</button></a>
         <!-- Download PDF via print -->
@@ -2190,10 +2190,15 @@ commentsRunWhenDOMLoaded(addUtterances);
         
               <div>
                 
-  <div class="section" id="bootstrap-aggregation-bagging">
-<h1>Bootstrap aggregation (Bagging)<a class="headerlink" href="#bootstrap-aggregation-bagging" title="Permalink to this headline">¶</a></h1>
-<p>The idea behind bootstrap aggregation is to combine multiple models to reduce error. If the errors of the models are uncorrelated than there will be an significant reduction, otherwise the ensemble will perform at least as well as any of its members.</p>
-<p>In bagging we construct k different k different datasets by drawing with replacement from the original dataset (on average 2/3 of the original dataset are found in the new dataset), than we train k models.</p>
+  <div class="section" id="tangent-prop">
+<h1>Tangent prop<a class="headerlink" href="#tangent-prop" title="Permalink to this headline">¶</a></h1>
+<p>We train an <a class="reference internal" href="neural_networks.html"><span class="doc std std-doc">neural network</span></a> classifier with extra penalty to be locally invariant to known factors, these factors correspond to movement along the <a class="reference internal" href="manifold_learning.html"><span class="doc std std-doc">manifold</span></a> near which examples of the same class concentrate.</p>
+<p>We achieve local invariance by requiring <span class="math notranslate nohighlight">\(\nabla x f(x)\)</span> to be orthogonal to the known manifold tangent vector <span class="math notranslate nohighlight">\(v^{(i)}\)</span> at x or equivalently that the directional derivative of <span class="math notranslate nohighlight">\(f\)</span> at x in the direction <span class="math notranslate nohighlight">\(v^{(i)}\)</span> be small by adding a regularization penalty:</p>
+<div class="math notranslate nohighlight">
+\[
+\Omega(f ) = \sum_i ((\nabla f(x))^T v^{(i)}^&#64;)
+\]</div>
+<p>These tangent vectors are usually defined aprior from formal knowledge.</p>
 </div>
 
     <script type="text/x-thebe-config">

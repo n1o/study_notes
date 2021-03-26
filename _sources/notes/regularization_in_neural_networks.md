@@ -63,3 +63,6 @@ We inject noise at the target labels, thus we explicitly model error in the inpu
 
 ## Early stopping
 We stop training when we stop improving.
+
+## [Dropout](dropout.md)
+Dropout approximates building an ensample of neural networks. 

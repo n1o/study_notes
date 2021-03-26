@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Bootstrap aggregation (Bagging) &#8212; study-notes</title>
+    <title>Adversarial training &#8212; study-notes</title>
     
   <link rel="stylesheet" href="../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
 
@@ -2158,7 +2158,7 @@ commentsRunWhenDOMLoaded(addUtterances);
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../_sources/notes/boostrap_aggregation.md"><button type="button"
+        <a class="dropdown-buttons" href="../_sources/notes/adversarial_trainig.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.md</button></a>
         <!-- Download PDF via print -->
@@ -2190,10 +2190,9 @@ commentsRunWhenDOMLoaded(addUtterances);
         
               <div>
                 
-  <div class="section" id="bootstrap-aggregation-bagging">
-<h1>Bootstrap aggregation (Bagging)<a class="headerlink" href="#bootstrap-aggregation-bagging" title="Permalink to this headline">¶</a></h1>
-<p>The idea behind bootstrap aggregation is to combine multiple models to reduce error. If the errors of the models are uncorrelated than there will be an significant reduction, otherwise the ensemble will perform at least as well as any of its members.</p>
-<p>In bagging we construct k different k different datasets by drawing with replacement from the original dataset (on average 2/3 of the original dataset are found in the new dataset), than we train k models.</p>
+  <div class="section" id="adversarial-training">
+<h1>Adversarial training<a class="headerlink" href="#adversarial-training" title="Permalink to this headline">¶</a></h1>
+<p>FOrces the network to be locally consistent in the neighborhood in the data. Thus if there is a small change in the data, it should lead only to a small change in the outcome.</p>
 </div>
 
     <script type="text/x-thebe-config">
