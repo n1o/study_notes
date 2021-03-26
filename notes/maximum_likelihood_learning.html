@@ -1271,41 +1271,6 @@ commentsRunWhenDOMLoaded(addUtterances);
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="gaussian_distribution.html#moments">
-   Moments
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="gaussian_distribution.html#standard-normal">
-   Standard normal
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="gaussian_distribution.html#degenerate">
-   Degenerate
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="gaussian_distribution.html#pecission-parametrization">
-   Pecission parametrization
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="gaussian_distribution.html#multivariate">
-   Multivariate
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="gaussian_distribution.html#cdf">
-   CDF
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="gaussian_distribution.html#usage">
-   Usage
-  </a>
- </li>
- <li class="toctree-l1">
   <a class="reference internal" href="poisson_process.html">
    Poisson process
   </a>
@@ -2240,6 +2205,16 @@ commentsRunWhenDOMLoaded(addUtterances);
    </li>
   </ul>
  </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#relationship-to-cross-entropy">
+   Relationship to cross entropy
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#properties">
+   Properties
+  </a>
+ </li>
 </ul>
 
         </nav>
@@ -2258,12 +2233,12 @@ commentsRunWhenDOMLoaded(addUtterances);
 \[
 KL(p^*||p) = \sum_x p^*(x) \log \frac{p^*(x)}{p(x)} = -H(p^*) - E_{x \sim p^*}[\log p(x)]
 \]</div>
-<p>We can simplify since <span class="math notranslate nohighlight">\(H(^p*)\)</span> is independent of p, thus minimizing KL divergence is the same as maximizing the expected log-likelihood:</p>
+<p>We can simplify since <span class="math notranslate nohighlight">\(H(p^*)\)</span> is independent of p, thus minimizing KL divergence is the same as maximizing the expected log-likelihood:</p>
 <div class="math notranslate nohighlight">
 \[
 E_{x \sim p^*}[\log p(x)]
 \]</div>
-<p>Here we want to find <span class="math notranslate nohighlight">\(p\)</span> that assigns high probability to instances sampled from <span class="math notranslate nohighlight">\(p^*\)</span>. (We do not compute <span class="math notranslate nohighlight">\(H(p)\)</span> thus we do not know how far from optimum we are)</p>
+<p>Here we want to find <span class="math notranslate nohighlight">\(p\)</span> that assigns high probability to instances sampled from <span class="math notranslate nohighlight">\(p^*\)</span>. (We do not compute <span class="math notranslate nohighlight">\(H(p)\)</span> thus we do not know how far from optimum we are). The equation above is also the equation for cross entropy. Thus we can view this as minimizing the cross entropy between the model distribution and the data distribution.</p>
 <p>In general we do not know <span class="math notranslate nohighlight">\(p^*\)</span>, thus we approximate the expected log likelihood with the empirical log-likelihood (MC estimate):</p>
 <div class="math notranslate nohighlight">
 \[
@@ -2295,7 +2270,7 @@ E_{x \tilde p^*} [L(x,p)] \approx \frac{1}{|D|} \sum_{x\in D}L(x,p)
 <div class="section" id="empirical-risk-and-overfitting">
 <h2>Empirical Risk and Overfitting<a class="headerlink" href="#empirical-risk-and-overfitting" title="Permalink to this headline">¶</a></h2>
 <p>Empirical risk minimization can easily overfit, since we observe only a fraction of the data not the whole data generative process. Thus our model will not generalize. For choosing a good model it is important to take <a class="reference internal" href="bias_variance_tradeoff.html"><span class="doc std std-doc">bias-variance tradeoff</span></a> into account.</p>
-<p>Here we may ask how to avoid overfitting (having high variance). A good an efficient way is to introduce a regularizer therme <span class="math notranslate nohighlight">\(R(p)\)</span> to the loss function <span class="math notranslate nohighlight">\(L(x,p)\)</span> which will penalize complex p.</p>
+<p>Here we may ask how to avoid overfitting (having high variance). A good an efficient way is to introduce a regularizer term <span class="math notranslate nohighlight">\(R(p)\)</span> to the loss function <span class="math notranslate nohighlight">\(L(x,p)\)</span> which will penalize complex p.</p>
 <div class="section" id="generalization-error">
 <h3>Generalization error<a class="headerlink" href="#generalization-error" title="Permalink to this headline">¶</a></h3>
 <p>If we train we minimize:</p>
@@ -2303,13 +2278,26 @@ E_{x \tilde p^*} [L(x,p)] \approx \frac{1}{|D|} \sum_{x\in D}L(x,p)
 \[
 \max_{p \in M} \frac{1}{|D|} \sum_{x \in D} \log p(x)
 \]</div>
-<p>However we are interested in minimizing:</p>
+<p>However, we are interested in minimizing:</p>
 <div class="math notranslate nohighlight">
 \[
 E_{x \sim p^*}[\log p(x)]
 \]</div>
 <p>Thus we cannot guarantee the quality of our model. Since D is just an sample from the true model, and we might get unlucky.</p>
 </div>
+</div>
+<div class="section" id="relationship-to-cross-entropy">
+<h2>Relationship to cross entropy<a class="headerlink" href="#relationship-to-cross-entropy" title="Permalink to this headline">¶</a></h2>
+<p>If we minimize an negative log likelihood function it is the same as minimizing the cross entropy between the empirical distribution and the distribution defined by the model.</p>
+<p>An example is minimizing the mean squared error, this is the same as minimizing the cross entropy between the empirical distribution and a Gaussian model. Where we try to match the model distribution to the empirical distribution of the data <span class="math notranslate nohighlight">\(\hat{p}_{\text{data}}\)</span></p>
+</div>
+<div class="section" id="properties">
+<h2>Properties<a class="headerlink" href="#properties" title="Permalink to this headline">¶</a></h2>
+<p>As the number of training samples approaches <span class="math notranslate nohighlight">\(\infty\)</span> the MLE estimate of a parameter converges to the true value of the parameter. For this to happen the following conditions has to be met.</p>
+<ul class="simple">
+<li><p>the true distribution <span class="math notranslate nohighlight">\(p_{\text{data}}\)</span> must lie within the model family <span class="math notranslate nohighlight">\(p_{\text{model}}(.,\theta)\)</span> otherwise no estimator can recover <span class="math notranslate nohighlight">\(p_{\text{data}}\)</span></p></li>
+<li><p>the true distribution <span class="math notranslate nohighlight">\(p_{\text{data}}\)</span> must correspond to exactly one value of <span class="math notranslate nohighlight">\(\theta\)</span> otherwise the MLE can recover the correct <span class="math notranslate nohighlight">\(p_{\text{data}}\)</span> but we cannot recover the true value of <span class="math notranslate nohighlight">\(\theta\)</span></p></li>
+</ul>
 </div>
 </div>
 

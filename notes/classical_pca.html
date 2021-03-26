@@ -1273,41 +1273,6 @@ commentsRunWhenDOMLoaded(addUtterances);
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="gaussian_distribution.html#moments">
-   Moments
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="gaussian_distribution.html#standard-normal">
-   Standard normal
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="gaussian_distribution.html#degenerate">
-   Degenerate
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="gaussian_distribution.html#pecission-parametrization">
-   Pecission parametrization
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="gaussian_distribution.html#multivariate">
-   Multivariate
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="gaussian_distribution.html#cdf">
-   CDF
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="gaussian_distribution.html#usage">
-   Usage
-  </a>
- </li>
- <li class="toctree-l1">
   <a class="reference internal" href="poisson_process.html">
    Poisson process
   </a>
@@ -2220,6 +2185,20 @@ commentsRunWhenDOMLoaded(addUtterances);
     <!-- Table of contents -->
     <div class="d-none d-md-block col-md-2 bd-toc show">
         
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#maximizing-the-variance">
+   Maximizing the variance
+  </a>
+ </li>
+</ul>
+
+        </nav>
+        
     </div>
 </div>
     <div id="main-content" class="row">
@@ -2241,10 +2220,12 @@ commentsRunWhenDOMLoaded(addUtterances);
 <p>The optimal solution is obtained by setting <span class="math notranslate nohighlight">\(\hat{W} = V_L\)</span> where <span class="math notranslate nohighlight">\(V_L\)</span> contains the L eigenvectors with largest eigen values of the empirical covariane matrix <span class="math notranslate nohighlight">\(\hat{\Sigma} = \frac{1}{N} \sum_i^N x_i x_i^T\)</span> where we assume that <span class="math notranslate nohighlight">\(x_i\)</span> has zero mean. The optimal low-dimensional encoding of the data is given by <span class="math notranslate nohighlight">\(\hat{z}_i\)</span> which is an <em>orthogonal projection of the data on the column spaned by the eigen vectors</em>.</p>
 <p><img alt="PCA orthogonal projection" src="../_images/pca_orthogonal_projection.png" /></p>
 <p>Example of PCA and probabilistic PCA. We can see that the data points are orthogonaly projected on the line. The second picture is probabilistic PCA here the projection is no longer othogonal.</p>
-<p><strong>Maximizing the variance</strong></p>
+<div class="section" id="maximizing-the-variance">
+<h2>Maximizing the variance<a class="headerlink" href="#maximizing-the-variance" title="Permalink to this headline">¶</a></h2>
 <p>There is an alternative view to the minimization of reconstruction error is to view this process as <strong>variance maximization</strong>.</p>
 <p><img alt="" src="../_images/pca_proof_1.png" />
 <img alt="" src="../_images/pca_proof_2.png" /></p>
+</div>
 </div>
 
     <script type="text/x-thebe-config">

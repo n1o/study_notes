@@ -1273,41 +1273,6 @@ commentsRunWhenDOMLoaded(addUtterances);
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="gaussian_distribution.html#moments">
-   Moments
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="gaussian_distribution.html#standard-normal">
-   Standard normal
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="gaussian_distribution.html#degenerate">
-   Degenerate
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="gaussian_distribution.html#pecission-parametrization">
-   Pecission parametrization
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="gaussian_distribution.html#multivariate">
-   Multivariate
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="gaussian_distribution.html#cdf">
-   CDF
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="gaussian_distribution.html#usage">
-   Usage
-  </a>
- </li>
- <li class="toctree-l1">
   <a class="reference internal" href="poisson_process.html">
    Poisson process
   </a>
@@ -2220,6 +2185,25 @@ commentsRunWhenDOMLoaded(addUtterances);
     <!-- Table of contents -->
     <div class="d-none d-md-block col-md-2 bd-toc show">
         
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#properties">
+   Properties
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#conditioning-number">
+   Conditioning number
+  </a>
+ </li>
+</ul>
+
+        </nav>
+        
     </div>
 </div>
     <div id="main-content" class="row">
@@ -2229,6 +2213,21 @@ commentsRunWhenDOMLoaded(addUtterances);
                 
   <div class="section" id="hessian">
 <h1>Hessian<a class="headerlink" href="#hessian" title="Permalink to this headline">¶</a></h1>
+<p>Matrix that contains all the second partial derivatives of a function.</p>
+<div class="math notranslate nohighlight">
+\[
+\nabla^2 f(x)_{ij} = \frac{\partial ^2 f(x)}{\partial x_i \partial x_j}
+\]</div>
+<div class="section" id="properties">
+<h2>Properties<a class="headerlink" href="#properties" title="Permalink to this headline">¶</a></h2>
+<p>If the Hessian is positive definite than we have a local minima, if it is negative definite it is a local maxima, otherwise it is a saddle point.</p>
+</div>
+<div class="section" id="conditioning-number">
+<h2>Conditioning number<a class="headerlink" href="#conditioning-number" title="Permalink to this headline">¶</a></h2>
+<p>In multiple dimensions there is a different second derivative for each direction at any given point. The conditioning number of the hessian measures how much the second derivatives differ from each other.</p>
+<p>If the conditioning number of the hessian is low, gradient descent performs poorly. This is because in one dimension the derivative increases rapidly while in other directions it increases slowly.</p>
+<p>An example, lets assume the conditioning number is 5, that means that the direction of most curvature has 5 times more curvature than the direction of the least curvature.</p>
+</div>
 </div>
 
     <script type="text/x-thebe-config">

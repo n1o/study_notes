@@ -10,7 +10,7 @@ $$
 Typically the function is symmetric, and non-negative, so it can be interpreted as a measure of similarity. (But this is not required)
 
 ## RBF (Gaussian) Kernel 
-Also known as **squared exponential kernel** (SE)
+Also known as **squared exponential kernel** (SE). We can view it as template matching where x associated with y becomes a template for y. If a test point $x'$ is close to x in euclidean distance the Gaussian kernel has a large response indicating $x$ and $x'$ are similar putting large weights on the association to training label $y$.
 
 $$
 \mathcal{k}(x, x') = \exp(- \frac{1}{2}(x - x')^T\Sigma^{-1}(x - x'))

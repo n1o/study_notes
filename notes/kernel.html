@@ -1273,41 +1273,6 @@ commentsRunWhenDOMLoaded(addUtterances);
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="gaussian_distribution.html#moments">
-   Moments
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="gaussian_distribution.html#standard-normal">
-   Standard normal
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="gaussian_distribution.html#degenerate">
-   Degenerate
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="gaussian_distribution.html#pecission-parametrization">
-   Pecission parametrization
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="gaussian_distribution.html#multivariate">
-   Multivariate
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="gaussian_distribution.html#cdf">
-   CDF
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="gaussian_distribution.html#usage">
-   Usage
-  </a>
- </li>
- <li class="toctree-l1">
   <a class="reference internal" href="poisson_process.html">
    Poisson process
   </a>
@@ -2274,7 +2239,7 @@ commentsRunWhenDOMLoaded(addUtterances);
 <p>Typically the function is symmetric, and non-negative, so it can be interpreted as a measure of similarity. (But this is not required)</p>
 <div class="section" id="rbf-gaussian-kernel">
 <h2>RBF (Gaussian) Kernel<a class="headerlink" href="#rbf-gaussian-kernel" title="Permalink to this headline">¶</a></h2>
-<p>Also known as <strong>squared exponential kernel</strong> (SE)</p>
+<p>Also known as <strong>squared exponential kernel</strong> (SE). We can view it as template matching where x associated with y becomes a template for y. If a test point <span class="math notranslate nohighlight">\(x'\)</span> is close to x in euclidean distance the Gaussian kernel has a large response indicating <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(x'\)</span> are similar putting large weights on the association to training label <span class="math notranslate nohighlight">\(y\)</span>.</p>
 <div class="math notranslate nohighlight">
 \[
 \mathcal{k}(x, x') = \exp(- \frac{1}{2}(x - x')^T\Sigma^{-1}(x - x'))

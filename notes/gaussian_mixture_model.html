@@ -1273,41 +1273,6 @@ commentsRunWhenDOMLoaded(addUtterances);
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="gaussian_distribution.html#moments">
-   Moments
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="gaussian_distribution.html#standard-normal">
-   Standard normal
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="gaussian_distribution.html#degenerate">
-   Degenerate
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="gaussian_distribution.html#pecission-parametrization">
-   Pecission parametrization
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="gaussian_distribution.html#multivariate">
-   Multivariate
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="gaussian_distribution.html#cdf">
-   CDF
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="gaussian_distribution.html#usage">
-   Usage
-  </a>
- </li>
- <li class="toctree-l1">
   <a class="reference internal" href="poisson_process.html">
    Poisson process
   </a>
@@ -2265,6 +2230,7 @@ p(x_i|\theta) = \sum_{k=1}^K \pi_k \mathcal{N}(x_i| \mu_k, \Sigma_k)
 </ul>
 <p>Here we assume that our observed data is comprised of K cluster with proportions specified by <span class="math notranslate nohighlight">\(\pi_1, \cdots, \pi_k\)</span>, where each cluster is a Gaussian.</p>
 <p><img alt="" src="../_images/gaussian_mixture_example.png" /></p>
+<p>The Gaussian mixture can be viewed as a <strong>universal approximator</strong>, we can approximate any smooth density with zero error if we have enough components.</p>
 <div class="section" id="em">
 <h2>EM<a class="headerlink" href="#em" title="Permalink to this headline">¶</a></h2>
 <p>One way to fit Gaussian mixture model is to use <a class="reference internal" href="em_algorithm.html"><span class="doc std std-doc">EM</span></a></p>

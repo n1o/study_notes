@@ -1,6 +1,16 @@
 # Kernel trick 
 
-We replaces all the inner products of the form $<x, x'>$ with a call to the kernel function $k(x, x')$. This is called the **kernel trick**.  It turns out that many algorithms can be kernelized in this way. Note that we require that the kernel be a [Mercer kernel](kernel.md) for this trick to work.
+We replaces all the inner products of the form $<x, x'>$ with a call to the kernel function 
+
+$$k(x, x') =\phi(x)^T \phi(x')$$
+* $\phi$ is a feature function
+
+This is called the **kernel trick**.  It turns out that many algorithms can be kernelized in this way. Note that we require that the kernel be a [Mercer kernel](kernel.md) for this trick to work. The kernel function is equivalent to preprocessing the data by applying $\phi(x)$ to all the inputs then lean a linear model on the transformed space.
+
+Kernel trick is powerful because:
+
+* we can learn models that are nonlinear as a function of x using convex optimization (guaranteed to converge). The decision function is linear but we transform the input space
+* using kernel function is computationally more efficient than constructing two transformed vectors $\phi(x)$ and calculate the dot product (especially for infinite dimensional kernels ($k(x,x') = \min(x, x')$) this corresponds to infinite dimensional dost product)
 
 ## Nearest neighbor classification
 

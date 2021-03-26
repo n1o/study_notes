@@ -1273,41 +1273,6 @@ commentsRunWhenDOMLoaded(addUtterances);
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="gaussian_distribution.html#moments">
-   Moments
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="gaussian_distribution.html#standard-normal">
-   Standard normal
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="gaussian_distribution.html#degenerate">
-   Degenerate
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="gaussian_distribution.html#pecission-parametrization">
-   Pecission parametrization
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="gaussian_distribution.html#multivariate">
-   Multivariate
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="gaussian_distribution.html#cdf">
-   CDF
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="gaussian_distribution.html#usage">
-   Usage
-  </a>
- </li>
- <li class="toctree-l1">
   <a class="reference internal" href="poisson_process.html">
    Poisson process
   </a>
@@ -2289,24 +2254,25 @@ commentsRunWhenDOMLoaded(addUtterances);
 <h1>Expectations<a class="headerlink" href="#expectations" title="Permalink to this headline">¶</a></h1>
 <p>Given an random variable <span class="math notranslate nohighlight">\(X\)</span> with PDF <span class="math notranslate nohighlight">\(f(x)\)</span> we define its expected value (<strong>mean</strong>) as:</p>
 <div class="math notranslate nohighlight">
-\[
-E[X] = \int_{-\infty}^{\infty} xp(x)dx
-\]</div>
+\[\begin{split}
+E[X] = \int_{-\infty}^{\infty} xp(x)dx \\
+\end{split}\]</div>
 </div>
 <div class="section" id="functions-of-random-variables">
 <h1>Functions of random variables<a class="headerlink" href="#functions-of-random-variables" title="Permalink to this headline">¶</a></h1>
 <p>Given a <a class="reference internal" href="functions_of_random_variables.html"><span class="doc std std-doc">function</span></a> <span class="math notranslate nohighlight">\(g: R \rightarrow R\)</span>, <span class="math notranslate nohighlight">\(g(X)\)</span> is also an random variable we define its expectation as:</p>
 <div class="math notranslate nohighlight">
-\[
-E[g(X)] = \int_{-\infty}^{\infty} g(x)f(x)dx
-\]</div>
+\[\begin{split}
+E[g(X)] = \int_{-\infty}^{\infty} g(x)p(x)dx \\ 
+= E_{x \sim p(x)}[g(x)]
+\end{split}\]</div>
 <p>This is the weighted average of <span class="math notranslate nohighlight">\(g\)</span>. In the special case when <span class="math notranslate nohighlight">\(g\)</span> is the <em>identity</em> function we get <strong>mean</strong>.</p>
 <div class="section" id="properties">
 <h2>Properties<a class="headerlink" href="#properties" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p><span class="math notranslate nohighlight">\(E[a] = a\)</span> for any constant <span class="math notranslate nohighlight">\(a\)</span></p></li>
 <li><p><span class="math notranslate nohighlight">\(E[af(X)] = a E[f(X)]\)</span> for any constant <span class="math notranslate nohighlight">\(a\)</span></p></li>
-<li><p><span class="math notranslate nohighlight">\(E[f(X) + g(X)] = E[f(X)] + E[g(X)]\)</span> Linearity</p></li>
+<li><p><span class="math notranslate nohighlight">\(E[af(X) + bg(X)] = aE[f(X)] + bE[g(X)]\)</span> Linearity</p></li>
 </ul>
 </div>
 </div>

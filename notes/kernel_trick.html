@@ -1273,41 +1273,6 @@ commentsRunWhenDOMLoaded(addUtterances);
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="gaussian_distribution.html#moments">
-   Moments
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="gaussian_distribution.html#standard-normal">
-   Standard normal
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="gaussian_distribution.html#degenerate">
-   Degenerate
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="gaussian_distribution.html#pecission-parametrization">
-   Pecission parametrization
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="gaussian_distribution.html#multivariate">
-   Multivariate
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="gaussian_distribution.html#cdf">
-   CDF
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="gaussian_distribution.html#usage">
-   Usage
-  </a>
- </li>
- <li class="toctree-l1">
   <a class="reference internal" href="poisson_process.html">
    Poisson process
   </a>
@@ -2265,7 +2230,18 @@ commentsRunWhenDOMLoaded(addUtterances);
                 
   <div class="section" id="kernel-trick">
 <h1>Kernel trick<a class="headerlink" href="#kernel-trick" title="Permalink to this headline">¶</a></h1>
-<p>We replaces all the inner products of the form <span class="math notranslate nohighlight">\(&lt;x, x'&gt;\)</span> with a call to the kernel function <span class="math notranslate nohighlight">\(k(x, x')\)</span>. This is called the <strong>kernel trick</strong>.  It turns out that many algorithms can be kernelized in this way. Note that we require that the kernel be a <a class="reference internal" href="kernel.html"><span class="doc std std-doc">Mercer kernel</span></a> for this trick to work.</p>
+<p>We replaces all the inner products of the form <span class="math notranslate nohighlight">\(&lt;x, x'&gt;\)</span> with a call to the kernel function</p>
+<div class="math notranslate nohighlight">
+\[k(x, x') =\phi(x)^T \phi(x')\]</div>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\phi\)</span> is a feature function</p></li>
+</ul>
+<p>This is called the <strong>kernel trick</strong>.  It turns out that many algorithms can be kernelized in this way. Note that we require that the kernel be a <a class="reference internal" href="kernel.html"><span class="doc std std-doc">Mercer kernel</span></a> for this trick to work. The kernel function is equivalent to preprocessing the data by applying <span class="math notranslate nohighlight">\(\phi(x)\)</span> to all the inputs then lean a linear model on the transformed space.</p>
+<p>Kernel trick is powerful because:</p>
+<ul class="simple">
+<li><p>we can learn models that are nonlinear as a function of x using convex optimization (guaranteed to converge). The decision function is linear but we transform the input space</p></li>
+<li><p>using kernel function is computationally more efficient than constructing two transformed vectors <span class="math notranslate nohighlight">\(\phi(x)\)</span> and calculate the dot product (especially for infinite dimensional kernels (<span class="math notranslate nohighlight">\(k(x,x') = \min(x, x')\)</span>) this corresponds to infinite dimensional dost product)</p></li>
+</ul>
 <div class="section" id="nearest-neighbor-classification">
 <h2>Nearest neighbor classification<a class="headerlink" href="#nearest-neighbor-classification" title="Permalink to this headline">¶</a></h2>
 <p>In nearest neighbours we need to compute the Euclidean distance of the test vector to all the training points and find the closest. We can kernelize:</p>

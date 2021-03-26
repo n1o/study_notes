@@ -14,4 +14,4 @@ tr(A + B) = tr(A) + tr(B) \\
 tr(AB) = tr(BA) \\
 $$
 
-This is true even if A and B have different shapes (untill they can be multiplied from booth sides)
+This is true even if A and B have different shapes (until they can be multiplied from booth sides)

@@ -1273,41 +1273,6 @@ commentsRunWhenDOMLoaded(addUtterances);
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="gaussian_distribution.html#moments">
-   Moments
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="gaussian_distribution.html#standard-normal">
-   Standard normal
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="gaussian_distribution.html#degenerate">
-   Degenerate
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="gaussian_distribution.html#pecission-parametrization">
-   Pecission parametrization
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="gaussian_distribution.html#multivariate">
-   Multivariate
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="gaussian_distribution.html#cdf">
-   CDF
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="gaussian_distribution.html#usage">
-   Usage
-  </a>
- </li>
- <li class="toctree-l1">
   <a class="reference internal" href="poisson_process.html">
    Poisson process
   </a>
@@ -2245,12 +2210,30 @@ commentsRunWhenDOMLoaded(addUtterances);
 <h1>Softmax function<a class="headerlink" href="#softmax-function" title="Permalink to this headline">¶</a></h1>
 <p>Softmax is the convex relaxation of the max function.</p>
 <div class="math notranslate nohighlight">
-\[S(\eta)_c = \frac{e^{\eta_c}}{\sum_{c' = 1}^C e^{\eta_{c'}}}\]</div>
+\[\text{softmax}(\eta)_c = \frac{\exp(\eta_c)}{\sum_{c' = 1}^C \exp(\eta_{c'})}\]</div>
+<p>If we take the log of the softmax function we get</p>
+<div class="math notranslate nohighlight">
+\[
+\log \text{softmax}(z)_i = z_i - \log \sum_j \exp(z_j)
+\]</div>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\log \sum \exp(z_j)\)</span> can be viewed as an approx to <span class="math notranslate nohighlight">\(\max z_j\)</span> this approximation states that <span class="math notranslate nohighlight">\(\exp(z_k)\)</span> is insignificant for any <span class="math notranslate nohighlight">\(z_k\)</span> other than <span class="math notranslate nohighlight">\(\max_j z_j\)</span></p></li>
+</ul>
+<p>In the log version <span class="math notranslate nohighlight">\(z_i\)</span> directly contributes to the loss function it is hard for it to saturate. It saturates only if there is an extreme difference between input values.</p>
+<p>It is invariant to adding a scalar to each of the inputs</p>
+<div class="math notranslate nohighlight">
+\[
+\text{softmax}(z) = \text{softmax}(z + c) 
+\]</div>
+<p>because of this we an derive an numerically stable softmax variant:
+$<span class="math notranslate nohighlight">\(
+\text{softmax}(z) = \text{softmax}(z  - \max_i z_i) 
+\)</span>$</p>
 <div class="section" id="temperature">
 <h2>Temperature<a class="headerlink" href="#temperature" title="Permalink to this headline">¶</a></h2>
 <p>We can augument it using a temperature constant T.</p>
 <p>If <span class="math notranslate nohighlight">\(T \rightarrow 0\)</span>
-$<span class="math notranslate nohighlight">\( \mathcal{S}(\eta / T)_c = \begin{cases}
+$<span class="math notranslate nohighlight">\( \text{softmax}(\eta / T)_c = \begin{cases}
     1.0 &amp; \text{ if } c = \arg\max_{c'}\eta_{c'} \\
     0.0  &amp; \text{ otherwise }
 \end{cases} \)</span>$</p>

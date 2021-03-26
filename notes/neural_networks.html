@@ -1273,41 +1273,6 @@ commentsRunWhenDOMLoaded(addUtterances);
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="gaussian_distribution.html#moments">
-   Moments
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="gaussian_distribution.html#standard-normal">
-   Standard normal
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="gaussian_distribution.html#degenerate">
-   Degenerate
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="gaussian_distribution.html#pecission-parametrization">
-   Pecission parametrization
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="gaussian_distribution.html#multivariate">
-   Multivariate
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="gaussian_distribution.html#cdf">
-   CDF
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="gaussian_distribution.html#usage">
-   Usage
-  </a>
- </li>
- <li class="toctree-l1">
   <a class="reference internal" href="poisson_process.html">
    Poisson process
   </a>
@@ -2226,6 +2191,23 @@ commentsRunWhenDOMLoaded(addUtterances);
         <nav id="bd-toc-nav">
             <ul class="nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#learning-in-nn">
+   Learning in NN
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#architecture">
+   Architecture
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#feed-forward-networks">
+   <span class="xref myst">
+    Feed forward networks
+   </span>
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#computer-vision">
    <span class="xref myst">
     Computer Vision
@@ -2245,6 +2227,42 @@ commentsRunWhenDOMLoaded(addUtterances);
                 
   <div class="section" id="neural-networks">
 <h1>Neural Networks<a class="headerlink" href="#neural-networks" title="Permalink to this headline">¶</a></h1>
+<p>The key idea of deep learning is that takes an input x and apply an highly nonlinear (non convex) transformation to the data.</p>
+<div class="math notranslate nohighlight">
+\[
+y= \phi(x'\theta)^Tw
+\]</div>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\theta\)</span> is the learned representation that best describes the data</p></li>
+</ul>
+<div class="section" id="learning-in-nn">
+<h2>Learning in NN<a class="headerlink" href="#learning-in-nn" title="Permalink to this headline">¶</a></h2>
+<p>Neural networks are nonconvex, finding an optimal value is nearly impossible, thus we find only an sufficiently low one.</p>
+<p>The initial weights are initialized to a small random value, with the bias term either zero or an small random value.</p>
+<p>In most cases our model defines an distribution</p>
+<div class="math notranslate nohighlight">
+\[
+p(y|x;\theta)
+\]</div>
+<p>and we find its <a class="reference internal" href="maximum_likelihood_learning.html"><span class="doc std std-doc">MLE</span></a>. Thus the cost function is defined as the cross entropy between the training data and the model predictions and a regularization term.</p>
+<p>The shape of <span class="math notranslate nohighlight">\(p(y|x)\)</span> is determined by the <a class="reference internal" href="output_units_neural_networks.html"><span class="doc std std-doc">output unit</span></a> (output layers) which in turn determines the actual loss function. We want this loss functions to have large gradients. If the gradient is small it cannot learn effectively, this happens when the <a class="reference internal" href="activation_functions.html"><span class="doc std std-doc">activation functions</span></a> saturate in <a class="reference internal" href="hidden_unit_neural_network.html"><span class="doc std std-doc">hidden</span></a> (or output units).</p>
+</div>
+<div class="section" id="architecture">
+<h2>Architecture<a class="headerlink" href="#architecture" title="Permalink to this headline">¶</a></h2>
+<p>Architecture of a neural network is its structure, the number of units, what activations we use and how the units are connected.</p>
+<p>Most NN are organized in groups as layers, layers organized in a chain structure, each layer being a function of layers that precede it.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+h^{(1)} = g^{(1)}(w^{(1)T}x + b^{(1)}) \\ 
+h^{(2)} = g^{(2)}(w^{(1)T}h^{(1)} + b^{(2)} ) 
+\end{split}\]</div>
+<p>In a chain structure we choose the number of layers and the width of each layer and the activation at each layer.</p>
+<p>There are also architectures where we have connection that skip layers.</p>
+</div>
+<div class="section" id="feed-forward-networks">
+<h2><a class="reference internal" href="feed_forward_nn.html"><span class="doc std std-doc">Feed forward networks</span></a><a class="headerlink" href="#feed-forward-networks" title="Permalink to this headline">¶</a></h2>
+<p>Also known as multilayered perceptron.</p>
+</div>
 <div class="section" id="computer-vision">
 <h2><a class="reference internal" href="neural_networks_computer_vision.html"><span class="doc std std-doc">Computer Vision</span></a><a class="headerlink" href="#computer-vision" title="Permalink to this headline">¶</a></h2>
 <p>Overview some of the most popular architectures.</p>

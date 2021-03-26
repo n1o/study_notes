@@ -1273,41 +1273,6 @@ commentsRunWhenDOMLoaded(addUtterances);
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="gaussian_distribution.html#moments">
-   Moments
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="gaussian_distribution.html#standard-normal">
-   Standard normal
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="gaussian_distribution.html#degenerate">
-   Degenerate
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="gaussian_distribution.html#pecission-parametrization">
-   Pecission parametrization
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="gaussian_distribution.html#multivariate">
-   Multivariate
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="gaussian_distribution.html#cdf">
-   CDF
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="gaussian_distribution.html#usage">
-   Usage
-  </a>
- </li>
- <li class="toctree-l1">
   <a class="reference internal" href="poisson_process.html">
    Poisson process
   </a>
@@ -2241,6 +2206,13 @@ commentsRunWhenDOMLoaded(addUtterances);
   <a class="reference internal nav-link" href="#convergence">
    Convergence
   </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#stochastic-gradient-descent">
+     Stochastic gradient descent
+    </a>
+   </li>
+  </ul>
  </li>
 </ul>
 
@@ -2307,6 +2279,26 @@ d^{(k+1)T} d^{(k)} = 0
 <h1>Convergence<a class="headerlink" href="#convergence" title="Permalink to this headline">¶</a></h1>
 <p>If we want stochastic gradient descent to converge we need the learning rate to be:
 $<span class="math notranslate nohighlight">\(\sum_{k=1}^{\infty} \alpha_k = \infty, \sum_{k=1}^{\infty} \alpha_k^2 \le \infty \)</span>$</p>
+<div class="section" id="stochastic-gradient-descent">
+<h2>Stochastic gradient descent<a class="headerlink" href="#stochastic-gradient-descent" title="Permalink to this headline">¶</a></h2>
+<p>The key insight is that gradient descent is an expectation, the expectation can be approximated using a small set of samples:</p>
+<div class="math notranslate nohighlight">
+\[
+g = \frac{1}{m'} \nabla_{\theta} \sum_{i=1}^{m'} L(x^{(i)}, y^{(i)};\theta)
+\]</div>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(m'\)</span> is an minibatch</p></li>
+</ul>
+<p>The update rule becomes:</p>
+<div class="math notranslate nohighlight">
+\[
+\theta \leftarrow \theta - \epsilon g
+\]</div>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\epsilon\)</span> is the learning rate</p></li>
+</ul>
+<p>Gradient descent has no guarantee to find a local optimum, but in practice it finds an low enough value quickly enough to be useful.</p>
+</div>
 </div>
 
     <script type="text/x-thebe-config">

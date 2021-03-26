@@ -1273,41 +1273,6 @@ commentsRunWhenDOMLoaded(addUtterances);
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="gaussian_distribution.html#moments">
-   Moments
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="gaussian_distribution.html#standard-normal">
-   Standard normal
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="gaussian_distribution.html#degenerate">
-   Degenerate
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="gaussian_distribution.html#pecission-parametrization">
-   Pecission parametrization
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="gaussian_distribution.html#multivariate">
-   Multivariate
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="gaussian_distribution.html#cdf">
-   CDF
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="gaussian_distribution.html#usage">
-   Usage
-  </a>
- </li>
- <li class="toctree-l1">
   <a class="reference internal" href="poisson_process.html">
    Poisson process
   </a>
@@ -2264,8 +2229,10 @@ commentsRunWhenDOMLoaded(addUtterances);
 <h1>Entropy<a class="headerlink" href="#entropy" title="Permalink to this headline">¶</a></h1>
 <p>Given we have a random variable <span class="math notranslate nohighlight">\(X\)</span> with distribution <span class="math notranslate nohighlight">\(p\)</span>, we can say that the entropy of <span class="math notranslate nohighlight">\(H(X)\)</span> is the measure of uncertainty.</p>
 <div class="math notranslate nohighlight">
-\[\begin{split}H(X)  \triangleq - \sum_{x \in A_X} p(x) \log_2 p(x) \\ 
-= \sum_{x \in A_X} p(x) \log_2 \frac{1}{p(x)}\end{split}\]</div>
+\[\begin{split}H(X)  = - \sum_{x \in A_X} p(x) \log_2 p(x) \\ 
+= \sum_{x \in A_X} p(x) \log_2 \frac{1}{p(x)} \\ 
+= -E_{x \sim p(x)}[\log p(x)]
+\end{split}\]</div>
 <p>It measures the information content of an event in <strong>bits</strong> (If we would use base <span class="math notranslate nohighlight">\(e\)</span> for the logarithm, the units we would measure entropy would be <strong>nats</strong>). And it can be viewed as the average <a class="reference internal" href="shannon_information_content.html"><span class="doc std std-doc">information content of an outcome</span></a>.</p>
 <div class="section" id="properties">
 <h2>Properties<a class="headerlink" href="#properties" title="Permalink to this headline">¶</a></h2>

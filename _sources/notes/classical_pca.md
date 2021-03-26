@@ -15,10 +15,10 @@ The optimal solution is obtained by setting $\hat{W} = V_L$ where $V_L$ contains
 
 Example of PCA and probabilistic PCA. We can see that the data points are orthogonaly projected on the line. The second picture is probabilistic PCA here the projection is no longer othogonal.
 
-**Maximizing the variance**
+## Maximizing the variance
 
 There is an alternative view to the minimization of reconstruction error is to view this process as **variance maximization**.
 
-
 ![](../.images/machine_learning/pca_proof_1.png)
 ![](../.images/machine_learning/pca_proof_2.png)
+
