@@ -52,3 +52,22 @@ We require $f, \nabla f$ and a learning rate $\alpha$
 # Convergence
 If we want stochastic gradient descent to converge we need the learning rate to be:
 $$\sum_{k=1}^{\infty} \alpha_k = \infty, \sum_{k=1}^{\infty} \alpha_k^2 \le \infty $$
+
+## Stochastic gradient descent
+The key insight is that gradient descent is an expectation, the expectation can be approximated using a small set of samples:
+
+$$
+g = \frac{1}{m'} \nabla_{\theta} \sum_{i=1}^{m'} L(x^{(i)}, y^{(i)};\theta)
+$$
+
+* $m'$ is an minibatch
+
+The update rule becomes:
+
+$$
+\theta \leftarrow \theta - \epsilon g
+$$
+
+* $\epsilon$ is the learning rate
+
+Gradient descent has no guarantee to find a local optimum, but in practice it finds an low enough value quickly enough to be useful.

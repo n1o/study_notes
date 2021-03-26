@@ -14,4 +14,4 @@ In multiple dimensions there is a different second derivative for each direction
 
 If the conditioning number of the hessian is low, gradient descent performs poorly. This is because in one dimension the derivative increases rapidly while in other directions it increases slowly.
 
-An example, lets assumme the conditioning number is 5, that means that the direction of most curvature has 5 times more curvature than the direction of the least curvature.
+An example, lets assume the conditioning number is 5, that means that the direction of most curvature has 5 times more curvature than the direction of the least curvature.

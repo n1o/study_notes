@@ -17,3 +17,4 @@ $$
 $$
 
 If the conditioning number is large, the matrix is sensitive to error in input. Poor conditioned matrices multiply pre-existing errors, and errors will be compounded further by numerical errors in inversion.
+
