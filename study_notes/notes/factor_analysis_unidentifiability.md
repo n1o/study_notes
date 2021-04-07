@@ -1,6 +1,6 @@
 # Factor analysis unidentifiability
 
-Just like with mixture models, [FA](factor_analysis.md) is also unidentifiable. This makes it hard for interpretation. An example we take a orthogonal rotation matrix $R$ that sattisfy $RR^T = I$ Now if we rotate $W$
+Just like with mixture models, [FA](factor_analysis.md) is also [unidentifiable](non_identifiable_models.md). This makes it hard for interpretation. An example we take a orthogonal rotation matrix $R$ that satisfy $RR^T = I$ Now if we rotate $W$
 
 $$
 \tilde{W} = WR

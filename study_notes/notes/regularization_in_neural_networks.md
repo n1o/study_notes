@@ -2,7 +2,7 @@
 
 The main idea behind [regularization](regularitzation.md) is to reduce the variance of an [estimator](estimator.md) without increasing its bias by much. This leads to better performance on a holdout set. 
 
-Regularization can help to solve undetermined (unidentifiable) problems. In deep learning the best performing models are large and heavily regularized.
+Regularization can help to solve undetermined ([unidentifiable](non_identifiable_models.md)) problems. In deep learning the best performing models are large and heavily regularized.
 
 ## Parameter norm penalties
 

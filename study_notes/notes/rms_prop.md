@@ -1,5 +1,5 @@
 # RMS Prop
-Extends [Adagrad](adagrad.md) to avoid the effect of a monotonically decreasing learning rate. It maintains an decaying average of squared gradients. This average is updated according:
+Extends [Adagrad](adagrad.md) to avoid the effect of a monotonically decreasing learning rate. It maintains an decaying average of squared gradients. Works good in nonconvex settings. This average is updated according:
 
 $$
 \hat{s}^{(k+1)} = \gamma \hat{s}^{(k)} + (1-\gamma)(g^{(k)} \odot g^{(k)})

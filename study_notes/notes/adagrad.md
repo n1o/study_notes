@@ -1,6 +1,5 @@
 # Adagrad (Adaptive subgradient method)
- Adapts a learning rate for each component of x. Adagrad dulls the influence of parameters with consistently high gradients, and increase the influence of parameters with infrequent updates. Adagrad excels when the gradient is sparse. 
-
+Adapts a learning rate for each component of x. Adagrad dulls the influence of parameters with consistently high gradients, and increase the influence of parameters with infrequent updates. Adagrad excels when the gradient is sparse. Small partial derivatives decrease relativelly small, this forces greater progress in gently sloped directions
 ## Steps
 
 $$x_i^{(k+1)} = x_i^{(k)} - \frac{\alpha}{\epsilon + \sqrt{s_i^k}}g_i^k$$
