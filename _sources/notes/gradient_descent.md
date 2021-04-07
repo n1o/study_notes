@@ -49,9 +49,13 @@ We require $f, \nabla f$ and a learning rate $\alpha$
   * $g_i = \nabla f(x^{(i)})$
   * return $x_i - \alpha \cdot g_i$   
 
-# Convergence
+## Convergence
 If we want stochastic gradient descent to converge we need the learning rate to be:
 $$\sum_{k=1}^{\infty} \alpha_k = \infty, \sum_{k=1}^{\infty} \alpha_k^2 \le \infty $$
+
+## Excess error
+
+The [excess error](excess_error.md) after $k$ iterations of gradient descent for convex problems is $O(\frac{1}{\sqrt{k}})$ and $O(1/k)$ for strong convex problems.
 
 ## Stochastic gradient descent
 The key insight is that gradient descent is an expectation, the expectation can be approximated using a small set of samples:

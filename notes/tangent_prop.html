@@ -1516,11 +1516,6 @@ commentsRunWhenDOMLoaded(addUtterances);
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="gradient_descent.html#convergence">
-   Convergence
-  </a>
- </li>
- <li class="toctree-l1">
   <a class="reference internal" href="bayesian_linear_regression.html">
    Bayesian linear regression
   </a>
@@ -2196,7 +2191,7 @@ commentsRunWhenDOMLoaded(addUtterances);
 <p>We achieve local invariance by requiring <span class="math notranslate nohighlight">\(\nabla x f(x)\)</span> to be orthogonal to the known manifold tangent vector <span class="math notranslate nohighlight">\(v^{(i)}\)</span> at x or equivalently that the directional derivative of <span class="math notranslate nohighlight">\(f\)</span> at x in the direction <span class="math notranslate nohighlight">\(v^{(i)}\)</span> be small by adding a regularization penalty:</p>
 <div class="math notranslate nohighlight">
 \[
-\Omega(f ) = \sum_i ((\nabla f(x))^T v^{(i)}^&#64;)
+\Omega(f ) = \sum_i ((\nabla f(x))^T v^{(i)})^2
 \]</div>
 <p>These tangent vectors are usually defined aprior from formal knowledge.</p>
 </div>

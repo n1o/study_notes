@@ -1518,11 +1518,6 @@ commentsRunWhenDOMLoaded(addUtterances);
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="gradient_descent.html#convergence">
-   Convergence
-  </a>
- </li>
- <li class="toctree-l1">
   <a class="reference internal" href="bayesian_linear_regression.html">
    Bayesian linear regression
   </a>
@@ -2218,7 +2213,7 @@ commentsRunWhenDOMLoaded(addUtterances);
                 
   <div class="section" id="adagrad-adaptive-subgradient-method">
 <h1>Adagrad (Adaptive subgradient method)<a class="headerlink" href="#adagrad-adaptive-subgradient-method" title="Permalink to this headline">¶</a></h1>
-<p>Adapts a learning rate for each component of x. Adagrad dulls the influence of parameters with consistently high gradients, and increase the influence of parameters with infrequent updates. Adagrad excels when the gradient is sparse.</p>
+<p>Adapts a learning rate for each component of x. Adagrad dulls the influence of parameters with consistently high gradients, and increase the influence of parameters with infrequent updates. Adagrad excels when the gradient is sparse. Small partial derivatives decrease relativelly small, this forces greater progress in gently sloped directions</p>
 <div class="section" id="steps">
 <h2>Steps<a class="headerlink" href="#steps" title="Permalink to this headline">¶</a></h2>
 <div class="math notranslate nohighlight">

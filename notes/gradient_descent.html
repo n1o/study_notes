@@ -1518,11 +1518,6 @@ commentsRunWhenDOMLoaded(addUtterances);
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="#convergence">
-   Convergence
-  </a>
- </li>
- <li class="toctree-l1">
   <a class="reference internal" href="bayesian_linear_regression.html">
    Bayesian linear regression
   </a>
@@ -2190,29 +2185,25 @@ commentsRunWhenDOMLoaded(addUtterances);
         </div>
         <nav id="bd-toc-nav">
             <ul class="nav section-nav flex-column">
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#">
-   Gradient descent
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#algorithm">
+   Algorithm
   </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#algorithm">
-     Algorithm
-    </a>
-   </li>
-  </ul>
  </li>
- <li class="toc-h1 nav-item toc-entry">
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#convergence">
    Convergence
   </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#stochastic-gradient-descent">
-     Stochastic gradient descent
-    </a>
-   </li>
-  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#excess-error">
+   Excess error
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#stochastic-gradient-descent">
+   Stochastic gradient descent
+  </a>
  </li>
 </ul>
 
@@ -2274,11 +2265,15 @@ d^{(k+1)T} d^{(k)} = 0
 </li>
 </ul>
 </div>
-</div>
 <div class="section" id="convergence">
-<h1>Convergence<a class="headerlink" href="#convergence" title="Permalink to this headline">¶</a></h1>
+<h2>Convergence<a class="headerlink" href="#convergence" title="Permalink to this headline">¶</a></h2>
 <p>If we want stochastic gradient descent to converge we need the learning rate to be:
 $<span class="math notranslate nohighlight">\(\sum_{k=1}^{\infty} \alpha_k = \infty, \sum_{k=1}^{\infty} \alpha_k^2 \le \infty \)</span>$</p>
+</div>
+<div class="section" id="excess-error">
+<h2>Excess error<a class="headerlink" href="#excess-error" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference internal" href="excess_error.html"><span class="doc std std-doc">excess error</span></a> after <span class="math notranslate nohighlight">\(k\)</span> iterations of gradient descent for convex problems is <span class="math notranslate nohighlight">\(O(\frac{1}{\sqrt{k}})\)</span> and <span class="math notranslate nohighlight">\(O(1/k)\)</span> for strong convex problems.</p>
+</div>
 <div class="section" id="stochastic-gradient-descent">
 <h2>Stochastic gradient descent<a class="headerlink" href="#stochastic-gradient-descent" title="Permalink to this headline">¶</a></h2>
 <p>The key insight is that gradient descent is an expectation, the expectation can be approximated using a small set of samples:</p>

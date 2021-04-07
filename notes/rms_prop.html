@@ -1518,11 +1518,6 @@ commentsRunWhenDOMLoaded(addUtterances);
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="gradient_descent.html#convergence">
-   Convergence
-  </a>
- </li>
- <li class="toctree-l1">
   <a class="reference internal" href="bayesian_linear_regression.html">
    Bayesian linear regression
   </a>
@@ -2208,7 +2203,7 @@ commentsRunWhenDOMLoaded(addUtterances);
                 
   <div class="section" id="rms-prop">
 <h1>RMS Prop<a class="headerlink" href="#rms-prop" title="Permalink to this headline">¶</a></h1>
-<p>Extends <a class="reference internal" href="adagrad.html"><span class="doc std std-doc">Adagrad</span></a> to avoid the effect of a monotonically decreasing learning rate. It maintains an decaying average of squared gradients. This average is updated according:</p>
+<p>Extends <a class="reference internal" href="adagrad.html"><span class="doc std std-doc">Adagrad</span></a> to avoid the effect of a monotonically decreasing learning rate. It maintains an decaying average of squared gradients. Works good in nonconvex settings. This average is updated according:</p>
 <div class="math notranslate nohighlight">
 \[
 \hat{s}^{(k+1)} = \gamma \hat{s}^{(k)} + (1-\gamma)(g^{(k)} \odot g^{(k)})
