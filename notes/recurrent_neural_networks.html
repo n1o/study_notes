@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Recurrent neural networks &#8212; study-notes</title>
+    <title>Recurrent neural networks (RNN) &#8212; study-notes</title>
     
   <link rel="stylesheet" href="../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
 
@@ -2178,6 +2178,68 @@ commentsRunWhenDOMLoaded(addUtterances);
     <!-- Table of contents -->
     <div class="d-none d-md-block col-md-2 bd-toc show">
         
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#common-architectures">
+   Common architectures
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#rnn-as-a-directed-graph">
+   <span class="xref myst">
+    RNN as a directed graph
+   </span>
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#generating-data-from-rnn">
+   Generating data from RNN
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#conditioned-on-context">
+   Conditioned on context
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#bidirectional-recurrent-neural-networks">
+   <span class="xref myst">
+    Bidirectional recurrent neural networks
+   </span>
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#encoder-decoder-rnn">
+   <span class="xref myst">
+    Encoder-Decoder RNN
+   </span>
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#deep-recurrent-neural-networks">
+   <span class="xref myst">
+    Deep recurrent neural networks
+   </span>
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#long-term-dependencies">
+   Long term dependencies
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#gated-rnn">
+   Gated RNN
+  </a>
+ </li>
+</ul>
+
+        </nav>
+        
     </div>
 </div>
     <div id="main-content" class="row">
@@ -2185,8 +2247,82 @@ commentsRunWhenDOMLoaded(addUtterances);
         
               <div>
                 
-  <div class="section" id="recurrent-neural-networks">
-<h1>Recurrent neural networks<a class="headerlink" href="#recurrent-neural-networks" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="recurrent-neural-networks-rnn">
+<h1>Recurrent neural networks (RNN)<a class="headerlink" href="#recurrent-neural-networks-rnn" title="Permalink to this headline">¶</a></h1>
+<p>Specialize on processing an sequence of data <span class="math notranslate nohighlight">\(x^{(1)}, x^{(2)}, \cdots, x^{(\tau)}\)</span> and they share the same weight across multiple time steps.</p>
+<p>In RNN each member of the output is the function of the previous member of the output and is produces using the same update rule applied to the previous outputs. Because of this we can share parameters across a very deep computational graph.</p>
+<p>Many recurrent neural networks are of the form:</p>
+<div class="math notranslate nohighlight">
+\[
+h^{(t)} = f(h^{(t-1)}, x^{(t)}; \theta)
+\]</div>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(h\)</span> are the hidden units representing the state of the neural network</p></li>
+<li><p><span class="math notranslate nohighlight">\(x^{(t)}\)</span> is an external signal</p></li>
+</ul>
+<p>This kind can be express and unfolded as the following graph:</p>
+<p><img alt="" src="../_images/recurrent_hidden_state_unfolded.png" /></p>
+<p>Most RNN are more complex, they read the hidden state and make predictions to the output units.</p>
+<p>Recurrent neural networks learn <span class="math notranslate nohighlight">\(h^{(t)}\)</span> to perform lossy summary of task-relevant aspects of the past sequence of inputs up to <span class="math notranslate nohighlight">\(t\)</span>. It has to be lossy since it maps an arbitrary length sequence to an fixed length vector.</p>
+<p>We can represent the unfolded recurrence after <span class="math notranslate nohighlight">\(t\)</span> steps with a function <span class="math notranslate nohighlight">\(g^{(t)}\)</span></p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+h^{(t)} = g(x^{(t)}, x^{(t-1)}, \cdots, x^{(2)},x^{(1)}) \\
+= f(h^{(t-1)}, x^{(t)}; \theta)
+\end{split}\]</div>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(g\)</span> takes the whole past sequence <span class="math notranslate nohighlight">\(x^{(t)}, \cdots, x^{(1)}\)</span> as input and produces the current state. The unfolded recurrence allows the factorization of <span class="math notranslate nohighlight">\(g^{(t)}\)</span> into repeated application of a function <span class="math notranslate nohighlight">\(f\)</span>. The unfolded process introduces mayor advantages.</p></li>
+</ul>
+<ol class="simple">
+<li><p>The learned model <span class="math notranslate nohighlight">\(f\)</span> has to learn only a transition from one state to the other. It does not depend on the length of the input. Thus it allows us to handle variable length inputs.</p></li>
+<li><p>We can reuse the same transition function <span class="math notranslate nohighlight">\(f\)</span> with the same parameters at every step.</p></li>
+</ol>
+<p>The fact that we have to learn only a single model <span class="math notranslate nohighlight">\(f\)</span> that operates on all time steps, allows to handle sequence lengths where not observed in the training data.</p>
+<div class="section" id="common-architectures">
+<h2>Common architectures<a class="headerlink" href="#common-architectures" title="Permalink to this headline">¶</a></h2>
+<p>There are <a class="reference internal" href="common_recurrent_nn_architectures.html"><span class="doc std std-doc">multiple ways</span></a> to define a recurrent neural network.</p>
+</div>
+<div class="section" id="rnn-as-a-directed-graph">
+<h2><a class="reference internal" href="rnn_as_a_directed_graph.html"><span class="doc std std-doc">RNN as a directed graph</span></a><a class="headerlink" href="#rnn-as-a-directed-graph" title="Permalink to this headline">¶</a></h2>
+<p>We can view recurrent neural networks as a directed graph.</p>
+</div>
+<div class="section" id="generating-data-from-rnn">
+<h2>Generating data from RNN<a class="headerlink" href="#generating-data-from-rnn" title="Permalink to this headline">¶</a></h2>
+<p>We want to generate future sequences. The main difficulty is to determine when to stop the generation of the next sequence. There are some common approaches:</p>
+<ol class="simple">
+<li><p>Include a special sign in the sequence determining the end</p></li>
+<li><p>Learn a Bernoulli output to determine if we keep generating</p></li>
+<li><p>We can train the model also output the length as an extra output.</p></li>
+</ol>
+</div>
+<div class="section" id="conditioned-on-context">
+<h2>Conditioned on context<a class="headerlink" href="#conditioned-on-context" title="Permalink to this headline">¶</a></h2>
+<p>Recurrent neural networks can tak <a class="reference internal" href="rnn_conditioned_on_context.html"><span class="doc std std-doc">additional input</span></a>.</p>
+</div>
+<div class="section" id="bidirectional-recurrent-neural-networks">
+<h2><a class="reference internal" href="bidirectional_rnn.html"><span class="doc std std-doc">Bidirectional recurrent neural networks</span></a><a class="headerlink" href="#bidirectional-recurrent-neural-networks" title="Permalink to this headline">¶</a></h2>
+<p>Combines two recurrent neural networks.</p>
+</div>
+<div class="section" id="encoder-decoder-rnn">
+<h2><a class="reference internal" href="encoder_decoder_recurrent_neural_networks.html"><span class="doc std std-doc">Encoder-Decoder RNN</span></a><a class="headerlink" href="#encoder-decoder-rnn" title="Permalink to this headline">¶</a></h2>
+<p>We map an input sequence, to an output sequence of different length.</p>
+</div>
+<div class="section" id="deep-recurrent-neural-networks">
+<h2><a class="reference internal" href="deep_recurrent_nn.html"><span class="doc std std-doc">Deep recurrent neural networks</span></a><a class="headerlink" href="#deep-recurrent-neural-networks" title="Permalink to this headline">¶</a></h2>
+<p>We have recurrent connection on multiple levels.</p>
+</div>
+<div class="section" id="long-term-dependencies">
+<h2>Long term dependencies<a class="headerlink" href="#long-term-dependencies" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference internal" href="long_term_dependencies_in_rnn.html"><span class="doc std std-doc">Long term dependencies</span></a> propose a challenge in recurrent neural networks.</p>
+</div>
+<div class="section" id="gated-rnn">
+<h2>Gated RNN<a class="headerlink" href="#gated-rnn" title="Permalink to this headline">¶</a></h2>
+<p>Create paths trough time that do not vanish nor explode. They generalize <a class="reference internal" href="leaky_units.html"><span class="doc std std-doc">leaky units</span></a> where the connection weights can change over time. We are allowed to accumulate information for a long duration, and when it is not needed it can forget the old state.</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="long_short_term_memory_rnn.html"><span class="doc std std-doc">LSTM</span></a></p></li>
+<li><p><a class="reference internal" href="gated_recurrent_units.html"><span class="doc std std-doc">GRU</span></a></p></li>
+</ul>
+</div>
 </div>
 
     <script type="text/x-thebe-config">
