@@ -22,6 +22,8 @@ The overal model is called **Factor analysis**
 
 ![](../.images/machine_learning/factor_analysis.png)
 
+This model can be viewed as a version of [linear factor model](linear_factor_model.md)
+
 ## FA as a low rank parametrization of MVN
 
 Factor analysis can be thought as a way of specifying a joint density model on x using a small number of parameters.
