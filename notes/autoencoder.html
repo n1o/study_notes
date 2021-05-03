@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Principal component analysis &#8212; study-notes</title>
+    <title>Autoencoders &#8212; study-notes</title>
     
   <link rel="stylesheet" href="../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
 
@@ -91,8 +91,6 @@ commentsRunWhenDOMLoaded(addUtterances);
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Posterior predictive distribution" href="posterior_predictive_distribution.html" />
-    <link rel="prev" title="Proximal algorithms" href="proximal_algorithms.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -129,7 +127,7 @@ commentsRunWhenDOMLoaded(addUtterances);
   </a>
  </li>
 </ul>
-<ul class="current nav sidenav_l1">
+<ul class="nav sidenav_l1">
  <li class="toctree-l1">
   <a class="reference internal" href="signal_to_noise_ratio.html">
    Signal to noise ratio
@@ -948,13 +946,13 @@ commentsRunWhenDOMLoaded(addUtterances);
    Proximal gradient method
   </a>
  </li>
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
+ <li class="toctree-l1">
+  <a class="reference internal" href="principal_component_analysis.html">
    Principal component analysis
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="#probabilistic-pca">
+  <a class="reference internal" href="principal_component_analysis.html#probabilistic-pca">
    Probabilistic PCA
   </a>
  </li>
@@ -2155,7 +2153,7 @@ commentsRunWhenDOMLoaded(addUtterances);
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../_sources/notes/principal_component_analysis.md"><button type="button"
+        <a class="dropdown-buttons" href="../_sources/notes/autoencoder.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.md</button></a>
         <!-- Download PDF via print -->
@@ -2185,24 +2183,51 @@ commentsRunWhenDOMLoaded(addUtterances);
         </div>
         <nav id="bd-toc-nav">
             <ul class="nav section-nav flex-column">
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#">
-   Principal component analysis
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#under-complete-autoencoders">
+   <span class="xref myst">
+    Under-complete autoencoders
+   </span>
   </a>
  </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#probabilistic-pca">
-   Probabilistic PCA
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#regularized-autoencoder">
+   Regularized autoencoder
   </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#pca-as-a-manifold">
-     <span class="xref myst">
-      PCA as a Manifold
-     </span>
-    </a>
-   </li>
-  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#stochastic-autoencoder">
+   <span class="xref myst">
+    Stochastic Autoencoder
+   </span>
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#denosing-autoencoder-dae">
+   <span class="xref myst">
+    Denosing Autoencoder
+   </span>
+   (DAE)
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#manifold">
+   <span class="xref myst">
+    Manifold
+   </span>
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#contractive-autoencoders">
+   <span class="xref myst">
+    Contractive autoencoders
+   </span>
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#applications">
+   Applications
+  </a>
  </li>
 </ul>
 
@@ -2215,42 +2240,54 @@ commentsRunWhenDOMLoaded(addUtterances);
         
               <div>
                 
-  <div class="section" id="principal-component-analysis">
-<h1>Principal component analysis<a class="headerlink" href="#principal-component-analysis" title="Permalink to this headline">¶</a></h1>
-<p>It is actually an version of <a class="reference internal" href="factor_analysis.html"><span class="doc std std-doc">FA</span></a> where we restrict <span class="math notranslate nohighlight">\(\Psi = \sigma^2 I\)</span> and <span class="math notranslate nohighlight">\(W\)</span> to be orthonromal. If <span class="math notranslate nohighlight">\(\sigma^2 &gt; 0\)</span> than it is <strong>probabilistic PCA</strong> if <span class="math notranslate nohighlight">\(\sigma^2 \rightarrow 0\)</span> we reduce to <a class="reference internal" href="classical_pca.html"><span class="doc std std-doc">classical PCA</span></a></p>
+  <div class="section" id="autoencoders">
+<h1>Autoencoders<a class="headerlink" href="#autoencoders" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><p>neural network that attempts to copy its input to its output.</p></li>
+<li><p>internally it has a hidden layer <span class="math notranslate nohighlight">\(h\)</span>, that describe the <strong>code</strong> that represents the input</p></li>
+</ul>
+<blockquote>
+<div><p>It contains two parts:</p>
+<ol class="simple">
+<li><p>Encoder <span class="math notranslate nohighlight">\(h = f(x)\)</span></p></li>
+<li><p>Decoder <span class="math notranslate nohighlight">\(r = g(h)\)</span></p></li>
+</ol>
+<p><img alt="" src="../_images/autoencoder_basic.png" /></p>
+<p>The idea is to learn <span class="math notranslate nohighlight">\(g(f(x)) \approx x\)</span>, where we do not reconstruct the input perfectly. This forces to learn aspects of the data that are most important.</p>
+</div></blockquote>
+<ul class="simple">
+<li><p>we can connect autoencoders to <a class="reference internal" href="latent_variable_models.html"><span class="doc std std-doc">latent variable models</span></a></p></li>
+<li><p>encoder and decoder can be an neural network.</p></li>
+</ul>
+<div class="section" id="under-complete-autoencoders">
+<h2><a class="reference internal" href="under_complete_autoencoder.html"><span class="doc std std-doc">Under-complete autoencoders</span></a><a class="headerlink" href="#under-complete-autoencoders" title="Permalink to this headline">¶</a></h2>
+<p>We want the decoder encoder pair not to learn the identity function: <span class="math notranslate nohighlight">\(g(f(x)) \ne I(x)\)</span>. In the undercomplete autoencoder this is achieved by constraining the hidden code to be lower dimensional than the input.</p>
 </div>
-<div class="section" id="probabilistic-pca">
-<h1>Probabilistic PCA<a class="headerlink" href="#probabilistic-pca" title="Permalink to this headline">¶</a></h1>
-<p>It is just <a class="reference internal" href="factor_analysis.html"><span class="doc std std-doc">Factor analysis</span></a> in which <span class="math notranslate nohighlight">\(\Psi = \sigma^2I\)</span> and <span class="math notranslate nohighlight">\(\sigma^2 &gt; 0\)</span> and <span class="math notranslate nohighlight">\(W\)</span> is orthogonal. Hence the log likelihood of the observed data is given (We assume the data is centered):</p>
-<div class="math notranslate nohighlight">
-\[\log p(X|W, \sigma^2) = - \frac{N}{2} \ln |C| - \frac{1}{2}\sum_{i=1}^N x_i^T C^{-1}x_i = -\frac{N}{2} \ln |C| + tr(C^{-1}\Sigma) \]</div>
+<div class="section" id="regularized-autoencoder">
+<h2>Regularized autoencoder<a class="headerlink" href="#regularized-autoencoder" title="Permalink to this headline">¶</a></h2>
+<p>We allow large hidden code <span class="math notranslate nohighlight">\(h\)</span> but we add some penalty to avoid overfitting.</p>
+</div>
+<div class="section" id="stochastic-autoencoder">
+<h2><a class="reference internal" href="stochastic_autoencoder.html"><span class="doc std std-doc">Stochastic Autoencoder</span></a><a class="headerlink" href="#stochastic-autoencoder" title="Permalink to this headline">¶</a></h2>
+<p>Booth encoder and decoder is an stochastic model.</p>
+</div>
+<div class="section" id="denosing-autoencoder-dae">
+<h2><a class="reference internal" href="denoising_autoencoder.html"><span class="doc std std-doc">Denosing Autoencoder</span></a> (DAE)<a class="headerlink" href="#denosing-autoencoder-dae" title="Permalink to this headline">¶</a></h2>
+<p>Here we learn a encoder function that that takes an corrupted input and the networks tries to remove this corruption.</p>
+</div>
+<div class="section" id="manifold">
+<h2><a class="reference internal" href="autoencoder_manifold.html"><span class="doc std std-doc">Manifold</span></a><a class="headerlink" href="#manifold" title="Permalink to this headline">¶</a></h2>
+<p>We can view learning an autoencoder as trying to learn the manifold of the training data.</p>
+</div>
+<div class="section" id="contractive-autoencoders">
+<h2><a class="reference internal" href="contractive_autoencoders.html"><span class="doc std std-doc">Contractive autoencoders</span></a><a class="headerlink" href="#contractive-autoencoders" title="Permalink to this headline">¶</a></h2>
+<p>We regularize the hidden code <span class="math notranslate nohighlight">\(h=f(x)\)</span> encouraging the derivatives of <span class="math notranslate nohighlight">\(f\)</span> to be as small as possible.</p>
+</div>
+<div class="section" id="applications">
+<h2>Applications<a class="headerlink" href="#applications" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li><p><span class="math notranslate nohighlight">\(C = WW^T + \sigma^2I\)</span></p></li>
-<li><p><span class="math notranslate nohighlight">\(S = \frac{1}{N} \sum_i^N x_ix_i^T = (1/N)X^TX\)</span></p></li>
-</ul>
-<p>The maximum of the log likelihood is:</p>
-<div class="math notranslate nohighlight">
-\[\hat{W} = V (\Lambda - \sigma^2I)^{\frac{1}{2}}R\]</div>
-<ul class="simple">
-<li><p><span class="math notranslate nohighlight">\(R_{L\times L}\)</span> abitrary orthogonal matrix and without loss of generality can be set to I</p></li>
-<li><p><span class="math notranslate nohighlight">\(V_{D\times L}\)</span> the first L eigenvectors of S</p></li>
-<li><p><span class="math notranslate nohighlight">\(\Lambda\)</span> diagonal eigen values</p></li>
-</ul>
-<p>The MLE of the noice variance is:</p>
-<div class="math notranslate nohighlight">
-\[\hat{\sigma}^2 = \frac{1}{D - L} \sum_{j = L+1}^D \lambda_j\]</div>
-<p>If <span class="math notranslate nohighlight">\(\sigma^2 \rightarrow 0\)</span> then <span class="math notranslate nohighlight">\(\hat{W} \rightarrow V\)</span> and ve get classical PCA.</p>
-<p>The posterior predictive distribution over latent factors is given by:</p>
-<div class="math notranslate nohighlight">
-\[\begin{split} P(z_i| x_i, \hat{\theta}) = N(z_i| \hat{F}^{-1} \hat{W}^Tx_i, \sigma^2 \hat{F}^{-1}) \\ 
-\hat{F} \triangleq \hat{W}^T \hat{W} + \hat{\sigma}^2I \end{split}\]</div>
-<p>Thus the posterior mean is obtained by an orthogonal projection of the data onto the column space of V.</p>
-<p>This can be fit using <a class="reference internal" href="probabilistic_pca_em.html"><span class="doc std std-doc">em</span></a>.</p>
-<p>There are also some <a class="reference internal" href="pca_extensions.html"><span class="doc std std-doc">extension</span></a> that enables to use pca for categorical variables on in supervised manner.</p>
-<div class="section" id="pca-as-a-manifold">
-<h2><a class="reference internal" href="pca_manifold.html"><span class="doc std std-doc">PCA as a Manifold</span></a><a class="headerlink" href="#pca-as-a-manifold" title="Permalink to this headline">¶</a></h2>
-<ul class="simple">
-<li><p>Interpret PCA as manifold learning</p></li>
+<li><p>dimension reduction</p></li>
+<li><p>information retrieval</p></li>
 </ul>
 </div>
 </div>
@@ -2283,8 +2320,6 @@ commentsRunWhenDOMLoaded(addUtterances);
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="proximal_algorithms.html" title="previous page">Proximal algorithms</a>
-    <a class='right-next' id="next-link" href="posterior_predictive_distribution.html" title="next page">Posterior predictive distribution</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">

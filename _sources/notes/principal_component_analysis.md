@@ -36,3 +36,7 @@ Thus the posterior mean is obtained by an orthogonal projection of the data onto
 This can be fit using [em](probabilistic_pca_em).
 
 There are also some [extension](pca_extensions.md) that enables to use pca for categorical variables on in supervised manner. 
+
+## [PCA as a Manifold](pca_manifold.md)
+
+* Interpret PCA as manifold learning
