@@ -31,7 +31,7 @@ $$
 \psi_c(y_c|\theta) = \exp(-E[y_c|\theta_c])
 $$
 
-This forms the base of **energy based models**. Here high probability states correspond to low energy configurations.
+This forms the base of [energy based models](energy_based_models.md). Here high probability states correspond to low energy configurations.
 
 ## [Directed vs Undirected models](directed_vs_undirected_graphical_models.md)
 

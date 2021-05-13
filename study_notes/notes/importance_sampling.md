@@ -27,9 +27,9 @@ Importance sampling is NOT useful if the importance weights wary substantially. 
 
 ## Accuracy and efficiency of importance sampling estimates
 
-We can analyze the distribution of importance weights to discover possible problems. In general if the largest ratio is too large compared to the average, then the estimates are ofthen poor.
+We can analyze the distribution of importance weights to discover possible problems. In general if the largest ratio is too large compared to the average, then the estimates are often poor.
 
-If the wariance of the weights is finite we can estimate the effective sample size:
+If the variance of the weights is finite we can estimate the effective sample size:
 
 $$S_{eff} = \frac{1}{\sum_{s=1}^S (\tilde{w}(\theta^s))^2} $$
 
@@ -49,8 +49,8 @@ We assume that we have S samples $\{ \theta^1, \cdots, \theta^S \}$ using import
 
 1. Sample $\theta$ from the set of samples $S$, where the probability of sampling is proportional to $w(\theta^s)$
 
-2. Sample a second value, with the same procedure, but exlude the already sampled value
-3. Repat without replacement $k-2$ times. 
+2. Sample a second value, with the same procedure, but exclude the already sampled value
+3. Repeat without replacement $k-2$ times. 
 
 ### Remarks
 Importance sampler should be a distribution that has heavy tails. 
