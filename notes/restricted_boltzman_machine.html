@@ -2178,6 +2178,25 @@ commentsRunWhenDOMLoaded(addUtterances);
     <!-- Table of contents -->
     <div class="d-none d-md-block col-md-2 bd-toc show">
         
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#conditional-distributions">
+   Conditional distributions
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#learning">
+   Learning
+  </a>
+ </li>
+</ul>
+
+        </nav>
+        
     </div>
 </div>
     <div id="main-content" class="row">
@@ -2187,8 +2206,46 @@ commentsRunWhenDOMLoaded(addUtterances);
                 
   <div class="section" id="restricted-boltzman-machine">
 <h1>Restricted Boltzman Machine<a class="headerlink" href="#restricted-boltzman-machine" title="Permalink to this headline">¶</a></h1>
-<p>It is an deep learning model that is also an <a class="reference internal" href="markov_random_fields.html"><span class="doc std std-doc">undirected graphical model</span></a>.</p>
-<p>https://www.cs.toronto.edu/~tijmen/pcd/pcd.pdf</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="neural_networks.html"><span class="doc std std-doc">deep learning model</span></a> that is also an <a class="reference internal" href="markov_random_fields.html"><span class="doc std std-doc">undirected graphical model</span></a>.</p></li>
+<li><p>single layer <a class="reference internal" href="latent_variable_models.html"><span class="doc std std-doc">latent variable model</span></a></p></li>
+<li><p><a class="reference internal" href="energy_based_models.html"><span class="doc std std-doc">energy based model</span></a> with a single visible and hidden unit
+$<span class="math notranslate nohighlight">\(
+  E(U,V) = -b^Tv - c^Th - v^TWv
+  \)</span>$</p>
+<ul>
+<li><p><span class="math notranslate nohighlight">\(b,c,w\)</span> are unconstrained learned real values</p></li>
+</ul>
+</li>
+<li><p>the model is divided int two groups, <span class="math notranslate nohighlight">\(h\)</span> (hidden) and <span class="math notranslate nohighlight">\(v\)</span> (visible) units and the interactions between them is defined by a matrix <span class="math notranslate nohighlight">\(W\)</span></p></li>
+</ul>
+<p><img alt="" src="../_images/restricted_boltzman_machine.png" /></p>
+<ul class="simple">
+<li><p>There are not interactions between visible or hidden units (Hense the name restricted)</p></li>
+</ul>
+<div class="section" id="conditional-distributions">
+<h2>Conditional distributions<a class="headerlink" href="#conditional-distributions" title="Permalink to this headline">¶</a></h2>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+p(h|v) = \prod_i p(h_i|v) \\
+p(v|) = \prod_i p(v_i|h) 
+\end{split}\]</div>
+<ul class="simple">
+<li><p>the individual conditionals are:
+$<span class="math notranslate nohighlight">\(
+  p(h_i = 1|v) = \sigma(v^TW_{:,i} + c_i) \\
+  p(h_i = 0|v) = 1 - p(h_i = 1|v)
+  \)</span>$</p></li>
+</ul>
+</div>
+<div class="section" id="learning">
+<h2>Learning<a class="headerlink" href="#learning" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>we can use block Gibbs sampling alternating between sampling all of the hidden units <span class="math notranslate nohighlight">\(h\)</span> and sampling all of the visible units <span class="math notranslate nohighlight">\(v\)</span></p></li>
+<li><p>the derivative of the energy function is
+$<span class="math notranslate nohighlight">\( \frac{\partial}{\partial w_{i,j}} E[v,h] = -v_ih_j\)</span>$</p></li>
+</ul>
+</div>
 </div>
 
     <script type="text/x-thebe-config">

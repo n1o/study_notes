@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Factor graph &#8212; study-notes</title>
+    <title>Biparite graph &#8212; study-notes</title>
     
   <link rel="stylesheet" href="../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
 
@@ -91,8 +91,6 @@ commentsRunWhenDOMLoaded(addUtterances);
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Qda to LDA" href="quadratic_to_linear_discriminant_analysis.html" />
-    <link rel="prev" title="Empirical Distribution" href="empirical_distribution.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -129,7 +127,7 @@ commentsRunWhenDOMLoaded(addUtterances);
   </a>
  </li>
 </ul>
-<ul class="current nav sidenav_l1">
+<ul class="nav sidenav_l1">
  <li class="toctree-l1">
   <a class="reference internal" href="signal_to_noise_ratio.html">
    Signal to noise ratio
@@ -2085,8 +2083,8 @@ commentsRunWhenDOMLoaded(addUtterances);
    Empirical CDF
   </a>
  </li>
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
+ <li class="toctree-l1">
+  <a class="reference internal" href="factor_graph.html">
    Factor graph
   </a>
  </li>
@@ -2155,7 +2153,7 @@ commentsRunWhenDOMLoaded(addUtterances);
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../_sources/notes/factor_graph.md"><button type="button"
+        <a class="dropdown-buttons" href="../_sources/notes/biparite_graph.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.md</button></a>
         <!-- Download PDF via print -->
@@ -2187,38 +2185,10 @@ commentsRunWhenDOMLoaded(addUtterances);
         
               <div>
                 
-  <div class="section" id="factor-graph">
-<h1>Factor graph<a class="headerlink" href="#factor-graph" title="Permalink to this headline">¶</a></h1>
-<ul class="simple">
-<li><p>a way to express <a class="reference internal" href="markov_random_fields.html"><span class="doc std std-doc">undirected graphical models</span></a> with less ambiguity</p>
-<ul>
-<li><p>from the standard notation in MRF, we do not known if the corresponding factor encompasses the whole clique or some of its parts</p>
-<ul>
-<li><p>an example if we have a clique of 3 nodes, we can have a single factor for the whole clique, or we can have 3 factors for each possible pairs</p></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>factor graph is a <a class="reference internal" href="biparite_graph.html"><span class="doc std std-doc">bipartite graph</span></a> and has the following nodes:</p>
-<ul>
-<li><p><strong>circles</strong>: which are random variables as in undirected graphs</p></li>
-<li><p><strong>squares</strong>: factors <span class="math notranslate nohighlight">\(\phi\)</span> of unnormalized probability distribution</p></li>
-</ul>
-</li>
-<li><p>variables and factors can be connected with undirected edges, this connection is there if a variable is a argument of a factor in the unnormalized distribution.</p></li>
-<li><p>there cannot be an connection</p>
-<ul>
-<li><p>variable - variable</p></li>
-<li><p>factor - factor</p></li>
-</ul>
-</li>
-</ul>
-<p><img alt="" src="../_images/factor_graph_v1.png" /></p>
-<ul class="simple">
-<li><p>an classical undirected graph</p></li>
-<li><p>a factor graph where we have a single factor for the clique of variables a,b,c</p></li>
-<li><p>we have 3 factors in the clique a,b,c</p></li>
-</ul>
+  <div class="section" id="biparite-graph">
+<h1>Biparite graph<a class="headerlink" href="#biparite-graph" title="Permalink to this headline">¶</a></h1>
+<p>Is a graph whose vertices can be divided into two disjoint and independent sets <span class="math notranslate nohighlight">\(U,V\)</span> such that every edge connects a vertex in U to one in V. Vertex sets U and V are usually called the parts of the graph.</p>
+<p><img alt="" src="../_images/Simple-bipartite-graph.svg.png" /></p>
 </div>
 
     <script type="text/x-thebe-config">
@@ -2249,8 +2219,6 @@ commentsRunWhenDOMLoaded(addUtterances);
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="empirical_distribution.html" title="previous page">Empirical Distribution</a>
-    <a class='right-next' id="next-link" href="quadratic_to_linear_discriminant_analysis.html" title="next page">Qda to LDA</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">
