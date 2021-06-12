@@ -1,10 +1,12 @@
-# Restricted Boltzman Machine
+# Restricted [Boltzman Machine](boltzman_machines.md)
 
 * [deep learning model](neural_networks.md) that is also an [undirected graphical model](markov_random_fields.md).
 * single layer [latent variable model](latent_variable_models.md)
 * [energy based model](energy_based_models.md) with a single visible and hidden unit
     $$
-    E(U,V) = -b^Tv - c^Th - v^TWv
+    p(v=v, v=v) = \frac{1}{Z}\exp \{ =E(u,v)\} \\
+    E(U,V) = -b^Tv - c^Th - v^TWv \\
+    Z = \sum_u \sum_v \exp\{-E(u,v)\}
     $$
     * $b,c,w$ are unconstrained learned real values
 
@@ -30,3 +32,9 @@ $$
 * we can use block Gibbs sampling alternating between sampling all of the hidden units $h$ and sampling all of the visible units $v$ 
 * the derivative of the energy function is 
   $$ \frac{\partial}{\partial w_{i,j}} E[v,h] = -v_ih_j$$
+
+
+## Stacking 
+* if we wish to have a deeper model, we have to stack them on top of each other
+
+![](../.images/machine_learning/deep_rbm.png)

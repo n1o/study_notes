@@ -2296,7 +2296,10 @@ commentsRunWhenDOMLoaded(addUtterances);
  </li>
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
-   Restricted Boltzman Machine
+   Restricted
+   <span class="xref myst">
+    Boltzman Machine
+   </span>
   </a>
  </li>
  <li class="toctree-l1">
@@ -2875,6 +2878,11 @@ commentsRunWhenDOMLoaded(addUtterances);
    Learning
   </a>
  </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#stacking">
+   Stacking
+  </a>
+ </li>
 </ul>
 
         </nav>
@@ -2887,13 +2895,15 @@ commentsRunWhenDOMLoaded(addUtterances);
               <div>
                 
   <div class="section" id="restricted-boltzman-machine">
-<h1>Restricted Boltzman Machine<a class="headerlink" href="#restricted-boltzman-machine" title="Permalink to this headline">¶</a></h1>
+<h1>Restricted <a class="reference internal" href="boltzman_machines.html"><span class="doc std std-doc">Boltzman Machine</span></a><a class="headerlink" href="#restricted-boltzman-machine" title="Permalink to this headline">¶</a></h1>
 <ul class="simple">
 <li><p><a class="reference internal" href="neural_networks.html"><span class="doc std std-doc">deep learning model</span></a> that is also an <a class="reference internal" href="markov_random_fields.html"><span class="doc std std-doc">undirected graphical model</span></a>.</p></li>
 <li><p>single layer <a class="reference internal" href="latent_variable_models.html"><span class="doc std std-doc">latent variable model</span></a></p></li>
 <li><p><a class="reference internal" href="energy_based_models.html"><span class="doc std std-doc">energy based model</span></a> with a single visible and hidden unit
 $<span class="math notranslate nohighlight">\(
-  E(U,V) = -b^Tv - c^Th - v^TWv
+  p(v=v, v=v) = \frac{1}{Z}\exp \{ =E(u,v)\} \\
+  E(U,V) = -b^Tv - c^Th - v^TWv \\
+  Z = \sum_u \sum_v \exp\{-E(u,v)\}
   \)</span>$</p>
 <ul>
 <li><p><span class="math notranslate nohighlight">\(b,c,w\)</span> are unconstrained learned real values</p></li>
@@ -2927,6 +2937,13 @@ $<span class="math notranslate nohighlight">\(
 <li><p>the derivative of the energy function is
 $<span class="math notranslate nohighlight">\( \frac{\partial}{\partial w_{i,j}} E[v,h] = -v_ih_j\)</span>$</p></li>
 </ul>
+</div>
+<div class="section" id="stacking">
+<h2>Stacking<a class="headerlink" href="#stacking" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>if we wish to have a deeper model, we have to stack them on top of each other</p></li>
+</ul>
+<p><img alt="" src="../_images/deep_rbm.png" /></p>
 </div>
 </div>
 
