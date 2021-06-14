@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Generative Adiversal Networks (GAN) &#8212; study-notes</title>
+    <title>Auto Regressive networks &#8212; study-notes</title>
     
   <link rel="stylesheet" href="../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
 
@@ -91,8 +91,6 @@ commentsRunWhenDOMLoaded(addUtterances);
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Maximum Likelihood Learning (Estimation)" href="maximum_likelihood_learning.html" />
-    <link rel="prev" title="Kernel function" href="kernel.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -129,7 +127,7 @@ commentsRunWhenDOMLoaded(addUtterances);
   </a>
  </li>
 </ul>
-<ul class="current nav sidenav_l1">
+<ul class="nav sidenav_l1">
  <li class="toctree-l1">
   <a class="reference internal" href="signal_to_noise_ratio.html">
    Signal to noise ratio
@@ -1635,8 +1633,8 @@ commentsRunWhenDOMLoaded(addUtterances);
    Kernel function
   </a>
  </li>
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
+ <li class="toctree-l1">
+  <a class="reference internal" href="generative_adiversal_networks.html">
    Generative Adiversal Networks (GAN)
   </a>
  </li>
@@ -2838,7 +2836,7 @@ commentsRunWhenDOMLoaded(addUtterances);
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../_sources/notes/generative_adiversal_networks.md"><button type="button"
+        <a class="dropdown-buttons" href="../_sources/notes/auto_regresive_networks.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.md</button></a>
         <!-- Download PDF via print -->
@@ -2863,6 +2861,25 @@ commentsRunWhenDOMLoaded(addUtterances);
     <!-- Table of contents -->
     <div class="d-none d-md-block col-md-2 bd-toc show">
         
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#linear-auto-regressive-networks">
+   Linear Auto-Regressive networks
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#neural-auto-regressive-networks">
+   Neural Auto Regressive networks
+  </a>
+ </li>
+</ul>
+
+        </nav>
+        
     </div>
 </div>
     <div id="main-content" class="row">
@@ -2870,27 +2887,31 @@ commentsRunWhenDOMLoaded(addUtterances);
         
               <div>
                 
-  <div class="section" id="generative-adiversal-networks-gan">
-<h1>Generative Adiversal Networks (GAN)<a class="headerlink" href="#generative-adiversal-networks-gan" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="auto-regressive-networks">
+<h1>Auto Regressive networks<a class="headerlink" href="#auto-regressive-networks" title="Permalink to this headline">¶</a></h1>
 <ul class="simple">
-<li><p>game theory where a generator competes against an adversary</p></li>
-<li><p>generator directly produces samples <span class="math notranslate nohighlight">\(x=g(z;\theta)\)</span></p></li>
-<li><p>discriminator attempts to distinguish between samples drawn from training data and samples drawn from the generator, it emits the probability <span class="math notranslate nohighlight">\(d(x;\theta)\)</span> that x is real</p></li>
-<li><p>we can express this as a zero-sum game</p>
-<ul>
-<li><p><span class="math notranslate nohighlight">\(v(\theta^{(k)}, \theta^{(d)})\)</span> determines the payoff of the discriminator the generator receives <span class="math notranslate nohighlight">\(-v\)</span> as its own payment</p></li>
-<li><p>each player tries to maximize its payoff
+<li><p>directed probabilistic models without latent variables, where conditional probability distribution are represented using NN</p></li>
+<li><p>the graph structure is a complete graph</p></li>
+<li><p>decomposes a joint probability distribution over visible variables as a product of conditionals
 $<span class="math notranslate nohighlight">\(
-g^* = \arg \min_g \max_d v(g,d)
-\)</span>$</p></li>
-<li><p>the default choice for <span class="math notranslate nohighlight">\(v\)</span> is
-$<span class="math notranslate nohighlight">\(
-v(\theta^{(k)}, \theta^{(d)} = E_{x \sim p_{\text{data}}} \log d(x) + E_{x \sim p_{model}} \log(1 - d(x)) 
-\)</span>$</p></li>
+  p(x_d|x_{d-1}, \cdots, x_1)
+  \)</span>$</p></li>
 </ul>
-</li>
-<li><p>at convergence the discriminator is unable to distinguish real from the fake thus emits probability 1/2 every where</p></li>
+<div class="section" id="linear-auto-regressive-networks">
+<h2>Linear Auto-Regressive networks<a class="headerlink" href="#linear-auto-regressive-networks" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>each <span class="math notranslate nohighlight">\(p(x_d|x_{d-1}, \cdots, x_1)\)</span> is a linear model</p></li>
+<li><p>if the variables are continuous, than the linear auto-regressive model is just an another way to formulate a multivariate Gaussian dist, capturing linear pairwise interactions between the observed variables</p></li>
 </ul>
+<p><img alt="" src="../_images/linear_autoregressive_networks.png" /></p>
+</div>
+<div class="section" id="neural-auto-regressive-networks">
+<h2>Neural Auto Regressive networks<a class="headerlink" href="#neural-auto-regressive-networks" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>same left to right flow as linear auto-reg networks</p></li>
+<li><p>joint conditional are parametrized using a NN, which is powerful enough to approx any joint distribution</p></li>
+</ul>
+</div>
 </div>
 
     <script type="text/x-thebe-config">
@@ -2921,8 +2942,6 @@ v(\theta^{(k)}, \theta^{(d)} = E_{x \sim p_{\text{data}}} \log d(x) + E_{x \sim 
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="kernel.html" title="previous page">Kernel function</a>
-    <a class='right-next' id="next-link" href="maximum_likelihood_learning.html" title="next page">Maximum Likelihood Learning (Estimation)</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">

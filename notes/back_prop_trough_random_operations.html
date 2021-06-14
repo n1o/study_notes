@@ -2876,6 +2876,16 @@ commentsRunWhenDOMLoaded(addUtterances);
    Reparametrization trick
   </a>
  </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#back-prop-trough-discrete-stochastic-operations">
+   Back-Prop trough Discrete stochastic operations
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#reinforce-reward-increment-nonnegative-factor-x-offset-reinforcement">
+   Reinforce (REward Increment nonnegative Factor X Offset Reinforcement)
+  </a>
+ </li>
 </ul>
 
         </nav>
@@ -2924,6 +2934,30 @@ commentsRunWhenDOMLoaded(addUtterances);
 <li><p>we can compute the derivative of <span class="math notranslate nohighlight">\(y\)</span> wtr <span class="math notranslate nohighlight">\(w\)</span> using backprop, but w cannot be a function of z</p></li>
 </ul>
 </li>
+</ul>
+</div>
+<div class="section" id="back-prop-trough-discrete-stochastic-operations">
+<h2>Back-Prop trough Discrete stochastic operations<a class="headerlink" href="#back-prop-trough-discrete-stochastic-operations" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>if the model emits discrete <span class="math notranslate nohighlight">\(y\)</span>, we cannot apply reparametrization trick</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+y = f(z,w) \\
+w = (\theta, x) \\
+\end{split}\]</div>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(z\)</span> random noise</p></li>
+<li><p>f is a step function since y is discrete, the derivatives of a step function are not useful since they are 0 everywhere except at the step boundary</p></li>
+</ul>
+</div>
+<div class="section" id="reinforce-reward-increment-nonnegative-factor-x-offset-reinforcement">
+<h2>Reinforce (REward Increment nonnegative Factor X Offset Reinforcement)<a class="headerlink" href="#reinforce-reward-increment-nonnegative-factor-x-offset-reinforcement" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>the core idea is that <span class="math notranslate nohighlight">\(J(f(z;w))\)</span> is a step function but <span class="math notranslate nohighlight">\(E_{z \sim p(z)} J(f(z,w))\)</span> is a smooth function</p></li>
+<li><p>in most cases the expectation is not tractable when <span class="math notranslate nohighlight">\(y\)</span> is highly dimensional but it can be estimated without bias using MC average</p></li>
+<li><p>we can use the stochastic estimate of the gradient with SGD or other gradient techniques</p></li>
+<li><p>this estimation has high variance thus we need to draw a lot of samples to have a good estimator and apply variance reduction techniques</p></li>
 </ul>
 </div>
 </div>
