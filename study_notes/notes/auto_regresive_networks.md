@@ -11,7 +11,7 @@
 * each $p(x_d|x_{d-1}, \cdots, x_1)$ is a linear model
 * if the variables are continuous, than the linear auto-regressive model is just an another way to formulate a multivariate Gaussian dist, capturing linear pairwise interactions between the observed variables
 
-![](../.images/machine_learning/linear_autoregressive_networks.png)
+![](../.images/machine_learning/linear_autoregressivej_networks.png)
 
 ## Neural Auto Regressive networks
 
