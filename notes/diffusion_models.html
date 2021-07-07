@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Auto Regressive networks &#8212; study-notes</title>
+    <title>Diffusion models &#8212; study-notes</title>
     
   <link rel="stylesheet" href="../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
 
@@ -2836,7 +2836,7 @@ commentsRunWhenDOMLoaded(addUtterances);
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../_sources/notes/auto_regresive_networks.md"><button type="button"
+        <a class="dropdown-buttons" href="../_sources/notes/diffusion_models.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.md</button></a>
         <!-- Download PDF via print -->
@@ -2861,25 +2861,6 @@ commentsRunWhenDOMLoaded(addUtterances);
     <!-- Table of contents -->
     <div class="d-none d-md-block col-md-2 bd-toc show">
         
-        <div class="tocsection onthispage pt-5 pb-3">
-            <i class="fas fa-list"></i> Contents
-        </div>
-        <nav id="bd-toc-nav">
-            <ul class="nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#linear-auto-regressive-networks">
-   Linear Auto-Regressive networks
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#neural-auto-regressive-networks">
-   Neural Auto Regressive networks
-  </a>
- </li>
-</ul>
-
-        </nav>
-        
     </div>
 </div>
     <div id="main-content" class="row">
@@ -2887,31 +2868,13 @@ commentsRunWhenDOMLoaded(addUtterances);
         
               <div>
                 
-  <div class="section" id="auto-regressive-networks">
-<h1>Auto Regressive networks<a class="headerlink" href="#auto-regressive-networks" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="diffusion-models">
+<h1>Diffusion models<a class="headerlink" href="#diffusion-models" title="Permalink to this headline">¶</a></h1>
 <ul class="simple">
-<li><p>directed probabilistic models without latent variables, where conditional probability distribution are represented using NN</p></li>
-<li><p>the graph structure is a complete graph</p></li>
-<li><p>decomposes a joint probability distribution over visible variables as a product of conditionals
-$<span class="math notranslate nohighlight">\(
-  p(x_d|x_{d-1}, \cdots, x_1)
-  \)</span>$</p></li>
+<li><p>diffusion models are trained by progressively adding more and more Gaussian noise to images form the training set and learning to “denoise” the noisy image.</p></li>
+<li><p>if we add enough noise removes all of the information encapsulated in an image, and if the model can reverse the process entirely, we can than generate images from white noise</p></li>
+<li><p>diffusion models attempt to match the gradient of the data distribution at all points in the space using denoising score matching, which minimizes the Fisher divergence between the model and the real data distribution, an if two distribution have the same gradient everywhere than they have the same probability distribution</p></li>
 </ul>
-<div class="section" id="linear-auto-regressive-networks">
-<h2>Linear Auto-Regressive networks<a class="headerlink" href="#linear-auto-regressive-networks" title="Permalink to this headline">¶</a></h2>
-<ul class="simple">
-<li><p>each <span class="math notranslate nohighlight">\(p(x_d|x_{d-1}, \cdots, x_1)\)</span> is a linear model</p></li>
-<li><p>if the variables are continuous, than the linear auto-regressive model is just an another way to formulate a multivariate Gaussian dist, capturing linear pairwise interactions between the observed variables</p></li>
-</ul>
-<p><img alt="" src="notes/../.images/machine_learning/linear_autoregressivej_networks.png" /></p>
-</div>
-<div class="section" id="neural-auto-regressive-networks">
-<h2>Neural Auto Regressive networks<a class="headerlink" href="#neural-auto-regressive-networks" title="Permalink to this headline">¶</a></h2>
-<ul class="simple">
-<li><p>same left to right flow as linear auto-reg networks</p></li>
-<li><p>joint conditional are parametrized using a NN, which is powerful enough to approx any joint distribution</p></li>
-</ul>
-</div>
 </div>
 
     <script type="text/x-thebe-config">

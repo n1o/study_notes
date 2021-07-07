@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Auto Regressive networks &#8212; study-notes</title>
+    <title>Graphical causal models &#8212; study-notes</title>
     
   <link rel="stylesheet" href="../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
 
@@ -2836,7 +2836,7 @@ commentsRunWhenDOMLoaded(addUtterances);
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../_sources/notes/auto_regresive_networks.md"><button type="button"
+        <a class="dropdown-buttons" href="../_sources/notes/graphical_causal_models.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.md</button></a>
         <!-- Download PDF via print -->
@@ -2867,13 +2867,18 @@ commentsRunWhenDOMLoaded(addUtterances);
         <nav id="bd-toc-nav">
             <ul class="nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#linear-auto-regressive-networks">
-   Linear Auto-Regressive networks
+  <a class="reference internal nav-link" href="#example">
+   Example
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#neural-auto-regressive-networks">
-   Neural Auto Regressive networks
+  <a class="reference internal nav-link" href="#confounding-bias">
+   Confounding bias
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#selection-bias">
+   Selection bias
   </a>
  </li>
 </ul>
@@ -2887,29 +2892,90 @@ commentsRunWhenDOMLoaded(addUtterances);
         
               <div>
                 
-  <div class="section" id="auto-regressive-networks">
-<h1>Auto Regressive networks<a class="headerlink" href="#auto-regressive-networks" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="graphical-causal-models">
+<h1>Graphical <a class="reference internal" href="causality_intro.html"><span class="doc std std-doc">causal models</span></a><a class="headerlink" href="#graphical-causal-models" title="Permalink to this headline">¶</a></h1>
 <ul class="simple">
-<li><p>directed probabilistic models without latent variables, where conditional probability distribution are represented using NN</p></li>
-<li><p>the graph structure is a complete graph</p></li>
-<li><p>decomposes a joint probability distribution over visible variables as a product of conditionals
+<li><p>conditional independence of potential outcomes
 $<span class="math notranslate nohighlight">\(
-  p(x_d|x_{d-1}, \cdots, x_1)
-  \)</span>$</p></li>
+  (Y_0, Y_1) \perp T |X
+  \)</span>$</p>
+<ul>
+<li><p>this allows measure an effect tht is due treatment</p></li>
 </ul>
-<div class="section" id="linear-auto-regressive-networks">
-<h2>Linear Auto-Regressive networks<a class="headerlink" href="#linear-auto-regressive-networks" title="Permalink to this headline">¶</a></h2>
+</li>
+</ul>
+<div class="section" id="example">
+<h2>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li><p>each <span class="math notranslate nohighlight">\(p(x_d|x_{d-1}, \cdots, x_1)\)</span> is a linear model</p></li>
-<li><p>if the variables are continuous, than the linear auto-regressive model is just an another way to formulate a multivariate Gaussian dist, capturing linear pairwise interactions between the observed variables</p></li>
+<li><p>we are testing the efficiency of a drug</p></li>
+<li><p>severity of illness may mix up the effect of the drug</p></li>
+<li><p>an common approach is to divide patients into two groups, severe and not server illness and analyze the efficiency in very subgroup</p></li>
+<li><p>this braking down of population is also known as “controlling” or “conditioning” on</p></li>
+<li><p>if the treatment is than assigned at random, the treatment becomes conditionally independent of potential outcomes</p></li>
+<li><p>by designing problems as <a class="reference internal" href="directed_graphical_models.html"><span class="doc std std-doc">directed graphical models</span></a> we can diagnose different kinds of biases</p></li>
 </ul>
-<p><img alt="" src="notes/../.images/machine_learning/linear_autoregressivej_networks.png" /></p>
 </div>
-<div class="section" id="neural-auto-regressive-networks">
-<h2>Neural Auto Regressive networks<a class="headerlink" href="#neural-auto-regressive-networks" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="confounding-bias">
+<h2>Confounding bias<a class="headerlink" href="#confounding-bias" title="Permalink to this headline">¶</a></h2>
+<ul>
+<li><p>treatment and outcome share a common cause</p>
+<ul>
+<li><p>Example: Education is the treatment and the outcome is income booth share a common cause intelligence</p>
+<p><img alt="" src="../_images/confounding_bias.png" /></p>
 <ul class="simple">
-<li><p>same left to right flow as linear auto-reg networks</p></li>
-<li><p>joint conditional are parametrized using a NN, which is powerful enough to approx any joint distribution</p></li>
+<li><p>we can argue that intelligent people have higher wage not necessarily because of education</p></li>
+<li><p>to identify causality we have to close all the back door paths between the treated</p></li>
+<li><p>we control on intelligence, thus we compare people with similar intelligence, with the only difference is education, any difference in the outcome is only due the difference in education</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>in order to fix confounding bias, we need to control all common causes of the treatment and the outcome</p></li>
+<li><p>unfortunately it is not always possible to control for all common causes, some variables are unobserved</p></li>
+<li><p>in some cases unmeasured variables cause the outcome and the treatment directly
+<img alt="" src="../_images/confounding_bias_unobserved.png" /></p>
+<ul class="simple">
+<li><p>intelligence is unobserved (impossible to observe directly), but we can control on the parents education, and some effects of intelligence as SAT or IQ</p>
+<ul>
+<li><p>this however wont eliminate bias, but it helps</p></li>
+</ul>
+</li>
+<li><p>if we cannot control directly on a variable we can find variables that act as a proxy for the confounder</p>
+<ul>
+<li><p>this wont eliminate the bias just lowers it</p></li>
+<li><p>these proxy variables are called surrogate confounders</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="selection-bias">
+<h2>Selection bias<a class="headerlink" href="#selection-bias" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>we control for more variables than we should
+<img alt="" src="../_images/selection_bias.png" /></p>
+<ul>
+<li><p>we are interested in the effect of education on the wage</p></li>
+<li><p>we control on investment, but investment is not an common cause but an consequence of booth</p>
+<ul>
+<li><p>this opens an collider structure and makes the causal effect harder to estimate</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>selection bias also happens if we condition on any descendant of a common effect
+<img alt="" src="../_images/selection_bias_common_effect.png" /></p>
+<ul>
+<li><p>we have conditioned on S</p></li>
+</ul>
+</li>
+<li><p>if we condition on a mediator of a treatment
+<img alt="" src="../_images/selection_bias_mediator.png" /></p>
+<ul>
+<li><p>by conditioning on white collar we close a channel trough the treatment operates</p></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>

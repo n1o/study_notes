@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Auto Regressive networks &#8212; study-notes</title>
+    <title>Causality &#8212; study-notes</title>
     
   <link rel="stylesheet" href="../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
 
@@ -2836,7 +2836,7 @@ commentsRunWhenDOMLoaded(addUtterances);
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../_sources/notes/auto_regresive_networks.md"><button type="button"
+        <a class="dropdown-buttons" href="../_sources/notes/causality_intro.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.md</button></a>
         <!-- Download PDF via print -->
@@ -2867,13 +2867,25 @@ commentsRunWhenDOMLoaded(addUtterances);
         <nav id="bd-toc-nav">
             <ul class="nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#linear-auto-regressive-networks">
-   Linear Auto-Regressive networks
+  <a class="reference internal nav-link" href="#basic-notation">
+   Basic notation
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#potential-outcome">
+     Potential outcome
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#average-treatment-effect">
+   Average treatment effect
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#neural-auto-regressive-networks">
-   Neural Auto Regressive networks
+  <a class="reference internal nav-link" href="#bias">
+   Bias
   </a>
  </li>
 </ul>
@@ -2887,29 +2899,160 @@ commentsRunWhenDOMLoaded(addUtterances);
         
               <div>
                 
-  <div class="section" id="auto-regressive-networks">
-<h1>Auto Regressive networks<a class="headerlink" href="#auto-regressive-networks" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="causality">
+<h1>Causality<a class="headerlink" href="#causality" title="Permalink to this headline">¶</a></h1>
 <ul class="simple">
-<li><p>directed probabilistic models without latent variables, where conditional probability distribution are represented using NN</p></li>
-<li><p>the graph structure is a complete graph</p></li>
-<li><p>decomposes a joint probability distribution over visible variables as a product of conditionals
-$<span class="math notranslate nohighlight">\(
-  p(x_d|x_{d-1}, \cdots, x_1)
-  \)</span>$</p></li>
+<li><p>the main idea of causal inference is to transform association into causation</p></li>
+<li><p>counterfactuals (inverse causal), “what if” question</p>
+<ul>
+<li><p>examples</p>
+<ul>
+<li><p>what if we change the price</p></li>
+<li><p>what if we change the diet</p></li>
 </ul>
-<div class="section" id="linear-auto-regressive-networks">
-<h2>Linear Auto-Regressive networks<a class="headerlink" href="#linear-auto-regressive-networks" title="Permalink to this headline">¶</a></h2>
+</li>
+</ul>
+</li>
+</ul>
+<div class="section" id="basic-notation">
+<h2>Basic notation<a class="headerlink" href="#basic-notation" title="Permalink to this headline">¶</a></h2>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+T_i \begin{cases}
+    1 \space \text{ if unit i has received treatment} \\
+    0 \space \text{ otherwise}
+\end{cases}
+\end{split}\]</div>
+<p><span class="math notranslate nohighlight">\(Y_i\)</span> observed outcome for unit <span class="math notranslate nohighlight">\(i\)</span>, a we are interested in the treatment had any effect</p>
 <ul class="simple">
-<li><p>each <span class="math notranslate nohighlight">\(p(x_d|x_{d-1}, \cdots, x_1)\)</span> is a linear model</p></li>
-<li><p>if the variables are continuous, than the linear auto-regressive model is just an another way to formulate a multivariate Gaussian dist, capturing linear pairwise interactions between the observed variables</p></li>
+<li><p><strong>fundamental problem</strong> with causal inference is that we never observe the same unit with and without treatment</p></li>
 </ul>
-<p><img alt="" src="notes/../.images/machine_learning/linear_autoregressivej_networks.png" /></p>
+<div class="section" id="potential-outcome">
+<h3>Potential outcome<a class="headerlink" href="#potential-outcome" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>we are interested in the potential outcomes, if the potential outcome has happened we call it factual, if it did not happen we call it counterfactual</p></li>
+<li><p><span class="math notranslate nohighlight">\(Y_{0i}, Y_i(0)\)</span> is the potential outcome for unit i without treatment</p></li>
+<li><p><span class="math notranslate nohighlight">\(Y_{1i}, Y_i(1)\)</span> is the potential outcome for unit i with treatment</p></li>
+</ul>
+<p><strong>Potential outcome</strong> for a treatment is defined as:</p>
+<div class="math notranslate nohighlight">
+\[
+Y_{1i} - Y_{0i}
+\]</div>
+<ul class="simple">
+<li><p>this is never observed, since we observe only one outcome</p></li>
+</ul>
 </div>
-<div class="section" id="neural-auto-regressive-networks">
-<h2>Neural Auto Regressive networks<a class="headerlink" href="#neural-auto-regressive-networks" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="average-treatment-effect">
+<h2>Average treatment effect<a class="headerlink" href="#average-treatment-effect" title="Permalink to this headline">¶</a></h2>
+<ul>
+<li><p>instead of estimating individual treatment effects we estimate the average treatment effect</p>
+<div class="math notranslate nohighlight">
+\[
+    ATE = E[Y_1 - Y_0]
+    \]</div>
+</li>
+<li><p>is the average treatment effect of the treated</p>
+<div class="math notranslate nohighlight">
+\[
+    ATET = [Y_1 - Y_0|T=1]
+    \]</div>
+</li>
+</ul>
+</div>
+<div class="section" id="bias">
+<h2>Bias<a class="headerlink" href="#bias" title="Permalink to this headline">¶</a></h2>
+<ul>
+<li><p>makes association different from causation</p>
+<ul>
+<li><p>association</p>
+<div class="math notranslate nohighlight">
+\[
+    E[Y|T=1] - E[Y|T=0]
+    \]</div>
+</li>
+<li><p>Causation
+$<span class="math notranslate nohighlight">\(
+E[Y_1 - Y_0]
+\)</span>$</p></li>
+</ul>
+</li>
+<li><p>to relate causation to association we replace observed outcomes with potential outcomes. For the treated, the observed outcome is <span class="math notranslate nohighlight">\(Y_1\)</span>. For the untreated, the observed outcome is <span class="math notranslate nohighlight">\(Y_0\)</span>.
+$<span class="math notranslate nohighlight">\(
+  E[Y|T=1] - E[Y|T=0] = E[Y_1|T=1] - E[Y_0|T=0]
+  \)</span>$</p></li>
+<li><p>we add counter factual outcome (if the treatment would receive treatment)
+$<span class="math notranslate nohighlight">\(
+  E[Y|T=1] - E[Y|T=0] = E[Y_1|T=1] - E[Y_0|T=0] + E[Y_0|T=1] - E[Y_0|T=1]
+  \)</span>$</p></li>
+<li><p>reorder an merge observations
+$<span class="math notranslate nohighlight">\(
+  E[Y|T=1] - E[Y|T=0] = E[Y_1 - Y_0|T=1] + E[Y_0|T=1] - E[Y_0|T=0]
+  \)</span>$</p>
 <ul class="simple">
-<li><p>same left to right flow as linear auto-reg networks</p></li>
-<li><p>joint conditional are parametrized using a NN, which is powerful enough to approx any joint distribution</p></li>
+<li><p><span class="math notranslate nohighlight">\(E[Y_0|T=1] - E[Y_0|T=0]\)</span> is the bias term</p></li>
+<li><p>this equations tells us why association is not causation</p></li>
+<li><p>association can be decomposed as:</p>
+<ul>
+<li><p>treatment effect of the treated</p></li>
+<li><p>bias, which is how the treatment and control groups differs before treatment</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>we can transform association into causation if
+$<span class="math notranslate nohighlight">\(
+  E[Y_0|T=0] = E[Y_0|T=1]
+  \)</span>$</p>
+<ul class="simple">
+<li><p>this means that the treatment and control groups are comparable before treatment</p></li>
+</ul>
+</li>
+<li><p>since the bias cancels we get
+$<span class="math notranslate nohighlight">\(
+  E[Y|T=1] - E[Y|T=0] = E[Y_1 - Y_0|Y=1] = ATET
+  \)</span>$</p></li>
+<li><p>we can say that the causal impact of the treated is the same as the untreated (since they are similar)</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+E[Y_1 - Y_0|T=1] - E[Y_1|T=1] - E[Y_0|T=1] \\
+= E[Y_1|T=1] - E[Y_0|T=0] \\
+= E[Y|T=1] - E[Y|T=0]
+\end{split}\]</div>
+<ul class="simple">
+<li><p>since the treated and untreated are exchangeable  <span class="math notranslate nohighlight">\(E[Y_1 - Y_0|T=1] = E[Y_1 -Y_0|T=0]\)</span> than the difference in means become the causal effect</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[E[Y|T=1]-E[Y|T=0] = ATET = ATE\]</div>
+<p><img alt="" src="../_images/causality_img_1.png" /></p>
+<ul class="simple">
+<li><p>the difference may be due</p>
+<ul>
+<li><p>treatment effect</p></li>
+<li><p>other difference</p></li>
+</ul>
+</li>
+<li><p>if we could observe counter factuals</p></li>
+</ul>
+<p><img alt="" src="../_images/causality_counter_factuals.png" /></p>
+<ul class="simple">
+<li><p>the light dots are counterfactuals</p></li>
+<li><p>we get bias if we set everyone NOT to receive the treatment</p>
+<ul>
+<li><p>we left only with potential outcome, and we see how the treated differs from the untreated, if there is a difference we know tht there is something other than the treatment that makes the difference (There is bias between groups)</p></li>
+</ul>
+</li>
+<li><p>if we look ath the situation where is no bias</p></li>
+</ul>
+<p><img alt="" src="../_images/causality_no_bias.png" /></p>
+<ul>
+<li><p>the difference in outcomes is the average causal effect, (there is no other source of difference)</p>
+<p><img alt="" src="../_images/causal_effect.png" /></p>
+</li>
+<li><p>if we set nobody to receive treatment, we observe <span class="math notranslate nohighlight">\(Y_0\)</span>, we find no difference between the groups</p></li>
+<li><p>the main idea of causal inference is to remove bias making the treated and untreated comparable</p></li>
 </ul>
 </div>
 </div>

@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Auto Regressive networks &#8212; study-notes</title>
+    <title>Randomized experiments &#8212; study-notes</title>
     
   <link rel="stylesheet" href="../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
 
@@ -2836,7 +2836,7 @@ commentsRunWhenDOMLoaded(addUtterances);
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../_sources/notes/auto_regresive_networks.md"><button type="button"
+        <a class="dropdown-buttons" href="../_sources/notes/causal_inference_randomized_experiments.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.md</button></a>
         <!-- Download PDF via print -->
@@ -2861,25 +2861,6 @@ commentsRunWhenDOMLoaded(addUtterances);
     <!-- Table of contents -->
     <div class="d-none d-md-block col-md-2 bd-toc show">
         
-        <div class="tocsection onthispage pt-5 pb-3">
-            <i class="fas fa-list"></i> Contents
-        </div>
-        <nav id="bd-toc-nav">
-            <ul class="nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#linear-auto-regressive-networks">
-   Linear Auto-Regressive networks
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#neural-auto-regressive-networks">
-   Neural Auto Regressive networks
-  </a>
- </li>
-</ul>
-
-        </nav>
-        
     </div>
 </div>
     <div id="main-content" class="row">
@@ -2887,31 +2868,31 @@ commentsRunWhenDOMLoaded(addUtterances);
         
               <div>
                 
-  <div class="section" id="auto-regressive-networks">
-<h1>Auto Regressive networks<a class="headerlink" href="#auto-regressive-networks" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="randomized-experiments">
+<h1>Randomized experiments<a class="headerlink" href="#randomized-experiments" title="Permalink to this headline">¶</a></h1>
 <ul class="simple">
-<li><p>directed probabilistic models without latent variables, where conditional probability distribution are represented using NN</p></li>
-<li><p>the graph structure is a complete graph</p></li>
-<li><p>decomposes a joint probability distribution over visible variables as a product of conditionals
+<li><p>we can transform <a class="reference internal" href="causality_intro.html"><span class="doc std std-doc">association into causation</span></a> if there is no bias.</p>
+<ul>
+<li><p>without bias the treatment and control groups are equal before treatment</p></li>
+<li><p>without bias we can say that the untreated is qual to the counterfactual of the treated</p></li>
+</ul>
+</li>
+<li><p>randomized trials annihilate bias since we randomly assign to control and treatment groups
 $<span class="math notranslate nohighlight">\(
-  p(x_d|x_{d-1}, \cdots, x_1)
-  \)</span>$</p></li>
+  (Y_0,Y_1) \perp T
+  \)</span>$</p>
+<ul>
+<li><p>the  potential outcomes are independent of the treatment, thus knowing who is treated or not is independent of the treatment effect</p></li>
+<li><p>the only difference between the groups is the treatment</p></li>
+<li><p><span class="math notranslate nohighlight">\(E[Y_0|T=1] = E[T_0|T=0] =E[Y_0]\)</span></p></li>
 </ul>
-<div class="section" id="linear-auto-regressive-networks">
-<h2>Linear Auto-Regressive networks<a class="headerlink" href="#linear-auto-regressive-networks" title="Permalink to this headline">¶</a></h2>
-<ul class="simple">
-<li><p>each <span class="math notranslate nohighlight">\(p(x_d|x_{d-1}, \cdots, x_1)\)</span> is a linear model</p></li>
-<li><p>if the variables are continuous, than the linear auto-regressive model is just an another way to formulate a multivariate Gaussian dist, capturing linear pairwise interactions between the observed variables</p></li>
+</li>
+<li><p>randomized trials are powerful and reliable, but hard to achieve or expensive</p>
+<ul>
+<li><p>most of causal inference is about identifying the treatment assignment mechanism, by identifying the treatment assignment we can give an more convicting causal answer</p></li>
 </ul>
-<p><img alt="" src="notes/../.images/machine_learning/linear_autoregressivej_networks.png" /></p>
-</div>
-<div class="section" id="neural-auto-regressive-networks">
-<h2>Neural Auto Regressive networks<a class="headerlink" href="#neural-auto-regressive-networks" title="Permalink to this headline">¶</a></h2>
-<ul class="simple">
-<li><p>same left to right flow as linear auto-reg networks</p></li>
-<li><p>joint conditional are parametrized using a NN, which is powerful enough to approx any joint distribution</p></li>
+</li>
 </ul>
-</div>
 </div>
 
     <script type="text/x-thebe-config">

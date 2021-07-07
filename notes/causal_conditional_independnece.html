@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Auto Regressive networks &#8212; study-notes</title>
+    <title>Causal graphical model conditional independence &#8212; study-notes</title>
     
   <link rel="stylesheet" href="../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
 
@@ -2836,7 +2836,7 @@ commentsRunWhenDOMLoaded(addUtterances);
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../_sources/notes/auto_regresive_networks.md"><button type="button"
+        <a class="dropdown-buttons" href="../_sources/notes/causal_conditional_independnece.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.md</button></a>
         <!-- Download PDF via print -->
@@ -2867,13 +2867,18 @@ commentsRunWhenDOMLoaded(addUtterances);
         <nav id="bd-toc-nav">
             <ul class="nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#linear-auto-regressive-networks">
-   Linear Auto-Regressive networks
+  <a class="reference internal nav-link" href="#x-y-z">
+   X -&gt; Y -&gt; Z
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#neural-auto-regressive-networks">
-   Neural Auto Regressive networks
+  <a class="reference internal nav-link" href="#x-y-z-collider">
+   X &lt;- Y -&gt; Z (Collider)
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#x-y-z-v-structure">
+   X -&gt; Y &lt;- Z (V Structure)
   </a>
  </li>
 </ul>
@@ -2887,29 +2892,35 @@ commentsRunWhenDOMLoaded(addUtterances);
         
               <div>
                 
-  <div class="section" id="auto-regressive-networks">
-<h1>Auto Regressive networks<a class="headerlink" href="#auto-regressive-networks" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="causal-graphical-model-conditional-independence">
+<h1><a class="reference internal" href="graphical_causal_models.html"><span class="doc std std-doc">Causal graphical model</span></a> conditional independence<a class="headerlink" href="#causal-graphical-model-conditional-independence" title="Permalink to this headline">¶</a></h1>
 <ul class="simple">
-<li><p>directed probabilistic models without latent variables, where conditional probability distribution are represented using NN</p></li>
-<li><p>the graph structure is a complete graph</p></li>
-<li><p>decomposes a joint probability distribution over visible variables as a product of conditionals
-$<span class="math notranslate nohighlight">\(
-  p(x_d|x_{d-1}, \cdots, x_1)
-  \)</span>$</p></li>
+<li><p>we build on the motion of <a class="reference internal" href="d-separation.html"><span class="doc std std-doc">d-separation</span></a> in <a class="reference internal" href="directed_graphical_models.html"><span class="doc std std-doc">directed graphical models</span></a></p></li>
 </ul>
-<div class="section" id="linear-auto-regressive-networks">
-<h2>Linear Auto-Regressive networks<a class="headerlink" href="#linear-auto-regressive-networks" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="x-y-z">
+<h2>X -&gt; Y -&gt; Z<a class="headerlink" href="#x-y-z" title="Permalink to this headline">¶</a></h2>
+<p>Causal Knowledge -&gt; Solve Problems -&gt; Job promotion</p>
 <ul class="simple">
-<li><p>each <span class="math notranslate nohighlight">\(p(x_d|x_{d-1}, \cdots, x_1)\)</span> is a linear model</p></li>
-<li><p>if the variables are continuous, than the linear auto-regressive model is just an another way to formulate a multivariate Gaussian dist, capturing linear pairwise interactions between the observed variables</p></li>
+<li><p>the general idea that having higher causal knowledge leads to better problem solving and have a higher probability of job promotion</p></li>
+<li><p>if we condition on problem solving skill, than causal knowledge becomes independent from job promotion.</p></li>
+<li><p>by knowing one problem solving skill, knowing also causal knowledge leads to no additional information about job promotion</p></li>
 </ul>
-<p><img alt="" src="notes/../.images/machine_learning/linear_autoregressivej_networks.png" /></p>
 </div>
-<div class="section" id="neural-auto-regressive-networks">
-<h2>Neural Auto Regressive networks<a class="headerlink" href="#neural-auto-regressive-networks" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="x-y-z-collider">
+<h2>X &lt;- Y -&gt; Z (Collider)<a class="headerlink" href="#x-y-z-collider" title="Permalink to this headline">¶</a></h2>
+<p>Causal inference &lt;- Stat -&gt; Machine learning</p>
 <ul class="simple">
-<li><p>same left to right flow as linear auto-reg networks</p></li>
-<li><p>joint conditional are parametrized using a NN, which is powerful enough to approx any joint distribution</p></li>
+<li><p>if somebody is good in causal inference than he is probably also good in stats and good in ML</p></li>
+<li><p>if we condition on stats, we know everything we need to infer ML or Causal skill, thus also knowing either wont tell us anything new</p></li>
+</ul>
+</div>
+<div class="section" id="x-y-z-v-structure">
+<h2>X -&gt; Y &lt;- Z (V Structure)<a class="headerlink" href="#x-y-z-v-structure" title="Permalink to this headline">¶</a></h2>
+<p>stats -&gt; job promotion &lt;- flatter</p>
+<ul class="simple">
+<li><p>if we know how good we are at stats, but we do not know about promotion we cannot tell anything about flatter skills</p></li>
+<li><p>once we know about promotion (if somebody got it) and his stats knowledge is poor than we know that he has good flatter skills</p></li>
+<li><p>this is known as explaining away, since knowing the cause already explains the effect, making the other cause less likely</p></li>
 </ul>
 </div>
 </div>

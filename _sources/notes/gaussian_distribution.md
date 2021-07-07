@@ -15,6 +15,9 @@ $$f(x, \mu, \sigma) = \frac{1}{\sigma \sqrt{2 \pi}} e^{- (\frac{x - \mu}{2\sigma
 * Symmetry for tail areas for CDF: $\Phi(z) = 1 -\Phi(-z)$
 * Symmetry of $X, -X$. If $X \sim N(\mu, \sigma)$ than $-X \sim N(\mu, \sigma)$
 
+### Sum difference of two Gaussians:
+1. $N(\mu_1, \sigma_1^2) - N(\mu_2, \sigma_2^2) = N(\mu_1 - \mu_2, \sigma_1^2 + \sigma_2^2) $
+2. $N(\mu_1, \sigma_1^2) + N(\mu_2, \sigma_2^2) = N(\mu_1 + \mu_2, \sigma_1^2 + \sigma_2^2) $
 ## Moments
 
 ### Mean
