@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>SVM classification EXAMPLE cvxpy &#8212; study-notes</title>
+    <title>Non Compliance LATE &#8212; study-notes</title>
     
   <link rel="stylesheet" href="../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
 
@@ -91,8 +91,6 @@ commentsRunWhenDOMLoaded(addUtterances);
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Derivation of BIC" href="bayesian_information_criterion.html" />
-    <link rel="prev" title="Dropout" href="dropout.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -129,7 +127,7 @@ commentsRunWhenDOMLoaded(addUtterances);
   </a>
  </li>
 </ul>
-<ul class="current nav sidenav_l1">
+<ul class="nav sidenav_l1">
  <li class="toctree-l1">
   <a class="reference internal" href="signal_to_noise_ratio.html">
    Signal to noise ratio
@@ -1301,8 +1299,8 @@ commentsRunWhenDOMLoaded(addUtterances);
    Dropout
   </a>
  </li>
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
+ <li class="toctree-l1">
+  <a class="reference internal" href="svm_classification_example.html">
    SVM classification EXAMPLE cvxpy
   </a>
  </li>
@@ -2838,9 +2836,9 @@ commentsRunWhenDOMLoaded(addUtterances);
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../_sources/notes/svm_classification_example.ipynb"><button type="button"
+        <a class="dropdown-buttons" href="../_sources/notes/non_compliance_late.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
-                data-placement="left">.ipynb</button></a>
+                data-placement="left">.md</button></a>
         <!-- Download PDF via print -->
         <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
             onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
@@ -2858,27 +2856,36 @@ commentsRunWhenDOMLoaded(addUtterances);
 
         <!-- Launch buttons -->
 
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
-    <div class="dropdown-buttons">
-        
-        <a class="binder-button" href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/notes/svm_classification_example.ipynb"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
-                data-placement="left"><img class="binder-button-logo"
-                    src="../_static/images/logo_binder.svg"
-                    alt="Interact on binder">Binder</button></a>
-        
-        
-        
-        
-    </div>
-</div>
-
     </div>
 
     <!-- Table of contents -->
     <div class="d-none d-md-block col-md-2 bd-toc show">
+        
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#example">
+   Example:
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#local-treatment-effect-late">
+   Local treatment Effect (LATE)
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#wald-estimator">
+     Wald estimator
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+        </nav>
         
     </div>
 </div>
@@ -2887,164 +2894,183 @@ commentsRunWhenDOMLoaded(addUtterances);
         
               <div>
                 
-  <div class="section" id="svm-classification-example-cvxpy">
-<h1>SVM classification EXAMPLE cvxpy<a class="headerlink" href="#svm-classification-example-cvxpy" title="Permalink to this headline">¶</a></h1>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">cvxpy</span> <span class="k">as</span> <span class="nn">cp</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">datasets</span>
-<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
-</pre></div>
+  <div class="section" id="non-compliance-late">
+<h1>Non Compliance LATE<a class="headerlink" href="#non-compliance-late" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><p>in real world we encounter the following groups</p></li>
+</ul>
+<ol class="simple">
+<li><p>Compliers</p>
+<ul class="simple">
+<li><p>they stick to what they get, if they are assigned to treatment they get treatment, if placebo they take placebo</p></li>
+</ul>
+</li>
+<li><p>Never Takers</p>
+<ul class="simple">
+<li><p>they neither take treatment nor placebo</p></li>
+</ul>
+</li>
+<li><p>Allays Takers</p>
+<ul class="simple">
+<li><p>they allways receive treatment even if they are asigned to placebo</p></li>
+</ul>
+</li>
+<li><p>Defiers</p>
+<ul class="simple">
+<li><p>they always do the oposite, thus they take treatment if they are asigned to control or placebo if they are in treatment</p></li>
+</ul>
+</li>
+</ol>
+<ul class="simple">
+<li><p>modern approach to IV is that we assume compliance is not perfect, thus we need to distinguish between:</p>
+<ul>
+<li><p>internally valid causal effect, which is valid under particular settings and with particular data</p></li>
+<li><p>externally valid causal effect, here we worry about the predictive prower on different samples</p></li>
+</ul>
+</li>
+</ul>
+<div class="section" id="example">
+<h2>Example:<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>push notification to boost sales, where we take a random sample and perform an 50/50 split</p></li>
+<li><p>some assigned to receive, do not receive due to older phose, where we assume that those who have older phones have lower income</p></li>
+<li><p>the causal graph is:</p></li>
+</ul>
+<p><img alt="" src="../_images/causality_non_compliance.png" /></p>
+<ul class="simple">
+<li><p>push assigned is our treatment variables</p></li>
+<li><p>income is an unobserved confounder</p></li>
+<li><p>push delivered is an mediator</p></li>
+<li><p>in app purchase is causal effect</p></li>
+<li><p>push assignemnt is random thus we assume:
+$<span class="math notranslate nohighlight">\(ATE = E[Y|pushAssigned=1] - E[Y|pushAssigned=0]\)</span>$</p></li>
+<li><p>this hold only when there is no bias:
+$<span class="math notranslate nohighlight">\(E[Y_0|pushAssigned=0] = E[Y_0| pushAssigned=1] = 0\)</span>$</p></li>
+<li><p>this is however not true since low income people have older phones that wont receive push notifications</p></li>
+<li><p>instead of ATE we would find the causall effect of the treatment assignemnt</p></li>
+<li><p>non compliance grop push the outcome of the treatment groups towards the outcome of the control group. Non compliance flips the treatment, meaning the treatment and control are more similar.</p></li>
+</ul>
+<p><img alt="" src="../_images/non_compliance_similarity.png" /></p>
+<ul class="simple">
+<li><p>allways takers push the control group towards the treatment</p></li>
+<li><p>by analogy we can say never takers will pull the treatment group closer to the control</p></li>
+<li><p><strong>Causal effect of the treatment effect is biased twoards zero</strong>, since non-compliaces shrinks it towards zero</p></li>
+<li><p>conditioning on push assignment is biased, thus we could condition on push delivery:</p></li>
+</ul>
+<p><img alt="" src="../_images/non_compliance_push_delivery.png" /></p>
+<ul class="simple">
+<li><p>this is a mediator, since we known that push delivery depends on phone age, and phone age depends on income because of that we have:
+$<span class="math notranslate nohighlight">\(
+    E[Y_0|push=0] &lt; E[Y_0|push=1] 
+ \)</span>$</p>
+<ul>
+<li><p>people  with older phones have lower income, this is a bias</p></li>
+</ul>
+</li>
+</ul>
 </div>
+<div class="section" id="local-treatment-effect-late">
+<h2>Local treatment Effect (LATE)<a class="headerlink" href="#local-treatment-effect-late" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>we explicitly express the population that will receive treatment</p></li>
+<li><p>we view <a class="reference internal" href="instrumental_variables.html"><span class="doc std std-doc">instrumental variables</span></a> as a causal chain <span class="math notranslate nohighlight">\(Z \rightarrow T \rightarrow Y\)</span> thus the instrumental variable only effect Y trough T</p></li>
+<li><p>we have new notation for potential outcomes</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+Y_i(1,1) \text{ if } T_i=1, Z_i = 1 \\ 
+Y_i(1,0) \text{ if } T_i=1, Z_i = 0 \\ 
+Y_i(0,1) \text{ if } T_i=0, Z_i = 1 \\ 
+Y_i(0,0) \text{ if } T_i=0, Z_i = 0
+\end{split}\]</div>
+<ul class="simple">
+<li><p>for the treatment now we get an potential coutome:</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+T_0 \text{ if } Z_i = 0 \\
+T_0 \text{ if } Z_i = 1
+\end{split}\]</div>
+<ul class="simple">
+<li><p>the IV assumptions are rexpressed as:</p></li>
+</ul>
+<ol class="simple">
+<li><p><span class="math notranslate nohighlight">\(T_{0i}, T_{1i} \perp Z_i\)</span> and <span class="math notranslate nohighlight">\(Y_i(T_{1i}, 1), Y_i(T_{0i},0) \perp Z_i\)</span>, this is the <strong>independence assumption</strong></p>
+<ul class="simple">
+<li><p>insturment is good as randomly assigned. it is not correlated with potential treatments, thus people in different instruments are comparable</p></li>
+</ul>
+</li>
+<li><p><span class="math notranslate nohighlight">\(Y_i(0,1) = Y_i(1,1) = Y_{i1}\)</span> and <span class="math notranslate nohighlight">\(Y_i(1,0) = Y_i(1,1) = Y_{i0}\)</span>, <strong>exclusion restriction</strong></p>
+<ul class="simple">
+<li><p>if i am looking at the potential outcome for the treated, it is the same for booth instrument groups (the instroment does not influence the potetnial outcome, of they influence it only trough treatment)</p></li>
+</ul>
+</li>
+<li><p><span class="math notranslate nohighlight">\(E[T_{1i} - T_{0i}] \ne 0\)</span> <strong>existence of the first stage</strong></p>
+<ul class="simple">
+<li><p>the instrument does not affect the treatment (potential treatments are different)</p></li>
+</ul>
+</li>
+<li><p><span class="math notranslate nohighlight">\(T_{i1} &gt; T_{i0}\)</span> <strong>monotonicity assumption</strong></p>
+<ul class="simple">
+<li><p>if everyone has the instrument turned on, the treatment level would be higher than if every one had the treatment turned off</p></li>
+</ul>
+</li>
+</ol>
+<div class="section" id="wald-estimator">
+<h3>Wald estimator<a class="headerlink" href="#wald-estimator" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>to gain more insight we review the Wald Estimator</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[
+ATE = \frac{E[Y|Z =1] - E[Y|Z=0]}{E[Y|Z=1] - E[T|Z=0]}
+\]</div>
+<ul class="simple">
+<li><p>first we break down <span class="math notranslate nohighlight">\(E[Y|Z=1]\)</span></p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+E[Y_i|Z_i =1] = E[Y_{i0} + T_{i0}(Y_{i1} - Y_{i0})|Z=1] \text{ by exclusion restriction} \\
+= E[Y_{i0} + T_{i0}(Y_{i1} - Y_{i0})] \text{ independence we can drop conditioning} \\
+\end{split}\]</div>
+<ul class="simple">
+<li><p>the same applies to <span class="math notranslate nohighlight">\(E[Y|Z=0]\)</span></p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[
+E[Y_i|Z_i =1]  = E[Y_{i0} + T_{i0}(Y_{i1} - Y_{i0})]
+\]</div>
+<ul>
+<li><p>the Wald rule numerator becomes:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+   E[Y|Z =1] - E[Y|Z=0] = E[(Y_{i1} - Y_{i0})(T_{i1} - T_{i0}))] \\
+   E[(Y_{i1} - Y_{i0})| T_{i1} &gt; T_{i0} ]P(T_{i1} &gt; T_{i0})
+   \end{split}\]</div>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\((T_{i1} - T_{i0})\)</span> is either 0 or 1 by monotomicity</p></li>
+</ul>
+</li>
+<li><p>the Walds rule denominator:
+$<span class="math notranslate nohighlight">\(
+ E[T|Z = 1] - E[T|Z=0] = E[T_{i1} - T_{i0}] = P(T_{i1} &gt; T_{i0})
+ \)</span>$</p></li>
+<li><p>if we put them together the Wald Estimator becomes</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[
+ATE = E[(Y_{i1} - Y_{i0})| T_{i1} &gt; T_{i0}]
+\]</div>
+<ul class="simple">
+<li><p>ATE estimated by IV is the ATE on the subpopulation <span class="math notranslate nohighlight">\(T_{i1} &gt; T_{i0}\)</span>, that is the group of compliers!!!</p>
+<ul>
+<li><p><span class="math notranslate nohighlight">\(T_{i1} &gt; T_{i0}\)</span> is the group of compliers</p></li>
+<li><p><span class="math notranslate nohighlight">\(T_{i1} = T_{i0} = 0\)</span> are newertakers</p></li>
+<li><p><span class="math notranslate nohighlight">\(T_{i1} = T_{i0} = 1\)</span> are allways takers</p></li>
+</ul>
+</li>
+</ul>
 </div>
-<div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">RuntimeError</span><span class="g g-Whitespace">                              </span>Traceback (most recent call last)
-<span class="ne">RuntimeError</span>: module compiled against API version 0xe but this version of numpy is 0xd
-</pre></div>
-</div>
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">ImportError</span><span class="g g-Whitespace">                               </span>Traceback (most recent call last)
-<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="mi">961</span><span class="n">a1519bf5d</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="ne">----&gt; </span><span class="mi">2</span> <span class="kn">import</span> <span class="nn">cvxpy</span> <span class="k">as</span> <span class="nn">cp</span>
-<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">datasets</span>
-<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
-
-<span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">hostedtoolcache</span><span class="o">/</span><span class="n">Python</span><span class="o">/</span><span class="mf">3.8</span><span class="o">.</span><span class="mi">11</span><span class="o">/</span><span class="n">x64</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python3</span><span class="o">.</span><span class="mi">8</span><span class="o">/</span><span class="n">site</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">cvxpy</span><span class="o">/</span><span class="fm">__init__</span><span class="o">.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="g g-Whitespace">     </span><span class="mi">16</span> 
-<span class="g g-Whitespace">     </span><span class="mi">17</span> <span class="n">__version__</span> <span class="o">=</span> <span class="s2">&quot;1.1.7&quot;</span>
-<span class="ne">---&gt; </span><span class="mi">18</span> <span class="kn">from</span> <span class="nn">cvxpy.atoms</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="g g-Whitespace">     </span><span class="mi">19</span> <span class="kn">from</span> <span class="nn">cvxpy.constraints</span> <span class="kn">import</span> <span class="n">NonPos</span><span class="p">,</span> <span class="n">Zero</span><span class="p">,</span> <span class="n">SOC</span><span class="p">,</span> <span class="n">PSD</span>
-<span class="g g-Whitespace">     </span><span class="mi">20</span> <span class="kn">from</span> <span class="nn">cvxpy.expressions.expression</span> <span class="kn">import</span> <span class="n">Expression</span>
-
-<span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">hostedtoolcache</span><span class="o">/</span><span class="n">Python</span><span class="o">/</span><span class="mf">3.8</span><span class="o">.</span><span class="mi">11</span><span class="o">/</span><span class="n">x64</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python3</span><span class="o">.</span><span class="mi">8</span><span class="o">/</span><span class="n">site</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">cvxpy</span><span class="o">/</span><span class="n">atoms</span><span class="o">/</span><span class="fm">__init__</span><span class="o">.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="g g-Whitespace">     </span><span class="mi">18</span> <span class="kn">from</span> <span class="nn">cvxpy.atoms.dist_ratio</span> <span class="kn">import</span> <span class="n">dist_ratio</span>
-<span class="g g-Whitespace">     </span><span class="mi">19</span> <span class="kn">from</span> <span class="nn">cvxpy.atoms.eye_minus_inv</span> <span class="kn">import</span> <span class="n">eye_minus_inv</span><span class="p">,</span> <span class="n">resolvent</span>
-<span class="ne">---&gt; </span><span class="mi">20</span> <span class="kn">from</span> <span class="nn">cvxpy.atoms.geo_mean</span> <span class="kn">import</span> <span class="n">geo_mean</span>
-<span class="g g-Whitespace">     </span><span class="mi">21</span> <span class="kn">from</span> <span class="nn">cvxpy.atoms.gen_lambda_max</span> <span class="kn">import</span> <span class="n">gen_lambda_max</span>
-<span class="g g-Whitespace">     </span><span class="mi">22</span> <span class="kn">from</span> <span class="nn">cvxpy.atoms.gmatmul</span> <span class="kn">import</span> <span class="n">gmatmul</span>
-
-<span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">hostedtoolcache</span><span class="o">/</span><span class="n">Python</span><span class="o">/</span><span class="mf">3.8</span><span class="o">.</span><span class="mi">11</span><span class="o">/</span><span class="n">x64</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python3</span><span class="o">.</span><span class="mi">8</span><span class="o">/</span><span class="n">site</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">cvxpy</span><span class="o">/</span><span class="n">atoms</span><span class="o">/</span><span class="n">geo_mean</span><span class="o">.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="g g-Whitespace">     </span><span class="mi">18</span> <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="g g-Whitespace">     </span><span class="mi">19</span> <span class="kn">import</span> <span class="nn">scipy.sparse</span> <span class="k">as</span> <span class="nn">sp</span>
-<span class="ne">---&gt; </span><span class="mi">20</span> <span class="kn">from</span> <span class="nn">cvxpy.utilities.power_tools</span> <span class="kn">import</span> <span class="p">(</span><span class="n">fracify</span><span class="p">,</span> <span class="n">decompose</span><span class="p">,</span> <span class="n">approx_error</span><span class="p">,</span> <span class="n">lower_bound</span><span class="p">,</span>
-<span class="g g-Whitespace">     </span><span class="mi">21</span>                                          <span class="n">over_bound</span><span class="p">,</span> <span class="n">prettydict</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">22</span> 
-
-<span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">hostedtoolcache</span><span class="o">/</span><span class="n">Python</span><span class="o">/</span><span class="mf">3.8</span><span class="o">.</span><span class="mi">11</span><span class="o">/</span><span class="n">x64</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python3</span><span class="o">.</span><span class="mi">8</span><span class="o">/</span><span class="n">site</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">cvxpy</span><span class="o">/</span><span class="n">utilities</span><span class="o">/</span><span class="n">power_tools</span><span class="o">.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="g g-Whitespace">     </span><span class="mi">16</span> 
-<span class="g g-Whitespace">     </span><span class="mi">17</span> <span class="kn">from</span> <span class="nn">fractions</span> <span class="kn">import</span> <span class="n">Fraction</span>
-<span class="ne">---&gt; </span><span class="mi">18</span> <span class="kn">from</span> <span class="nn">cvxpy.atoms.affine.reshape</span> <span class="kn">import</span> <span class="n">reshape</span>
-<span class="g g-Whitespace">     </span><span class="mi">19</span> <span class="kn">from</span> <span class="nn">cvxpy.atoms.affine.vstack</span> <span class="kn">import</span> <span class="n">vstack</span>
-<span class="g g-Whitespace">     </span><span class="mi">20</span> <span class="kn">from</span> <span class="nn">cvxpy.constraints.second_order</span> <span class="kn">import</span> <span class="n">SOC</span>
-
-<span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">hostedtoolcache</span><span class="o">/</span><span class="n">Python</span><span class="o">/</span><span class="mf">3.8</span><span class="o">.</span><span class="mi">11</span><span class="o">/</span><span class="n">x64</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python3</span><span class="o">.</span><span class="mi">8</span><span class="o">/</span><span class="n">site</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">cvxpy</span><span class="o">/</span><span class="n">atoms</span><span class="o">/</span><span class="n">affine</span><span class="o">/</span><span class="n">reshape</span><span class="o">.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="g g-Whitespace">     </span><span class="mi">16</span> 
-<span class="g g-Whitespace">     </span><span class="mi">17</span> <span class="kn">from</span> <span class="nn">cvxpy.expressions.expression</span> <span class="kn">import</span> <span class="n">Expression</span>
-<span class="ne">---&gt; </span><span class="mi">18</span> <span class="kn">from</span> <span class="nn">cvxpy.atoms.affine.hstack</span> <span class="kn">import</span> <span class="n">hstack</span>
-<span class="g g-Whitespace">     </span><span class="mi">19</span> <span class="kn">from</span> <span class="nn">cvxpy.atoms.affine.affine_atom</span> <span class="kn">import</span> <span class="n">AffAtom</span>
-<span class="g g-Whitespace">     </span><span class="mi">20</span> <span class="kn">import</span> <span class="nn">cvxpy.lin_ops.lin_utils</span> <span class="k">as</span> <span class="nn">lu</span>
-
-<span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">hostedtoolcache</span><span class="o">/</span><span class="n">Python</span><span class="o">/</span><span class="mf">3.8</span><span class="o">.</span><span class="mi">11</span><span class="o">/</span><span class="n">x64</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python3</span><span class="o">.</span><span class="mi">8</span><span class="o">/</span><span class="n">site</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">cvxpy</span><span class="o">/</span><span class="n">atoms</span><span class="o">/</span><span class="n">affine</span><span class="o">/</span><span class="n">hstack</span><span class="o">.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="g g-Whitespace">     </span><span class="mi">16</span> 
-<span class="g g-Whitespace">     </span><span class="mi">17</span> <span class="kn">import</span> <span class="nn">cvxpy.lin_ops.lin_utils</span> <span class="k">as</span> <span class="nn">lu</span>
-<span class="ne">---&gt; </span><span class="mi">18</span> <span class="kn">from</span> <span class="nn">cvxpy.atoms.affine.affine_atom</span> <span class="kn">import</span> <span class="n">AffAtom</span>
-<span class="g g-Whitespace">     </span><span class="mi">19</span> <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="g g-Whitespace">     </span><span class="mi">20</span> 
-
-<span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">hostedtoolcache</span><span class="o">/</span><span class="n">Python</span><span class="o">/</span><span class="mf">3.8</span><span class="o">.</span><span class="mi">11</span><span class="o">/</span><span class="n">x64</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python3</span><span class="o">.</span><span class="mi">8</span><span class="o">/</span><span class="n">site</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">cvxpy</span><span class="o">/</span><span class="n">atoms</span><span class="o">/</span><span class="n">affine</span><span class="o">/</span><span class="n">affine_atom</span><span class="o">.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="g g-Whitespace">     </span><span class="mi">20</span> <span class="kn">import</span> <span class="nn">cvxpy.lin_ops.lin_utils</span> <span class="k">as</span> <span class="nn">lu</span>
-<span class="g g-Whitespace">     </span><span class="mi">21</span> <span class="kn">from</span> <span class="nn">cvxpy.atoms.atom</span> <span class="kn">import</span> <span class="n">Atom</span>
-<span class="ne">---&gt; </span><span class="mi">22</span> <span class="kn">from</span> <span class="nn">cvxpy.cvxcore.python</span> <span class="kn">import</span> <span class="n">canonInterface</span>
-<span class="g g-Whitespace">     </span><span class="mi">23</span> <span class="kn">from</span> <span class="nn">cvxpy.expressions.constants</span> <span class="kn">import</span> <span class="n">Constant</span>
-<span class="g g-Whitespace">     </span><span class="mi">24</span> <span class="kn">from</span> <span class="nn">cvxpy.utilities</span> <span class="kn">import</span> <span class="n">performance_utils</span> <span class="k">as</span> <span class="n">perf</span>
-
-<span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">hostedtoolcache</span><span class="o">/</span><span class="n">Python</span><span class="o">/</span><span class="mf">3.8</span><span class="o">.</span><span class="mi">11</span><span class="o">/</span><span class="n">x64</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python3</span><span class="o">.</span><span class="mi">8</span><span class="o">/</span><span class="n">site</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">cvxpy</span><span class="o">/</span><span class="n">cvxcore</span><span class="o">/</span><span class="n">python</span><span class="o">/</span><span class="fm">__init__</span><span class="o">.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># TODO(akshayka): This is a hack; the swig-auto-generated cvxcore.py</span>
-<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="c1"># tries to import cvxcore as `from . import _cvxcore`</span>
-<span class="ne">----&gt; </span><span class="mi">3</span> <span class="kn">import</span> <span class="nn">_cvxcore</span>
-
-<span class="ne">ImportError</span>: numpy.core.multiarray failed to import
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">iris</span> <span class="o">=</span> <span class="n">datasets</span><span class="o">.</span><span class="n">load_iris</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">iris</span><span class="o">.</span><span class="n">target</span><span class="p">[</span><span class="n">iris</span><span class="o">.</span><span class="n">target</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">100</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
-<span class="n">X</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">data</span><span class="p">[:</span><span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="p">:]</span>
-
-<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<p><span class="math notranslate nohighlight">\(f(\beta, v) = (1/m) \sum_i (1 - y_i(\beta^Tx_i - v))_+ + \lambda ||\beta||_1\)</span></p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">beta</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">Variable</span><span class="p">((</span><span class="n">X_train</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="mi">1</span><span class="p">))</span>
-<span class="n">v</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">Variable</span><span class="p">()</span>
-<span class="n">loss</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">cp</span><span class="o">.</span><span class="n">pos</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">cp</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="n">y_train</span><span class="p">,</span> <span class="n">X_train</span> <span class="o">@</span> <span class="n">beta</span> <span class="o">-</span> <span class="n">v</span><span class="p">)))</span>
-<span class="n">reg</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">beta</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-<span class="n">lambd</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">Parameter</span><span class="p">(</span><span class="n">nonneg</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">prob</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">Problem</span><span class="p">(</span><span class="n">cp</span><span class="o">.</span><span class="n">Minimize</span><span class="p">(</span><span class="n">loss</span><span class="o">/</span><span class="n">m</span> <span class="o">+</span> <span class="n">lambd</span><span class="o">*</span><span class="n">reg</span><span class="p">))</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">TRIALS</span> <span class="o">=</span> <span class="mi">100</span>
-<span class="n">train_error</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">TRIALS</span><span class="p">)</span>
-<span class="n">test_error</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">TRIALS</span><span class="p">)</span>
-<span class="n">lambda_vals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">TRIALS</span><span class="p">)</span>
-<span class="n">beta_vals</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">TRIALS</span><span class="p">):</span>
-    <span class="n">lambd</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">lambda_vals</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-    <span class="n">prob</span><span class="o">.</span><span class="n">solve</span><span class="p">()</span>
-    <span class="n">train_error</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">y_train</span> <span class="o">!=</span> <span class="n">np</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="n">X_train</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">beta</span><span class="o">.</span><span class="n">value</span><span class="p">)</span> <span class="o">-</span> <span class="n">v</span><span class="o">.</span><span class="n">value</span><span class="p">))</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">/</span><span class="n">m</span>
-    <span class="n">test_error</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">y_test</span> <span class="o">!=</span> <span class="n">np</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="n">X_test</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">beta</span><span class="o">.</span><span class="n">value</span><span class="p">)</span> <span class="o">-</span> <span class="n">v</span><span class="o">.</span><span class="n">value</span><span class="p">))</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">/</span><span class="n">TEST</span>
-    <span class="n">beta_vals</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">beta</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">lambda_vals</span><span class="p">,</span> <span class="n">train_error</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Train error&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">lambda_vals</span><span class="p">,</span> <span class="n">test_error</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Test error&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xscale</span><span class="p">(</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper left&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$\lambda$&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<img alt="../_images/svm_classification_example_7_0.svg" src="../_images/svm_classification_example_7_0.svg" /></div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">lambda_vals</span><span class="p">,</span> <span class="p">[</span><span class="n">wi</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">wi</span> <span class="ow">in</span> <span class="n">beta_vals</span><span class="p">])</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$\lambda$&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xscale</span><span class="p">(</span><span class="s2">&quot;log&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<img alt="../_images/svm_classification_example_8_0.svg" src="../_images/svm_classification_example_8_0.svg" /></div>
 </div>
 </div>
 
@@ -3076,8 +3102,6 @@ commentsRunWhenDOMLoaded(addUtterances);
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="dropout.html" title="previous page">Dropout</a>
-    <a class='right-next' id="next-link" href="bayesian_information_criterion.html" title="next page">Derivation of BIC</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">
