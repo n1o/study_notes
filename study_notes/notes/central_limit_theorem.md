@@ -16,7 +16,9 @@ $$ Z_n = \frac{S_n - n \mu}{ \sqrt{n}\sigma}$$
 
 This distribution now has:
 
-$E[Z_n] = 0$
-$var(Z_n) = 1$
+$$
+E[Z_n] = 0 \\ 
+var(Z_n) = 1
+$$
 
 and if $n \rightarrow \infty$ than the CDF of $Z_n$ converges to the standard normal CDF. Or more simply $Z_n \sim N(0,1)$
